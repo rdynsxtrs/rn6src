@@ -1,0 +1,25 @@
+From: Mark Baker <mark@mnb.org.uk>
+Date: Mon, 29 May 2017 14:25:01 +0200
+Subject: soname
+
+---
+ configure.ac | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -17,10 +17,10 @@
+ # 50 lines of this file. Please update that if the variables above are moved.
+ 
+ # Libtool shared library interface versions (current:revision:age)
+-m4_define(libpcre_version, [3:11:2])
+-m4_define(libpcre16_version, [2:11:2])
+-m4_define(libpcre32_version, [0:11:0])
+-m4_define(libpcreposix_version, [0:6:0])
++m4_define(libpcre_version, [16:3:13])
++m4_define(libpcre16_version, [16:3:13])
++m4_define(libpcre32_version, [16:3:13])
++m4_define(libpcreposix_version, [16:3:13])
+ m4_define(libpcrecpp_version, [0:1:0])
+ 
+ AC_PREREQ(2.57)

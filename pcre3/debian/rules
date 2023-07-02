@@ -1,0 +1,56 @@
+#!/usr/bin/make -f
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+include /usr/share/dpkg/default.mk
+
+V5 := $(shell dpkg --compare-versions "$$(c++ --version | awk '{print $$4; exit}')" ge 5 && echo v5)
+
+ENABLE_JIT := $(shell . debian/jit-test)
+
+%:
+	dh $@ --with autoreconf,autotools_dev --parallel -O--dbgsym-migration='libpcre3-dbg (<< 2:8.41-1.3)' --list-missing
+
+.PHONY: debian/control
+debian/control: debian/control.in
+	sed -e 's/###V5###/$(V5)/' < $< > $@
+
+override_dh_auto_configure: debian/control
+	dh_auto_configure -- \
+		--enable-utf8 \
+		--enable-unicode-properties \
+		--disable-silent-rules \
+		$(ENABLE_JIT) \
+		--enable-pcre16 \
+		--enable-pcre32
+
+override_dh_auto_clean:
+	rm -f dftables testsavedregex
+	rm -f debian/libpcre3.symbols
+	rm -f debian/libpcre16-3.symbols
+	rm -f debian/libpcre32-3.symbols
+	dh_auto_clean
+
+override_dh_install-arch:
+	dh_install -a
+	rm debian/libpcre3-dev/usr/share/man/man3/pcrepattern.3
+
+	# fix the shared library symlink
+	ln -sf /lib/$(DEB_HOST_MULTIARCH)/libpcre.so.3 debian/libpcre3-dev/usr/lib/$(DEB_HOST_MULTIARCH)/libpcre.so
+	# we never need to reference the library path in pcre-config on
+	# Debian, so clip it out so that the script will be multiarch-safe.
+	sed -i -e"s,/$(DEB_HOST_MULTIARCH),,g" debian/libpcre3-dev/usr/bin/pcre-config
+
+override_dh_makeshlibs:
+ifneq (,$(ENABLE_JIT))
+	sed -e 's/JIT//' debian/libpcre3.symbols.in > debian/libpcre3.symbols
+	sed -e 's/JIT//' debian/libpcre16-3.symbols.in > debian/libpcre16-3.symbols
+	sed -e 's/JIT//' debian/libpcre32-3.symbols.in > debian/libpcre32-3.symbols
+else
+	sed -e 's/JIT/#/' debian/libpcre3.symbols.in > debian/libpcre3.symbols
+	sed -e 's/JIT/#/' debian/libpcre16-3.symbols.in > debian/libpcre16-3.symbols
+	sed -e 's/JIT/#/' debian/libpcre32-3.symbols.in > debian/libpcre32-3.symbols
+endif
+	dh_makeshlibs -plibpcre3 --add-udeb="libpcre3-udeb" -V 'libpcre3 (>= 2:8.41)' -- -c4
+	dh_makeshlibs -plibpcrecpp0$(V5) -V 'libpcrecpp0$(V5) (>= 7.7)' -- -c4
+	dh_makeshlibs --remaining-packages -- -c4

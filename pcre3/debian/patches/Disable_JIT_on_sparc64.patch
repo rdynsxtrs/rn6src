@@ -1,0 +1,23 @@
+From: Matthew Vernon <matthew@debian.org>
+Date: Mon, 29 May 2017 14:25:01 +0200
+Subject: Disable_JIT_on_sparc64
+
+---
+ sljit/sljitConfigInternal.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+--- a/sljit/sljitConfigInternal.h
++++ b/sljit/sljitConfigInternal.h
+@@ -147,7 +147,11 @@
+ #elif defined(__mips64)
+ #define SLJIT_CONFIG_MIPS_64 1
+ #elif defined(__sparc__) || defined(__sparc)
+-#define SLJIT_CONFIG_SPARC_32 1
++# if defined(__arch64__)
++#  define SLJIT_CONFIG_UNSUPPORTED 1
++# else
++#  define SLJIT_CONFIG_SPARC_32 1
++# endif
+ #elif defined(__tilegx__)
+ #define SLJIT_CONFIG_TILEGX 1
+ #else

@@ -1,0 +1,92 @@
+Source: pcre3
+Section: libs
+Priority: optional
+Maintainer: Perl 5 Compatible Regular Expression Library <pcre3@packages.debian.org>
+Uploaders: Matthew Vernon <matthew@debian.org>,
+	   Ondřej Surý <ondrej@debian.org>
+Standards-Version: 4.1.3
+Build-Depends: debhelper (>= 9), dh-autoreconf, dh-exec, autotools-dev
+
+Package: libpcre3
+Section: libs
+Architecture: any
+Priority: important
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Multi-Arch: same
+Description: Perl 5 Compatible Regular Expression Library - runtime files
+ This is a library of functions to support regular expressions whose syntax 
+ and semantics are as close as possible to those of the Perl 5 language.
+ .
+ This package contains the runtime libraries.
+
+Package: libpcre3-udeb
+Section: debian-installer
+Package-Type: udeb
+Architecture: any
+Priority: important
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Perl 5 Compatible Regular Expression Library - runtime files (udeb)
+ This is a library of functions to support regular expressions whose syntax 
+ and semantics are as close as possible to those of the Perl 5 language.
+ .
+ This package contains the runtime libraries for the Debian Installer (udeb).
+
+Package: libpcrecpp0v5
+Section: libs
+Architecture: any
+Priority: optional
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: libpcrecpp0 (<< 2:8.38~)
+Replaces: libpcrecpp0 (<< 2:8.38~)
+Multi-Arch: same
+Description: Perl 5 Compatible Regular Expression Library - C++ runtime files
+ This is a C++ library of functions to support regular expressions whose syntax 
+ and semantics are as close as possible to those of the Perl 5 language.
+ .
+ This package contains the C++ runtime library.
+
+Package: libpcre3-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libc6-dev, libpcre3 (= ${binary:Version}), libpcre16-3 (= ${binary:Version}), libpcre32-3 (= ${binary:Version}), libpcrecpp0v5 (= ${binary:Version}), ${misc:Depends}
+Description: Perl 5 Compatible Regular Expression Library - development files
+ This is a library of functions to support regular expressions whose syntax 
+ and semantics are as close as possible to those of the Perl 5 language.
+ .
+ This package contains the development files, including headers, static 
+ libraries, and documentation.
+
+Package: pcregrep
+Section: utils
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: grep utility that uses perl 5 compatible regexes.
+ Perl-style regexps have many useful features that the standard POSIX ones
+ don't; this is basically the same as grep but with the different
+ regexp syntax.
+ .
+ The other reason for the existence of pcregrep is that its source code is an
+ example of programming with libpcre.
+
+Package: libpcre16-3
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Multi-Arch: same
+Description: Perl 5 Compatible Regular Expression Library - 16 bit runtime files
+ This is a library of functions to support regular expressions whose syntax
+ and semantics are as close as possible to those of the Perl 5 language.
+ .
+ This package contains the 16 bit runtime library.
+
+Package: libpcre32-3
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Multi-Arch: same
+Description: Perl 5 Compatible Regular Expression Library - 32 bit runtime files
+ This is a library of functions to support regular expressions whose syntax
+ and semantics are as close as possible to those of the Perl 5 language.
+ .
+ This package contains the 32 bit runtime library.

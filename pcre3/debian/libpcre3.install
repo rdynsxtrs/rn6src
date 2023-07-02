@@ -1,0 +1,4 @@
+#!/usr/bin/dh-exec
+usr/lib/*/libpcre.so.* /lib/${DEB_HOST_MULTIARCH}/
+usr/lib/*/libpcreposix.so.*
+usr/share/man/man3/pcrepattern.3
