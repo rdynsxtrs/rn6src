@@ -1,0 +1,10 @@
+# Run the "uscan" command to check for upstream updates and more.
+# See uscan(1) for format
+
+# Compulsory line, this is a version 4 file
+version=4
+
+# HTTP site (basic)
+https://mdocml.bsd.lv/snapshots/ \
+  mandoc-([\d\.]+)\.tar\.gz debian uupdate
+

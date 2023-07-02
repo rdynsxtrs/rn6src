@@ -5,7 +5,7 @@
 
 
 # see FEATURE AREAS in dpkg-buildflags(1)
-#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 # see ENVIRONMENT in dpkg-buildflags(1)
 # package maintainers to append CFLAGS
@@ -15,9 +15,20 @@
 
 
 %:
-	dh $@  --with autotools_dev
+	dh $@
 
 override_dh_auto_clean:
 	[ ! -f Makefile.local ] || $(MAKE) clean
 
+override_dh_auto_build:
+	dh_auto_build -- CFLAGS="$$CFLAGS" CPPFLAGS="$$CPPFLAGS" LDFLAGS="$$LDFLAGS"
+
+override_dh_installchangelogs:
+	dh_installchangelogs NEWS
+
 overrid_dh_installman:
+
+override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	(cd regress && ./regress.pl)
+endif

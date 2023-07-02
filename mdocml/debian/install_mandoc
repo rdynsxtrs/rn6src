@@ -1,0 +1,15 @@
+#!/bin/bash
+# Wraps install(1), converting mdoc documents to man documents before.
+
+eval target=\${$#}
+
+TMP=$(mktemp -d)
+
+while [ "$2" != "" ]; do
+  # Keep the filename, it is used by install(1) when target is a directory.
+  ./mandoc -Tman $1 > "$TMP/$1"
+  install -m 0444 "$TMP/$1" "$target"
+  shift
+done
+
+rm -rf "$TMP"

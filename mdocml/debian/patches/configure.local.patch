@@ -1,9 +1,11 @@
 Description: create configure.local to set Debian defaults
 Author: Bdale Garbee <bdale@gag.com>
 
+Index: mdocml/configure.local
+===================================================================
 --- /dev/null
-+++ mdocml-1.13.3/configure.local
-@@ -0,0 +1,13 @@
++++ mdocml/configure.local
+@@ -0,0 +1,19 @@
 +HAVE_WCHAR=1
 +OSNAME="Debian"
 +PREFIX="/usr"
@@ -16,4 +18,10 @@ Author: Bdale Garbee <bdale@gag.com>
 +MANM_EQN="mandoc_eqn"           # default is "eqn"
 +MANM_TBL="mandoc_tbl"           # default is "tbl"
 +BINM_MAN=mman                   # default is "man"
++BINM_APROPOS=mapropos           # default is "apropos"
++BINM_SOELIM=msoelim             # default is "soelim"
++BINM_WHATIS=mwhatis             # default is "whatis"
++BINM_CATMAN=mcatman             # default is "catman"
 +BUILD_DB=0
++BUILD_CATMAN=1
++LN="ln -sf"

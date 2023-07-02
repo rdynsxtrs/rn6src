@@ -1,0 +1,94 @@
+mdocml (1.14.4-1+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Thu, 17 Feb 2022 16:27:57 +0100
+
+mdocml (1.14.4-1) unstable; urgency=medium
+
+  * New upstream version 1.14.4
+  * drop empty-html-id-crash.patch (merged upstream)
+  * d/watch: switch to secure URL
+  * b/compat: bump to dh 11
+  * d/control: M-x delete-trailing-whitespace
+  * d/rules: add nocheck conditional
+  * d/control: bump standards-version (no changes necessary)
+
+ -- Michael Stapelberg <stapelberg@debian.org>  Thu, 09 Aug 2018 20:55:23 +0200
+
+mdocml (1.14.3-4) unstable; urgency=medium
+
+  * update Vcs-* tags after repository move to salsa.debian.org
+
+ -- Michael Stapelberg <stapelberg@debian.org>  Sun, 03 Jun 2018 08:56:04 +0200
+
+mdocml (1.14.3-3) unstable; urgency=medium
+
+  * Add debian/patches/empty-html-id-crash.patch (from upstream)
+
+ -- Michael Stapelberg <stapelberg@debian.org>  Mon, 18 Sep 2017 16:10:53 +0200
+
+mdocml (1.14.3-2) unstable; urgency=medium
+
+  * Drop autotools-dev build-dependency and argument
+
+ -- Michael Stapelberg <stapelberg@debian.org>  Sat, 05 Aug 2017 19:50:23 +0200
+
+mdocml (1.14.3-1) unstable; urgency=medium
+
+  * debian/watch: update tarball name
+  * New upstream version 1.14.3
+
+ -- Michael Stapelberg <stapelberg@debian.org>  Sat, 05 Aug 2017 17:47:46 +0200
+
+mdocml (1.14.2-1) unstable; urgency=medium
+
+  * New upstream version 1.14.2
+  * Drop relative-links.patch (applied upstream)
+  * bump Standards-Version (no changes necessary)
+  * experimental to unstable as the freeze is over
+
+ -- Michael Stapelberg <stapelberg@debian.org>  Fri, 28 Jul 2017 22:57:04 +0200
+
+mdocml (1.14.1-3) experimental; urgency=medium
+
+  * sync debian/patches/relative-links.patch with upstream
+
+ -- Michael Stapelberg <stapelberg@debian.org>  Thu, 23 Mar 2017 10:28:08 +0100
+
+mdocml (1.14.1-2) experimental; urgency=medium
+
+  * add debian/patches/relative-links.patch
+
+ -- Michael Stapelberg <stapelberg@debian.org>  Mon, 27 Feb 2017 19:39:57 +0100
+
+mdocml (1.14.1-1) experimental; urgency=medium
+
+  * New upstream version 1.14.1
+  * enable tests
+  * enable all hardening
+  * bump debhelper compat level to 10
+  * add new zlib1g-dev build dependency
+  * drop debian/patches/hurd-path-max.patch (applied upstream)
+  * configure.local: build catman, rename new binaries
+  * make install_mandoc concurrency-safe (compat 10 enables --parallel)
+  * Use secure Vcs-* URLs
+  * add myself to uploaders
+  * debian/watch: remove boilerplate from header
+  * synchronize debian/copyright with LICENSE
+  * install NEWS as upstream changelog
+  * Use symbolic links instead of hard links
+
+ -- Michael Stapelberg <stapelberg@debian.org>  Tue, 21 Feb 2017 22:06:11 +0100
+
+mdocml (1.13.3-2) unstable; urgency=medium
+
+  * define PATH_MAX if not present, so hurd-i386 works, closes: #829624
+
+ -- Bdale Garbee <bdale@gag.com>  Wed, 06 Jul 2016 20:50:01 +0200
+
+mdocml (1.13.3-1) unstable; urgency=medium
+
+  * Initial release (Closes: #829018)
+
+ -- Bdale Garbee <bdale@gag.com>  Sat, 02 Jul 2016 21:09:13 +0200
