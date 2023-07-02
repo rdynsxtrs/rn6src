@@ -1,0 +1,7 @@
+Tests: build python
+Depends:
+ build-essential,
+ libxml2-dev,
+ pkg-config,
+ python-libxml2,
+ python3-libxml2,
