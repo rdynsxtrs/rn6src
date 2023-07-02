@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/default.mk
+
+export DPKG_GENSYMBOLS_CHECK_LEVEL := 4
+
+%:
+	dh $@ --with autoreconf --with autotools_dev -Bbuild --parallel -O--dbgsym-migration='libsodium-dbg (<< 1.0.13-1.1~)'
