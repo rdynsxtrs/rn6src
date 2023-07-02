@@ -1,0 +1,31 @@
+Source: php-smbclient
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               libsmbclient-dev,
+               php-all-dev (>= 17~)
+Standards-Version: 3.9.8
+Homepage: http://pecl.php.net/smbclient
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-smbclient.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-smbclient
+
+Package: php-smbclient
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ucf,
+         ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: php-libsmbclient,
+          ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: PHP wrapper for libsmbclient
+ smbclient is a PHP extension that uses Samba's libsmbclient library
+ to provide Samba related functions and 'smb' streams to PHP programs.

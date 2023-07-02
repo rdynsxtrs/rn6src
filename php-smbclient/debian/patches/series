@@ -1,0 +1,4 @@
+0001-fix-string-free.patch
+0002-add-a-test-for-smbclient_read.patch
+0003-fix-for-changes-in-stream-in-7.4.patch
+0004-fix-for-upcoming-PHP-8.patch

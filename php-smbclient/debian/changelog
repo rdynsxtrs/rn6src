@@ -1,0 +1,101 @@
+php-smbclient (1.0.0-3+0~20201204.10+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 07 Dec 2020 00:46:02 +0100
+
+php-smbclient (1.0.0-3+0~20201204.10+debian9~1.gbp4e5196) unstable; urgency=medium
+
+  ** SNAPSHOT build @4e51962819df004a9e824c6a71868baedc4ee4f6 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 04 Dec 2020 14:40:04 +0100
+
+php-smbclient (1.0.0-3) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 12 Oct 2020 12:17:49 +0200
+
+php-smbclient (1.0.0-2) unstable; urgency=medium
+
+  * Add patches to fix PHP 7.4 and PHP 8.0 builds
+    (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 12 Oct 2020 12:12:01 +0200
+
+php-smbclient (1.0.0-1) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+  * New upstream version 1.0.0
+  * Remove PHP 7.3 compatibility patches
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 08 Aug 2019 08:59:24 +0200
+
+php-smbclient (0.9.0-4) unstable; urgency=medium
+
+  * Bump the required dh-php version to >= 0.33~
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 12:05:59 +0000
+
+php-smbclient (0.9.0-3) unstable; urgency=medium
+
+  * Add patch for PHP 7.3 (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 03 Oct 2018 07:49:36 +0000
+
+php-smbclient (0.9.0-2) unstable; urgency=medium
+
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899812)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 13:19:54 +0000
+
+php-smbclient (0.9.0-1) unstable; urgency=medium
+
+  * New upstream version 0.9.0 (Closes: #892925)
+  * Update Vcs-* to samba.d.o.
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 23 Mar 2018 07:55:06 +0000
+
+php-smbclient (0.8.0-3) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:19:58 +0200
+
+php-smbclient (0.8.0-2) unstable; urgency=medium
+
+  * Add Vcs-* links
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 16:31:52 +0200
+
+php-smbclient (0.8.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.8.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 07 Mar 2016 13:05:16 +0100
+
+php-smbclient (0.8.0~rc1-3) unstable; urgency=medium
+
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Feb 2016 22:31:29 +0100
+
+php-smbclient (0.8.0~rc1-2) unstable; urgency=medium
+
+  * Enable smbclient extension by default (Closes: #814383)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 15 Feb 2016 12:22:40 +0100
+
+php-smbclient (0.8.0~rc1-1) unstable; urgency=medium
+
+  * Initial release
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Jan 2016 10:20:12 +0100
