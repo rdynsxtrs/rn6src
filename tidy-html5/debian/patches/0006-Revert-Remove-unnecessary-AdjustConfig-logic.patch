@@ -1,0 +1,55 @@
+From: Dmitry Shachnev <mitya57@debian.org>
+Date: Sat, 27 Oct 2018 18:48:56 +0300
+Subject: Revert "Remove unnecessary AdjustConfig logic."
+
+While this looks like a code cleanup, it causes issues in PHP 7+
+and python-tidylib. This is also reverted upstream in commit
+67eaeb6d18563e223344b00f98d6ad42000d8285.
+
+This reverts commit 86e62dbb709b306ec41dc88fd55decfe6893f262.
+---
+ src/config.c  | 4 ++++
+ src/tidylib.c | 1 -
+ 2 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/config.c b/src/config.c
+index cb53989..e659229 100644
+--- a/src/config.c
++++ b/src/config.c
+@@ -711,6 +711,7 @@ void TY_(TakeConfigSnapshot)( TidyDocImpl* doc )
+     const TidyOptionValue* value = &doc->config.value[ 0 ];
+     TidyOptionValue* snap  = &doc->config.snapshot[ 0 ];
+ 
++    TY_(AdjustConfig)( doc );  /* Make sure it's consistent */
+     for ( ixVal=0; ixVal < N_TIDY_OPTIONS; ++option, ++ixVal )
+     {
+         assert( ixVal == (uint) option->id );
+@@ -759,6 +760,7 @@ void TY_(CopyConfig)( TidyDocImpl* docTo, TidyDocImpl* docFrom )
+         }
+         if ( needReparseTagsDecls )
+             ReparseTagDecls( docTo, changedUserTags  );
++        TY_(AdjustConfig)( docTo );  /* Make sure it's consistent */
+     }
+ }
+ 
+@@ -1052,6 +1054,8 @@ int TY_(ParseConfigFileEnc)( TidyDocImpl* doc, ctmbstr file, ctmbstr charenc )
+     if ( fname != (tmbstr) file )
+         TidyDocFree( doc, fname );
+ 
++    TY_(AdjustConfig)( doc );
++
+     /* any new config errors? If so, return warning status. */
+     return (doc->optionErrors > opterrs ? 1 : 0); 
+ }
+diff --git a/src/tidylib.c b/src/tidylib.c
+index 85d59e2..e6c75a9 100644
+--- a/src/tidylib.c
++++ b/src/tidylib.c
+@@ -1445,7 +1445,6 @@ int         TY_(DocParseStream)( TidyDocImpl* doc, StreamIn* in )
+ 
+     TY_(ResetTags)(doc);    /* reset table to html5 mode */
+     TY_(TakeConfigSnapshot)( doc );    /* Save config state */
+-    TY_(AdjustConfig)( doc ); /* ensure config consistency */
+     TY_(FreeAnchors)( doc );
+ 
+     TY_(FreeNode)(doc, &doc->root);

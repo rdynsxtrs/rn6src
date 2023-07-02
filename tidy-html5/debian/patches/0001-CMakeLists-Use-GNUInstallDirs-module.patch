@@ -1,0 +1,48 @@
+From: Boyuan Yang <byang@debian.org>
+Date: Fri, 21 Sep 2018 11:21:35 -0400
+Subject: CMakeLists: Use GNUInstallDirs module
+
+---
+ CMakeLists.txt | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 631f0fd..8247ff3 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -17,7 +17,7 @@
+ # @date    Consult git log.
+ ##############################################################################
+ 
+-cmake_minimum_required (VERSION 2.8.12)
++cmake_minimum_required (VERSION 3.0.2)
+ 
+ set(LIB_NAME tidy)
+ set(LIBTIDY_DESCRIPTION "${LIB_NAME} - HTML syntax checker")
+@@ -25,6 +25,7 @@ set(LIBTIDY_URL "http://www.html-tidy.org")
+ 
+ project (${LIB_NAME})
+ 
++include(GNUInstallDirs)
+ 
+ #################################################
+ # Setup
+@@ -365,15 +366,15 @@ set ( LIBHFILES
+ # Target Locations
+ #------------------------------------------------------------------------
+ if (NOT LIB_INSTALL_DIR)
+-    set(LIB_INSTALL_DIR lib${LIB_SUFFIX})
++    set(LIB_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR})
+ endif ()
+ 
+ if (NOT BIN_INSTALL_DIR)
+-    set(BIN_INSTALL_DIR bin)
++    set(BIN_INSTALL_DIR ${CMAKE_INSTALL_BINDIR})
+ endif ()
+ 
+ if (NOT INCLUDE_INSTALL_DIR)
+-    set(INCLUDE_INSTALL_DIR include)
++    set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR})
+ endif ()
+ 
+ 

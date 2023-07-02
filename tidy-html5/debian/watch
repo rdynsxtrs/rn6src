@@ -1,0 +1,2 @@
+version=3
+https://github.com/htacg/tidy-html5/tags /htacg/tidy-html5/archive/(.+)\.(?:zip|tgz|tbz|txz|(?:tar\.(?:gz|bz2|xz)))

@@ -1,0 +1,24 @@
+From: =?utf-8?b?56mN5Li55bC8IERhbiBKYWNvYnNvbg==?= <jidanni@jidanni.org>
+Date: Sat, 3 Mar 2018 14:49:03 +0800
+Subject: Issue #684 - Update language_en.h
+
+Default: no means YES DO print out comments.
+If set to YES, then DON'T print out comments.
+(cherry picked from commit 95af5ad39aea84518e8231f9b5dae59131939dff)
+---
+ src/language_en.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/language_en.h b/src/language_en.h
+index c84a7d8..7ec8964 100644
+--- a/src/language_en.h
++++ b/src/language_en.h
+@@ -533,7 +533,7 @@ static languageDefinition language_en = { whichPluralForm_en, {
+       - The strings "Tidy" and "HTML Tidy" are the program name and must not
+       be translated. */
+         TidyHideComments,             0,
+-        "This option specifies if Tidy should print out comments. "
++        "This option specifies if Tidy should not print out comments. "
+     },
+     {/* Important notes for translators:
+       - Use only <code></code>, <var></var>, <em></em>, <strong></strong>, and

@@ -1,0 +1,4 @@
+usr/include/* /usr/include/tidy/
+usr/lib/*/libtidy.so
+usr/lib/*/libtidys.a
+usr/lib/*/pkgconfig/*.pc

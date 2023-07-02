@@ -1,0 +1,2 @@
+debian/tidy.conf /etc/
+usr/bin/tidy

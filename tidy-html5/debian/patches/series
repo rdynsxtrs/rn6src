@@ -1,0 +1,6 @@
+0001-CMakeLists-Use-GNUInstallDirs-module.patch
+0002-Separate-source-and-shared-library-version.patch
+0003-Issue-656-protect-against-NULL-node-set-in-loop.patch
+0004-Issue-655-Fix-unsafe-use-of-output-buffer-as-input-p.patch
+0005-Issue-684-Update-language_en.h.patch
+0006-Revert-Remove-unnecessary-AdjustConfig-logic.patch

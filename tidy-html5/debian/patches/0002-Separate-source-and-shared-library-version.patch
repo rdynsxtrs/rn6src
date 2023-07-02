@@ -1,0 +1,44 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@debian.org>
+Date: Tue, 16 Oct 2018 05:46:44 +0000
+Subject: Separate source and shared library version
+
+---
+ CMakeLists.txt | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 8247ff3..65f9297 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -58,7 +58,7 @@ if (LIBTIDY_VERSION)
+ else ()
+     message(FATAL_ERROR "*** FAILED to get a VERSION from version.txt!")
+ endif ()   
+- 
++
+ # Establish version date
+ if (LIBTIDY_DATE)
+     string(REPLACE "." ";" DATE_LIST ${LIBTIDY_DATE})
+@@ -69,6 +69,11 @@ else ()
+     message(FATAL_ERROR "*** FAILED to get a DATE from version.txt!")
+ endif ()
+ 
++# Establish library version
++set(shared_LIBTIDY_VERSION_MAJOR ${TIDY_MAJOR_VERSION}deb1)
++set(shared_LIBTIDY_VERSION_MINOR ${TIDY_MINOR_VERSION})
++set(shared_LIBTIDY_VERSION_POINT ${TIDY_POINT_VERSION})
++set(shared_LIBTIDY_VERSION ${shared_LIBTIDY_VERSION_MAJOR}.${shared_LIBTIDY_VERSION_MINOR}.${shared_LIBTIDY_VERSION_POINT})
+ 
+ #------------------------------------------------------------------------
+ # Library Types and Linking
+@@ -410,8 +415,8 @@ if (BUILD_SHARED_LIB)
+     set_target_properties( ${name} PROPERTIES 
+                                    OUTPUT_NAME ${LIB_NAME} )
+     set_target_properties( ${name} PROPERTIES
+-                                   VERSION   ${LIBTIDY_VERSION}
+-                                   SOVERSION ${TIDY_MAJOR_VERSION} )
++                                   VERSION   ${shared_LIBTIDY_VERSION}
++                                   SOVERSION ${shared_LIBTIDY_VERSION_MAJOR} )
+     set_target_properties( ${name} PROPERTIES 
+                                    COMPILE_FLAGS "-DBUILD_SHARED_LIB" )
+     set_target_properties( ${name} PROPERTIES 

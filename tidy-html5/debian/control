@@ -1,0 +1,50 @@
+Source: tidy-html5
+Section: web
+Priority: optional
+Maintainer: Tidy HTML5 <tidy-html5@packages.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>,
+	   Boyuan Yang <byang@debian.org>
+Build-Depends: cmake,
+               debhelper (>= 9),
+               xsltproc
+Standards-Version: 4.2.1
+Homepage: http://www.html-tidy.org/
+Vcs-Git: https://salsa.debian.org/debian/tidy-html5.git
+Vcs-Browser: https://salsa.debian.org/debian/tidy-html5
+
+Package: libtidy-dev
+Section: libdevel
+Architecture: any
+Depends: libtidy5deb1 (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Suggests: libdmalloc-dev
+Breaks: libtidy-0.99-0
+Replaces: libtidy-0.99-0
+Description: HTML/XML syntax checker and reformatter - development
+ Tidy is corrects and cleans up HTML and XML documents by fixing
+ markup errors and upgrading legacy code to modern standards.
+ .
+ This package contains the libtidy static library, and the headers.
+
+Package: libtidy5deb1
+Section: libs
+Architecture: any
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Description: HTML/XML syntax checker and reformatter - shared library
+ Tidy is corrects and cleans up HTML and XML documents by fixing
+ markup errors and upgrading legacy code to modern standards.
+ .
+ This package contains the libtidy shared library.
+
+Package: tidy
+Architecture: any
+Depends: libtidy5deb1 (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: HTML/XML syntax checker and reformatter
+ Tidy is corrects and cleans up HTML and XML documents by fixing
+ markup errors and upgrading legacy code to modern standards.
+ .
+ This package contains a command line tool 'tidy'.

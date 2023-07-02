@@ -1,0 +1,32 @@
+From: Geoff McLane <ubuntu@geoffair.info>
+Date: Sat, 16 Dec 2017 21:10:04 +0100
+Subject: Issue #655 - Fix unsafe use of output buffer as input param
+
+---
+ src/messageobj.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/src/messageobj.c b/src/messageobj.c
+index 6f76152..9d9cee2 100644
+--- a/src/messageobj.c
++++ b/src/messageobj.c
+@@ -158,8 +158,17 @@ static TidyMessageImpl *tidyMessageCreateInitV( TidyDocImpl *doc,
+ 
+     if ( ( cfgBool(doc, TidyMuteShow) == yes ) && level <= TidyFatal )
+     {
+-        TY_(tmbsnprintf)(result->messageOutputDefault, sizeMessageBuf, "%s (%s)", result->messageOutputDefault, TY_(tidyErrorCodeAsKey)(code) );
+-        TY_(tmbsnprintf)(result->messageOutput, sizeMessageBuf, "%s (%s)", result->messageOutput, TY_(tidyErrorCodeAsKey)(code) );
++        /*\ Issue #655 - Unsafe to use output buffer as one of the va_list
++         *  input parameters in some snprintf implmentations.
++        \*/
++        ctmbstr pc = TY_(tidyErrorCodeAsKey)(code);
++        i = TY_(tmbstrlen)(result->messageOutputDefault);
++        if (i < sizeMessageBuf)
++            TY_(tmbsnprintf)(result->messageOutputDefault + i, sizeMessageBuf - i, " (%s)", pc );
++        i = TY_(tmbstrlen)(result->messageOutput);
++        if (i < sizeMessageBuf)
++            TY_(tmbsnprintf)(result->messageOutput + i, sizeMessageBuf - i, " (%s)", pc );
++        i = 0;
+     }
+ 
+     result->allowMessage = yes;
