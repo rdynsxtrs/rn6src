@@ -1,0 +1,111 @@
+php-apcu-bc (1.0.5-4+0~20201210.12+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 18:56:27 +0100
+
+php-apcu-bc (1.0.5-4+0~20201210.12+debian9~1.gbp9ea365) unstable; urgency=medium
+
+  ** SNAPSHOT build @9ea3657d4f20ef56f97226aa8599357c6c581f9d **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 10 Dec 2020 22:18:05 +0100
+
+php-apcu-bc (1.0.5-4) unstable; urgency=medium
+
+  * Only build for PHP 7.*
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 14 Oct 2020 15:58:39 +0200
+
+php-apcu-bc (1.0.5-3) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 14 Oct 2020 14:47:52 +0200
+
+php-apcu-bc (1.0.5-2) unstable; urgency=medium
+
+  * PHP 7.3 Rebuild
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 23 Feb 2020 16:22:38 +0100
+
+php-apcu-bc (1.0.5-1) unstable; urgency=medium
+
+  * New upstream version 1.0.5
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 08 Aug 2019 08:20:47 +0200
+
+php-apcu-bc (1.0.4-4) unstable; urgency=medium
+
+  * Depend on dh-php >= 0.34~ to disable and re-enable the module on
+    upgrades to deal with priority changes
+  * Bump the module priority to 25 (Closes: #909752)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 04 Nov 2018 04:16:28 +0000
+
+php-apcu-bc (1.0.4-3) unstable; urgency=medium
+
+  * Manual rebuild for PHP 7.3.0~rc2
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 09 Oct 2018 13:24:21 +0000
+
+php-apcu-bc (1.0.4-2) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899946)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 09 Oct 2018 13:23:14 +0000
+
+php-apcu-bc (1.0.4-1) unstable; urgency=medium
+
+  * New upstream version 1.0.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 08 Apr 2018 06:02:26 +0000
+
+php-apcu-bc (1.0.3-5) unstable; urgency=medium
+
+  * Use plain package.xml and dh_php >= 0.22~
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Dec 2016 13:08:34 +0100
+
+php-apcu-bc (1.0.3-4) unstable; urgency=medium
+
+  * Require dh_php >= 0.18~ for DH_PHP_VERSIONS environment variable
+    support
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 May 2016 10:23:22 +0200
+
+php-apcu-bc (1.0.3-3) unstable; urgency=medium
+
+  * Use a simple d/rules with dh-php >= 0.15~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 15:30:04 +0200
+
+php-apcu-bc (1.0.3-2) unstable; urgency=medium
+
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Feb 2016 16:48:13 +0100
+
+php-apcu-bc (1.0.3-1) unstable; urgency=medium
+
+  * Imported Upstream version 1.0.3
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Feb 2016 11:52:21 +0100
+
+php-apcu-bc (1.0.1-1) unstable; urgency=medium
+
+  * Override wrong license-problem-php-license lintian check for packages from PECL
+  * Imported Upstream version 1.0.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Jan 2016 09:51:52 +0100
+
+php-apcu-bc (1.0.0-1) unstable; urgency=low
+
+  * Initial Release (Closes: XXXXX).
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 10 Dec 2015 08:16:50 +0100

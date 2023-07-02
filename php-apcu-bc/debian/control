@@ -1,0 +1,30 @@
+Source: php-apcu-bc
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Lior Kaplan <kaplan@debian.org>,
+           Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev,
+               php-apcu
+Standards-Version: 3.9.8
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-apcu-bc.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-apcu-bc
+Homepage: http://pecl.php.net/package/apcu_bc
+
+Package: php-apcu-bc
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: php-apcu,
+         ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: APCu Backwards Compatibility Module
+ This module provides a backwards APC compatible API using APCu.
