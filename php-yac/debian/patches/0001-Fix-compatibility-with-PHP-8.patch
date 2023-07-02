@@ -1,0 +1,106 @@
+From: Remi Collet <remi@remirepo.net>
+Date: Wed, 23 Sep 2020 14:26:16 +0200
+Subject: Fix compatibility with PHP 8
+
+---
+ yac-2.2.1/tests/021.phpt |  8 ++++++--
+ yac-2.2.1/tests/022.phpt |  2 +-
+ yac-2.2.1/yac.c          | 34 +++++++++++++++++++++++++++-------
+ 3 files changed, 34 insertions(+), 10 deletions(-)
+
+diff --git a/yac-2.2.1/tests/021.phpt b/yac-2.2.1/tests/021.phpt
+index f2f98cf..0f68258 100644
+--- a/yac-2.2.1/tests/021.phpt
++++ b/yac-2.2.1/tests/021.phpt
+@@ -13,8 +13,12 @@ $yac = new Yac("prefix");
+ 
+ $yac->value = "value";
+ 
+-/* can not used in writen context */
+-$yac->foo->bar = "bar";
++try {
++	/* can not used in writen context */
++	$yac->foo->bar = "bar";
++} catch (Error $e) {
++	/* expected exception on PHP 8 */
++}
+ 
+ var_dump($yac->get("value"));
+ var_dump($yac->value);
+diff --git a/yac-2.2.1/tests/022.phpt b/yac-2.2.1/tests/022.phpt
+index a34a4d2..487de28 100644
+--- a/yac-2.2.1/tests/022.phpt
++++ b/yac-2.2.1/tests/022.phpt
+@@ -17,5 +17,5 @@ var_dump($yac);
+ --EXPECTF--
+ string(18) "Yac is not enabled"
+ 
+-Notice: Undefined variable: yac in %s022.php on line %d
++%s: Undefined variable%syac in %s022.php on line %d
+ NULL
+diff --git a/yac-2.2.1/yac.c b/yac-2.2.1/yac.c
+index 2e961f7..408e694 100644
+--- a/yac-2.2.1/yac.c
++++ b/yac-2.2.1/yac.c
+@@ -504,17 +504,27 @@ static void yac_object_free(zend_object *object) /* {{{ */ {
+ }
+ /* }}} */
+ 
+-static zval* yac_read_property_ptr(zval *zobj, zval *name, int type, void **cache_slot) /* {{{ */ {
++#if PHP_VERSION_ID < 80000
++static zval* yac_read_property_ptr(zval *zobj, zval *zname, int type, void **cache_slot) /* {{{ */ {
++#else
++static zval* yac_read_property_ptr(zend_object *obj, zend_string *name, int type, void **cache_slot) /* {{{ */ {
++#endif
+ 	return &EG(error_zval);
+ }
+ /* }}} */
+ 
+-static zval* yac_read_property(zval *zobj, zval *name, int type, void **cache_slot, zval *rv) /* {{{ */ {
++#if PHP_VERSION_ID < 80000
++static zval* yac_read_property(zval *zobj, zval *zname, int type, void **cache_slot, zval *rv) /* {{{ */ {
++	zend_object *obj = Z_OBJ_P(zobj);
++	zend_string *name = Z_STR_P(zname);
++#else
++static zval* yac_read_property(zend_object *obj, zend_string *name, int type, void **cache_slot, zval *rv) /* {{{ */ {
++#endif
+ 	if (UNEXPECTED(type == BP_VAR_RW||type == BP_VAR_W)) {
+ 		return &EG(error_zval);
+ 	}
+ 
+-	if (yac_get_impl(Z_YACOBJ_P(zobj), Z_STR_P(name), NULL, rv)) {
++	if (yac_get_impl(php_yac_fetch_object(obj), name, NULL, rv)) {
+ 		return rv;
+ 	}
+ 
+@@ -522,16 +532,26 @@ static zval* yac_read_property(zval *zobj, zval *name, int type, void **cache_sl
+ }
+ /* }}} */
+ 
+-static YAC_WHANDLER yac_write_property(zval *zobj, zval *name, zval *value, void **cache_slot) /* {{{ */ {
+-	yac_add_impl(Z_YACOBJ_P(zobj), Z_STR_P(name), value, 0, 0);
++#if PHP_VERSION_ID < 80000
++static YAC_WHANDLER yac_write_property(zval *zobj, zval *zname, zval *value, void **cache_slot) /* {{{ */ {
++	yac_add_impl(Z_YACOBJ_P(zobj), Z_STR_P(zname), value, 0, 0);
++#else
++static YAC_WHANDLER yac_write_property(zend_object *obj, zend_string *name, zval *value, void **cache_slot) /* {{{ */ {
++	yac_add_impl(php_yac_fetch_object(obj), name, value, 0, 0);
++#endif
+     Z_TRY_ADDREF_P(value);
+ 
+ 	YAC_WHANDLER_RET(value);
+ }
+ /* }}} */
+ 
+-static void yac_unset_property(zval *zobj, zval *name, void **cache_slot) /* {{{ */ {
+-	yac_delete_impl(Z_YACOBJ_P(zobj), Z_STR_P(name), 0);
++#if PHP_VERSION_ID < 80000
++static void yac_unset_property(zval *zobj, zval *zname, void **cache_slot) /* {{{ */ {
++	yac_delete_impl(Z_YACOBJ_P(zobj), Z_STR_P(zname), 0);
++#else
++static void yac_unset_property(zend_object *obj, zend_string *name, void **cache_slot) /* {{{ */ {
++	yac_delete_impl(php_yac_fetch_object(obj), name, 0);
++#endif
+ }
+ /* }}} */
+ 

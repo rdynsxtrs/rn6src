@@ -1,0 +1,32 @@
+Source: php-yac
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               libpcre3-dev,
+               php-all-dev
+Standards-Version: 3.9.8
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-yac.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-yac
+Homepage: http://pecl.php.net/package/yac
+
+Package: php-yac
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Conflicts: php-apcu,
+           php-xcache
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Replaces: ${pecl:Replaces}
+Breaks: ${pecl:Breaks}
+Suggests: ${pecl:Suggests}
+Description: YAC (Yet Another Cache) for PHP
+ The Yet Another Cache (YAC) is a shared memory user data cache for
+ PHP, which provides framework for caching user variables locally.
+ This framework completes the missing parts of the Zend OpCache.
