@@ -1,0 +1,110 @@
+
+Package: gcc-multilib-CROSS_GNU_TYPE
+Priority: optional
+Architecture: @host_archs@
+Depends: cpp-CROSS_GNU_TYPE (>= ${version:cpp}),
+  gcc-CROSS_GNU_TYPE (>= ${version:gcc}),
+  gcc-${pv:gcc}-multilib-CROSS_GNU_TYPE ${reqv:gcc},
+  ${misc:Depends}
+Recommends: libc6-dev-CROSS_ARCH-cross | libc-dev-CROSS_ARCH-cross
+Suggests: make, manpages-dev, autoconf, automake, libtool, flex, bison, gdb-CROSS_GNU_TYPE, gcc-doc
+Description: GNU C compiler for the CROSS_ARCH architecture
+ This is the GNU C compiler, a fairly portable optimizing compiler for C.
+ .
+ This is a dependency package providing the default GNU C cross-compiler
+ for the CROSS_ARCH architecture.
+
+Package: g++-multilib-CROSS_GNU_TYPE
+Priority: optional
+Architecture: @host_archs@
+Depends: cpp-CROSS_GNU_TYPE (>= ${version:cpp}),
+  g++-CROSS_GNU_TYPE (>= ${version:gpp}),
+  gcc-multilib-CROSS_GNU_TYPE (>= ${version:gcc}),
+  g++-${pv:gpp}-multilib-CROSS_GNU_TYPE ${reqv:gpp},
+  ${misc:Depends}
+Description: GNU C++ compiler for the CROSS_ARCH architecture
+ This is the GNU C++ compiler, a fairly portable optimizing compiler for C++.
+ .
+ This is a dependency package providing the default GNU C++
+ cross-compiler for the CROSS_ARCH architecture.
+
+Package: gobjc-multilib-CROSS_GNU_TYPE
+Priority: optional
+Architecture: @host_archs@
+Depends: cpp-CROSS_GNU_TYPE (>= ${version:cpp}),
+  gobjc-CROSS_GNU_TYPE (>= ${version:gobjc}),
+  gcc-multilib-CROSS_GNU_TYPE (>= ${version:cpp}),
+  gobjc-${pv:gobjc}-multilib-CROSS_GNU_TYPE ${reqv:gobjc},
+  ${misc:Depends}
+Description: GNU Objective-C compiler for the CROSS_ARCH architecture
+ This is the GNU Objective-C compiler, which compiles Objective-C on platforms
+ supported by the gcc compiler. It uses the gcc backend to generate optimized
+ code.
+ .
+ This is a dependency package providing the default GNU Objective-C
+ cross-compiler for the CROSS_ARCH architecture.
+
+Package: gobjc++-multilib-CROSS_GNU_TYPE
+Priority: optional
+Architecture: @host_archs@
+Depends: cpp-CROSS_GNU_TYPE (>= ${version:cpp}),
+  gcc-multilib-CROSS_GNU_TYPE (>= ${version:cpp}),
+  gobjc++-CROSS_GNU_TYPE (>= ${version:gobjcxx}),
+  gobjc++-${pv:gobjcxx}-multilib-CROSS_GNU_TYPE ${reqv:gobjcxx},
+  ${misc:Depends}
+Recommends: g++-CROSS_GNU_TYPE (>= ${version:cpp}),
+  gobjc-CROSS_GNU_TYPE (>= ${version:cpp})
+Description: GNU Objective-C++ compiler for the CROSS_ARCH architecture
+ This is the GNU Objective-C++ compiler, which compiles
+ Objective-C++ on platforms supported by the gcc compiler. It uses the
+ gcc backend to generate optimized code.
+ .
+ This is a dependency package providing the default GNU Objective-C++
+ cross-compiler for the CROSS_ARCH architecture.
+
+Package: gfortran-multilib-CROSS_GNU_TYPE
+Priority: optional
+Architecture: @host_archs@
+Depends: cpp-CROSS_GNU_TYPE (>= ${version:cpp}),
+  gcc-multilib-CROSS_GNU_TYPE (>= ${version:gcc}),
+  gfortran-CROSS_GNU_TYPE (>= ${version:gfort}),
+  gfortran-${pv:gfort}-multilib-CROSS_GNU_TYPE ${reqv:gfort},
+  ${misc:Depends}
+Suggests: gfortran-doc
+Description: GNU Fortran 95 compiler for the CROSS_ARCH architecture
+ This is the GNU Fortran 95 compiler, which compiles Fortran 95 on platforms
+ supported by the gcc compiler. It uses the gcc backend to generate optimized
+ code.
+ .
+ This is a dependency package providing the default GNU Fortran 95
+ cross-compiler for the CROSS_ARCH architecture.
+
+Package: gccgo-multilib-CROSS_GNU_TYPE
+Priority: optional
+Architecture: @host_archs@
+Depends: cpp-CROSS_GNU_TYPE (>= ${version:cpp}),
+  g++-multilib-CROSS_GNU_TYPE (>= ${version:gcc}),
+  gccgo-CROSS_GNU_TYPE (>= ${version:ggo}),
+  gccgo-${pv:ggo}-multilib-CROSS_GNU_TYPE ${reqv:ggo},
+  ${misc:Depends}
+Suggests: gccgo-doc
+Description: Go compiler (based on GCC) for the CROSS_ARCH architecture
+ This is the GNU Go compiler, which compiles Go on platforms supported by
+ the gcc compiler. It uses the gcc backend to generate optimized code.
+ .
+ This is a dependency package providing the default GNU Go cross-compiler
+ cross-compiler for the CROSS_ARCH architecture.
+
+Package: gdc-multilib-CROSS_GNU_TYPE
+Priority: optional
+Architecture: @host_archs@
+Depends: cpp-CROSS_GNU_TYPE (>= ${version:cpp}),
+  gdc-${pv:gdc}-multilib-CROSS_GNU_TYPE ${reqv:gdc},
+  gdc-CROSS_GNU_TYPE (>= ${version:gdc}),
+  ${misc:Depends}
+Description: GNU D compiler (based on GCC) for the CROSS_ARCH architecture
+ This is the GNU D compiler, which compiles D on platforms supported by
+ the gcc compiler. It uses the gcc backend to generate optimized code.
+ .
+ This is a dependency package providing the default GNU D cross-compiler
+ cross-compiler for the CROSS_ARCH architecture.

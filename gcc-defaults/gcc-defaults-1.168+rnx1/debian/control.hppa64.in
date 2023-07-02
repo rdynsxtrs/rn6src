@@ -1,0 +1,15 @@
+
+Package: gcc-hppa64-linux-gnu
+Priority: optional
+Architecture: @hppa64_archs@
+Depends: gcc (>= ${version:gcc}), gcc-${pv:gcc}-hppa64-linux-gnu ${reqv:gcc},
+  ${misc:Depends}
+Conflicts: gcc-5-hppa64-linux-gnu (<< 5.2.1-26),
+  gcc-5-hppa64 (<< 5.2.1-26),
+  gcc-4.9-hppa64 (<< 4.9.3-7),
+  gcc-4.8-hppa64 (<< 4.8.5-3)
+Description: GNU C compiler (cross compiler for hppa64-linux-gnu)
+ This is the GNU C compiler, a fairly portable optimizing compiler for C.
+ .
+ This is a dependency package providing the default GNU C cross-compiler
+ for the hppa64 architecture.

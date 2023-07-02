@@ -1,0 +1,8 @@
+#! /bin/sh -e
+
+# this is an empty script needed for the upgrade from earlier
+# versions calling install-info
+
+#DEBHELPER#
+
+exit 0

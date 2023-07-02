@@ -1,0 +1,355 @@
+
+Package: cpp
+Priority: optional
+Architecture: any
+Section: interpreters
+Multi-Arch: allowed
+Depends: cpp-${pv:cpp} ${reqv:cpp}, ${misc:Depends}
+Suggests: cpp-doc
+Conflicts: cpp-doc (<< 1:2.95.3)
+Description: GNU C preprocessor (cpp)
+ The GNU C preprocessor is a macro processor that is used automatically
+ by the GNU C compiler to transform programs before actual compilation.
+ .
+ This package has been separated from gcc for the benefit of those who
+ require the preprocessor but not the compiler.
+ .
+ This is a dependency package providing the default GNU C preprocessor.
+
+Package: gcc
+Priority: optional
+Architecture: any
+Depends: cpp (>= ${version:cpp}), gcc-${pv:gcc} ${reqv:gcc}, ${misc:Depends}
+Recommends: libc6-dev | libc-dev
+Suggests: gcc-multilib, make, manpages-dev, autoconf, automake, libtool, flex, bison, gdb, gcc-doc
+Provides: c-compiler
+Conflicts: gcc-doc (<< 1:2.95.3)
+Description: GNU C compiler
+ This is the GNU C compiler, a fairly portable optimizing compiler for C.
+ .
+ This is a dependency package providing the default GNU C compiler.
+
+Package: gcc-multilib
+Priority: optional
+Architecture: @multilib_archs@
+Depends: cpp (>= ${version:cpp}), gcc (>= ${version:gcc}), gcc-${pv:gcc}-multilib ${reqv:gcc}, ${misc:Depends}, linux-libc-dev (>= 3.0.0-2) [linux-any]
+Conflicts: gcc-4.9-alpha-linux-gnu,
+  gcc-4.9-aarch64-linux-gnu,
+  gcc-4.9-arm-linux-gnueabi,
+  gcc-4.9-arm-linux-gnueabihf,
+  gcc-4.9-hppa-linux-gnu,
+  gcc-4.9-m68k-linux-gnu,
+  gcc-4.9-powerpc-linux-gnu,
+  gcc-4.9-powerpc-linux-gnuspe,
+  gcc-4.9-powerpc64-linux-gnu,
+  gcc-4.9-powerpc64le-linux-gnu,
+  gcc-4.9-mips-linux-gnu,
+  gcc-4.9-mipsel-linux-gnu,
+  gcc-4.9-mips64-linux-gnuabi64,
+  gcc-4.9-mips64el-linux-gnuabi64,
+  gcc-4.9-s390x-linux-gnu,
+  gcc-4.9-sh4-linux-gnu,
+  gcc-4.9-sparc-linux-gnu,
+  gcc-4.9-sparc64-linux-gnu,
+  gcc-5-aarch64-linux-gnu,
+  gcc-5-alpha-linux-gnu,
+  gcc-5-arm-linux-gnueabi,
+  gcc-5-arm-linux-gnueabihf,
+  gcc-5-hppa-linux-gnu,
+  gcc-5-m68k-linux-gnu,
+  gcc-5-powerpc-linux-gnu,
+  gcc-5-powerpc-linux-gnuspe,
+  gcc-5-powerpc64-linux-gnu,
+  gcc-5-powerpc64le-linux-gnu,
+  gcc-5-mips-linux-gnu,
+  gcc-5-mipsel-linux-gnu,
+  gcc-5-mips64-linux-gnuabi64,
+  gcc-5-mips64el-linux-gnuabi64,
+  gcc-5-s390x-linux-gnu,
+  gcc-5-sh4-linux-gnu,
+  gcc-5-sparc-linux-gnu,
+  gcc-5-sparc64-linux-gnu,
+  gcc-6-aarch64-linux-gnu,
+  gcc-6-alpha-linux-gnu,
+  gcc-6-arm-linux-gnueabi,
+  gcc-6-arm-linux-gnueabihf,
+  gcc-6-hppa-linux-gnu,
+  gcc-6-m68k-linux-gnu,
+  gcc-6-powerpc-linux-gnu,
+  gcc-6-powerpc-linux-gnuspe,
+  gcc-6-powerpc64-linux-gnu,
+  gcc-6-powerpc64le-linux-gnu,
+  gcc-6-mips-linux-gnu,
+  gcc-6-mipsel-linux-gnu,
+  gcc-6-mips64-linux-gnuabi64,
+  gcc-6-mips64el-linux-gnuabi64,
+  gcc-6-s390x-linux-gnu,
+  gcc-6-sh4-linux-gnu,
+  gcc-6-sparc-linux-gnu,
+  gcc-6-sparc64-linux-gnu,
+  gcc-7-aarch64-linux-gnu,
+  gcc-7-alpha-linux-gnu,
+  gcc-7-arm-linux-gnueabi,
+  gcc-7-arm-linux-gnueabihf,
+  gcc-7-hppa-linux-gnu,
+  gcc-7-m68k-linux-gnu,
+  gcc-7-powerpc-linux-gnu,
+  gcc-7-powerpc-linux-gnuspe,
+  gcc-7-powerpc64-linux-gnu,
+  gcc-7-powerpc64le-linux-gnu,
+  gcc-7-mips-linux-gnu,
+  gcc-7-mipsel-linux-gnu,
+  gcc-7-mips64-linux-gnuabi64,
+  gcc-7-mips64el-linux-gnuabi64,
+  gcc-7-s390x-linux-gnu,
+  gcc-7-sh4-linux-gnu,
+  gcc-7-sparc-linux-gnu,
+  gcc-7-sparc64-linux-gnu,
+  gcc-8-aarch64-linux-gnu,
+  gcc-8-alpha-linux-gnu,
+  gcc-8-arm-linux-gnueabi,
+  gcc-8-arm-linux-gnueabihf,
+  gcc-8-hppa-linux-gnu,
+  gcc-8-m68k-linux-gnu,
+  gcc-8-powerpc-linux-gnu,
+  gcc-8-powerpc-linux-gnuspe,
+  gcc-8-powerpc64-linux-gnu,
+  gcc-8-powerpc64le-linux-gnu,
+  gcc-8-mips-linux-gnu,
+  gcc-8-mipsel-linux-gnu,
+  gcc-8-mips64-linux-gnuabi64,
+  gcc-8-mips64el-linux-gnuabi64,
+  gcc-8-s390x-linux-gnu,
+  gcc-8-sh4-linux-gnu,
+  gcc-8-sparc-linux-gnu,
+  gcc-8-sparc64-linux-gnu,
+Description: GNU C compiler (multilib files)
+ This is the GNU C compiler, a fairly portable optimizing compiler for C.
+ .
+ A dependency package on architectures with multilib support; the package
+ contains dependencies for the non-default multilib architecture(s).
+
+Package: g++
+Priority: optional
+Architecture: any
+Depends: cpp (>= ${version:cpp}), gcc (>= ${version:cpp}), g++-${pv:gpp} ${reqv:gpp}, gcc-${pv:gpp} ${reqv:gpp}, ${misc:Depends}
+Suggests: ${pkgmulti:gpp}
+Provides: c++-compiler
+Description: GNU C++ compiler
+ This is the GNU C++ compiler, a fairly portable optimizing compiler for C++.
+ .
+ This is a dependency package providing the default GNU C++ compiler.
+
+Package: g++-multilib
+Priority: optional
+Architecture: @multilib_archs@
+Depends: cpp (>= ${version:cpp}), gcc-multilib (>= ${version:cpp}), g++ (>= ${version:cpp}), g++-${pv:gpp}-multilib ${reqv:gpp}, ${misc:Depends}
+Description: GNU C++ compiler (multilib files)
+ This is the GNU C++ compiler, a fairly portable optimizing compiler for C++.
+ .
+ A dependency package on architectures with multilib support; the package
+ contains dependencies for the non-default multilib architecture(s).
+
+Package: gobjc
+Priority: optional
+Architecture: any
+Depends: cpp (>= ${version:cpp}), gcc (>= ${version:cpp}), gobjc-${pv:gobjc} ${reqv:gobjc}, ${misc:Depends}
+Suggests: ${pkgmulti:gobjc}
+Provides: objc-compiler
+Description: GNU Objective-C compiler
+ This is the GNU Objective-C compiler, which compiles Objective-C on platforms
+ supported by the gcc compiler. It uses the gcc backend to generate optimized
+ code.
+ .
+ This is a dependency package providing the default GNU Objective-C compiler.
+
+Package: gobjc-multilib
+Priority: optional
+Architecture: @multilib_archs@
+Depends: cpp (>= ${version:cpp}), gcc-multilib (>= ${version:cpp}), gobjc (>= ${version:gcc}), gobjc-${pv:gobjc}-multilib ${reqv:gobjc}, ${misc:Depends}
+Description: GNU Objective-C compiler (multilib files)
+ This is the GNU Objective-C compiler, which compiles Objective-C on
+ platforms supported by the gcc compiler.
+ .
+ A dependency package on architectures with multilib support; the package
+ contains dependencies for the non-default multilib architecture(s).
+
+Package: gobjc++
+Priority: optional
+Architecture: any
+Depends: cpp (>= ${version:cpp}), gcc (>= ${version:cpp}), gobjc++-${pv:gobjcxx} ${reqv:gobjcxx}, ${misc:Depends}
+Recommends: g++ (>= ${version:cpp}), gobjc (>= ${version:cpp})
+Suggests: ${pkgmulti:gobjcxx}
+Provides: objc++-compiler
+Description: GNU Objective-C++ compiler
+ This is the GNU Objective-C++ compiler, which compiles
+ Objective-C++ on platforms supported by the gcc compiler. It uses the
+ gcc backend to generate optimized code.
+ .
+ This is a dependency package providing the default GNU Objective-C++ compiler.
+
+Package: gobjc++-multilib
+Priority: optional
+Architecture: @multilib_archs@
+Depends: cpp (>= ${version:cpp}), gobjc-multilib (>= ${version:cpp}), gobjc++ (>= ${version:gcc}), gobjc++-${pv:gobjcxx}-multilib ${reqv:gobjcxx}, ${misc:Depends}
+Description: GNU Objective-C++ compiler (multilib files)
+ This is the GNU Objective-C++ compiler, which compiles Objective-C++ on
+ platforms supported by the gcc compiler.
+ .
+ A dependency package on architectures with multilib support; the package
+ contains dependencies for the non-default multilib architecture(s).
+
+Package: gfortran
+Priority: optional
+Architecture: any
+Depends: cpp (>= ${version:cpp}), gcc (>= ${version:gcc}), gfortran-${pv:gfort} ${reqv:gfort}, ${misc:Depends}
+Suggests: ${pkgmulti:gfort}, gfortran-doc
+Provides: fortran-compiler, ${fortran:mod-version}
+Description: GNU Fortran 95 compiler
+ This is the GNU Fortran 95 compiler, which compiles Fortran 95 on platforms
+ supported by the gcc compiler. It uses the gcc backend to generate optimized
+ code.
+ .
+ This is a dependency package providing the default GNU Fortran 95 compiler.
+
+Package: gfortran-multilib
+Priority: optional
+Architecture: @multilib_archs@
+Depends: cpp (>= ${version:cpp}), gcc-multilib (>= ${version:cpp}), gfortran (>= ${version:gcc}), gfortran-${pv:gfort}-multilib ${reqv:gfort}, ${misc:Depends}
+Description: GNU Fortran 95 compiler (multilib files)
+ This is the GNU Fortran compiler, which compiles Fortran 95 on platforms
+ supported by the gcc compiler.
+ .
+ A dependency package on architectures with multilib support; the package
+ contains dependencies for the non-default multilib architecture(s).
+
+Package: gccgo
+Priority: optional
+Architecture: any
+Depends: cpp (>= ${version:cpp}), gcc (>= ${version:gcc}), gccgo-${pv:ggo} ${reqv:ggo}, ${misc:Depends}
+Suggests: ${pkgmulti:ggo}
+Provides: go-compiler
+Description: Go compiler, based on the GCC backend
+ This is the GNU Go compiler, which compiles Go on platforms supported by
+ the gcc compiler. It uses the gcc backend to generate optimized code.
+ .
+ This is a dependency package providing the default GNU Go compiler.
+
+Package: gccgo-multilib
+Priority: optional
+Architecture: @go_multilib_archs@
+Depends: cpp (>= ${version:cpp}), gcc-multilib (>= ${version:cpp}), gccgo (>= ${version:ggo}), gccgo-${pv:ggo}-multilib ${reqv:ggo}, ${misc:Depends}
+Description: Go compiler, based on the GCC backend (multilib files)
+ This is the GNU Go compiler, which compiles Go on platforms supported by
+ the gcc compiler. It uses the gcc backend to generate optimized code.
+ .
+ A dependency package on architectures with multilib support; the package
+ contains dependencies for the non-default multilib architecture(s).
+
+Package: libgcj-common
+Section: java
+Architecture: all
+Multi-Arch: foreign
+Priority: optional
+Depends: ${python:Depends}, ${misc:Depends}
+Conflicts: classpath (<= 0.04-4)
+Replaces: java-gcj-compat (<< 1.0.65-8), java-gcj-compat-dev (<< 1.0.80-2)
+XB-Python-Version: ${python:Versions}
+Description: Java runtime library (common files)
+ This package contains files shared by Classpath and libgcj libraries.
+
+Package: libgcj-bc
+Section: java
+Architecture: any
+Multi-Arch: same
+Priority: optional
+Pre-Depends: ${misc:Pre-Depends}
+Depends: libgcj-common (>= ${version:libgcjcommon}), ${pkg:libgcj} ${reqv:gij}, ${misc:Depends}
+Description: Link time only library for use with gcj
+ A fake library that is used at link time only.  It ensures that
+ binaries built with the BC-ABI link against a constant SONAME.
+ This way, BC-ABI binaries continue to work if the SONAME underlying
+ libgcj.so changes.
+
+Package: gcj-jdk
+Section: java
+Architecture: any
+Priority: optional
+Depends: libgcj-common (>= ${version:libgcjcommon}), gcj-jre (>= ${version:gcj}), ${dep:jdk}, ${pkg:gjdoc}, ${misc:Depends}
+Provides: java-gcj-compat-dev, java-compiler, java-sdk, java2-sdk, java5-sdk, ${pkg:gjdoc}
+Conflicts: gcj (<< ${ver:gcjconflict}), classpath-common (<= 2:0.97.2-1.1), ${pkg:gjdoc}, java-gcj-compat-dev (<< 1.0.80-2)
+Replaces: ${pkg:gjdoc}, java-gcj-compat-dev (<< 1.0.80-2), gcj-jre-headless (<< 4:4.9.0-2)
+Description: gcj and Classpath development tools for Java(TM)
+ GCJ is a front end to the GCC compiler which can natively compile both
+ Java(tm) source and bytecode files. The compiler can also generate class
+ files. Other java development tools from Classpath are included in this
+ package.
+ .
+ The package contains as well a collection of wrapper scripts and symlinks.
+ It is meant to provide a Java-SDK-like interface to the GCJ tool set.
+
+Package: gcj-jre-headless
+Priority: optional
+Section: java
+Architecture: any
+Depends: libgcj-common (>= ${version:libgcjcommon}), ${dep:jrehl}, ${misc:Depends}
+Suggests: gcj-jdk
+Conflicts: gij (<< ${ver:gcjconflict}), java-gcj-compat-headless (<< 1.0.80-6)
+Replaces: java-gcj-compat-headless (<< 1.0.80-6)
+Provides: java-gcj-compat-headless, java-virtual-machine, java5-runtime-headless, java2-runtime-headless, java1-runtime-headless, java-runtime-headless
+Description: Java runtime environment using GIJ/Classpath (headless version)
+ GIJ is a Java bytecode interpreter, not limited to interpreting bytecode.
+ It includes a class loader which can dynamically load shared objects, so
+ it is possible to give it the name of a class which has been compiled and
+ put into a shared library on the class path.
+ .
+ The package contains as well a collection of wrapper scripts and symlinks.
+ It is meant to provide a Java-RTE-like interface to the GIJ/GCJ tool set,
+ limited to the headless tools and libraries.
+
+Package: gcj-jre
+Section: java
+Architecture: any
+Priority: optional
+Depends: libgcj-common (>= ${version:libgcjcommon}), gcj-jre-headless (>= ${version:gcj}), ${dep:jre}, ${misc:Depends}
+Provides: java-gcj-compat, java5-runtime, java2-runtime, java1-runtime, java-runtime
+Description: Java runtime environment using GIJ/Classpath
+ GIJ is a Java bytecode interpreter, not limited to interpreting bytecode.
+ It includes a class loader which can dynamically load shared objects, so
+ it is possible to give it the name of a class which has been compiled and
+ put into a shared library on the class path.
+ .
+ This is currently an empty package.
+ It is meant to provide a Java-RTE-like interface to the GIJ/GCJ tool set.
+
+Package: gdc
+Priority: optional
+Architecture: any
+Depends: gdc-${pv:gdc} ${reqv:gdc}, ${dep:libgphobos}, ${misc:Depends}
+Replaces: gdc-4.1 (<< 0.25-4.1.2-18), gdc-4.2 (<< 0.25-4.2.2-7), gdc-4.3 (<< 1:1.043-4.3.4-1)
+Description: D compiler (language version 2), based on the GCC backend
+ This is a dependency package providing the default D compiler.
+ Per policy, all packages that contain D sources must use this package
+ in their Build-Depends line.
+ .
+ This compiler supports D language version 2.
+
+Package: gdc-multilib
+Priority: optional
+Architecture: @d_multilib_archs@
+Depends: cpp (>= ${version:cpp}), gcc-multilib (>= ${version:cpp}), gdc (>= ${version:gcc}), gdc-${pv:gdc}-multilib ${reqv:gdc}, ${misc:Depends}
+Description: D compiler (language version 2) (multilib files)
+ This compiler supports D language version 2.
+ .
+ A dependency package on architectures with multilib support; the package
+ contains dependencies for the non-default multilib architecture(s).
+
+Package: libgphobos-dev
+Section: libdevel
+Priority: optional
+Architecture: any
+Multi-Arch: same
+Depends: libgphobos-${pv:gdc}-dev ${reqv:gdc}, ${misc:Depends}
+Provides: libphobos-dev
+Description: Phobos D standard library
+ This is a dependency package providing the default D standard library.

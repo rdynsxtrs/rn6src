@@ -1,0 +1,26 @@
+
+Package: gnat-CROSS_GNU_TYPE
+Priority: optional
+Architecture: @host_archs@
+Depends: cpp-CROSS_GNU_TYPE (>= ${version:cpp}),
+  gnat-${pv:gnat}-CROSS_GNU_TYPE ${reqv:gnat},
+  ${misc:Depends}
+Description: GNU Ada compiler (based on GCC) for the CROSS_ARCH architecture
+ This is the GNU Ada compiler, which compiles Ada on platforms supported by
+ the gcc compiler. It uses the gcc backend to generate optimized code.
+ .
+ This is a dependency package providing the default GNU D cross-compiler
+ cross-compiler for the CROSS_ARCH architecture.
+
+Package: gnat-sjlj-CROSS_GNU_TYPE
+Priority: optional
+Architecture: @host_archs@
+Depends: cpp-CROSS_GNU_TYPE (>= ${version:cpp}),
+  gnat-${pv:gnat}-sjlj-CROSS_GNU_TYPE ${reqv:gnat},
+  ${misc:Depends}
+Description: GNU Ada compiler (based on GCC) for the CROSS_ARCH architecture
+ This is the GNU Ada compiler, which compiles Ada on platforms supported by
+ the gcc compiler. It uses the gcc backend to generate optimized code.
+ .
+ This is a dependency package providing the default GNU D cross-compiler
+ cross-compiler for the CROSS_ARCH architecture.

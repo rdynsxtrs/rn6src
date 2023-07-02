@@ -1,0 +1,15 @@
+
+Package: pkg-config-CROSS_GNU_TYPE
+Priority: optional
+Architecture: @host_archs@
+Depends: pkg-config (>= 0.25-1.1ubuntu2), ${misc:Depends}
+Description: manage compile and link flags for libraries for CROSS_ARCH architecture
+ pkg-config is a system for managing library compile and link flags that
+ works with automake and autoconf.
+ .
+ Increasingly libraries ship with ".pc" files that allow querying of the
+ compiler and linker flags needed to use them through the pkg-config(1)
+ program.
+ .
+ This is a dependency package providing cross pkg-config support for the
+ CROSS_ARCH architecture.
