@@ -1,0 +1,21 @@
+From: Steven Robbins <smr@debian.org>
+Date: Tue, 2 Oct 2018 22:34:48 -0500
+Subject: Remove -Werror from cxx_base_flags.
+
+---
+ googletest/cmake/internal_utils.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/googletest/cmake/internal_utils.cmake b/googletest/cmake/internal_utils.cmake
+index 682a564..477a918 100644
+--- a/googletest/cmake/internal_utils.cmake
++++ b/googletest/cmake/internal_utils.cmake
+@@ -104,7 +104,7 @@ macro(config_compiler_and_linker)
+     set(cxx_no_exception_flags "-EHs-c- -D_HAS_EXCEPTIONS=0")
+     set(cxx_no_rtti_flags "-GR-")
+   elseif (CMAKE_COMPILER_IS_GNUCXX)
+-    set(cxx_base_flags "-Wall -Wshadow -Werror")
++    set(cxx_base_flags "-Wall -Wshadow")
+     if(NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0.0)
+       set(cxx_base_flags "${cxx_base_flags} -Wno-error=dangling-else")
+     endif()
