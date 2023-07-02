@@ -1,0 +1,17 @@
+---
+ config |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- a/config
++++ b/config
+@@ -170,8 +170,8 @@ case "${SYSTEM}:${RELEASE}:${VERSION}:${
+ 	echo "${MACHINE}-whatever-linux1"; exit 0
+ 	;;
+ 
+-    GNU*)
+-	echo "hurd-x86"; exit 0;
++    GNU:*|GNU/*:*)
++	echo "${MACHINE}-gnuish"; exit 0;
+ 	;;
+ 
+     LynxOS:*)

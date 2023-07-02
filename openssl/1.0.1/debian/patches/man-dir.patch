@@ -1,0 +1,15 @@
+---
+ Makefile.org |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/Makefile.org
++++ b/Makefile.org
+@@ -157,7 +157,7 @@ TESTS = alltests
+ 
+ MAKEFILE= Makefile
+ 
+-MANDIR=$(OPENSSLDIR)/man
++MANDIR=/usr/share/man
+ MAN1=1
+ MAN3=3
+ MANSUFFIX=

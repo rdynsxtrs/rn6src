@@ -1,0 +1,40 @@
+From b583c1bd069f6928c3973dc6d6864930f6c4bb3e Mon Sep 17 00:00:00 2001
+From: "Dr. Stephen Henson" <steve@openssl.org>
+Date: Wed, 4 May 2016 16:09:06 +0100
+Subject: [PATCH] Fix name length limit check.
+
+The name length limit check in x509_name_ex_d2i() includes
+the containing structure as well as the actual X509_NAME. This will
+cause large CRLs to be rejected.
+
+Fix by limiting the length passed to ASN1_item_ex_d2i() which will
+then return an error if the passed X509_NAME exceeds the length.
+
+RT#4531
+
+Reviewed-by: Rich Salz <rsalz@openssl.org>
+(cherry picked from commit 4e0d184ac1dde845ba9574872e2ae5c903c81dff)
+---
+ crypto/asn1/x_name.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/crypto/asn1/x_name.c b/crypto/asn1/x_name.c
+index a858c29..26378fd 100644
+--- a/crypto/asn1/x_name.c
++++ b/crypto/asn1/x_name.c
+@@ -199,10 +199,8 @@ static int x509_name_ex_d2i(ASN1_VALUE **val,
+     int i, j, ret;
+     STACK_OF(X509_NAME_ENTRY) *entries;
+     X509_NAME_ENTRY *entry;
+-    if (len > X509_NAME_MAX) {
+-        ASN1err(ASN1_F_X509_NAME_EX_D2I, ASN1_R_TOO_LONG);
+-        return 0;
+-    }
++    if (len > X509_NAME_MAX)
++        len = X509_NAME_MAX;
+     q = p;
+ 
+     /* Get internal representation of Name */
+-- 
+2.8.1
+

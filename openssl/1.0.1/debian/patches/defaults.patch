@@ -1,0 +1,79 @@
+From: Kurt Roeckx <kurt@roeckx.be>
+Subject: Change default bit size and digest
+Date: Fri, 01 Nov 2013 20:47:14 +0100
+
+---
+ apps/genrsa.c          |    2 +-
+ apps/openssl.cnf       |    2 +-
+ crypto/dsa/dsa_ameth.c |    2 +-
+ crypto/ec/ec_ameth.c   |    2 +-
+ crypto/hmac/hm_ameth.c |    2 +-
+ crypto/rsa/rsa_ameth.c |    2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
+
+--- a/apps/genrsa.c
++++ b/apps/genrsa.c
+@@ -80,7 +80,7 @@
+ # include <openssl/pem.h>
+ # include <openssl/rand.h>
+ 
+-# define DEFBITS 1024
++# define DEFBITS 2048
+ # undef PROG
+ # define PROG genrsa_main
+ 
+--- a/apps/openssl.cnf
++++ b/apps/openssl.cnf
+@@ -103,7 +103,7 @@ emailAddress		= optional
+ 
+ ####################################################################
+ [ req ]
+-default_bits		= 1024
++default_bits		= 2048
+ default_keyfile 	= privkey.pem
+ distinguished_name	= req_distinguished_name
+ attributes		= req_attributes
+--- a/crypto/dsa/dsa_ameth.c
++++ b/crypto/dsa/dsa_ameth.c
+@@ -605,7 +605,7 @@ static int dsa_pkey_ctrl(EVP_PKEY *pkey,
+ #endif
+ 
+     case ASN1_PKEY_CTRL_DEFAULT_MD_NID:
+-        *(int *)arg2 = NID_sha1;
++        *(int *)arg2 = NID_sha256;
+         return 2;
+ 
+     default:
+--- a/crypto/ec/ec_ameth.c
++++ b/crypto/ec/ec_ameth.c
+@@ -583,7 +583,7 @@ static int ec_pkey_ctrl(EVP_PKEY *pkey,
+ #endif
+ 
+     case ASN1_PKEY_CTRL_DEFAULT_MD_NID:
+-        *(int *)arg2 = NID_sha1;
++        *(int *)arg2 = NID_sha256;
+         return 2;
+ 
+     default:
+--- a/crypto/hmac/hm_ameth.c
++++ b/crypto/hmac/hm_ameth.c
+@@ -87,7 +87,7 @@ static int hmac_pkey_ctrl(EVP_PKEY *pkey
+ {
+     switch (op) {
+     case ASN1_PKEY_CTRL_DEFAULT_MD_NID:
+-        *(int *)arg2 = NID_sha1;
++        *(int *)arg2 = NID_sha256;
+         return 1;
+ 
+     default:
+--- a/crypto/rsa/rsa_ameth.c
++++ b/crypto/rsa/rsa_ameth.c
+@@ -411,7 +411,7 @@ static int rsa_pkey_ctrl(EVP_PKEY *pkey,
+ #endif
+ 
+     case ASN1_PKEY_CTRL_DEFAULT_MD_NID:
+-        *(int *)arg2 = NID_sha1;
++        *(int *)arg2 = NID_sha256;
+         return 1;
+ 
+     default:
