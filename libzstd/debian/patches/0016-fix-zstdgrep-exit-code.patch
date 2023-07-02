@@ -1,0 +1,23 @@
+Description: Fix zstdgrep exit code when operating on files
+From: Jörg-Volker Peetz <jvpeetz@web.de>
+Forwarded: https://github.com/facebook/zstd/issues/1428
+--- libzstd.orig/programs/zstdgrep
++++ libzstd/programs/zstdgrep
+@@ -113,16 +113,11 @@
+     if [ "${silent}" -lt 1 ] && [ "$#" -gt 1 ]; then
+         grep_args="-H ${grep_args}"
+     fi
+-    CUR_EXIT_CODE=0
+-    EXIT_CODE=1
+     set -f
+     while [ "$#" -gt 0 ]; do
+         # shellcheck disable=SC2086
+         "${zcat}" -fq -- "$1" | "${grep}" --label="${1}" ${grep_args} -- "${pattern}" -
+-        CUR_EXIT_CODE=$?
+-        if [ "${CUR_EXIT_CODE}" -eq 0 ] && [ "${EXIT_CODE}" -ne 1 ]; then
+-            EXIT_CODE=0
+-        fi
++        [ "$?" -ne 0 ] && EXIT_CODE=1
+         shift
+     done
+     set +f

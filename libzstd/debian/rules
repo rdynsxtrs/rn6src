@@ -1,0 +1,50 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+# Upstream's makefiles will respect PREFIX, and this means we avoid a patch
+export PREFIX=/usr
+
+HELP2MAN = help2man --no-info --help-option="'-h'" --no-discard-stderr
+mandir := $(CURDIR)/debian/zstd/usr/share/man/man1
+
+%:
+	dh $@
+
+DH_AUTO_CONFIGURE_OPTS :=
+ifneq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	DH_AUTO_CONFIGURE_OPTS += -DZSTD_BUILD_TESTS:BOOL=OFF
+endif
+
+override_dh_auto_clean:
+	dh_auto_clean
+	dh_auto_clean --sourcedirectory=contrib/pzstd
+
+override_dh_auto_build:
+	dh_auto_build
+	dh_auto_build --sourcedirectory=contrib/pzstd/ -- pzstd
+
+override_dh_install:
+	# Call d-shlibmove to comply with library packaging guide
+	d-shlibmove --commit \
+				--multiarch \
+				--devunversioned \
+				--exclude-la \
+				--movedev "debian/tmp/usr/include/*" usr/include \
+				--movedev "debian/tmp/usr/lib/pkgconfig/*" usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig \
+				debian/tmp/usr/lib/lib*.so
+	cp -r debian/libzstd1/usr debian/libzstd1-udeb/
+	dh_install
+
+override_dh_makeshlibs:
+	dh_makeshlibs -plibzstd1 -V'libzstd1 (>= 1.3.8)' --add-udeb=libzstd1-udeb
+
+override_dh_installman:
+	dh_installman
+	mkdir -p $(mandir)
+	$(HELP2MAN) --name='parallelised Zstandard compression, al la pigz' contrib/pzstd/pzstd \
+	| perl -pe 's/(\(de\)compression\s\(default:)(\d+)(\))/$$1 All$$3/g' >$(mandir)/pzstd.1

@@ -1,0 +1,6 @@
+0006-Use-bash-for-test-script-portablitity.patch
+0008-Address-embedded-zlib.patch
+0013-skip-memory-greedy-tests.patch
+0014-Reproducible-build.patch
+0015-Skip-dev-random-tests-on-hurd.patch
+0016-fix-zstdgrep-exit-code.patch
