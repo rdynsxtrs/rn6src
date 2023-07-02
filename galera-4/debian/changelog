@@ -1,0 +1,322 @@
+galera-4 (26.4.9-0+deb11u1+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 11 Dec 2021 11:32:19 +0100
+
+galera-4 (26.4.9-0+deb11u1) bullseye; urgency=medium
+
+  [ Otto Kekäläinen ]
+  * New upstream release 26.4.9. Includes multiple bug fixes, see
+    https://github.com/codership/documentation/blob/master/release-notes/release-notes-galera-26.4.9.txt
+  * Restore CK_TIMEOUT_MULTIPLIER in debian rules to avoid unnecassary
+    test failures due to slow builders
+
+  [ Andreas Beckmann ]
+  * Solve circular Conflicts with galera-3 by no longer providing a virtual
+    galera package (Closes: #990708)
+
+ -- Otto Kekäläinen <otto@debian.org>  Sun, 29 Aug 2021 20:05:11 -0700
+
+galera-4 (26.4.8-1) unstable; urgency=medium
+
+  * New upstream release 26.4.8
+  * Remove patches applied upstream
+  * Drop SConstruct patch for i386 as SCons is not used for builds anymore
+  * Bugfix: Don't uninstall MariaDB on Galera 3 to 4 upgrade (Closes: #988089)
+    This ensures the Buster installs of mariadb-server-10.3 (that depend on
+    galera-3) correctly upgrade to Bullseye installs of mariadb-server-10.5
+    (that depend on galera-4).
+
+ -- Otto Kekäläinen <otto@debian.org>  Tue, 25 May 2021 20:38:32 -0700
+
+galera-4 (26.4.7-3) unstable; urgency=medium
+
+  * Revised atomics patch to fix multiple FTBFS
+  * Update standards-version to 4.5.1 (no changes)
+
+ -- Otto Kekäläinen <otto@debian.org>  Sat, 20 Feb 2021 21:26:46 +0200
+
+galera-4 (26.4.7-2) unstable; urgency=medium
+
+  [ Helmut Grohne ]
+  * Fix new CMake definitions to correctly use CMAKE_OBJDUMP (Closes: #981652)
+
+  [ Otto Kekäläinen ]
+  * Backport atomics patch from upstream to fix multiple FTBFS
+
+ -- Otto Kekäläinen <otto@debian.org>  Fri, 05 Feb 2021 12:24:44 +0200
+
+galera-4 (26.4.7-1) unstable; urgency=medium
+
+  * New upstream version 26.4.7
+  * Remove arm64 crc32 patch that was applied upstream
+  * Build with CMake instead of SCons, as now done in upstream
+  * Install libgalera_smm.so the only way upstream now does it
+  * Also sync all other relevant changes done in debian/ upstream
+
+ -- Otto Kekäläinen <otto@debian.org>  Mon, 01 Feb 2021 18:27:19 +0200
+
+galera-4 (26.4.6-1) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Set upstream metadata fields: Bug-Submit, Repository.
+
+  [ Otto Kekäläinen ]
+  * New upstream version 26.4.6
+  * Apply the test timeout multiplier on all architectures
+  * Remove d/copyright references to crc32 library now removed upstream
+  * Fix arm64 build failure due to crc32 issue
+  * Fix i386 builds by forcing Scons to use DEB_HOST_ARCH if available
+
+ -- Otto Kekäläinen <otto@debian.org>  Sat, 07 Nov 2020 20:26:19 +0200
+
+galera-4 (26.4.5-1) unstable; urgency=medium
+
+  * New upstream version 26.4.5. This is the first official release for
+    general availability.
+  * Remove all patches as they have been applied upstream.
+
+ -- Otto Kekäläinen <otto@debian.org>  Fri, 29 May 2020 23:39:16 +0300
+
+galera-4 (26.4.3-4) unstable; urgency=medium
+
+  [ Otto Kekäläinen ]
+  * Remove unused Lintian override binary-file-built-without-LFS-support
+  * Enable hardening=+all to fix Lintian warning hardening-no-bindnow
+  * Include systemd service definition in Debian packaging
+  * Add man page for garb-systemd
+  * Add minor systemd service definition fixes
+  * Add Rules-Requires-Root definition to control file
+
+  [ Faustin Lammler ]
+  * Fix systemd unit and start script
+
+ -- Otto Kekäläinen <otto@debian.org>  Sun, 23 Feb 2020 10:46:37 +0200
+
+galera-4 (26.4.3-3) unstable; urgency=medium
+
+  * No-change, source-only upload after previous binary upload to NEW.
+
+ -- Otto Kekäläinen <otto@debian.org>  Thu, 02 Jan 2020 10:20:27 +0200
+
+galera-4 (26.4.3-2) unstable; urgency=medium
+
+  * Rename galera-arbitrator-4 -> -3 forgotten form previous upload
+  * Add proper conflicts/replaces to older Galera versions
+  * Extend Salsa-CI tests with upgrade scenarios
+
+ -- Otto Kekäläinen <otto@debian.org>  Mon, 30 Dec 2019 11:56:34 +0200
+
+galera-4 (26.4.3-1) unstable; urgency=medium
+
+  * New upstream version 26.4.3
+  * Refresh patches after 26.4.3 import
+  * Rename galera-3 -> galera-4 after Galera 4 import
+
+ -- Otto Kekäläinen <otto@debian.org>  Sun, 22 Dec 2019 12:06:07 +0200
+
+galera-3 (25.3.28-2) unstable; urgency=low
+
+  [ Debian Janitor ]
+  * Use secure URI in debian/watch.
+  * Update standards version to 4.4.1, no changes needed.
+  * Bump debhelper from old 9 to 12.
+  * Fix field name typos in debian/copyright.
+  * Remove obsolete fields Name, Contact from debian/upstream/metadata.
+
+ -- Otto Kekäläinen <otto@debian.org>  Mon, 16 Dec 2019 21:32:17 +0200
+
+galera-3 (25.3.28-1) unstable; urgency=medium
+
+  * New upstream version 25.3.28 (Closes: #940200)
+  * Remove patch for #927846 as it was applied upstream.
+  * Mark autopkgtests with new 'superficial' as it applies to this package
+
+ -- Otto Kekäläinen <otto@debian.org>  Mon, 16 Sep 2019 19:17:31 +0300
+
+galera-3 (25.3.27-1) unstable; urgency=medium
+
+  * New upstream version 25.3.27
+  * Include full CC-BY-SA-3.0 license in debian/copyright to satisfy Lintian
+  * Drop manual dbgsym creation as this is nowadays automatic
+  * Apply upstream patch for FTBFS on hppa, hurd and kfreebsd-*
+    (Closes: #927846)
+
+ -- Otto Kekäläinen <otto@debian.org>  Sat, 27 Jul 2019 16:33:43 -0300
+
+galera-3 (25.3.26-1) unstable; urgency=medium
+
+  * New upstream version 25.3.26
+
+ -- Otto Kekäläinen <otto@debian.org>  Tue, 23 Apr 2019 13:23:35 +0300
+
+galera-3 (25.3.25-2) unstable; urgency=low
+
+  [ Giovanni Mascellani ]
+  * Hopefully fix FTBFS on mipsel (Closes: #920209)
+
+ -- Otto Kekäläinen <otto@debian.org>  Sat, 30 Mar 2019 16:22:23 +0200
+
+galera-3 (25.3.25-1) unstable; urgency=low
+
+  [ Otto Kekäläinen ]
+  * New upstream version 25.3.25
+
+  [ Logan Rosen ]
+  * Fix FTBFS against system asio by using bundled version instead
+    (Closes: #914112)
+
+  [ Samuel Thibault ]
+  * Fix FTBFS on hurd-i386 (Closes: #906305)
+  * Do not assume timestamps are strictly monotonous (Closes: #856237)
+  * Fix FTBFS on kfreebsd (Closes: #906081)
+
+ -- Otto Kekäläinen <otto@debian.org>  Wed, 09 Jan 2019 00:39:48 +0100
+
+galera-3 (25.3.24-1) unstable; urgency=medium
+
+  [ Otto Kekäläinen ]
+  * New upstream version 25.3.24
+  * Add .gitlab-ci.yml copied from Salsa-CI team's example
+  * Add rudimentary autopkgtests
+  * Make build reproducible by forcing an empty GNU build-id
+  * Explicitly forbid tests if DEB_BUILD_OPTIONS has nocheck
+  * Add d/upstream/metadata file
+  * Update http -> https addresses where available
+  * Add 'terse' support in DEB_BUILD_OPTIONS
+  * Replace buildflags.mk with full default.mk dpkg settings
+  * Drop usage of _SYSTEMCTL_SKIP_REDIRECT from init script (Closes: #910471)
+  * Debian Policy 4.0.1: use priority 'optional' instead of 'extra'
+
+  [ Dimitri John Ledkov ]
+  * Do not run testsuite on armhf with arm64 kernel due to bus errors
+
+  [ Daniel Kahn Gillmor ]
+  * Modernize debugging symbols
+
+ -- Otto Kekäläinen <otto@debian.org>  Mon, 15 Oct 2018 16:24:30 +0300
+
+galera-3 (25.3.23-1) unstable; urgency=low
+
+  * Update VCS-* links to point to Salsa
+  * New upstream version 25.3.23
+    - Includes GCC-7 build fix (Closes: #853410)
+  * Fix Lintian complaints
+  * Use dh --list-missing to detect extra files that might belong in package
+
+ -- Otto Kekäläinen <otto@debian.org>  Sun, 04 Mar 2018 01:12:52 +0200
+
+galera-3 (25.3.22-1) unstable; urgency=low
+
+  * Update download URL and add check authenticity with PGP signature
+  * New upstream version 25.3.22
+  * Update Debian standards version to to 4.1.1
+
+ -- Otto Kekäläinen <otto@debian.org>  Tue, 21 Nov 2017 11:57:30 +0100
+
+galera-3 (25.3.20-1) unstable; urgency=low
+
+  * Update Vcs-* URLs to use secure connections
+  * New upstream release 25.3.20
+  * Include patch to avoid unaligned access, which fixes the regression
+    in the armhf build (Closes: #855657)
+
+ -- Otto Kekäläinen <otto@debian.org>  Thu, 09 Mar 2017 18:41:42 +0200
+
+galera-3 (25.3.19-2) unstable; urgency=low
+
+  * Backport upstream fix for OpenSSL SSL_R_SHORT_READ
+
+ -- Otto Kekäläinen <otto@debian.org>  Fri, 11 Nov 2016 21:38:04 +0200
+
+galera-3 (25.3.19-1) unstable; urgency=low
+
+  * New upstream release 25.3.19
+  * Make garb depend on lsb-base as uses /lib/lsb/init-functions
+
+ -- Otto Kekäläinen <otto@debian.org>  Thu, 10 Nov 2016 23:02:48 +0200
+
+galera-3 (25.3.17-1) unstable; urgency=low
+
+  * New upstream release
+    - Fixes a GCC6/C++11 compatibility issue (Closes: #812052)
+
+ -- Otto Kekäläinen <otto@debian.org>  Mon, 15 Aug 2016 21:04:56 +0300
+
+galera-3 (25.3.16-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Otto Kekäläinen <otto@debian.org>  Mon, 30 May 2016 23:28:41 +0300
+
+galera-3 (25.3.15-1) unstable; urgency=low
+
+  * New upstream release
+    - Remove all obsolete patches
+
+ -- Otto Kekäläinen <otto@debian.org>  Wed, 16 Mar 2016 20:37:10 +0200
+
+galera-3 (25.3.14-2~exp1) experimental; urgency=low
+
+  * Update standards version, vcs-link to use https and maintainer e-mail
+  * Add patch to fix build regression on s390x
+
+ -- Otto Kekäläinen <otto@debian.org>  Sun, 06 Mar 2016 00:09:49 +0200
+
+galera-3 (25.3.14-1) unstable; urgency=low
+
+  * New upstream release
+  * Ran wrap-and-sort
+
+ -- Otto Kekäläinen <otto@seravo.fi>  Sun, 07 Feb 2016 22:09:15 +0200
+
+galera-3 (25.3.13-2) unstable; urgency=low
+
+  * Added libasio-dev as build dependency. The new upstream SConscript will
+    automatically use system ASIO if the provided version is recent enough
+    (Closes: #804336).
+  * Make GFDL link explicit and other Lintian fixes
+  * Update git-buildpackage config to allow fix branches etc
+
+ -- Otto Kekäläinen <otto@seravo.fi>  Thu, 31 Dec 2015 23:45:17 +0200
+
+galera-3 (25.3.13-1) unstable; urgency=low
+
+  * Import new upstream release and drop patches that have become obsolete
+
+ -- Otto Kekäläinen <otto@seravo.fi>  Fri, 27 Nov 2015 22:48:00 +0200
+
+galera-3 (25.3.12-3) unstable; urgency=low
+
+  * Update patches with proper DEP-3 compliant headers
+  * Add patch to fix build error after SSLv3 deprication (Closes: #804336)
+
+ -- Otto Kekäläinen <otto@seravo.fi>  Fri, 13 Nov 2015 15:41:29 +0200
+
+galera-3 (25.3.12-2) unstable; urgency=low
+
+  * Backport upstream commit as patch to fix multiple build problems
+    (Closes: #799150)
+  * Backport upstream commit as patch to fix x32 build problems
+
+ -- Otto Kekäläinen <otto@seravo.fi>  Sun, 20 Sep 2015 23:27:16 +0300
+
+galera-3 (25.3.12-1) unstable; urgency=low
+
+  * Import new upstream release
+    - Fixes GCC 5 building and PRETTY_FUNCTION error (Closes: #797238)
+    - Fixes for pthread build issues on different platforms
+  * Add lintian override as garbd is intentionally not started upon installation
+  * Print in build log env info to help debug builds on different platforms
+  * Update gdb.conf to have tags signed by default
+  * Print config.log contents in build log for easier debugging of Debian builds
+  * Print config.log if build fails
+
+ -- Otto Kekäläinen <otto@seravo.fi>  Sun, 06 Sep 2015 20:45:43 +0300
+
+galera-3 (25.3.10-1) unstable; urgency=low
+
+  * Initial upload (Closes: #562666)
+
+ -- Otto Kekäläinen <otto@seravo.fi>  Fri, 01 May 2015 20:15:51 +0300

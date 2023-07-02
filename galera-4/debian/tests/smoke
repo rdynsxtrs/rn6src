@@ -1,0 +1,13 @@
+#!/bin/sh
+set -ex
+
+# dep8 smoke test for Galera
+# Author: Otto Kekäläinen <otto@debian.org>
+#
+# This very simple test just checks that the binary starts and prints out
+# the usage instructions, detected by keyword "usage".
+#
+# Use the virtual framebuffer to wrap trend, otherwise it will just print
+# the error message: freeglut (trend): failed to open display 'none'
+
+garbd --help 2>&1 | grep Usage
