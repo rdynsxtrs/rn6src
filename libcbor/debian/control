@@ -1,0 +1,58 @@
+Source: libcbor
+Priority: optional
+Maintainer: Vincent Bernat <bernat@debian.org>
+Build-Depends: debhelper (>= 9),
+               cmake,
+               libcmocka-dev,
+#               python3-sphinx,
+#               python3-sphinx-rtd-theme,
+#               python3-breathe
+Standards-Version: 4.1.2
+Section: libs
+Homepage: https://github.com/PJK/libcbor
+Vcs-Git: https://salsa.debian.org/debian/libcbor.git
+Vcs-Browser: https://salsa.debian.org/debian/libcbor/
+
+Package: libcbor0
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: library for parsing and generating CBOR (RFC 7049)
+ CBOR is a general-purpose schema-less binary data format, defined in
+ RFC 7049. This package provides a C library for parsing and generating
+ CBOR. The main features are:
+ .
+  - Complete RFC conformance
+  - Robust C99 implementation
+  - Layered architecture offers both control and convenience
+  - Flexible memory management
+  - No shared global state - threading friendly
+  - Proper handling of UTF-8
+  - Full support for streams & incremental processing
+  - Extensive documentation and test suite
+  - No runtime dependencies, small footprint
+ .
+ This package contains the runtime library.
+
+Package: libcbor-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libcbor0 (= ${binary:Version}), ${misc:Depends}
+Description: library for parsing and generating CBOR (RFC 7049) (development headers)
+ CBOR is a general-purpose schema-less binary data format, defined in
+ RFC 7049. This package provides a C library for parsing and generating
+ CBOR.
+ .
+ This package contains the development headers.
+
+Package: libcbor-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}, ${sphinxdoc:Depends}, libjs-mathjax
+Description: library for parsing and generating CBOR (RFC 7049) (documentation)
+ CBOR is a general-purpose schema-less binary data format, defined in
+ RFC 7049. This package provides a C library for parsing and generating
+ CBOR.
+ .
+ This package contains the documentation

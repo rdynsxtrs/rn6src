@@ -1,0 +1,6 @@
+version=4
+opts=\
+filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/libcbor-$1.tar.gz/,\
+dversionmangle=s/\+dfsg(\.?\d+)?$//,\
+repacksuffix=+dfsg \
+ https://github.com/PJK/libcbor/tags .*/v(\d[\d\.]*)\.tar\.gz

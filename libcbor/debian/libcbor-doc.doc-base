@@ -1,0 +1,9 @@
+Document: libcbor
+Title: libcbor documentation
+Author: Pavel Kalvoda
+Abstract: This manual describes libcbor, a library for parsing and generating CBOR
+Section: Programming/C
+
+#Format: HTML
+#Index: /usr/share/doc/libcbor-doc/html/index.html
+#Files: /usr/share/doc/libcbor-doc/html/*

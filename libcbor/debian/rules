@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+%:
+	dh $@
+	# --with sphinxdoc
+
+override_dh_auto_build:
+	dh_auto_build
+	mkdir -p doc/build/doxygen
+	doxygen
+	# make -C doc html
+	# Nothing is using MathJax
+	# find doc/build/html -type f -print0 | xargs -0 sed -i '/ajax\/libs\/mathjax/d'

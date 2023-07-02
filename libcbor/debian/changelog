@@ -1,0 +1,19 @@
+libcbor (0.5.0+dfsg-2+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Thu, 17 Feb 2022 15:33:55 +0100
+
+libcbor (0.5.0+dfsg-2) unstable; urgency=medium
+
+  * d/control: migrate to salsa.debian.org.
+  * d/install: install pkg-config file.
+
+ -- Vincent Bernat <bernat@debian.org>  Thu, 17 May 2018 17:08:03 +0200
+
+libcbor (0.5.0+dfsg-1) unstable; urgency=medium
+
+  * Initial release. Closes: #787015.
+
+ -- Vincent Bernat <bernat@debian.org>  Mon, 18 Dec 2017 07:26:05 +0100
+
