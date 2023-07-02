@@ -1,0 +1,168 @@
+isl (0.18-1.rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 31 Oct 2020 15:22:21 +0100
+
+isl (0.18-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 05 Jan 2017 18:50:41 +0100
+
+isl (0.17.1-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 01 Jun 2016 23:00:24 +0200
+
+isl (0.17-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update symbols file.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 29 May 2016 19:50:09 +0200
+
+isl (0.16.1-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 25 Jan 2016 19:20:25 +0100
+
+isl (0.15-3~14.04) trusty; urgency=medium
+
+  * PPA upload.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 30 Nov 2015 11:34:44 +0100
+
+isl (0.15-3) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 17 Nov 2015 00:20:09 +0100
+
+isl (0.15-2) experimental; urgency=medium
+
+  * libisl-dbg: Fix dependency on libisl.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 27 Jul 2015 19:25:08 +0200
+
+isl (0.15-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 25 Jul 2015 18:18:18 +0200
+
+isl (0.14-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 24 Apr 2015 14:36:08 +0200
+
+isl (0.14-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 11 Nov 2014 12:24:42 +0100
+
+isl (0.13-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 25 Jun 2014 16:24:52 +0200
+
+isl (0.12.2-2) unstable; urgency=medium
+
+  * Make the python pretty printer file compatible with python3.
+  * Let the python pretty printer load the library by the soname.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 25 Jun 2014 15:35:38 +0200
+
+isl (0.12.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Fix header file. Closes: #730352.
+  * Build using dh-autoreconf.
+  * Update symbols file.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 13 Feb 2014 14:51:31 +0100
+
+isl (0.12.1-2) unstable; urgency=low
+
+  * Drop build dependency on libcloog-isl-dev.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 26 Nov 2013 12:44:41 +0100
+
+isl (0.12.1-1) unstable; urgency=low
+
+  * New upstream release. Closes: #714830.
+  * libisl10: Breaks libcloog-isl4 (<< 0.18.1).
+  * Update symbols file.
+  * Build-depend on libcloog-isl-dev (>= 0.18.1) to make sure that the
+    cloog version compatible with isl-0.12 already is in the archive.
+  * Use dh_autotools-dev, not autoreconf to update config.{sub,guess}.
+    Closes: #721854.
+  * Update project home page. Closes: #682352.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 17 Oct 2013 15:30:11 +0200
+
+isl (0.12-1) experimental; urgency=low
+
+  * New upstream release.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 16 Jul 2013 01:06:25 +0200
+
+isl (0.11.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * Update symbols file.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 09 May 2013 14:38:13 +0200
+
+isl (0.11.1-2) unstable; urgency=low
+
+  * Build using dh-autoreconf.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 27 Feb 2013 17:28:44 +0100
+
+isl (0.11.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * Update debian/copyright.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 13 Jan 2013 03:24:36 +0100
+
+isl (0.10-3) unstable; urgency=low
+
+  * Configure with --disable-silent-rules.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 08 Jul 2012 20:42:27 +0200
+
+isl (0.10-2) unstable; urgency=low
+
+  * Complete copyright information. Closes: #679464.
+  * Note about stdint.h generator differs among architectures
+    and breaks multiarch (Gregor Jasny). Closes: #658841.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 01 Jul 2012 12:45:46 +0200
+
+isl (0.10-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 25 Jun 2012 15:19:06 +0200
+
+isl (0.08-1) unstable; urgency=low
+
+  * New upstream version.
+  * Install into multiarch locations.
+  * Build a -dbg package.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 15 Dec 2011 17:36:22 +0100
+
+isl (0.07-1) experimental; urgency=low
+
+  * Initial release.
+
+ -- Matthias Klose <doko@debian.org>  Thu, 11 Aug 2011 12:07:39 +0200
