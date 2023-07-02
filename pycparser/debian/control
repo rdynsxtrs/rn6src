@@ -1,0 +1,37 @@
+Source: pycparser
+Section: python
+Priority: optional
+Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+Uploaders: Stefano Rivera <stefanor@debian.org>
+Build-Depends:
+ debhelper (>= 10),
+ dh-python (>= 1.20140511),
+ python-all,
+ python-ply,
+ python3-all,
+ python3-ply
+Standards-Version: 4.2.1
+Homepage: https://github.com/eliben/pycparser
+Vcs-Git: https://salsa.debian.org/python-team/modules/pycparser.git
+Vcs-Browser: https://salsa.debian.org/python-team/modules/pycparser
+Rules-Requires-Root: no
+
+Package: python-pycparser
+Architecture: all
+Depends: ${misc:Depends}, ${python-ply:Depends}, ${python:Depends}
+Suggests: cpp
+Description: C parser in Python
+ pycparser is a complete parser of the C language, written in pure Python using
+ the PLY parsing library. It parses C code into an AST and can serve as a
+ front-end for C compilers or analysis tools.
+
+Package: python3-pycparser
+Architecture: all
+Depends: ${misc:Depends}, ${python3-ply:Depends}, ${python3:Depends}
+Suggests: cpp
+Description: C parser in Python 3
+ pycparser is a complete parser of the C language, written in pure Python using
+ the PLY parsing library. It parses C code into an AST and can serve as a
+ front-end for C compilers or analysis tools.
+ .
+ This package contains the Python 3 version.

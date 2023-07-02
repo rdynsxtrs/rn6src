@@ -1,0 +1,2 @@
+Tests: unittests
+Depends: @, cpp, python-all, python3-all
