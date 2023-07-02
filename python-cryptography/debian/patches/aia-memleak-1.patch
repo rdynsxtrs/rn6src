@@ -1,0 +1,94 @@
+From 92241410b5b0591d849443b3023992334a4be0a2 Mon Sep 17 00:00:00 2001
+From: Paul Kehrer <paul.l.kehrer@gmail.com>
+Date: Thu, 11 Apr 2019 20:57:13 +0800
+Subject: [PATCH] fix a memory leak in AIA parsing (#4836)
+
+* fix a memory leak in AIA parsing
+
+* oops can't remove that
+---
+ src/_cffi_src/openssl/x509v3.py               |  3 +++
+ .../hazmat/backends/openssl/decode_asn1.py    |  9 +++++++-
+ tests/hazmat/backends/test_openssl_memleak.py | 21 ++++++++++++++++++-
+ 3 files changed, 31 insertions(+), 2 deletions(-)
+
+diff --git a/src/_cffi_src/openssl/x509v3.py b/src/_cffi_src/openssl/x509v3.py
+index 193d2e233b..5968120652 100644
+--- a/src/_cffi_src/openssl/x509v3.py
++++ b/src/_cffi_src/openssl/x509v3.py
+@@ -177,6 +177,7 @@
+ typedef void (*sk_GENERAL_NAME_freefunc)(GENERAL_NAME *);
+ typedef void (*sk_DIST_POINT_freefunc)(DIST_POINT *);
+ typedef void (*sk_POLICYINFO_freefunc)(POLICYINFO *);
++typedef void (*sk_ACCESS_DESCRIPTION_freefunc)(ACCESS_DESCRIPTION *);
+ """
+ 
+ 
+@@ -228,6 +229,8 @@
+     Cryptography_STACK_OF_ACCESS_DESCRIPTION *, int
+ );
+ void sk_ACCESS_DESCRIPTION_free(Cryptography_STACK_OF_ACCESS_DESCRIPTION *);
++void sk_ACCESS_DESCRIPTION_pop_free(Cryptography_STACK_OF_ACCESS_DESCRIPTION *,
++                              sk_ACCESS_DESCRIPTION_freefunc);
+ int sk_ACCESS_DESCRIPTION_push(Cryptography_STACK_OF_ACCESS_DESCRIPTION *,
+                                ACCESS_DESCRIPTION *);
+ 
+diff --git a/src/cryptography/hazmat/backends/openssl/decode_asn1.py b/src/cryptography/hazmat/backends/openssl/decode_asn1.py
+index 773189d4f8..75d5844bc1 100644
+--- a/src/cryptography/hazmat/backends/openssl/decode_asn1.py
++++ b/src/cryptography/hazmat/backends/openssl/decode_asn1.py
+@@ -379,7 +379,14 @@ def _decode_authority_key_identifier(backend, akid):
+ 
+ def _decode_authority_information_access(backend, aia):
+     aia = backend._ffi.cast("Cryptography_STACK_OF_ACCESS_DESCRIPTION *", aia)
+-    aia = backend._ffi.gc(aia, backend._lib.sk_ACCESS_DESCRIPTION_free)
++    aia = backend._ffi.gc(
++        aia,
++        lambda x: backend._lib.sk_ACCESS_DESCRIPTION_pop_free(
++            x, backend._ffi.addressof(
++                backend._lib._original_lib, "ACCESS_DESCRIPTION_free"
++            )
++        )
++    )
+     num = backend._lib.sk_ACCESS_DESCRIPTION_num(aia)
+     access_descriptions = []
+     for i in range(num):
+diff --git a/tests/hazmat/backends/test_openssl_memleak.py b/tests/hazmat/backends/test_openssl_memleak.py
+index ed22b5db9e..f9ae1c46b9 100644
+--- a/tests/hazmat/backends/test_openssl_memleak.py
++++ b/tests/hazmat/backends/test_openssl_memleak.py
+@@ -210,7 +210,7 @@ class TestOpenSSLMemoryLeaks(object):
+     @pytest.mark.parametrize("path", [
+         "x509/PKITS_data/certs/ValidcRLIssuerTest28EE.crt",
+     ])
+-    def test_x509_certificate_extensions(self, path):
++    def test_der_x509_certificate_extensions(self, path):
+         assert_no_memory_leaks(textwrap.dedent("""
+         def func(path):
+             from cryptography import x509
+@@ -226,6 +226,25 @@ def func(path):
+             cert.extensions
+         """), [path])
+ 
++    @pytest.mark.parametrize("path", [
++        "x509/cryptography.io.pem",
++    ])
++    def test_pem_x509_certificate_extensions(self, path):
++        assert_no_memory_leaks(textwrap.dedent("""
++        def func(path):
++            from cryptography import x509
++            from cryptography.hazmat.backends.openssl import backend
++
++            import cryptography_vectors
++
++            with cryptography_vectors.open_vector_file(path, "rb") as f:
++                cert = x509.load_pem_x509_certificate(
++                    f.read(), backend
++                )
++
++            cert.extensions
++        """), [path])
++
+     def test_x509_csr_extensions(self):
+         assert_no_memory_leaks(textwrap.dedent("""
+         def func():

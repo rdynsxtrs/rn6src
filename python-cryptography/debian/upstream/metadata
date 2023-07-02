@@ -1,0 +1,16 @@
+---
+Archive: PyPI
+Bug-Database: https://github.com/pyca/cryptography/issues
+Bug-Submit: https://github.com/pyca/cryptography/issues/new
+Changelog:
+  https://raw.githubusercontent.com/pyca/cryptography/master/CHANGELOG.rst
+Contact: https://mail.python.org/mailman/listinfo/cryptography-dev
+Documentation: https://cryptography.io/en/latest/
+Name: Cryptography
+Registry:
+  - Name: PyPI
+    Entry: cryptography_vectors
+Repository: https://github.com/pyca/cryptography.git
+Repository-Browse: https://github.com/pyca/cryptography
+Security-Contact:
+  https://cryptography.io/en/latest/security/#reporting-a-security-issue

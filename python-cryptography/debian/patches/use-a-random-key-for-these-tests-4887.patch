@@ -1,0 +1,29 @@
+From 97af501780534065739a251dc6bafd74b6bf7f19 Mon Sep 17 00:00:00 2001
+From: Paul Kehrer <paul.l.kehrer@gmail.com>
+Date: Sat, 18 May 2019 09:04:37 -0400
+Subject: [PATCH] use a random key for these tests (#4887)
+
+Using an all 0 key causes failures in OpenSSL master (and Fedora has
+cherry-picked the commit that causes it). The change requires that the
+key/tweak for XTS mode not be the same value, so let's just use a random
+key.
+---
+ tests/hazmat/primitives/test_aes.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/hazmat/primitives/test_aes.py b/tests/hazmat/primitives/test_aes.py
+index f083f31978ee7..565cc11dd4df5 100644
+--- a/tests/hazmat/primitives/test_aes.py
++++ b/tests/hazmat/primitives/test_aes.py
+@@ -490,7 +490,7 @@ from ...utils import load_nist_vectors
+ def test_buffer_protocol_alternate_modes(mode, backend):
+     data = bytearray(b"sixteen_byte_msg")
+     cipher = base.Cipher(
+-        algorithms.AES(bytearray(b"\x00" * 32)), mode, backend
++        algorithms.AES(bytearray(os.urandom(32))), mode, backend
+     )
+     enc = cipher.encryptor()
+     ct = enc.update(data) + enc.finalize()
+-- 
+2.23.0
+
