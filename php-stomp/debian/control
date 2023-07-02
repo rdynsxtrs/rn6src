@@ -1,0 +1,31 @@
+Source: php-stomp
+Section: web
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Jonas Genannt <genannt@debian.org>,
+           Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev
+Standards-Version: 3.9.7
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-stomp.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-stomp
+Homepage: https://pecl.php.net/package/stomp
+
+Package: php-stomp
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: Streaming Text Oriented Messaging Protocol (STOMP) client module for PHP
+ This extension allows php applications to communicate with any STOMP
+ (Streaming Text Oriented Messaging Protocol) compliant Message
+ Brokers (e.g. Apache ActiveMQ) through easy object oriented and
+ procedural interfaces.

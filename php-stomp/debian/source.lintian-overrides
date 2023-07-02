@@ -1,0 +1,4 @@
+# Override invalid PHP license problem for PHP extensions coming from PECL.PHP.NET
+php-stomp source: license-problem-php-license *
+# Not needed for PHP 7 PECL packaging
+php-stomp source: pear-package-without-pkg-php-tools-builddep
