@@ -1,0 +1,31 @@
+Source: php-yaml
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Lior Kaplan <kaplan@debian.org>,
+           Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               libyaml-dev,
+               php-all-dev
+Standards-Version: 3.9.8
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-yaml.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-yaml
+Homepage: http://pecl.php.net/package/Yaml
+
+Package: php-yaml
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Recommends: ${misc:Recommends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: YAML-1.1 parser and emitter for PHP
+ PHP extension adding support for YAML 1.1 (YAML Ain't Markup
+ Language) serialization using the LibYAML library.
