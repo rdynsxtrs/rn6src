@@ -1,0 +1,41 @@
+From: =?utf-8?q?Sebastian_Dr=C3=B6ge?= <slomo@debian.org>
+Date: Fri, 30 Mar 2012 09:49:05 +0200
+Subject: Hurd has no MAP_NORESERVE so don't use it there
+
+---
+ test/cairo-test-trace.c    | 4 ++++
+ util/cairo-sphinx/sphinx.c | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/test/cairo-test-trace.c b/test/cairo-test-trace.c
+index 5badc43..5c059b4 100644
+--- a/test/cairo-test-trace.c
++++ b/test/cairo-test-trace.c
+@@ -545,7 +545,11 @@ spawn_shm (const char *shm_path)
+ 
+     base = mmap (NULL, DATA_SIZE,
+ 		 PROT_READ | PROT_WRITE,
++#ifdef MAP_NORESERVE
+ 		 MAP_SHARED | MAP_NORESERVE,
++#else
++		 MAP_SHARED,
++#endif
+ 		 fd, 0);
+     close (fd);
+ 
+diff --git a/util/cairo-sphinx/sphinx.c b/util/cairo-sphinx/sphinx.c
+index 238d400..9384edd 100644
+--- a/util/cairo-sphinx/sphinx.c
++++ b/util/cairo-sphinx/sphinx.c
+@@ -1337,7 +1337,11 @@ client_shm (const char *shm_path)
+ 
+     base = mmap (NULL, DATA_SIZE,
+ 		 PROT_READ | PROT_WRITE,
++#ifdef MAP_NORESERVE
+ 		 MAP_SHARED | MAP_NORESERVE,
++#else
++		 MAP_SHARED,
++#endif
+ 		 fd, 0);
+     close (fd);
+ 

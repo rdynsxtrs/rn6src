@@ -1,0 +1,3 @@
+version=4
+https://cairographics.org/releases/ \
+	@PACKAGE@-([\d\.]+[02468]\.[\d\.]+)\.tar\.xz

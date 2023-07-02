@@ -1,0 +1,142 @@
+Source: cairo
+Section: libs
+Priority: optional
+Maintainer: Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
+Uploaders: @GNOME_TEAM@
+Build-Depends: debhelper (>= 10),
+               gnome-pkg-tools,
+               pkg-config (>= 0.19),
+               libfontconfig1-dev (>= 2.2.95),
+               libfreetype6-dev (>= 2.1.10),
+               libxrender-dev (>= 1:0.9.5-2),
+               libx11-dev (>= 2:1.3.3-2),
+               libxext-dev,
+               libpng-dev,
+               libsm-dev,
+               xutils-dev,
+               libxt-dev,
+               libpixman-1-dev (>= 0.30.0),
+               libxcb1-dev (>= 1.6),
+               libxcb-render0-dev (>= 1.6),
+               libxcb-shm0-dev,
+               libglib2.0-dev,
+               zlib1g-dev,
+               liblzo2-dev
+Standards-Version: 4.3.0
+Vcs-Browser: https://salsa.debian.org/gnome-team/cairo
+Vcs-Git: https://salsa.debian.org/gnome-team/cairo.git
+Homepage: https://cairographics.org/
+
+Package: libcairo2
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Multi-Arch: same
+Breaks: weston (<< 1.5.0-3~),
+        libwebkitgtk-1.0-0 (<< 2.4.5-2~),
+        libwebkitgtk-3.0-0 (<< 2.4.5-2~),
+        libwebkit2gtk-3.0-25 (<< 2.4.5-2~),
+Description: Cairo 2D vector graphics library
+ Cairo is a multi-platform library providing anti-aliased
+ vector-based rendering for multiple target backends. Paths consist
+ of line segments and cubic splines and can be rendered at any width
+ with various join and cap styles. All colors may be specified with
+ optional translucence (opacity/alpha) and combined using the
+ extended Porter/Duff compositing algebra as found in the X Render
+ Extension.
+ .
+ Cairo exports a stateful rendering API similar in spirit to the path
+ construction, text, and painting operators of PostScript, (with the
+ significant addition of translucence in the imaging model). When
+ complete, the API is intended to support the complete imaging model of
+ PDF 1.4.
+ .
+ This package contains the shared libraries.
+
+Package: libcairo2-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libcairo2 (= ${binary:Version}),
+         libcairo-gobject2 (= ${binary:Version}),
+         libcairo-script-interpreter2 (= ${binary:Version}),
+         libfontconfig1-dev (>= 2.2.95),
+         libfreetype6-dev (>= 2.1.10),
+         libx11-dev,
+         libxrender-dev (>= 0.6),
+         libxext-dev,
+         libpng-dev,
+         libsm-dev,
+         libpixman-1-dev (>= 0.22.0),
+         libxcb1-dev (>= 1.6),
+         libxcb-render0-dev (>= 1.6),
+         libxcb-shm0-dev,
+         libglib2.0-dev,
+         ${shlibs:Depends},
+         ${misc:Depends}
+Provides: libcairo-dev
+Suggests: libcairo2-doc
+Description: Development files for the Cairo 2D graphics library
+ Cairo is a multi-platform library providing anti-aliased
+ vector-based rendering for multiple target backends.
+ .
+ This package contains the development libraries, header files needed by
+ programs that want to compile with Cairo.
+
+Package: libcairo2-doc
+Section: doc
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}
+Recommends: lynx | www-browser
+Description: Documentation for the Cairo Multi-platform 2D graphics library
+ Cairo is a multi-platform library providing anti-aliased
+ vector-based rendering for multiple target backends.
+ .
+ This package contains the HTML documentation for the Cairo library
+ in /usr/share/gtk-doc/html/cairo/.
+
+Package: libcairo-script-interpreter2
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Multi-Arch: same
+Description: Cairo 2D vector graphics library (script interpreter)
+ Cairo is a multi-platform library providing anti-aliased
+ vector-based rendering for multiple target backends.
+ .
+ This package contains the script interpreter for executing and manipulating
+ cairo execution traces.
+
+Package: libcairo-gobject2
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Multi-Arch: same
+Description: Cairo 2D vector graphics library (GObject library)
+ Cairo is a multi-platform library providing anti-aliased
+ vector-based rendering for multiple target backends.
+ .
+ This package contains the GObject library, providing wrapper GObject types
+ for all cairo types.
+
+Package: cairo-perf-utils
+Section: misc
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: Cairo 2D vector graphics library performance utilities
+ Cairo is a multi-platform library providing anti-aliased
+ vector-based rendering for multiple target backends.
+ .
+ This package contains a set of utilities for capturing and replaying cairo
+ execution traces using various backends, in order to be able to measure the
+ performance of cairo for real-world applications in a reproducible way.
+
+Package: libcairo2-udeb
+Package-Type: udeb
+Section: debian-installer
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Cairo 2D vector graphics library
+ This is a udeb, or a microdeb, for the debian-installer.

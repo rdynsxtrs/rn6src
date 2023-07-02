@@ -1,0 +1,2 @@
+usr/lib/*/libcairo.so.*
+usr/lib/*/libcairo-gobject.so.*

@@ -1,0 +1,7 @@
+01_build_perf_utils.patch
+02_am-maintainer-mode.patch
+03_export-symbols.patch
+06_hurd-map-noreserve.patch
+git-pdf-add-missing-flush.patch
+ft-Use-FT_Done_MM_Var-instead-of-free-when-available-in-c.patch
+CVE-2020-35492.patch

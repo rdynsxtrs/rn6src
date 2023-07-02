@@ -1,0 +1,69 @@
+From: Alexandros Frantzis <alexandros.frantzis@linaro.org>
+Date: Tue, 7 Sep 2010 10:09:10 +0200
+Subject: Build cairo-perf-utils as part of then normal build process.
+
+Bug: https://bugs.freedesktop.org/show_bug.cgi?id=28865
+---
+ build/configure.ac.features |  1 +
+ configure.ac                |  5 +++++
+ perf/Makefile.am            | 14 ++++++++++++++
+ 3 files changed, 20 insertions(+)
+
+diff --git a/build/configure.ac.features b/build/configure.ac.features
+index e0a4606..522b3f3 100644
+--- a/build/configure.ac.features
++++ b/build/configure.ac.features
+@@ -409,6 +409,7 @@ AC_DEFUN([CAIRO_REPORT],
+ 	echo "The following features and utilities:"
+ 	echo "  cairo-trace:                $use_trace"
+ 	echo "  cairo-script-interpreter:   $use_interpreter"
++	echo "  cairo-perf-utils:           $use_perf_utils"
+ 	echo ""
+ 	echo "And the following internal features:"
+ 	echo "  pthread:       $use_pthread"
+diff --git a/configure.ac b/configure.ac
+index 5e33c96..2e3fb71 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -873,6 +873,11 @@ dnl ===========================================================================
+ PKG_CHECK_MODULES(gtk, "gtk+-2.0",have_gtk=yes, have_gtk=no)
+ AM_CONDITIONAL(HAVE_GTK, test "x$have_gtk" = "xyes")
+ 
++dnl ===========================================================================
++
++CAIRO_ENABLE(perf_utils, cairo-perf-utils, no, [use_perf_utils=yes])
++
++
+ AC_CONFIG_FILES([
+ Makefile
+ boilerplate/Makefile
+diff --git a/perf/Makefile.am b/perf/Makefile.am
+index 40b35bc..70ed619 100644
+--- a/perf/Makefile.am
++++ b/perf/Makefile.am
+@@ -15,11 +15,25 @@ AM_LDFLAGS = $(CAIRO_LDFLAGS)
+ 
+ SUBDIRS = micro
+ 
++if CAIRO_HAS_PERF_UTILS
++bin_PROGRAMS = cairo-analyse-trace \
++	cairo-perf-micro \
++	cairo-perf-trace \
++	cairo-perf-diff-files \
++	cairo-perf-print \
++	cairo-perf-chart \
++	cairo-perf-compare-backends
++if HAVE_GTK
++bin_PROGRAMS += cairo-perf-graph-files
++endif
++
++else
+ noinst_PROGRAMS = \
+ 	cairo-analyse-trace \
+ 	cairo-perf-trace \
+ 	cairo-perf-micro \
+ 	$(NULL)
++endif
+ 
+ EXTRA_PROGRAMS += \
+ 	cairo-analyse-trace \

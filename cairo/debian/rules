@@ -1,0 +1,76 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS  = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND  = -Wall
+export DEB_LDFLAGS_MAINT_APPEND = -Wl,-O1 -Wl,-z,defs -Wl,--as-needed
+
+%:
+	dh $@ --with gnome
+
+configure_flags += \
+	--enable-pdf \
+	--enable-ps \
+	--enable-xlib \
+	--enable-png \
+	--enable-tee \
+	--disable-silent-rules \
+	--disable-maintainer-mode
+
+deb_configure_flags += \
+	$(configure_flags) \
+	--enable-xlib \
+	--enable-svg \
+	--enable-xcb \
+	--enable-perf-utils \
+	--disable-gl
+
+udeb_configure_flags += \
+	$(configure_flags) \
+	--disable-svg \
+	--disable-xcb
+
+override_dh_autoreconf:
+	dh_autoreconf --as-needed
+
+override_dh_auto_configure:
+	dh_auto_configure --builddirectory=debian/build/deb \
+		-- $(deb_configure_flags)
+	dh_auto_configure --builddirectory=debian/build/udeb \
+		-- $(udeb_configure_flags)
+
+override_dh_auto_build:
+	dh_auto_build --builddirectory=debian/build/deb
+	dh_auto_build --builddirectory=debian/build/udeb
+
+override_dh_auto_install:
+	dh_auto_install --builddirectory=debian/build/deb \
+		--destdir=debian/install/deb
+	dh_auto_install --builddirectory=debian/build/udeb \
+		--destdir=debian/install/udeb
+
+override_dh_install:
+	dh_install -plibcairo2-udeb --sourcedir=debian/install/udeb
+	dh_install -Nlibcairo2-udeb --sourcedir=debian/install/deb
+
+override_dh_missing:
+	dh_missing --list-missing
+
+override_dh_auto_clean:
+	rm -rf debian/install/ debian/build/
+
+# The test suite is quite broken atm, so running it is not very useful.
+# Furthermore there's just one automake test that runs a ton of sub-tests,
+# that causes the single test to run for a long time without automake
+# printing any output, which causes the build to fail due to inactivity
+# on slow arches with no FPU, see https://bugs.debian.org/891547
+#override_dh_auto_test:
+#	-dh_auto_test --builddirectory=debian/build/deb
+
+override_dh_strip:
+	dh_strip -plibcairo2-udeb -pcairo-perf-utils
+	dh_strip --remaining-packages --dbgsym-migration="libcairo2-dbg (<< 1.14.8-1~)"
+
+override_dh_makeshlibs:
+	dh_makeshlibs -plibcairo2 --add-udeb=libcairo2-udeb -V 'libcairo2 (>= 1.14.0)' -- -c4
+	dh_makeshlibs -plibcairo-gobject2 --add-udeb=libcairo2-udeb -V 'libcairo-gobject2 (>= 1.10.0)' -- -c4
+	dh_makeshlibs -plibcairo-script-interpreter2 -V 'libcairo-script-interpreter2 (>= 1.10.0)' -- -c4

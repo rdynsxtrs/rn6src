@@ -1,0 +1,4 @@
+usr/include/cairo/*.h
+usr/lib/*/libcairo*.so
+usr/lib/*/libcairo*.a
+usr/lib/*/pkgconfig/cairo*.pc
