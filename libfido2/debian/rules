@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DUDEV_RULES_DIR=/lib/udev/rules.d \
+	                     -DCMAKE_BUILD_RPATH_USE_ORIGIN=ON
+
+override_dh_missing:
+	dh_missing --fail-missing
+
+override_dh_makeshlibs:
+	dh_makeshlibs -- -c4
+
+override_dh_auto_test:
+	debian/run-regression-tests.sh

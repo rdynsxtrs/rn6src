@@ -1,0 +1,3 @@
+lib/udev/rules.d/70-u2f.rules
+usr/lib/*/libfido2.a
+usr/lib/*/libsk-libfido2.so

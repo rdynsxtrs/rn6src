@@ -1,0 +1,9 @@
+Document: libfido2
+Title: libfido2 documentation
+Author: Yubico AB
+Abstract: The development documentation for libfido2.
+Section: Programming/C
+
+Format: HTML
+Index: /usr/share/doc/libfido2/html/
+Files: /usr/share/doc/libfido2/html/*.html
