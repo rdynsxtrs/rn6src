@@ -1,0 +1,81 @@
+mpdecimal (2.4.2-1+rnx.1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 15 May 2021 20:41:24 +0200
+
+mpdecimal (2.4.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Split out a libmpdec-doc package. Closes: #751861.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 18 Mar 2016 16:43:39 +0100
+
+mpdecimal (2.4.1-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 31 Aug 2014 21:16:48 +0200
+
+mpdecimal (2.4.0-6) unstable; urgency=medium
+
+  * Fix the uint128_t detection, so several architectures don't use the
+    substantially slower ANSI build (Stefan Krah).
+  * Fix the dangling .so symlink.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 10 Jan 2014 17:01:31 +0100
+
+mpdecimal (2.4.0-5) unstable; urgency=medium
+
+  * Always build with -fPIC, fixing build failure on sparc64.
+  * Don't use amd64-any in the symbols file, matching x32 for some reason.
+    See #734842.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 10 Jan 2014 11:25:17 +0100
+
+mpdecimal (2.4.0-4) unstable; urgency=medium
+
+  * Disable the allocation failure tests, takes too long to run
+    on slow architectures (Stefan Krah).
+
+ -- Matthias Klose <doko@debian.org>  Fri, 10 Jan 2014 01:07:41 +0100
+
+mpdecimal (2.4.0-3) unstable; urgency=medium
+
+  * Fix symbols file for x32.
+  * Make the test run a bit more verbose (Stefan Krah).
+
+ -- Matthias Klose <doko@debian.org>  Thu, 09 Jan 2014 16:23:47 +0100
+
+mpdecimal (2.4.0-2) unstable; urgency=medium
+
+  * Run the subset of tests which can be run without downloading
+    additional files.
+  * debian/control: Use ${sphinxdoc:Depends}.
+  * Removed copyrights for files removed upstream in 2.4.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 08 Jan 2014 23:11:05 +0100
+
+mpdecimal (2.4.0-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 05 Jan 2014 22:23:14 +0100
+
+mpdecimal (2.3-3) unstable; urgency=low
+
+  * Update symbols file for non-x86 32bit architectures.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 23 Nov 2013 07:42:40 +0100
+
+mpdecimal (2.3-2) unstable; urgency=low
+
+  * Update symbols file for 32bit architectures.
+
+ -- Matthias Klose <doko@debian.org>  Fri, 22 Nov 2013 17:55:09 +0100
+
+mpdecimal (2.3-1) unstable; urgency=low
+
+  * Initial release (Closes: #692589).
+
+ -- Matthias Klose <doko@debian.org>  Wed, 07 Nov 2012 14:57:10 +0100

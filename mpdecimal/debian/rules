@@ -1,0 +1,62 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+SHELL = /bin/bash
+DEB_BUILD_MULTIARCH ?= $(shell dpkg-architecture -qDEB_BUILD_MULTIARCH)
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+CFLAGS ?= $(shell dpkg-buildflags --get  CPPFLAGS; dpkg-buildflags --get CFLAGS)
+LDFLAGS ?= $(shell dpkg-buildflags --get LDFLAGS)
+
+ifneq ($(DEB_BUILD_MULTIARCH),$(DEB_HOST_MULTIARCH))
+  confargs += \
+	have_glibc_memmove_bug=no \
+	have_ipa_pure_const_bug=no
+endif
+
+%:
+	dh $@ --parallel --buildsystem=autoconf
+
+binary binary-indep build build-indep:
+	dh $@ --parallel --buildsystem=autoconf --with sphinxdoc
+
+# work around debhelper, v9 overwrites CFLAGS in the build :-/
+
+override_dh_auto_configure:
+	-env | grep CFLAGS
+	dh_auto_configure -- \
+		--includedir=\$${prefix}/include/$(DEB_HOST_MULTIARCH) \
+		--libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH) \
+		CFLAGS="$(CFLAGS)" \
+		LDFLAGS="$(LDFLAGS)" \
+		$(confargs)
+
+override_dh_auto_test:
+ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+	$(MAKE) -C tests
+	: # needs download of tests, just run additional.decTest
+	ln -sf testdata_dist tests/testdata
+	cd tests && ./runtest ./additional.decTest
+endif
+
+override_dh_makeshlibs:
+	sed \
+	    -e 's/@32@/any-i386 armel armhf hppa m68k mips mipsel powerpc powerpcspe s390 sh4 sparc x32/' \
+	    -e 's/@64@/amd64 arm64 ia64 ppc64 ppc64el s390x sparc64 kfreebsd-amd64/' \
+		debian/libmpdec.symbols.in > debian/libmpdec2.symbols
+	dh_makeshlibs
+
+override_dh_auto_install:
+	dh_auto_install
+	ln -sf libmpdec.so.2 debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/libmpdec.so
+
+override_dh_sphinxdoc:
+	cp -a debian/tmp/usr/share/doc/mpdecimal/* \
+		debian/libmpdec-doc/usr/share/doc/libmpdec-doc
+	rm -f debian/libmpdec-doc/usr/share/doc/libmpdec-doc/LICENSE*
+	rm -f debian/libmpdec-doc/usr/share/doc/libmpdec-doc/INSTALL*
+	cp -p /usr/share/javascript/sphinxdoc/1.0/{doctools,jquery,searchtools,sidebar,underscore}.js \
+		debian/libmpdec-doc/usr/share/doc/libmpdec-doc/_static/.
+	dh_sphinxdoc

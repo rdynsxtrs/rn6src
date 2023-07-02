@@ -1,0 +1,41 @@
+Source: mpdecimal
+Priority: optional
+Maintainer: Matthias Klose <doko@debian.org>
+Build-Depends: debhelper (>= 9), autotools-dev,
+# gmp is only used when running the tests from the separate test tarball
+ libgmp-dev
+Build-Depends-Indep: python3-sphinx
+Standards-Version: 3.9.7
+Section: libs
+Homepage: http://www.bytereef.org/mpdecimal/index.html
+
+Package: libmpdec-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libmpdec2 (= ${binary:Version}), ${sphinxdoc:Depends}, ${misc:Depends}
+Suggests: libmpdec-doc
+Description: library for decimal floating point arithmetic (development files)
+ mpdecimal is a package for correctly-rounded arbitrary precision decimal
+ floating point arithmetic.
+
+Package: libmpdec2
+Section: libs
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Breaks: libmpdec2.3
+Replaces: libmpdec2.3
+Description: library for decimal floating point arithmetic (runtime library)
+ mpdecimal is a package for correctly-rounded arbitrary precision decimal
+ floating point arithmetic.
+
+Package: libmpdec-doc
+Section: doc
+Architecture: all
+Breaks: libmpdec-dev (<< 2.4.0-7)
+Replaces: libmpdec-dev (<< 2.4.0-7)
+Description: library for decimal floating point arithmetic (documentation)
+ mpdecimal is a package for correctly-rounded arbitrary precision decimal
+ floating point arithmetic.
