@@ -1,0 +1,114 @@
+php-gmagick (2.0.5~rc1+1.1.7~rc3-7+0~20201211.14+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 17:12:11 +0100
+
+php-gmagick (2.0.5~rc1+1.1.7~rc3-7+0~20201211.14+debian9~1.gbpe35c00) unstable; urgency=medium
+
+  ** SNAPSHOT build @e35c00f4ef4aee40874ca6f198d6bab53a464bf6 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 11 Dec 2020 10:49:39 +0100
+
+php-gmagick (2.0.5~rc1+1.1.7~rc3-7) unstable; urgency=medium
+
+  * Build the extension only for PHP 5 and PHP 7 (now really)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 17 Oct 2020 06:15:02 +0200
+
+php-gmagick (2.0.5~rc1+1.1.7~rc3-6) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 17 Oct 2020 06:14:27 +0200
+
+php-gmagick (2.0.5~rc1+1.1.7~rc3-5) unstable; urgency=medium
+
+  * Don't fail on failed tests
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 23 Feb 2020 16:41:29 +0100
+
+php-gmagick (2.0.5~rc1+1.1.7~rc3-4) unstable; urgency=medium
+
+  * No change rebuild for Debian buster
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 28 Aug 2019 09:18:26 +0200
+
+php-gmagick (2.0.5~rc1+1.1.7~rc3-3) unstable; urgency=medium
+
+  * Bump the dependency on dh-php to >= 0.33
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 09:52:21 +0000
+
+php-gmagick (2.0.5~rc1+1.1.7~rc3-2) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899641)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 12:19:06 +0000
+
+php-gmagick (2.0.5~rc1+1.1.7~rc3-1) unstable; urgency=medium
+
+  * New upstream version 2.0.5~rc1+1.1.7~rc3
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 08 Apr 2018 06:13:15 +0000
+
+php-gmagick (2.0.4~rc1+1.1.7~rc3-2) unstable; urgency=medium
+
+  * Add Conflicts: php-imagick as the two modules can't be coinstalled
+    together.
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 29 Jun 2017 13:33:49 +0200
+
+php-gmagick (2.0.4~rc1+1.1.7~rc3-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.4~rc1+1.1.7~rc3
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 07 Nov 2016 10:11:56 +0100
+
+php-gmagick (2.0.2~rc1+1.1.7~rc3+-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:17:16 +0200
+
+php-gmagick (2.0.2~rc1+1.1.7~rc3+-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.2~rc1+1.1.7~rc3+
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 13:22:18 +0200
+
+php-gmagick (2.0.2~rc1+1.1.7~rc3-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.2~rc1+1.1.7~rc3
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 07 Mar 2016 12:57:06 +0100
+
+php-gmagick (2.0.1~rc3+1.1.7~rc3-2) unstable; urgency=medium
+
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Feb 2016 22:13:54 +0100
+
+php-gmagick (2.0.1~rc3+1.1.7~rc3-1) unstable; urgency=medium
+
+  * Update d/copyright to include license for embedded Vera.ttf font
+  * Imported Upstream version 2.0.1~rc3+1.1.7~rc3
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Feb 2016 11:45:50 +0100
+
+php-gmagick (2.0.1~rc1+1.1.7~rc3-1) unstable; urgency=medium
+
+  * Initial release
+  * Imported Upstream version 2.0.1~rc1+1.1.7~rc3
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Jan 2016 10:10:21 +0100
