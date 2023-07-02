@@ -1,0 +1,21 @@
+From: Vincent Bernat <vincent@bernat.im>
+Date: Fri, 16 Sep 2016 21:54:48 +0200
+Subject: [PATCH] Use dynamic libprotobuf-c
+
+---
+ config.m4 | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/config.m4 b/config.m4
+index b50499b..4475a03 100644
+--- a/config.m4
++++ b/config.m4
+@@ -8,5 +8,7 @@ if test "$PHP_PINBA" != "no"; then
+   AC_CHECK_HEADERS(malloc.h)
+   PHP_CHECK_FUNC(mallinfo)
+ 
+-  PHP_NEW_EXTENSION(pinba, pinba-pb-c.c pinba.c protobuf-c.c, $ext_shared,, -DNDEBUG)
++  PHP_ADD_LIBRARY(protobuf-c, 1, PINBA_SHARED_LIBADD)
++  PHP_SUBST(PINBA_SHARED_LIBADD)
++  PHP_NEW_EXTENSION(pinba, pinba-pb-c.c pinba.c, $ext_shared,, -DNDEBUG)
+ fi

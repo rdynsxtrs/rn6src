@@ -1,0 +1,24 @@
+From: Vincent Bernat <vincent@bernat.im>
+Date: Sat, 2 Dec 2017 17:50:54 +0100
+Subject: Remove maximum supported PHP version and set minimal version to
+ 7.0.0
+
+---
+ package.xml | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/package.xml b/package.xml
+index de6689f..025c28f 100644
+--- a/package.xml
++++ b/package.xml
+@@ -41,9 +41,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
+  <dependencies>
+   <required>
+    <php>
+-    <min>4.4.8</min>
+-    <max>6.0.0</max>
+-    <exclude>6.0.0</exclude>
++    <min>7.0.0</min>
+    </php>
+    <pearinstaller>
+     <min>1.4.0b1</min>

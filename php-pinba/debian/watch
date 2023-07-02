@@ -1,0 +1,3 @@
+version=3
+opts=filenamemangle=s/.+\/RELEASE_(\d\S*)\.tar\.gz/php-pinba-$1.tar.gz/;s/_/./g,uversionmangle=s/_/./g \
+  https://github.com/tony2001/pinba_extension/releases .*/RELEASE_(\d\S*)\.tar\.gz

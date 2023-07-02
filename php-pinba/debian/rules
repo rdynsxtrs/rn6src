@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+include /usr/share/dh-php/pkg-pecl.mk
+
+$(CONFIGURE_TARGETS): configure-%-stamp: prepare-%-stamp
+prepare-%-stamp:
+	mkdir -p $(PECL_SOURCE_$*)
+	cp -a config.m4 CREDITS NEWS README *.h *.c *.proto tests $(PECL_SOURCE_$*)
+	cd $(PECL_SOURCE_$*) && protoc-c --c_out=. pinba.proto
+	mv $(PECL_SOURCE_$*)/pinba.pb-c.c $(PECL_SOURCE_$*)/pinba-pb-c.c
+	touch prepare-$*-stamp
+
+$(CLEAN_TARGETS): clean-%-stamp: unprepare-%-stamp
+unprepare-%-stamp:
+	-rm prepare-$*-stamp
+	-rm -rf $(PECL_SOURCE_$*)

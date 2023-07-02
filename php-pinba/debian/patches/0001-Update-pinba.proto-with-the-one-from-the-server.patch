@@ -1,0 +1,19 @@
+From: Vincent Bernat <vincent@bernat.im>
+Date: Fri, 16 Sep 2016 21:06:30 +0200
+Subject: [PATCH] Update pinba.proto with the one from the server
+
+---
+ pinba.proto | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/pinba.proto b/pinba.proto
+index 1596199..b9947ae 100644
+--- a/pinba.proto
++++ b/pinba.proto
+@@ -24,4 +24,6 @@ message Request {
+ 	optional string schema          = 19;
+ 	repeated uint32 tag_name        = 20;
+ 	repeated uint32 tag_value       = 21;
++	repeated float timer_ru_utime    = 22;
++	repeated float timer_ru_stime    = 23;
+ }

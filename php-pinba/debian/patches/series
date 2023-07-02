@@ -1,0 +1,4 @@
+0001-Update-pinba.proto-with-the-one-from-the-server.patch
+0002-Use-dynamic-libprotobuf-c.patch
+0003-Remove-maximum-supported-PHP-version.patch
+0004-Build-the-extension-only-for-PHP-7.patch
