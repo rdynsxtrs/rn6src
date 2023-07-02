@@ -1,0 +1,19 @@
+Descriptions: Disable some tests that are failing on certain architectures.
+ The bugs have been reported upstream, see links in the patch below.
+ numpy_subarray fails on big-endian architectures,
+ numpy_memoryview on all powerpc architectures, arm64 and alpha,
+ apparently due to a bug in numpy.
+Author: Tobias Hansen <thansen@debian.org>
+
+--- a/tests/bugs.txt
++++ b/tests/bugs.txt
+@@ -55,3 +55,9 @@
+ 
+ # Inlined generators
+ inlined_generator_expressions
++
++# Skipped in Debian
++# https://github.com/cython/cython/issues/2308
++numpy_memoryview
++# https://github.com/cython/cython/issues/1982
++numpy_subarray

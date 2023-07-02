@@ -1,0 +1,11 @@
+#!/bin/sh
+set -efu
+
+pys="$(py3versions -r 2>/dev/null)"
+
+cd "$AUTOPKGTEST_TMP"
+
+for py in $pys; do
+	echo "=== $py ==="
+	$py -c "import Cython; import Cython.Compiler.Code"
+done

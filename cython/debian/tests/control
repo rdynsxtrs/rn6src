@@ -1,0 +1,5 @@
+Tests: import2
+Depends: cython, cython-dbg, python-all, python-all-dbg
+
+Tests: import3
+Depends: cython3, cython3-dbg, python3-all, python3-all-dbg

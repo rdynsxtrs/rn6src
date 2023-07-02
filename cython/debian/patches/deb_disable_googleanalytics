@@ -1,0 +1,33 @@
+From: Yaroslav Halchenko <debian@onerussian.com>
+Date: Tue, 25 Mar 2014 13:04:01 -0400
+Subject: Disable google analytics calls
+
+  See http://lintian.debian.org/tags/privacy-breach-google-adsense.html for reasoning
+
+Origin: Debian
+Last-Update: 2014-03-25
+---
+ docs/_templates/layout.html | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
+
+diff --git a/docs/_templates/layout.html b/docs/_templates/layout.html
+index a071c96..074eaa6 100644
+--- a/docs/_templates/layout.html
++++ b/docs/_templates/layout.html
+@@ -2,13 +2,7 @@
+ 
+ {% block footer %}
+ {{ super() }}
+-<script type="text/javascript">
+-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+-</script>
+-<script type="text/javascript">
+-try {
+-var pageTracker = _gat._getTracker("UA-6139100-3");
+-pageTracker._trackPageview();
+-} catch(err) {}</script>
++<!-- google analytics snippet as removed by Debian maintainers.
++     See http://lintian.debian.org/tags/privacy-breach-google-adsense.html
++     for more information -->
+ {% endblock %}

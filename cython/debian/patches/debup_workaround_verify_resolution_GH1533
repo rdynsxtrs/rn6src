@@ -1,0 +1,22 @@
+From: Python Applications Packaging Team
+ <python-apps-team@lists.alioth.debian.org>
+Date: Tue, 24 Jan 2017 20:19:43 +0000
+Subject: debup_workaround_verify_resolution_GH1533
+
+---
+ tests/run/cpdef_enums.pyx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/run/cpdef_enums.pyx b/tests/run/cpdef_enums.pyx
+index d2e0945..afa6ed5 100644
+--- a/tests/run/cpdef_enums.pyx
++++ b/tests/run/cpdef_enums.pyx
+@@ -90,7 +90,7 @@ verify_pure_c()
+ 
+ def verify_resolution_GH1533():
+     """
+-    >>> verify_resolution_GH1533()
++    >>> int(verify_resolution_GH1533())
+     3
+     """
+     THREE = 100

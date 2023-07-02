@@ -1,0 +1,5 @@
+deb_nopngmath
+deb_disable_googleanalytics
+honour_SOURCE_DATE_EPOCH_for_copyright_year
+debup_workaround_verify_resolution_GH1533
+disable_tests.patch

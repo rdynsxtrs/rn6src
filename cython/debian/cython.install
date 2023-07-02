@@ -1,0 +1,4 @@
+usr/bin/cython
+usr/bin/cygdb
+usr/lib/python2*/*-packages/*
+Tools/cython-mode.el usr/share/emacs/site-lisp
