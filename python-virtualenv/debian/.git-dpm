@@ -1,0 +1,11 @@
+# see git-dpm(1) from git-dpm package
+66f66d7d96bc2596acaa6e36ac30483bded3d01a
+66f66d7d96bc2596acaa6e36ac30483bded3d01a
+6feb59786db60b88c1771f1d787175a9cfc5e3f1
+6feb59786db60b88c1771f1d787175a9cfc5e3f1
+python-virtualenv_15.1.0+ds.orig.tar.gz
+9494e534dac0f4208063b3831415f8a6a47ba3a6
+88232
+debianTag="debian/%e%v"
+patchedTag="patched/%e%v"
+upstreamTag="upstream/%e%u"

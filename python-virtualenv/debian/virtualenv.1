@@ -1,0 +1,171 @@
+'\" t
+.\"     Title: virtualenv
+.\"    Author: [see the "AUTHORS" section]
+.\" Generator: DocBook XSL Stylesheets v1.75.1 <http://docbook.sf.net/>
+.\"      Date: 12/02/2009
+.\"    Manual:
+.\"    Source:
+.\"  Language: English
+.\"
+.TH "VIRTUALENV" "1" "12/02/2009" "" ""
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+virtualenv \- create virtual Python instances
+.SH "SYNOPSIS"
+.sp
+\fBvirtualenv\fR [options...] [\fIdestination\-directory\fR]
+.SH "DESCRIPTION"
+.sp
+virtualenv creates virtual Python executables, each of which can have
+its own set of installed modules\&. Programs that require different
+versions of modules or sets of modules that may be incompatible with
+others to be installed on the same system without conflicts\&.
+.sp
+The result is a directory containing its own Python executables (in
+\fIDIR\fB/bin/python\fIVER\fR and \fIDIR\fB/bin/python\fR) and its own module
+directory containing the standard library as installed by the system\&.
+Additional modules may be installed via setuptools, as invoked from the
+binary directory (\fIDIR\fB/bin/easy_install\fR)\&. The system\(aas
+site\-packages directories will not be available by default, but can be
+made visible with the \fB\-\-system\-site\-packages\fR option. They can
+then be overridden with locally\-installed modules\&.
+.sp
+In addition, a shell script called "activate" will be installed in the
+bin directory\&. If sourced, this will cause normal invocations of the
+Python executable to use the virtual environment\&.
+.sp
+By running the virtualenv command explicitly under the desired Python
+interpreter, the user can control which version of Python is created in
+the virtual environment\&.
+.SH "OPTIONS"
+.PP
+\fB\-h, \-\-help\fR
+.RS 4
+Show summary of options\&.
+.RE
+.PP
+\fB\-\-version\fR
+.RS 4
+Show the version of the program\&.
+.RE
+.PP
+\fB\-v, \-\-verbose\fR
+.RS 4
+Be more verbose\&.
+.RE
+.PP
+\fB\-q, \-\-quiet\fR
+.RS 4
+Be less verbose; suppress unimportant output\&.
+.RE
+.PP
+\fB\-\-clear\fR
+.RS 4
+Clear out a previously\-created virtual Python instance in this location before creating a new one\&.
+.RE
+.PP
+\fB\-p \fIPYTHON_EXE\fR,\fB\-\-python\fR=\fIPYTHON_EXE\fR
+.RS 4
+The Python interpreter to use to create the new environment\&.
+.RE
+.PP
+\fB\-\-no\-site\-packages\fR
+.RS 4
+Ignored (the default).
+Don\(aat give access to the global site\-packages modules to the virtual
+environment\&.
+.RE
+.PP
+\fB\-\-system\-site\-packages\fR
+.RS 4
+Give access to the global site\-packages modules to the virtual
+environment\&.
+.RE
+.PP
+\fB\-\-always\-copy\fR
+.RS 4
+Always copy files rather than symlinking\&.
+.RE
+.PP
+\fB\-\-unzip\-setuptools\fR
+.RS 4
+Unzip Setuptools when installing it\&.
+This fixes up scripts and makes all \fB.pth\fR files relative\&.
+.RE
+.PP
+\fB\-\-relocatable\fR
+.RS 4
+Make an EXISTING virtualenv environment relocatable\&.
+.RE
+.PP
+\fB\-\-no\-setuptools\fR
+.RS 4
+Do not install setuptools (or pip) in the new virtualenv.
+.RE
+.PP
+\fB\-\-no\-pip\fR
+.RS 4
+Do not install pip in the new virtualenv.
+.RE
+.PP
+\fB\-\-extra\-search\-dir\fR=\fISEARCH_DIRS\fR
+.RS 4
+Directory to search for setuptools/distribute/pip distributions in\&.
+Can be specified multiple times\&.
+.RE
+.PP
+\fB\-\-prompt\fR==\fIPROMPT\fR
+.RS 4
+Provides an alternative prompt prefix for this environment\&.
+.SH "AUTHORS"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+This manual page was originally written by Jeff Licquia <licquia@debian\&.org>, later rewritten by Carl Chenet <chaica@ohmytux\&.com>\&.
+.fi
+.if n \{\
+.RE
+.\}
+.SH "LICENSE"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+Permission is granted to copy, distribute and/or modify this document under the terms of the GNU General Public License, version 2 or any later version published by the Free Software Foundation\&.
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+On Debian systems, the complete text of the GNU General Public License can be found in /usr/share/common\-licenses/GPL\&.
+.fi
+.if n \{\
+.RE
+.\}
+.SH "COPYRIGHT"
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+Copyright \(co 2007 Jeff Licquia
+.fi
+.if n \{\
+.RE
+.\}

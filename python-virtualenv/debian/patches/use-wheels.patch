@@ -1,0 +1,163 @@
+From 622ffb4f43d102425b9fbf60897f403433e06a44 Mon Sep 17 00:00:00 2001
+From: Barry Warsaw <barry@debian.org>
+Date: Fri, 9 Oct 2015 22:23:58 +0200
+Subject: Use distro wheels instead of the bundled wheels.
+
+Prepend the wheel paths onto the front of sys.path.  Also, when the venv
+is created, copy the system wheels into <venv>/lib/python-wheels for use
+by our patched pip wheel.  Make sure the command line script uses the
+system wheels first.
+
+Under Debian, we also have to install pkg_resources and _markerlib.
+Since these get installed from distro wheels, and since Debian splits
+setuptools and pkg_resources into separate binary packages, they get
+built into separate wheels.  Thus we have to explicitly install
+pkg_resources from wheel or assumptions made by Python packages that the
+two always go together will be broken.
+
+Forwarded: not-needed
+
+Patch-Name: use-wheels.patch
+---
+ scripts/virtualenv              |  9 +++++++
+ setup.py                        |  4 ++--
+ virtualenv.egg-info/SOURCES.txt |  4 ++--
+ virtualenv.py                   | 52 ++++++++++++++++++++++++++++++++++++++---
+ 4 files changed, 62 insertions(+), 7 deletions(-)
+
+diff --git a/scripts/virtualenv b/scripts/virtualenv
+index 418bd79..7dd0203 100644
+--- a/scripts/virtualenv
++++ b/scripts/virtualenv
+@@ -1,3 +1,12 @@
+ #!/usr/bin/python3
+ import virtualenv
++
++# Debian: Barry Warsaw <barry@debian.org> 2014-06-02
++# Instead of using the bundled wheels, use the ones in the archive.
++import sys
++for path in virtualenv.find_wheels(virtualenv.DEBIAN_WHEEL_DEPS,
++                                   ['/usr/share/python-wheels']):
++    if path not in sys.path:
++        sys.path.insert(0, path)
++
+ virtualenv.main()
+diff --git a/setup.py b/setup.py
+index ee03bc5..978f1db 100644
+--- a/setup.py
++++ b/setup.py
+@@ -118,6 +118,6 @@ setup(
+     url='https://virtualenv.pypa.io/',
+     license='MIT',
+     py_modules=['virtualenv'],
+-    packages=['virtualenv_support'],
+-    package_data={'virtualenv_support': ['*.whl']},
++    #packages=['virtualenv_support'],
++    #package_data={'virtualenv_support': ['*.whl']},
+     **setup_params)
+diff --git a/virtualenv.egg-info/SOURCES.txt b/virtualenv.egg-info/SOURCES.txt
+index 40ba997..7018270 100644
+--- a/virtualenv.egg-info/SOURCES.txt
++++ b/virtualenv.egg-info/SOURCES.txt
+@@ -41,5 +41,5 @@ virtualenv_embedded/site.py
+ virtualenv_support/__init__.py
+ virtualenv_support/argparse-1.4.0-py2.py3-none-any.whl
+ virtualenv_support/pip-9.0.1-py2.py3-none-any.whl
+-virtualenv_support/setuptools-28.8.0-py2.py3-none-any.whl
+-virtualenv_support/wheel-0.29.0-py2.py3-none-any.whl
+\ No newline at end of file
++virtualenv_support/setuptools-28.7.1-py2.py3-none-any.whl
++virtualenv_support/wheel-0.29.0-py2.py3-none-any.whl
+diff --git a/virtualenv.py b/virtualenv.py
+index 42cd1f4..0e1d03f 100755
+--- a/virtualenv.py
++++ b/virtualenv.py
+@@ -39,6 +39,12 @@ except ImportError:
+ __version__ = "15.1.0"
+ virtualenv_version = __version__  # legacy
+ 
++# Debian: Barry Warsaw <barry@debian.org> 2014-06-06
++DEBIAN_WHEEL_DEPS = [
++    os.path.basename(whl).split('-')[0]
++    for whl in glob.glob('/usr/share/python-wheels/*.whl')
++    ]
++
+ if sys.version_info < (2, 6):
+     print('ERROR: %s' % sys.exc_info()[1])
+     print('ERROR: this script requires Python 2.6 or greater.')
+@@ -398,7 +404,11 @@ def _find_file(filename, dirs):
+ 
+ def file_search_dirs():
+     here = os.path.dirname(os.path.abspath(__file__))
+-    dirs = [here, join(here, 'virtualenv_support')]
++    # Debian: Barry Warsaw <barry@debian.org> 2015-06-11
++    # Don't include the bundled wheels in the search dirs, since we strip them
++    # out in favor of the system wheels.
++    #dirs = [here, join(here, 'virtualenv_support')]
++    dirs = [here, '/usr/share/python-wheels/']
+     if os.path.splitext(os.path.dirname(__file__))[0] != 'virtualenv':
+         # Probably some boot script; just in case virtualenv is installed...
+         try:
+@@ -744,7 +754,16 @@ def call_subprocess(cmd, show_stdout=True,
+             for varname in remove_from_env:
+                 env.pop(varname, None)
+     else:
+-        env = None
++        env = {}
++    # Debian: Barry Warsaw <barry@debian.org> 2014-06-06
++    # We're about to execute $python -c "import sys, pip ..." and run
++    # pip.main().  We have to make sure to find pip and setuptools via the
++    # wheels if they exist.
++    syspath_parts = env.get('PYTHONPATH', '').split(os.pathsep)
++    for path in find_wheels(DEBIAN_WHEEL_DEPS, ['/usr/share/python-wheels']):
++        if path not in syspath_parts:
++            syspath_parts.insert(0, path)
++    env['PYTHONPATH'] = os.pathsep.join(syspath_parts)
+     try:
+         proc = subprocess.Popen(
+             cmd, stderr=subprocess.STDOUT,
+@@ -861,7 +880,8 @@ def install_wheel(project_names, py_executable, search_dirs=None,
+ 
+         import pip
+ 
+-        cert_data = pkgutil.get_data("pip._vendor.requests", "cacert.pem")
++        #cert_data = pkgutil.get_data("pip._vendor.requests", "cacert.pem")
++        cert_data = None
+         if cert_data is not None:
+             cert_file = tempfile.NamedTemporaryFile(delete=False)
+             cert_file.write(cert_data)
+@@ -928,8 +948,34 @@ def create_environment(home_dir, site_packages=False, clear=False,
+ 
+     to_install = []
+ 
++    # Debian: Barry Warsaw <barry@debian.org> 2014-06-06
++    # Copy system wheels into the venv directory where our hacked pip will
++    # search, i.e. <venv>/share/python-wheels.
++    destdir = os.path.join(home_dir, 'share', 'python-wheels')
++    try:
++        # The directory could exist.  Because this code may run under Python
++        # 2, we can't use `exist_ok=True`.  Catch and ignore the old way.
++        os.makedirs(destdir)
++    except OSError as error:
++        if error.errno != errno.EEXIST:
++            raise
++    for project in DEBIAN_WHEEL_DEPS:
++        wheel_names = glob.glob(
++            '/usr/share/python-wheels/{0}-*.whl'.format(project))
++        if len(wheel_names) == 0:
++            raise RuntimeError('missing dependency wheel %s' % project)
++        assert len(wheel_names) == 1, wheel_names
++        wheel_name = os.path.basename(wheel_names[0])
++        path = os.path.join('/usr/share/python-wheels', wheel_name)
++        with open(path, 'rb') as fp:
++            whl = fp.read()
++        dest = os.path.join(destdir, wheel_name)
++        with open(dest, 'wb') as fp:
++            fp.write(whl)
++
+     if not no_setuptools:
+         to_install.append('setuptools')
++        to_install.append('pkg_resources')
+ 
+     if not no_pip:
+         to_install.append('pip')

@@ -1,0 +1,5 @@
+Tests: smoketest-2, smoketest-3
+Restrictions: allow-stderr
+
+Tests: setup-2, setup-3
+Restrictions: allow-stderr

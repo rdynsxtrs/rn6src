@@ -1,0 +1,10 @@
+#!/bin/sh
+
+virtualenv -p python2 $ADTTMP/p2a
+$ADTTMP/p2a/bin/pip install 'world<4'
+$ADTTMP/p2a/bin/world it
+
+virtualenv -p python2 $ADTTMP/p2b
+. $ADTTMP/p2b/bin/activate
+pip install 'world<4'
+world it

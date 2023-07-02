@@ -1,0 +1,10 @@
+#!/bin/sh
+
+virtualenv -p python3 $ADTTMP/p3a
+$ADTTMP/p3a/bin/pip install 'world<4'
+$ADTTMP/p3a/bin/world it
+
+virtualenv -p python3 $ADTTMP/p3b
+. $ADTTMP/p3b/bin/activate
+pip install 'world<4'
+world it

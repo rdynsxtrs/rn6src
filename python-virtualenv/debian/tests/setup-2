@@ -1,0 +1,20 @@
+#!/bin/sh
+
+cat > setup.py <<EOF
+from setuptools import setup, find_packages
+
+setup(
+    name='stupid',
+    version='0.0',
+    packages=find_packages(),
+    )
+EOF
+
+cat > stupid.py <<EOF
+print 'stupid module'
+EOF
+
+virtualenv -p python2 $ADTTMP/p2
+. $ADTTMP/p2/bin/activate
+python setup.py install
+python -c "import stupid"

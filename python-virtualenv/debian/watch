@@ -1,0 +1,4 @@
+version=3
+#opts=pgpsigurlmangle=s/$/.asc/,dversionmangle=s/\+ds$//,repacksuffix=+ds \
+opts=dversionmangle=s/\+ds$//,repacksuffix=+ds \
+http://pypi.debian.net/virtualenv/virtualenv-(.+)\.(?:zip|tgz|tbz|txz|(?:tar\.(?:gz|bz2|xz)))

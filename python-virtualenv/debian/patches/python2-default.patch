@@ -1,0 +1,31 @@
+From 66f66d7d96bc2596acaa6e36ac30483bded3d01a Mon Sep 17 00:00:00 2001
+From: Barry Warsaw <barry@debian.org>
+Date: Fri, 9 Oct 2015 22:23:59 +0200
+Subject: Even though /usr/bin/virtualenv is a Python 3 script now, in
+
+ Debian we still want to default to using Python 2 unless the -p/--python
+ argument is given.
+Forwarded: not-needed
+
+Patch-Name: python2-default.patch
+---
+ virtualenv.py | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/virtualenv.py b/virtualenv.py
+index 0e1d03f..61fe544 100755
+--- a/virtualenv.py
++++ b/virtualenv.py
+@@ -548,9 +548,10 @@ def main():
+         '-p', '--python',
+         dest='python',
+         metavar='PYTHON_EXE',
++        default='python2',
+         help='The Python interpreter to use, e.g., --python=python2.5 will use the python2.5 '
+-        'interpreter to create the new environment.  The default is the interpreter that '
+-        'virtualenv was installed with (%s)' % sys.executable)
++        'interpreter to create the new environment.  The default is the python2 '
++        'interpreter on your path (e.g. /usr/bin/python2)')
+ 
+     parser.add_option(
+         '--clear',
