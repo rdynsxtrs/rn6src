@@ -1,0 +1,1 @@
+php-curl:Breaks=php7.0-curl (<< 7.0.33-1~)
