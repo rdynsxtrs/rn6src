@@ -1,0 +1,10 @@
+0001-01_runtests_gdb.patch
+0002-03_keep_symbols_compat.patch
+0003-04_workaround_as_needed_bug.patch
+0004-06_always-disable-valgrind.patch
+0005-07_do-not-disable-debug-symbols.patch
+0006-08_enable-zsh.patch
+0007-11_omit-directories-from-config.patch
+0008-support-sco-ftp-directory-listings.patch
+0009-90_gnutls.patch
+0010-99_nss.patch

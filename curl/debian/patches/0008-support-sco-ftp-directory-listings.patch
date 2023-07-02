@@ -1,0 +1,27 @@
+From: Alessandro Ghedini <ghedo@debian.org>
+Date: Fri, 6 Apr 2018 15:15:48 -0700
+Subject: support-sco-ftp-directory-listings
+
+---
+ lib/ftplistparser.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/lib/ftplistparser.c b/lib/ftplistparser.c
+index 7668ea8..aefae49 100644
+--- a/lib/ftplistparser.c
++++ b/lib/ftplistparser.c
+@@ -591,8 +591,12 @@ size_t Curl_ftp_parselist(char *buffer, size_t size, size_t nmemb,
+               parser->state.UNIX.sub.size = PL_UNIX_SIZE_NUMBER;
+             }
+             else {
+-              parser->error = CURLE_FTP_BAD_FILE_LIST;
+-              goto fail;
++              /* Rewind and try to parse SCO-style before failing */
++              i -= finfo->b_used - parser->offsets.group;
++              finfo->b_used = parser->offsets.group;
++              parser->item_offset = parser->offsets.group - 1;
++              parser->item_length = 1;
++              parser->state.UNIX.sub.size = PL_UNIX_SIZE_NUMBER;
+             }
+           }
+           break;

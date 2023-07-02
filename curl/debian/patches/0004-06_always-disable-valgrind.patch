@@ -1,0 +1,21 @@
+From: Alessandro Ghedini <ghedo@debian.org>
+Date: Fri, 6 Apr 2018 15:15:48 -0700
+Subject: 06_always-disable-valgrind
+
+---
+ tests/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/Makefile.am b/tests/Makefile.am
+index d6e6cfe..0cc1489 100644
+--- a/tests/Makefile.am
++++ b/tests/Makefile.am
+@@ -67,7 +67,7 @@ curl:
+ if CROSSCOMPILING
+ TEST = @echo "NOTICE: we can't run the tests when cross-compiling!"
+ else # if not cross-compiling:
+-TEST = srcdir=$(srcdir) $(PERL) $(PERLFLAGS) $(srcdir)/runtests.pl
++TEST = srcdir=$(srcdir) $(PERL) $(PERLFLAGS) $(srcdir)/runtests.pl -n
+ TEST_Q = -a -s
+ TEST_AM = -a -am
+ TEST_F = -a -p -r

@@ -1,0 +1,21 @@
+From: Alessandro Ghedini <ghedo@debian.org>
+Date: Fri, 6 Apr 2018 15:15:47 -0700
+Subject: 03_keep_symbols_compat
+
+---
+ lib/libcurl.vers.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/libcurl.vers.in b/lib/libcurl.vers.in
+index ae978a4..bce5633 100644
+--- a/lib/libcurl.vers.in
++++ b/lib/libcurl.vers.in
+@@ -6,7 +6,7 @@ HIDDEN
+     _save*;
+ };
+ 
+-CURL_@CURL_LT_SHLIB_VERSIONED_FLAVOUR@4
++CURL_@CURL_LT_SHLIB_VERSIONED_FLAVOUR@3
+ {
+   global: curl_*;
+   local: *;

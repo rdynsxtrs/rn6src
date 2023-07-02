@@ -1,0 +1,23 @@
+From: Alessandro Ghedini <ghedo@debian.org>
+Date: Fri, 6 Apr 2018 15:15:48 -0700
+Subject: 08_enable-zsh
+
+---
+ Makefile.am | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index bf6bfa9..df31643 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -167,8 +167,8 @@ CLEANFILES = $(VC6_LIBDSP) $(VC6_SRCDSP) $(VC7_LIBVCPROJ) $(VC7_SRCVCPROJ)	\
+ 
+ bin_SCRIPTS = curl-config
+ 
+-SUBDIRS = lib src
+-DIST_SUBDIRS = $(SUBDIRS) tests packages scripts include docs
++SUBDIRS = lib src scripts
++DIST_SUBDIRS = $(SUBDIRS) tests packages include docs
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+ pkgconfig_DATA = libcurl.pc
