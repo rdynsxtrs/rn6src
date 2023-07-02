@@ -1,0 +1,39 @@
+Source: php-uopz
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev
+Standards-Version: 4.4.1.2
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-uopz.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-uopz
+Homepage: http://pecl.php.net/package/uopz
+
+Package: php-uopz
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Recommends: ${pecl:Recommends}
+Description: UOPZ extension for PHP 7
+ The uopz extension is focused on providing utilities to aid with unit testing
+ PHP code.
+ .
+ It supports the following activities:
+  * Intercepting function execution
+  * Intercepting object creation
+  * Hooking into function execution
+  * Manipulation of function statics
+  * Manipulation of function flags
+  * Redefinition of constants
+  * Deletion of constants
+  * Runtime creation of functions and methods

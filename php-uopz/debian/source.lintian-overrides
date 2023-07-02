@@ -1,0 +1,3 @@
+# Override invalid PHP license problem for PHP extensions coming from PECL.PHP.NET
+php-uopz source: license-problem-php-license *
+php-uopz source: pear-package-without-pkg-php-tools-builddep

@@ -1,0 +1,40 @@
+php-uopz (6.1.2-3+0~20201204.3+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 07 Dec 2020 00:32:23 +0100
+
+php-uopz (6.1.2-3+0~20201204.3+debian9~1.gbp05bc94) unstable; urgency=medium
+
+  ** SNAPSHOT build @05bc947526bcd820768f3768816be41829db9453 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 04 Dec 2020 14:40:19 +0100
+
+php-uopz (6.1.2-3) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+  * Build the extension only for PHP 7.1+
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 17 Oct 2020 07:10:21 +0200
+
+php-uopz (6.1.2-2) unstable; urgency=medium
+
+  * Don't fail on failed tests
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 07 Jul 2020 11:18:36 +0200
+
+php-uopz (6.1.2-1) unstable; urgency=medium
+
+  * New upstream version 6.1.2
+  * Finish conversion to debhelper compat level 10
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 07 Jul 2020 11:02:18 +0200
+
+php-uopz (6.1.1-1) unstable; urgency=low
+
+  * Initial release.
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 11:46:35 +0100
