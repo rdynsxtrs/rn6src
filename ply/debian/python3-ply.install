@@ -1,0 +1,2 @@
+debian/tmp/usr/lib/python3*	usr/lib/
+debian/dh_python3-ply		usr/bin/

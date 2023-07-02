@@ -1,0 +1,11 @@
+# see git-dpm(1) from git-dpm package
+30bd4b7bbcf989ec11b211e8bc7a6842889db196
+30bd4b7bbcf989ec11b211e8bc7a6842889db196
+466362e0b5385640af2ec20d3b71f2d5b10ca85e
+466362e0b5385640af2ec20d3b71f2d5b10ca85e
+ply_3.9.orig.tar.gz
+3909910312996082dfa9ca9b5300113636163b66
+150750
+debianTag="debian/%e%v"
+patchedTag="patched/%e%v"
+upstreamTag="upstream/%e%u"

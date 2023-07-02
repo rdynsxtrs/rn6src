@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+
+#export DH_VERBOSE=1
+
+# extra args for 'setup.py install'
+export PYBUILD_INSTALL_ARGS=--no-compile
+
+%:
+	dh $@ --with python2,python3 --buildsystem=pybuild
+
+override_dh_auto_test:
+	PYBUILD_SYSTEM=custom PYBUILD_TEST_ARGS="cd {build_dir}/test && {interpreter} testlex.py && {interpreter} testyacc.py && /bin/sh cleanup.sh" dh_auto_test
+
+override_dh_auto_build:
+	dh_auto_build
+	pod2man debian/dh_python-ply > dh_python-ply.1
+	pod2man debian/dh_python3-ply > dh_python3-ply.1
+
+override_dh_gencontrol:
+	echo "python-ply:Provides=$$(PYTHONPATH=. python debian/virtual-packages.py python-ply)" \
+		>> debian/python-ply.substvars
+	echo "python3-ply:Provides=$$(PYTHONPATH=. python debian/virtual-packages.py python3-ply)" \
+		>> debian/python3-ply.substvars
+	dh_gencontrol
+
+override_dh_compress:
+	dh_compress --exclude=.py

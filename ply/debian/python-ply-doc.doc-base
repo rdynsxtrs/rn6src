@@ -1,0 +1,10 @@
+Document: ply-manual
+Title: PLY (Python Lex-Yacc) Manual
+Author: David M. Beazley
+Abstract: This document is a manual for PLY, a Lex and Yacc
+ implementation for Python
+Section: Programming/Python
+
+Format: HTML
+Index: /usr/share/doc/python-ply/ply.html
+Files: /usr/share/doc/python-ply/*.html
