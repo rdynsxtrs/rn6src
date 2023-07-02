@@ -1,0 +1,2 @@
+# Upstream does not sign releases
+python-hypothesis source: debian-watch-may-check-gpg-signature

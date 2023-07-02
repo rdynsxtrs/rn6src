@@ -1,0 +1,94 @@
+Source: python-hypothesis
+Section: python
+Priority: optional
+Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+Uploaders:
+ Tristan Seligmann <mithrandi@debian.org>,
+ Vincent Bernat <bernat@debian.org>,
+Build-Depends:
+ debhelper (>= 9),
+ dh-python,
+ pypy,
+ pypy-setuptools,
+ python-all,
+ python-enum34,
+ python-setuptools,
+ python3-all,
+ python3-setuptools,
+Standards-Version: 3.9.8
+Homepage: https://github.com/DRMacIver/hypothesis
+Vcs-Git: https://anonscm.debian.org/git/python-modules/packages/python-hypothesis.git
+Vcs-Browser: https://anonscm.debian.org/cgit/python-modules/packages/python-hypothesis.git
+
+Package: python-hypothesis
+Architecture: all
+Depends: python-enum34, ${misc:Depends}, ${python:Depends}
+Suggests: python-hypothesis-doc
+Description: advanced Quickcheck style testing library for Python 2
+ Hypothesis is a library for testing your Python code against a much
+ larger range of examples than you would ever want to write by
+ hand. It's based on the Haskell library, Quickcheck, and is designed
+ to integrate seamlessly into your existing Python unit testing work
+ flow.
+ .
+ Hypothesis is both extremely practical and also advances the state of
+ the art of unit testing by some way. It's easy to use, stable, and
+ extremely powerful. If you're not using Hypothesis to test your
+ project then you're missing out.
+ .
+ This package contains the Python 2 module.
+
+Package: python3-hypothesis
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}
+Suggests: python-hypothesis-doc
+Description: advanced Quickcheck style testing library for Python 3
+ Hypothesis is a library for testing your Python code against a much
+ larger range of examples than you would ever want to write by
+ hand. It's based on the Haskell library, Quickcheck, and is designed
+ to integrate seamlessly into your existing Python unit testing work
+ flow.
+ .
+ Hypothesis is both extremely practical and also advances the state of
+ the art of unit testing by some way. It's easy to use, stable, and
+ extremely powerful. If you're not using Hypothesis to test your
+ project then you're missing out.
+ .
+ This package contains the Python 3 module.
+
+Package: pypy-hypothesis
+Architecture: all
+Depends: pypy-enum34, ${misc:Depends}, ${pypy:Depends}
+Suggests: python-hypothesis-doc
+Description: advanced Quickcheck style testing library for PyPy
+ Hypothesis is a library for testing your Python code against a much
+ larger range of examples than you would ever want to write by
+ hand. It's based on the Haskell library, Quickcheck, and is designed
+ to integrate seamlessly into your existing Python unit testing work
+ flow.
+ .
+ Hypothesis is both extremely practical and also advances the state of
+ the art of unit testing by some way. It's easy to use, stable, and
+ extremely powerful. If you're not using Hypothesis to test your
+ project then you're missing out.
+ .
+ This package contains the PyPy module.
+
+Package: python-hypothesis-doc
+Architecture: all
+Section: doc
+Priority: extra
+Depends: ${misc:Depends}
+Description: advanced Quickcheck style testing library (documentation)
+ Hypothesis is a library for testing your Python code against a much
+ larger range of examples than you would ever want to write by
+ hand. It's based on the Haskell library, Quickcheck, and is designed
+ to integrate seamlessly into your existing Python unit testing work
+ flow.
+ .
+ Hypothesis is both extremely practical and also advances the state of
+ the art of unit testing by some way. It's easy to use, stable, and
+ extremely powerful. If you're not using Hypothesis to test your
+ project then you're missing out.
+ .
+ This package contains the documentation for Hypothesis.

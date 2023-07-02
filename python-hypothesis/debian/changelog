@@ -1,0 +1,157 @@
+python-hypothesis (3.6.1-1+deb9u1+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Thu, 23 Dec 2021 22:44:50 +0100
+
+python-hypothesis (3.6.1-1+deb9u1) stretch; urgency=medium
+
+  [ Andreas Beckmann ]
+  * Non-maintainer upload.
+  * Backport fix from 3.12.0-1 to stretch.
+
+  [ Tristan Seligmann ]
+  * Fix permuted python3-hypothesis and python-hypothesis-doc Depends
+    stanzas (closes: #867435).
+
+ -- Andreas Beckmann <anbe@debian.org>  Mon, 03 Dec 2018 11:35:17 +0100
+
+python-hypothesis (3.6.1-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Mon, 26 Dec 2016 14:45:42 +0200
+
+python-hypothesis (3.6.0-1) unstable; urgency=medium
+
+  * The copyright of tests/cover/test_pretty.py is now documented
+    correctly.
+  * New upstream release.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Mon, 07 Nov 2016 19:48:45 +0200
+
+python-hypothesis (3.4.2-2) unstable; urgency=medium
+
+  [ Julian Taylor ]
+  * add pypy-hypothesis package
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Sat, 27 Aug 2016 18:04:12 +0200
+
+python-hypothesis (3.4.2-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Sat, 16 Jul 2016 17:29:58 +0200
+
+python-hypothesis (3.4.0-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Sat, 25 Jun 2016 02:00:45 +0200
+
+python-hypothesis (3.1.3-3) unstable; urgency=medium
+
+  * Install python3-sphinx-rtd-theme instead of python-sphinx-rtd-theme
+    (closes: #827588, hopefully).
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Thu, 23 Jun 2016 19:23:22 +0200
+
+python-hypothesis (3.1.3-2) unstable; urgency=medium
+
+  * Add python-hypothesis-doc to Suggests.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Sun, 15 May 2016 23:28:36 +0200
+
+python-hypothesis (3.1.3-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 3.9.8 (no changes).
+  * Disable build-time test suite; running the tests takes a long time,
+    and is a little flaky, but hardly anything tested by them is
+    Debian-specific, so upstream would have already caught a bad release.
+    The DEP 8 tests are left, however.
+  * Swap team over to Maintainer.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Sun, 15 May 2016 02:43:24 +0200
+
+python-hypothesis (3.1.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Build python-hypothesis-doc package with documentation.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Sun, 06 Mar 2016 23:40:36 +0200
+
+python-hypothesis (3.0.3-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Add autopkgtest.
+  * Bump Standards-Version to 3.9.7 (no changes).
+  * Add missing dependency on python-enum34; the platform marker obscures
+    it from being detected automatically.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Tue, 23 Feb 2016 14:48:26 +0200
+
+python-hypothesis (3.0.2-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Thu, 18 Feb 2016 22:05:58 +0200
+
+python-hypothesis (3.0.1-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Thu, 18 Feb 2016 15:57:16 +0200
+
+python-hypothesis (3.0.0-1) unstable; urgency=medium
+
+  * Fix watch file to handle alpha version.
+  * New upstream release.
+    - Add Build-Depends: python-enum34.
+  * Switch to https in Vcs-Git.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Wed, 17 Feb 2016 17:44:32 +0200
+
+python-hypothesis (2.0.0-1) unstable; urgency=medium
+
+  * New upstream version.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Sat, 23 Jan 2016 04:34:52 +0200
+
+python-hypothesis (1.18.0-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Switch to GitHub tarball to pick up the tests.
+  * Run the tests at build time (closes: #808039).
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Mon, 21 Dec 2015 13:47:28 +0200
+
+python-hypothesis (1.17.0-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Change in Python 3 compatibility code (closes: #807988).
+  * Add myself to Uploaders.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Wed, 16 Dec 2015 17:12:05 +0200
+
+python-hypothesis (1.16.0-1) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Vincent Bernat ]
+  * Ship README.rst.
+
+  [ Stefano Rivera ]
+  * Update VCS fields for Git migration.
+
+  [ Tristan Seligmann ]
+  * New upstream release.
+  * Remove stray egg-info directory.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Fri, 11 Dec 2015 16:54:37 +0200
+
+python-hypothesis (1.11.0-1) unstable; urgency=medium
+
+  * Initial release. Closes: #799044.
+
+ -- Vincent Bernat <bernat@debian.org>  Tue, 15 Sep 2015 10:17:24 +0200

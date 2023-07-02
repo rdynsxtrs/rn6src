@@ -1,0 +1,11 @@
+# see git-dpm(1) from git-dpm package
+56b9a3bc36584695ed36682c464b94debb064d17
+56b9a3bc36584695ed36682c464b94debb064d17
+56b9a3bc36584695ed36682c464b94debb064d17
+56b9a3bc36584695ed36682c464b94debb064d17
+python-hypothesis_3.6.1.orig.tar.gz
+b2d685c5364aac8c68de014de1720a6d1837a945
+250341
+debianTag="debian/%e%v"
+patchedTag="patched/%e%v"
+upstreamTag="upstream/%e%u"

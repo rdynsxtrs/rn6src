@@ -1,0 +1,17 @@
+Test-Command: for p in $(pyversions -s); do $p -m pytest --assert=plain tests/cover tests/nocover tests/datetime tests/numpy tests/py2; done
+Depends:
+ python-all,
+ python-flaky,
+ python-hypothesis,
+ python-numpy,
+ python-pytest,
+ python-tz,
+
+Test-Command: for p in $(py3versions -s); do $p -m pytest --assert=plain tests/cover tests/nocover tests/datetime tests/numpy tests/py3; done
+Depends:
+ python3-all,
+ python3-flaky,
+ python3-hypothesis,
+ python3-numpy,
+ python3-pytest,
+ python3-tz,

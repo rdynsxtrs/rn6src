@@ -1,0 +1,3 @@
+version=3
+opts=uversionmangle=s/-?(rc|a|b|c|alpha)/~$1/,filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/hypothesis-$1\.tar\.gz/ \
+https://github.com/DRMacIver/hypothesis/releases .*/archive/v?(.+)\.tar\.gz

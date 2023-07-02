@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+# -*- mode: makefile; coding: utf-8 -*-
+
+export LC_ALL=C.UTF-8
+export PYBUILD_NAME=hypothesis
+
+%:
+	# dh $@ --with python2,python3,pypy,sphinxdoc --buildsystem=pybuild
+	dh $@ --with python2,python3,pypy --buildsystem=pybuild
+
+
+override_dh_python3:
+	dh_python3
+	rm -rf debian/python3-hypothesis/usr/lib/python3.?
+
+override_dh_auto_build:
+	dh_auto_build
+	# PYTHONPATH=. \
+	#     http_proxy='127.0.0.1:9' \
+	#     https_proxy='127.0.0.1:9' \
+	#     sphinx-build -N -b html docs/ $(CURDIR)/.pybuild/docs/html/
+
+override_dh_auto_test:
