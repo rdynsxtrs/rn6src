@@ -1,0 +1,122 @@
+php-rrd (2.0.1+1.1.3-9+0~20201204.10+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 07 Dec 2020 00:48:29 +0100
+
+php-rrd (2.0.1+1.1.3-9+0~20201204.10+debian9~1.gbpaef1ed) unstable; urgency=medium
+
+  ** SNAPSHOT build @aef1edd65ad268a4c4766e1dfc75a017da01e216 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 04 Dec 2020 14:39:56 +0100
+
+php-rrd (2.0.1+1.1.3-9) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:40:51 +0200
+
+php-rrd (2.0.1+1.1.3-8) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Build with dh-php >= 1.0
+  * Add patch to support PHP 8.0 (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 22:30:09 +0200
+
+php-rrd (2.0.1+1.1.3-7) unstable; urgency=medium
+
+  * No change rebuild for Debian buster
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 28 Aug 2019 09:21:58 +0200
+
+php-rrd (2.0.1+1.1.3-6) unstable; urgency=medium
+
+  * Bump the required dh-php version to >= 0.33~
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 11:38:42 +0000
+
+php-rrd (2.0.1+1.1.3-5) unstable; urgency=medium
+
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899948)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 14:57:04 +0000
+
+php-rrd (2.0.1+1.1.3-4) unstable; urgency=medium
+
+  * Update changelog for 2.0.1+1.1.3-3 release
+  * Update Vcs-* links to salsa.d.o
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 14 Jan 2018 06:50:08 +0000
+
+php-rrd (2.0.1+1.1.3-3) unstable; urgency=medium
+
+  * Build-Depend on required pkg-config
+  * Revert "Disable PHP 7.1 build as it is not supported"
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 31 Aug 2017 13:33:33 +0200
+
+php-rrd (2.0.1+1.1.3-2) unstable; urgency=medium
+
+  * Disable PHP 7.1 build as it is not supported
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Dec 2016 11:50:43 +0100
+
+php-rrd (2.0.1+1.1.3-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.1+1.1.3
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Dec 2016 11:41:42 +0100
+
+php-rrd (2.0.0+1.1.3+-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:19:36 +0200
+
+php-rrd (2.0.0+1.1.3+-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.0+1.1.3+
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 16:27:31 +0200
+
+php-rrd (2.0.0+1.1.3-4) unstable; urgency=medium
+
+  * Rebuild with dh_php >= 0.7~
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Feb 2016 11:41:33 +0100
+
+php-rrd (2.0.0+1.1.3-3) unstable; urgency=medium
+
+  * Remove autopkgtest copied from imagemagick (Closes: #815842)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 25 Feb 2016 09:46:07 +0100
+
+php-rrd (2.0.0+1.1.3-2) unstable; urgency=medium
+
+  * Re-upload with lintian override for PHP license
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 15 Jan 2016 14:51:42 +0100
+
+php-rrd (2.0.0+1.1.3-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.0+1.1.3
+  * Use the double source version to build RRD for PHP 5.6 and 5.6
+  * Override wrong license-problem-php-license lintian check for packages
+    from PECL
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 10 Jan 2016 07:59:59 +0100
+
+php-rrd (2.0.0~beta3-1) unstable; urgency=low
+
+  * Initial release of 2.0.0 PHP 7.0 compatible series
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 10 Dec 2015 13:39:40 +0100
