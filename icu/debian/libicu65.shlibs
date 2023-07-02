@@ -1,0 +1,7 @@
+libicudata 65 libicu65 (>= 65.1-1~)
+libicui18n 65 libicu65 (>= 65.1-1~)
+libicuio 65 libicu65 (>= 65.1-1~)
+libicutest 65 libicu65 (>= 65.1-1~)
+libicutu 65 libicu65 (>= 65.1-1~)
+libicuuc 65 libicu65 (>= 65.1-1~)
+#libiculx 65 libicu65 (>= 65.1-1~)

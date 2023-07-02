@@ -1,0 +1,5 @@
+source/config.log
+source/config/icu-config.1
+source/test/letest/letest
+source/data/rules.mk
+source/test/testdata/rules.mk

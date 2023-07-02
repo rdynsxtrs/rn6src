@@ -1,0 +1,7 @@
+icudata-stdlibs.patch
+gennorm2-man.patch
+icuinfo-man.patch
+hurd-fix.diff
+layout-test-fix.patch
+flaky-tests.patch
+icu-64.1-data_archive_generation.patch
