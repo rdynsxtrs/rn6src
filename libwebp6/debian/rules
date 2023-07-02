@@ -1,0 +1,34 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# gcc 4.9 ICEs when building libwebp for arm64, use 4.8 for now
+# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=757738
+DEB_HOST_ARCH ?= $(shell dpkg-architecture -q DEB_HOST_ARCH)
+ifeq ($(DEB_HOST_ARCH),arm64)
+  export DEB_CFLAGS_MAINT_APPEND=-frename-registers
+endif
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+
+# dh seems to assume that configure is already there
+configure:
+	./autogen.sh
+
+build build-arch build-indep: configure
+
+%:
+	dh $@ --parallel
+
+override_dh_auto_configure:
+# Force aligned memory operations in non-dsp code on sparc*
+ifneq (,$(findstring $(DEB_HOST_ARCH),sparc sparc64))
+	dh_auto_configure -- --enable-libwebpmux --enable-libwebpdemux --enable-aligned
+else
+	dh_auto_configure -- --enable-libwebpmux --enable-libwebpdemux
+endif
