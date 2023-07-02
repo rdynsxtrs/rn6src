@@ -1,0 +1,30 @@
+Source: php-ds
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev
+Standards-Version: 3.9.8
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-ds.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-ds
+Homepage: http://pecl.php.net/package/ds
+
+Package: php-ds
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Recommends: ${misc:Recommends},
+            ${pecl:Recommends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: PHP extension providing efficient data structures for PHP 7
+ An PHP extension providing specialized data structures as efficient
+ alternatives to the PHP array.

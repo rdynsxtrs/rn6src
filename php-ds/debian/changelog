@@ -1,0 +1,84 @@
+php-ds (1.3.0-1+0~20201211.14+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 18:46:40 +0100
+
+php-ds (1.3.0-1+0~20201211.14+debian9~1.gbp161b3c) unstable; urgency=medium
+
+  ** SNAPSHOT build @161b3c59e6c06109fe3cbbf437a785c3eeab18c7 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 11 Dec 2020 10:49:26 +0100
+
+php-ds (1.3.0-1) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * New upstream version 1.3.0
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 17 Oct 2020 05:59:03 +0200
+
+php-ds (1.2.9-2) unstable; urgency=medium
+
+  * PHP 7.4 Rebuild
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 25 Feb 2020 09:32:42 +0100
+
+php-ds (1.2.9-1) unstable; urgency=medium
+
+  * New upstream version 1.2.9
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 08 Aug 2019 08:25:37 +0200
+
+php-ds (1.2.6-3) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 04 Jan 2019 08:25:52 +0000
+
+php-ds (1.2.6-2) unstable; urgency=medium
+
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899637)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 12:05:41 +0000
+
+php-ds (1.2.6-1) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * New upstream version 1.2.6
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 11:39:42 +0000
+
+php-ds (1.2.5-1) unstable; urgency=medium
+
+  * New upstream version 1.2.5
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 08 Apr 2018 06:05:58 +0000
+
+php-ds (1.2.4-1) unstable; urgency=medium
+
+  * New upstream version 1.2.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 19 Dec 2017 20:58:55 +0000
+
+php-ds (1.2.0-1) unstable; urgency=medium
+
+  * New upstream version 1.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 31 Jul 2017 18:56:45 +0200
+
+php-ds (1.1.8-1) unstable; urgency=medium
+
+  * New upstream version 1.1.8
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 26 Mar 2017 18:34:06 +0200
+
+php-ds (1.1.7-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 17 Mar 2017 18:34:22 +0100
