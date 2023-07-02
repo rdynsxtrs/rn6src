@@ -1,0 +1,111 @@
+argon2 (0~20190702-0.1+1~rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 05 Dec 2020 15:25:30 +0100
+
+argon2 (0~20190702-0.1+0~20190710.3+debian9~1.gbp2fb167) unstable; urgency=medium
+
+  ** SNAPSHOT build @2fb16735e211de42d09081a9b7469410b9211572 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Wed, 10 Jul 2019 11:17:37 +0200
+
+argon2 (0~20190702-0.1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * d/copyright: Use https protocol in Format field
+
+  [ Ondřej Surý ]
+  * Non-maintainer upload.
+  * New upstream version 0~20190702
+
+ -- Ondřej Surý <ondrej@sury.org>  Wed, 10 Jul 2019 10:48:05 +0200
+
+argon2 (0~20171227-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * New upstream release
+  * ABI bump.
+  * Build udeb without a dependency on pthreads.
+
+ -- Matthew Garrett <mjg59@google.com>  Wed, 06 Jun 2018 13:08:10 -0700
+
+argon2 (0~20161029-2) unstable; urgency=medium
+
+  * control: move vcs to salsa gitlab
+  * control: update to policy version 4.1.4
+  * rules: use plain upstream version for pkg-config (Closes: #894885)
+
+ -- Luca Bruno <lucab@debian.org>  Mon, 23 Apr 2018 20:59:38 +0000
+
+argon2 (0~20161029-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Add libargon2-0-udeb package for debian-installer. Required as
+    dependency for libcryptsetup12-udeb. (Closes: #880525)
+
+ -- Jonas Meurer <jonas@freesources.org>  Sat, 06 Jan 2018 17:54:34 +0100
+
+argon2 (0~20161029-1) unstable; urgency=medium
+
+  [ Luca Bruno ]
+  * New upstream version 0~20161029
+
+  [ Tyler Hicks ]
+  * debian/copyright: argon2 is now dual-licensed
+  * debian/libargon2-0.symbols: Add new symbols for argon2id support
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 16 Jul 2017 10:38:31 +0000
+
+argon2 (0~20160821-1) unstable; urgency=medium
+
+  * New upstream release
+    + drop all patches applied upstream
+
+ -- Luca Bruno <lucab@debian.org>  Tue, 30 Aug 2016 15:25:45 +0000
+
+argon2 (0~20160406-3) unstable; urgency=high
+
+  * debian/rules: explicit target for optimizations
+    (Closes: #828779)
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 21 Aug 2016 09:03:33 +0000
+
+argon2 (0~20160406-2) unstable; urgency=medium
+
+  [ Daniel Kahn Gillmor ]
+  * fix Vcs-* endpoints
+  * add manpage for argon2 (Closes: #820491)
+  * bump Standards-Version to 3.9.8 (no changes needed)
+
+  [ Luca Bruno ]
+  * argon2: fix section for utils package
+
+ -- Luca Bruno <lucab@debian.org>  Sat, 16 Apr 2016 09:37:28 +0200
+
+argon2 (0~20160406-1) unstable; urgency=medium
+
+  * First upload to unstable
+
+ -- Luca Bruno <lucab@debian.org>  Fri, 08 Apr 2016 23:47:47 +0200
+
+argon2 (0~20160406-0~exp1) experimental; urgency=medium
+
+  * New upstream release
+    + drop Makefile patch, applied upstream
+    + stable libargon2.so.0 interface, bump symbols
+  * Refreshed debian/control
+    + update Vcs-* endpoints
+    + bump policy version
+
+ -- Luca Bruno <lucab@debian.org>  Thu, 07 Apr 2016 23:40:58 +0200
+
+argon2 (0~20151206-0~exp1) experimental; urgency=medium
+
+  * Initial release (Closes: #810602)
+    + library interface not stable yet, targeting experimental
+
+ -- Luca Bruno <lucab@debian.org>  Fri, 08 Jan 2016 22:34:17 +0100

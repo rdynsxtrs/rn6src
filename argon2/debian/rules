@@ -1,0 +1,44 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/architecture.mk
+include /usr/share/dpkg/buildflags.mk
+include /usr/share/dpkg/default.mk
+
+export PKG=libargon2
+export OPTTARGET=$(DEB_TARGET_GNU_CPU)
+export SONAME=$(PKG).so.$(SOVER)
+export SOPKG=$(PKG)-$(SOVER)
+export SOVER=1
+export DEBPREFIX=0~
+export UPSTREAMVER=$(subst $(DEBPREFIX),,$(DEB_VERSION_UPSTREAM))
+export UDEBLIB=$(SONAME).udeb
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	dh_auto_build -- NO_THREADS=1
+	mv $(SONAME) $(UDEBLIB)
+	dh_auto_build
+
+override_dh_install:
+	dh_install
+	sed -i '/^## /d' debian/${PKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
+	sed -i s/@HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/ debian/${PKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
+	sed -i s/@UPSTREAM_VER@/$(UPSTREAMVER)/ debian/${PKG}-dev/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig/libargon2.pc
+	install -D $(UDEBLIB) debian/$(SOPKG)-udeb/usr/lib/$(DEB_HOST_MULTIARCH)/$(SONAME)
+
+override_dh_auto_clean:
+	dh_auto_clean
+	-rm $(UDEBLIB)
+
+override_dh_auto_test:
+	-$(MAKE) -j1 test
+
+override_dh_makeshlibs:
+	dh_makeshlibs -V --add-udeb="libargon2-1-udeb"

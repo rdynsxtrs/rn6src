@@ -1,0 +1,4 @@
+#!/usr/bin/dh-exec
+include/argon2.h usr/include
+libargon2.a usr/lib/${DEB_HOST_MULTIARCH}
+libargon2.pc usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig

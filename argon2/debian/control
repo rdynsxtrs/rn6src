@@ -1,0 +1,121 @@
+Source: argon2
+Priority: optional
+Maintainer: Luca Bruno <lucab@debian.org>
+Build-Depends: debhelper (>= 9),
+               dh-exec (>=0.3)
+Standards-Version: 4.1.4
+Section: libs
+Homepage: https://github.com/P-H-C/phc-winner-argon2
+Vcs-Browser: https://salsa.debian.org/debian/argon2
+Vcs-Git: https://salsa.debian.org/debian/argon2.git
+
+Package: libargon2-dev
+Section: libdevel
+Architecture: any
+Depends: libargon2-1 (= ${binary:Version}), ${misc:Depends}
+Provides: libargon2-0-dev
+Replaces: libargon2-0-dev
+Conflicts: libargon2-0-dev
+Multi-Arch: same
+Description: memory-hard hashing function - development files
+ Argon2 is a password-hashing function that can be used to hash passwords
+ for credential storage, key derivation, or other applications.
+ .
+ There are two main versions of Argon2: Argon2i and Argon2d.
+ Argon2i is the safest against side-channel attacks, while Argon2d provides
+ the highest resistance against GPU cracking attacks.
+ .
+ Argon2i and Argon2d are parametrized by:
+  * A time cost, which defines the amount of computation realized and
+    therefore the execution time, given in number of iterations
+  * A memory cost, which defines the memory usage, given in kibibytes
+  * A parallelism degree, which defines the number of parallel threads
+ .
+ This package contains headers and libraries for developing program based
+ on argon2.
+
+Package: libargon2-0
+Section: libdevel
+Architecture: any
+Depends: libargon2-1 (= ${binary:Version})
+Description: memory-hard hashing function - runtime library
+ Argon2 is a password-hashing function that can be used to hash passwords
+ for credential storage, key derivation, or other applications.
+ .
+ There are two main versions of Argon2: Argon2i and Argon2d.
+ Argon2i is the safest against side-channel attacks, while Argon2d provides
+ the highest resistance against GPU cracking attacks.
+ .
+ Argon2i and Argon2d are parametrized by:
+  * A time cost, which defines the amount of computation realized and
+    therefore the execution time, given in number of iterations
+  * A memory cost, which defines the memory usage, given in kibibytes
+  * A parallelism degree, which defines the number of parallel threads
+ .
+ This package provides compatibility for packages built against older
+ versions of libargon2.
+
+
+Package: libargon2-1
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Multi-Arch: same
+Description: memory-hard hashing function - runtime library
+ Argon2 is a password-hashing function that can be used to hash passwords
+ for credential storage, key derivation, or other applications.
+ .
+ There are two main versions of Argon2: Argon2i and Argon2d.
+ Argon2i is the safest against side-channel attacks, while Argon2d provides
+ the highest resistance against GPU cracking attacks.
+ .
+ Argon2i and Argon2d are parametrized by:
+  * A time cost, which defines the amount of computation realized and
+    therefore the execution time, given in number of iterations
+  * A memory cost, which defines the memory usage, given in kibibytes
+  * A parallelism degree, which defines the number of parallel threads
+ .
+ This package includes the dynamic library against which programs are linked.
+
+Package: argon2
+Section: utils
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Multi-Arch: foreign
+Description: memory-hard hashing function - utility
+ Argon2 is a password-hashing function that can be used to hash passwords
+ for credential storage, key derivation, or other applications.
+ .
+ There are two main versions of Argon2: Argon2i and Argon2d.
+ Argon2i is the safest against side-channel attacks, while Argon2d provides
+ the highest resistance against GPU cracking attacks.
+ .
+ Argon2i and Argon2d are parametrized by:
+  * A time cost, which defines the amount of computation realized and
+    therefore the execution time, given in number of iterations
+  * A memory cost, which defines the memory usage, given in kibibytes
+  * A parallelism degree, which defines the number of parallel threads
+ .
+ This package contains the argon2 tool for hashing data on the command-line.
+
+Package: libargon2-1-udeb
+Section: debian-installer
+Package-Type: udeb
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: memory-hard hashing function - runtime library (udeb)
+ Argon2 is a password-hashing function that can be used to hash passwords
+ for credential storage, key derivation, or other applications.
+ .
+ There are two main versions of Argon2: Argon2i and Argon2d.
+ Argon2i is the safest against side-channel attacks, while Argon2d provides
+ the highest resistance against GPU cracking attacks.
+ .
+ Argon2i and Argon2d are parametrized by:
+  * A time cost, which defines the amount of computation realized and
+    therefore the execution time, given in number of iterations
+  * A memory cost, which defines the memory usage, given in kibibytes
+  * A parallelism degree, which defines the number of parallel threads
+ .
+ This udeb package includes the dynamic library for the Debian Installer.
