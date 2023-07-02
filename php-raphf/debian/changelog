@@ -1,0 +1,106 @@
+php-raphf (2.0.1+1.1.2-3+0~20201204.9+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 07 Dec 2020 01:02:40 +0100
+
+php-raphf (2.0.1+1.1.2-3+0~20201204.9+debian9~1.gbp685057) unstable; urgency=medium
+
+  ** SNAPSHOT build @68505700f9e24e40d4c333dae645983470a77703 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 04 Dec 2020 14:32:39 +0100
+
+php-raphf (2.0.1+1.1.2-3) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:40:21 +0200
+
+php-raphf (2.0.1+1.1.2-2) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * add minor fix from https://github.com/m6w6/ext-raphf/pull/9
+  * Build with dh-php >= 1.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 22:20:30 +0200
+
+php-raphf (2.0.1+1.1.2-1) unstable; urgency=medium
+
+  * New upstream version 2.0.1+1.1.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 12:05:40 +0100
+
+php-raphf (2.0.0+1.1.2-5) unstable; urgency=medium
+
+  * No change rebuild for Debian buster
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 28 Aug 2019 09:21:42 +0200
+
+php-raphf (2.0.0+1.1.2-4) unstable; urgency=medium
+
+  * Bump the required dh-php version to >= 0.33~
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 11:29:30 +0000
+
+php-raphf (2.0.0+1.1.2-3) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899649)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 13:11:59 +0000
+
+php-raphf (2.0.0+1.1.2-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:21:30 +0200
+
+php-raphf (2.0.0+1.1.2-1) unstable; urgency=medium
+
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+  * Imported Upstream version 2.0.0+1.1.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 17:18:39 +0200
+
+php-raphf (2.0.0-1) unstable; urgency=medium
+
+  * Move the package under Debian PHP PECL Maintainers umbrella
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 06 Apr 2016 19:57:13 +0200
+
+php-raphf (2.0.0-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * PHP PECL team upload.
+  * Properly package for PHP 7 based on Nish's work in Ubuntu
+   + Kill php-raphf-dev as we don't want one file packages
+   + Use dh_php to install .ini file (Closes: #782576)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 05 Apr 2016 12:29:10 +0200
+
+php-raphf (2.0.0-0ubuntu1) xenial; urgency=medium
+
+  * New upstream release.  LP: #1564566.
+
+ -- Nishanth Aravamudan <nish.aravamudan@canonical.com>  Thu, 31 Mar 2016 11:58:32 -0700
+
+php-raphf (1.0.4-1build1) vivid; urgency=medium
+
+  * No change rebuild against PHP 5.6 (phpapi-20131226).
+
+ -- Robie Basak <robie.basak@ubuntu.com>  Tue, 27 Jan 2015 15:58:22 +0000
+
+php-raphf (1.0.4-1) unstable; urgency=low
+
+  * Initial Release (Closes: #737228).
+  * This dupload has been sponsored by OLX Inc.
+
+ -- Facundo Guerrero <guerremdq@gmail.com>  Tue, 04 Feb 2014 13:25:31 -0300
+

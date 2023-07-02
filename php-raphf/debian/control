@@ -1,0 +1,29 @@
+Source: php-raphf
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Facundo Guerrero <guerremdq@gmail.com>,
+           Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev
+Standards-Version: 3.9.8
+Homepage: http://pecl.php.net/package/raphf
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-raphf.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-raphf
+
+Package: php-raphf
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: raphf module for PHP
+ A reusable split-off of pecl_http persistent handle and
+ resource factory API.

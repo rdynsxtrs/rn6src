@@ -1,0 +1,3 @@
+version=3
+http://pecl.php.net/package/raphf \
+  /get/raphf-([\d\.]*).tgz  debian  uupdate

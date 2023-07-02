@@ -1,0 +1,21 @@
+From: Remi Collet <remi@remirepo.net>
+Date: Mon, 21 Sep 2020 15:48:01 +0200
+Subject: fix format, used is unsigned long
+
+---
+ raphf-2.0.1/src/php_raphf_api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/raphf-2.0.1/src/php_raphf_api.c b/raphf-2.0.1/src/php_raphf_api.c
+index 004fd66..d71ce36 100644
+--- a/raphf-2.0.1/src/php_raphf_api.c
++++ b/raphf-2.0.1/src/php_raphf_api.c
+@@ -624,7 +624,7 @@ static int php_persistent_handle_apply_info_ex(zval *p, int argc,
+ 	zend_hash_key *super_key = va_arg(argv, zend_hash_key *);
+ 	char used[21], free[21];
+ 
+-	slprintf(used, sizeof(used), "%u", list->used);
++	slprintf(used, sizeof(used), "%lu", list->used);
+ 	slprintf(free, sizeof(free), "%d", zend_hash_num_elements(&list->free));
+ 
+ 	php_info_print_table_row(4, super_key->key->val, key->key->val, used, free);
