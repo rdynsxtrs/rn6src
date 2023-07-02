@@ -1,0 +1,27 @@
+Source: php-msgpack
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Mathieu Parent <sathieu@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev
+Standards-Version: 3.9.8
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-msgpack
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-msgpack.git
+Homepage: http://pecl.php.net/package/msgpack
+
+Package: php-msgpack
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: PHP extension for interfacing with MessagePack
+ This extension provide API for communicating with MessagePack serialization.
