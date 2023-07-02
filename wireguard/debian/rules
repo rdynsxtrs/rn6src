@@ -1,0 +1,23 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/default.mk
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_VERSION_UPSTREAM
+
+WIREGUARD_ARGS = WITH_BASHCOMPLETION=yes WITH_WGQUICK=yes WITH_SYSTEMDUNITS=yes V=1
+
+%:
+	dh $@
+
+override_dh_auto_build-arch:
+	dh_auto_build --sourcedirectory=src -- $(WIREGUARD_ARGS)
+
+override_dh_auto_install-arch:
+	$(MAKE) -C src DESTDIR=../debian/wireguard-tools $(WIREGUARD_ARGS) install
+
+override_dh_fixperms:
+	dh_fixperms -Xetc/wireguard
+
+override_dh_installexamples:
+	dh_installexamples -Xexternal-tests
