@@ -1,0 +1,59 @@
+Source: ruby-ronn
+Section: ruby
+Priority: optional
+Maintainer: Debian Ruby Extras Maintainers <pkg-ruby-extras-maintainers@lists.alioth.debian.org>
+Uploaders: Martin Ueding <dev@martin-ueding.de>
+Build-Depends: debhelper (>= 9~),
+               gem2deb,
+               rake,
+               ruby-contest,
+               ruby-hpricot (>= 0.8.2),
+               ruby-json,
+               ruby-mustache (>= 0.7.0),
+               ruby-rdiscount (>= 1.5.8),
+               ruby-test-unit
+Standards-Version: 3.9.8
+Homepage: https://rtomayko.github.com/ronn
+Vcs-Git: https://anonscm.debian.org/git/pkg-ruby-extras/ruby-ronn.git
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-ruby-extras/ruby-ronn.git
+Testsuite: autopkgtest-pkg-ruby
+XS-Ruby-Versions: all
+
+Package: ruby-ronn
+Architecture: all
+XB-Ruby-Versions: ${ruby:Versions}
+Depends: ruby | ruby-interpreter,
+         groff,
+         ruby-hpricot (>= 0.8.2),
+         ruby-mustache (>= 0.7.0),
+         ruby-rdiscount (>= 1.5.8),
+         ${misc:Depends}
+Description: Builds manuals from Markdown
+ Ronn builds manuals. It converts simple, human readable textfiles to roff for
+ terminal display, and also to HTML for the web.
+ .
+ The source format includes all of Markdown but has a more rigid structure and
+ syntax extensions for features commonly found in manpages (definition lists,
+ link notation, etc.). The ronn-format(7) manual page defines the format in
+ detail.
+ .
+ This package contains the ronn ruby library.
+
+Package: ronn
+Architecture: all
+Multi-Arch: foreign
+Depends: ruby | ruby-interpreter,
+         ruby-ronn (= ${source:Version}),
+         ${misc:Depends}
+Breaks: ruby-ronn (<< 0.7.3-5.1)
+Replaces: ruby-ronn (<< 0.7.3-5.1)
+Description: Builds manuals from Markdown
+ Ronn builds manuals. It converts simple, human readable textfiles to roff for
+ terminal display, and also to HTML for the web.
+ .
+ The source format includes all of Markdown but has a more rigid structure and
+ syntax extensions for features commonly found in manpages (definition lists,
+ link notation, etc.). The ronn-format(7) manual page defines the format in
+ detail.
+ .
+ This package contains the ronn conversion tool.

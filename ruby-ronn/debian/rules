@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+export GEM2DEB_TEST_RUNNER = --check-dependencies
+export DH_RUBY_USE_DH_AUTO_INSTALL_DESTDIR=yes
+
+%:
+	dh $@ --buildsystem=ruby --with ruby
+
+override_dh_installdocs:
+	dh_installdocs --link-doc=ruby-ronn

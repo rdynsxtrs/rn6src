@@ -1,0 +1,42 @@
+Description: Do not require rubygems
+ Since this is not deployed as a ruby gem any more, requiring rubygems does not
+ make sense.
+
+---
+
+Origin: vendor
+Forwarded: no
+Reviewed-By: Cédric Boutillier <cedric.boutillier@gmail.com> 
+Last-Update: 2011-10-04
+
+--- ruby-ronn-0.7.3.orig/bin/ronn
++++ ruby-ronn-0.7.3/bin/ronn
+@@ -43,25 +43,9 @@ end
+ ##
+ # Libraries and LOAD_PATH shenanigans
+ 
+-begin
+-  require 'rdiscount'
+-  require 'hpricot'
+-  require 'ronn'
+-rescue LoadError => boom
+-  if boom.to_s =~ /ronn/
+-    libdir = File.expand_path("../../lib", __FILE__).sub(%r|^#{Dir.pwd}/|, './')
+-    if File.directory?(libdir) && !$:.include?(libdir)
+-      warn "warn: #{boom}. adding #{libdir} to RUBYLIB ..."
+-      $:.unshift libdir
+-      retry
+-    end
+-  elsif !defined?(Gem)
+-    warn "warn: #{boom}. loading rubygems ..."
+-    require 'rubygems'
+-    retry
+-  end
+-  abort boom.to_s
+-end
++require 'rdiscount'
++require 'hpricot'
++require 'ronn'
+ 
+ ##
+ # Argument defaults

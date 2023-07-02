@@ -1,0 +1,87 @@
+Description: Use the correct interpreter in the unit tests
+
+---
+
+Origin: vendor
+Forwarded: no
+Reviewed-By: Cédric Boutillier <cedric.boutillier@gmail.com> 
+Last-Update: 2011-11-04
+
+--- a/test/test_ronn.rb
++++ b/test/test_ronn.rb
+@@ -5,17 +5,19 @@
+ 
+   # setup PATH so that we execute the right ronn command
+   bindir = File.dirname(testdir) + "/bin"
+-  ENV['PATH'] = "#{bindir}:#{ENV['PATH']}"
++#  ENV['PATH'] = "#{bindir}:#{ENV['PATH']}"
+ 
+   # make sure the load path is setup correctly
+   libdir = File.expand_path("#{testdir}/../lib")
+   $:.unshift(libdir) unless $:.any? { |path| File.expand_path(path) == libdir }
+   ENV['RUBYLIB'] = $:.join(':')
+ 
++  ronn = ENV['RUBY_TEST_BIN'] + " " + bindir + "/ronn"
++
+   require 'ronn'
+ 
+   test "takes ronn text on stdin and produces roff on stdout" do
+-    output = `echo '# hello(1) -- hello world' | ronn --date=2009-11-23`
++    output = `echo '# hello(1) -- hello world' | #{ronn} --date=2009-11-23`
+     lines = output.split("\n")
+     assert_equal 7, lines.size
+     assert_equal %[.\\" generated with Ronn/v#{Ronn::version}], lines.shift
+@@ -37,12 +39,12 @@
+   end
+ 
+   test "produces html instead of roff with the --html argument" do
+-    output = `echo '# hello(1) -- hello world' | ronn --html`
++    output = `echo '# hello(1) -- hello world' | #{ronn} --html`
+     assert_match(/<h2 id='NAME'>NAME<\/h2>/, canonicalize(output))
+   end
+ 
+   test "produces html fragment with the --fragment argument" do
+-    output = `echo '# hello(1) -- hello world' | ronn --fragment`
++    output = `echo '# hello(1) -- hello world' | #{ronn} --fragment`
+     assert_equal [
+       "<div class='mp'>",
+       "<h2 id='NAME'>NAME</h2>",
+@@ -53,17 +55,17 @@
+   end
+ 
+   test "abbides by the RONN_MANUAL environment variable" do
+-    output = `echo '# hello(1) -- hello world' | RONN_MANUAL='Some Manual' ronn --html`
++    output = `echo '# hello(1) -- hello world' | RONN_MANUAL='Some Manual' #{ronn} --html`
+     assert_match(/Some Manual/, output)
+   end
+ 
+   test "abbides by the RONN_DATE environment variable" do
+-    output = `echo '# hello(1) -- hello world' | RONN_DATE=1979-01-01 ronn --html`
++    output = `echo '# hello(1) -- hello world' | RONN_DATE=1979-01-01 #{ronn} --html`
+     assert_match(/January 1979/, output)
+   end
+ 
+   test "abbides by the RONN_ORGANIZATION environment variable" do
+-    output = `echo '# hello(1) -- hello world' | RONN_ORGANIZATION='GitHub' ronn --html`
++    output = `echo '# hello(1) -- hello world' | RONN_ORGANIZATION='GitHub' #{ronn} --html`
+     assert_match(/GitHub/, output)
+   end
+ 
+@@ -73,7 +75,7 @@
+     next unless File.exist?(dest)
+     wrong = dest + '.wrong'
+     test File.basename(source, '.ronn') + ' HTML' do
+-      output = `ronn --pipe --html --fragment #{source}`
++      output = `#{ronn} --pipe --html --fragment #{source}`
+       expected = File.read(dest) rescue ''
+       if expected != output
+         File.open(wrong, 'wb') { |f| f.write(output) }
+@@ -91,7 +93,7 @@
+     next unless File.exist?(dest)
+     wrong = dest + '.wrong'
+     test File.basename(source, '.ronn') + ' roff' do
+-      output = `ronn --pipe --roff --date=1979-01-01 #{source}`.
++      output = `#{ronn} --pipe --roff --date=1979-01-01 #{source}`.
+         split("\n", 4).last # remove ronn version comments
+       expected = File.read(dest) rescue ''
+       if expected != output

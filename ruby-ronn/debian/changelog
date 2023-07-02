@@ -1,0 +1,83 @@
+ruby-ronn (0.7.3-5.1+0~rnx2) unstable; urgency=medium
+
+  * rebuilt fpr gcc 4.9.2
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 05 Dec 2020 18:35:39 +0100
+
+ruby-ronn (0.7.3-5.1+0~rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 28 Dec 2019 15:04:09 +0100
+
+ruby-ronn (0.7.3-5.1+0~20191008.1+debian8~1.gbpbd3ec3) unstable; urgency=medium
+
+  ** SNAPSHOT build @bd3ec3f368b5b5259ba408d6ef7e907725df120e **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Tue, 08 Oct 2019 18:46:33 +0200
+
+ruby-ronn (0.7.3-5.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Split to new package ronn and mark it M-A:foreign. (Closes: #882163)
+
+ -- Helmut Grohne <helmut@subdivi.de>  Sun, 17 Jun 2018 20:19:10 +0200
+
+ruby-ronn (0.7.3-5) unstable; urgency=medium
+
+  * Team upload.
+  * Replace existing output reproducibility patch with a new, less invasive
+    one. Thanks to Chris Lamb for the original patch (Closes: #829362)
+  * Refresh packaging with `dh-maske-ruby -w`.
+
+ -- Antonio Terceiro <terceiro@debian.org>  Sat, 03 Sep 2016 12:08:42 -0300
+
+ruby-ronn (0.7.3-4) unstable; urgency=medium
+
+  * Team upload
+
+  [ Sebastien Badia ]
+  * Add ruby-test-unit to Build-Depends for ruby2.2
+  * Update Vcs-Browser to cgit URL and HTTPS
+
+  [ Cédric Boutillier ]
+  * Bump debhelper compatibility level to 9
+  * Remove version in the gem2deb build-dependency
+  * Use https:// in Vcs-* fields
+  * Bump Standards-Version to 3.9.7 (no changes needed)
+  * Add dependency on groff (Closes: #771599)
+  * Use locale agnostic output to make build of packages using ronn
+    reproducible. Thanks Chris Lamb for the patch (Closes: #807201)
+
+ -- Cédric Boutillier <boutil@debian.org>  Sat, 05 Mar 2016 17:08:42 +0100
+
+ruby-ronn (0.7.3-3) unstable; urgency=low
+
+  * Team upload.
+  * d/control:
+    - added Vcs headers
+    - bumped up standards version to 3.9.6 (no changes needed)
+    - wrap sort
+    - added Testsuite headers
+  * d/copyright: removed newline
+
+ -- Jonas Genannt <jonas.genannt@capi2name.de>  Thu, 09 Oct 2014 13:33:40 +0200
+
+ruby-ronn (0.7.3-2) unstable; urgency=low
+
+  * Team upload.
+  * Disable tests relying on ordered hashes (Closes: #674380)
+  * Build against gem2deb >=0.3.0~
+  * Bump Standards-Version to 3.9.3 (no changes needed)
+  * Update debian/copyright to DEP-5 copyright-format/1.0
+
+ -- Cédric Boutillier <cedric.boutillier@gmail.com>  Thu, 28 Jun 2012 00:52:20 +0200
+
+ruby-ronn (0.7.3-1) unstable; urgency=low
+
+  * Initial release (Closes: #643672)
+
+ -- Martin Ueding <dev@martin-ueding.de>  Sun, 25 Sep 2011 15:09:46 +0200

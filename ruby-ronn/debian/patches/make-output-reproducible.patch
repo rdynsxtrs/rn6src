@@ -1,0 +1,22 @@
+From 7361d1e535cf4c07e4a9fa352e27e76e3cfaca58 Mon Sep 17 00:00:00 2001
+From: Chris Lamb <chris@chris-lamb.co.uk>
+Date: Sat, 2 Jul 2016 21:11:41 +0200
+Subject: [PATCH] Make the output reproducible.
+
+When a document has not explicit date set, fallback to the SOURCE_DATE_EPOCH[0]
+environment variable before using the current time.
+
+ [0] https://reproducible-builds.org/specs/source-date-epoch/
+
+Signed-off-by: Chris Lamb <chris@chris-lamb.co.uk>
+Signed-off-by: Antonio Terceiro <terceiro@debian.org>
+--- a/lib/ronn/document.rb
++++ b/lib/ronn/document.rb
+@@ -165,6 +165,7 @@ module Ronn
+     # the current time.
+     def date
+       return @date if @date
++      return Time.at(ENV['SOURCE_DATE_EPOCH'].to_i).gmtime if ENV['SOURCE_DATE_EPOCH']
+       return File.mtime(path) if File.exist?(path)
+       Time.now
+     end

@@ -1,0 +1,4 @@
+not-require-rubygems
+use-correct-interpreter
+disable_tests_relying_on_hash_order.patch
+make-output-reproducible.patch
