@@ -1,0 +1,29 @@
+Source: php-uuid
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev (>= 17~),
+               uuid-dev
+Standards-Version: 3.9.8
+Homepage: https://pecl.php.net/package/uuid
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-uuid.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-uuid
+
+Package: php-uuid
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ucf,
+         ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: PHP UUID extension
+ A thin wrapper around libuuid from the ext2utils project

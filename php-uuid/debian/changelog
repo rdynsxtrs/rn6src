@@ -1,0 +1,81 @@
+php-uuid (1.1.0-2+0~20201204.10+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 07 Dec 2020 00:28:03 +0100
+
+php-uuid (1.1.0-2+0~20201204.10+debian9~1.gbp1ff561) unstable; urgency=medium
+
+  ** SNAPSHOT build @1ff5616126c776fa527b688fd6de12a21d58ac99 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 04 Dec 2020 14:32:56 +0100
+
+php-uuid (1.1.0-2) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 12 Oct 2020 12:19:22 +0200
+
+php-uuid (1.1.0-1) unstable; urgency=medium
+
+  * New upstream version 1.1.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 12:12:19 +0100
+
+php-uuid (1.0.4-8) unstable; urgency=medium
+
+  * No change rebuild for Debian buster
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 28 Aug 2019 09:23:18 +0200
+
+php-uuid (1.0.4-7) unstable; urgency=medium
+
+  * Bump the required dh-php version to >= 0.33~
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 12:16:02 +0000
+
+php-uuid (1.0.4-6) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899651)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 13:39:29 +0000
+
+php-uuid (1.0.4-5) unstable; urgency=medium
+
+  * Rebuild with PHP 7.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Dec 2016 12:31:02 +0100
+
+php-uuid (1.0.4-4) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:20:58 +0200
+
+php-uuid (1.0.4-3) unstable; urgency=medium
+
+  * Add Vcs-* links
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 16:43:24 +0200
+
+php-uuid (1.0.4-2) unstable; urgency=medium
+
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 01 Mar 2016 00:17:18 +0100
+
+php-uuid (1.0.4-1) unstable; urgency=low
+
+  * Initial release
+  * Switch license to LGPL-2.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 08 Jan 2016 14:02:39 +0100
