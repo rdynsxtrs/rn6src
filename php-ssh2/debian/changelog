@@ -1,0 +1,205 @@
+php-ssh2 (1.2+0.13-3+0~20201204.12+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 07 Dec 2020 00:36:48 +0100
+
+php-ssh2 (1.2+0.13-3+0~20201204.12+debian9~1.gbp06e644) unstable; urgency=medium
+
+  ** SNAPSHOT build @06e6442ae7ebbfa25a05b2e889ddcc62ed717b95 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 04 Dec 2020 14:32:50 +0100
+
+php-ssh2 (1.2+0.13-3) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 12 Oct 2020 12:16:17 +0200
+
+php-ssh2 (1.2+0.13-2) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Add upstream patches to fix PHP 7.4 and PHP 8.0 builds
+    (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 12 Oct 2020 12:14:32 +0200
+
+php-ssh2 (1.2+0.13-1) unstable; urgency=medium
+
+  * New upstream version 1.2+0.13
+  * Remove all patches merged in upstream release
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 12:10:29 +0100
+
+php-ssh2 (1.1.2+0.13-5) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+
+ -- Ondřej Surý <ondrej@sury.org>  Tue, 27 Aug 2019 12:05:21 +0200
+
+php-ssh2 (1.1.2+0.13-4) unstable; urgency=medium
+
+  * Bump the required dh-php version to >= 0.33~
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 12:10:29 +0000
+
+php-ssh2 (1.1.2+0.13-3) unstable; urgency=medium
+
+  * Add patches for PHP 7.3 (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 03 Oct 2018 07:27:58 +0000
+
+php-ssh2 (1.1.2+0.13-2) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899650)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 13:29:51 +0000
+
+php-ssh2 (1.1.2+0.13-1) unstable; urgency=medium
+
+  * New upstream version 1.1.2+0.13
+  * Update debian/patches for 1.1.2 release
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 31 Jul 2017 19:19:14 +0200
+
+php-ssh2 (1.0+0.13-2) unstable; urgency=medium
+
+  * Apply patches to fix ssh2 to work again with 5.6.28 and 7.0.13
+    (Courtesy of Remi Collet) (Closes: #849946)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 22 Nov 2016 21:22:53 +0100
+
+php-ssh2 (1.0+0.13-1) unstable; urgency=medium
+
+  * Imported Upstream version 1.0+0.13
+  * Remove version patch
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 25 Jul 2016 13:27:39 +0200
+
+php-ssh2 (0.12-50-gaa1739a+0.12+-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:20:29 +0200
+
+php-ssh2 (0.12-50-gaa1739a+0.12+-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.12-50-gaa1739a+0.12+
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+  * Change upstream release version to 0.12-50-gaa1739a for PHP 7.0 git
+    branch
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 16:38:28 +0200
+
+php-ssh2 (0.12-50-gaa1739a+0.12-1) unstable; urgency=medium
+
+  * gbp.conf back at master/pristine-tar/upstream
+  * Imported Upstream version 0.12-50-gaa1739a+0.12
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 15 Apr 2016 15:21:50 +0200
+
+php-ssh2 (0.12-42-g50d97a5+0.12-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.12-42-g50d97a5+0.12
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 01 Mar 2016 00:13:23 +0100
+
+php-ssh2 (0.12-39-g3dfe336+0.12-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.12-39-g3dfe336+0.12
+  * Build php-ssh2 version for PHP 5.6 and 7.0
+  * Override wrong license-problem-php-license lintian check for packages
+    from PECL
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 12 Jan 2016 09:42:16 +0100
+
+php-ssh2 (0.12-39-g3dfe336-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.12-39-g3dfe336
+  * Convert package to PHP 7.0
+  * Remove patches already fixed upstream
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 09 Dec 2015 11:11:02 +0100
+
+php-ssh2 (0.12-3) unstable; urgency=medium
+
+  * Remove excess initialisers (Closes: #750081)
+  * php5-ssh2 breaks and replaces previous libssh2-php (Closes: #751737)
+
+ -- Mathieu Parent <sathieu@debian.org>  Thu, 19 Jun 2014 22:06:51 +0200
+
+php-ssh2 (0.12-2) unstable; urgency=low
+
+  [ David Prévot ]
+  * Switch to pkg-php-tools and dh-sequencer
+  * Let dpkg handle conffile
+  * Change section to php
+  * Maintain the package inside the PHP PECL team
+  * Bump debhelper compat to 9
+  * Convert copyright to format 1.0
+
+  [ Mathieu Parent ]
+  * Rename package to php5-ssh2 (Closes: #635296) and provide a transitionnal
+    package
+  * Add me as uploader
+  * Standards-Version: 3.9.5, no change
+  * Add gbp.conf to use pristine-tar
+
+ -- Mathieu Parent <sathieu@debian.org>  Sat, 22 Feb 2014 17:10:38 +0100
+
+php-ssh2 (0.12-1) unstable; urgency=low
+
+  * New upstream release
+  * Switch conffile to /etc/php5/mods-available and use php5enmod and 
+    php5dismod (Closes: #667782)
+
+ -- Lior Kaplan <kaplan@debian.org>  Sun, 11 Aug 2013 11:52:03 +0200
+
+php-ssh2 (0.11.3-0.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * New upstream release
+    - Has PHP 5.4 support (Closes: #656487)
+    - Add a patch to fix reported version from 0.11.3-dev to 0.11.3
+  * Fix lintian warning duplicate-changelog-files
+
+ -- Lior Kaplan <kaplan@debian.org>  Sat, 21 Jan 2012 02:45:49 +0200
+
+php-ssh2 (0.11.2-1) unstable; urgency=low
+
+  * New upstream release
+  * Switch to dpkg-source 3.0 (quilt) format
+
+ -- Martin Meredith <mez@debian.org>  Sun, 12 Dec 2010 02:39:37 +0000
+
+php-ssh2 (0.11.0-2.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Remove extra 'static' keyword (Closes: #569377)
+
+ -- Raphael Geissert <geissert@debian.org>  Wed, 24 Feb 2010 01:48:37 -0600
+
+php-ssh2 (0.11.0-2) unstable; urgency=low
+
+  * Updated rules to change dh_clean -k to dh_prep 
+  * Added Version number to GPL file link in copyright
+  * Fixed issue with dh_pecl being called against wrong package name
+                                                   (Closes: #531011)
+
+ -- Martin Meredith <mez@debian.org>  Sun, 12 Apr 2009 17:36:16 +0100
+
+php-ssh2 (0.11.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #511444, #447487)
+
+ -- Martin Meredith <mez@debian.org>  Wed, 14 Jan 2009 13:55:00 +0000
+

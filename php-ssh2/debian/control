@@ -1,0 +1,41 @@
+Source: php-ssh2
+Section: php
+Priority: extra
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Martin Meredith <mez@debian.org>,
+           Lior Kaplan <kaplan@debian.org>,
+           Mathieu Parent <sathieu@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               libssh2-1-dev,
+               libtool,
+               php-all-dev
+Standards-Version: 3.9.8
+Homepage: http://pecl.php.net/package/ssh2
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-ssh2.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-ssh2
+
+Package: php-ssh2
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Recommends: ${misc:Recommends},
+            ${pecl:Recommends},
+            ${phppear:Debian-Recommends}
+Replaces: libssh2-php (<< 0.12-2),
+          ${pecl:Replaces}
+Breaks: libssh2-php (<< 0.12-2),
+        ${pecl:Breaks}
+        ${phppear:Debian-Breaks}
+Suggests: ${pecl:Suggests}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Description: Bindings for the libssh2 library
+ Provides PHP bindings to the functions of libssh2 which implements
+ the SSH2 protocol.
+ .
+ WARNING: The PHP 7.0 is an unreleased git snapshot of current ssh2
+ that implements support for PHP 7.0. USE WITH CAUTION!

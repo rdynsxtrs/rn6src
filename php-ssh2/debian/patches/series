@@ -1,0 +1,3 @@
+0001-Fix-compatibility-with-8.0-call_user_function_ex.patch
+0002-Fix-function-definition-arguments.patch
+0003-fix-for-PHP-7.4-stream-API-and-8.0.patch

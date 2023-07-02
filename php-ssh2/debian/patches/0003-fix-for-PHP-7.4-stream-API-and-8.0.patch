@@ -1,0 +1,157 @@
+From: Remi Collet <remi@remirepo.net>
+Date: Thu, 10 Sep 2020 15:53:52 +0200
+Subject: fix for PHP 7.4 (stream API) and 8.0
+
+---
+ ssh2-1.2/ssh2.c                |  4 +---
+ ssh2-1.2/ssh2_fopen_wrappers.c | 26 +++++++++++++++++++-------
+ ssh2-1.2/ssh2_sftp.c           | 20 ++++++++++++++++++++
+ 3 files changed, 40 insertions(+), 10 deletions(-)
+
+diff --git a/ssh2-1.2/ssh2.c b/ssh2-1.2/ssh2.c
+index 4605f1a..31ee8f7 100644
+--- a/ssh2-1.2/ssh2.c
++++ b/ssh2-1.2/ssh2.c
+@@ -436,9 +436,7 @@ PHP_FUNCTION(ssh2_disconnect)
+ 		RETURN_FALSE;
+ 	}
+ 
+-	if (zend_list_close(Z_RES_P(zsession)) != SUCCESS) {
+-		RETURN_FALSE;
+-	}
++	zend_list_close(Z_RES_P(zsession));
+ 
+ 	RETURN_TRUE;
+ }
+diff --git a/ssh2-1.2/ssh2_fopen_wrappers.c b/ssh2-1.2/ssh2_fopen_wrappers.c
+index ef82134..d79a051 100644
+--- a/ssh2-1.2/ssh2_fopen_wrappers.c
++++ b/ssh2-1.2/ssh2_fopen_wrappers.c
+@@ -40,10 +40,14 @@ void *php_ssh2_zval_from_resource_handle(int handle) {
+    * channel_stream_ops *
+    ********************** */
+ 
++#if PHP_VERSION_ID < 70400
+ static size_t php_ssh2_channel_stream_write(php_stream *stream, const char *buf, size_t count)
++#else
++static ssize_t php_ssh2_channel_stream_write(php_stream *stream, const char *buf, size_t count)
++#endif
+ {
+ 	php_ssh2_channel_data *abstract = (php_ssh2_channel_data*)stream->abstract;
+-	size_t writestate;
++	ssize_t writestate;
+ 	LIBSSH2_SESSION *session;
+ 
+ 	libssh2_channel_set_blocking(abstract->channel, abstract->is_blocking);
+@@ -64,24 +68,31 @@ static size_t php_ssh2_channel_stream_write(php_stream *stream, const char *buf,
+ 		libssh2_session_set_timeout(session, 0);
+ 	}
+ #endif
++
+ 	if (writestate == LIBSSH2_ERROR_EAGAIN) {
++#if PHP_VERSION_ID < 70400
+ 		writestate = 0;
+-	}
+-
+-	if (writestate < 0) {
++#endif
++	} else if (writestate < 0) {
+ 		char *error_msg = NULL;
+ 		if (libssh2_session_last_error(session, &error_msg, NULL, 0) == writestate) {
+ 			php_error_docref(NULL, E_WARNING, "Failure '%s' (%ld)", error_msg, writestate);
+ 		}
+ 
+ 		stream->eof = 1;
++#if PHP_VERSION_ID < 70400
+ 		writestate = 0;
++#endif
+ 	}
+ 
+ 	return writestate;
+ }
+ 
++#if PHP_VERSION_ID < 70400
+ static size_t php_ssh2_channel_stream_read(php_stream *stream, char *buf, size_t count)
++#else
++static ssize_t php_ssh2_channel_stream_read(php_stream *stream, char *buf, size_t count)
++#endif
+ {
+ 	php_ssh2_channel_data *abstract = (php_ssh2_channel_data*)stream->abstract;
+ 	ssize_t readstate;
+@@ -104,11 +115,12 @@ static size_t php_ssh2_channel_stream_read(php_stream *stream, char *buf, size_t
+ 		libssh2_session_set_timeout(session, 0);
+ 	}
+ #endif
++
+ 	if (readstate == LIBSSH2_ERROR_EAGAIN) {
++#if PHP_VERSION_ID < 70400
+ 		readstate = 0;
+-	}
+-
+-	if (readstate < 0) {
++#endif
++	} else if (readstate < 0) {
+ 		char *error_msg = NULL;
+ 		if (libssh2_session_last_error(session, &error_msg, NULL, 0) == readstate) {
+ 			php_error_docref(NULL, E_WARNING, "Failure '%s' (%ld)", error_msg, readstate);
+diff --git a/ssh2-1.2/ssh2_sftp.c b/ssh2-1.2/ssh2_sftp.c
+index ae8f6f8..0f62d35 100644
+--- a/ssh2-1.2/ssh2_sftp.c
++++ b/ssh2-1.2/ssh2_sftp.c
+@@ -103,20 +103,32 @@ typedef struct _php_ssh2_sftp_handle_data {
+ 
+ /* {{{ php_ssh2_sftp_stream_write
+  */
++#if PHP_VERSION_ID < 70400
+ static size_t php_ssh2_sftp_stream_write(php_stream *stream, const char *buf, size_t count)
++#else
++static ssize_t php_ssh2_sftp_stream_write(php_stream *stream, const char *buf, size_t count)
++#endif
+ {
+ 	php_ssh2_sftp_handle_data *data = (php_ssh2_sftp_handle_data*)stream->abstract;
+ 	ssize_t bytes_written;
+ 
+ 	bytes_written = libssh2_sftp_write(data->handle, buf, count);
+ 
++#if PHP_VERSION_ID < 70400
+ 	return (size_t)(bytes_written<0 ? 0 : bytes_written);
++#else
++	return bytes_written;
++#endif
+ }
+ /* }}} */
+ 
+ /* {{{ php_ssh2_sftp_stream_read
+  */
++#if PHP_VERSION_ID < 70400
+ static size_t php_ssh2_sftp_stream_read(php_stream *stream, char *buf, size_t count)
++#else
++static ssize_t php_ssh2_sftp_stream_read(php_stream *stream, char *buf, size_t count)
++#endif
+ {
+ 	php_ssh2_sftp_handle_data *data = (php_ssh2_sftp_handle_data*)stream->abstract;
+ 	ssize_t bytes_read;
+@@ -125,7 +137,11 @@ static size_t php_ssh2_sftp_stream_read(php_stream *stream, char *buf, size_t co
+ 
+ 	stream->eof = (bytes_read <= 0 && bytes_read != LIBSSH2_ERROR_EAGAIN);
+ 
++#if PHP_VERSION_ID < 70400
+ 	return (size_t)(bytes_read<0 ? 0 : bytes_read);
++#else
++	return bytes_read;
++#endif
+ }
+ /* }}} */
+ 
+@@ -264,7 +280,11 @@ static php_stream *php_ssh2_sftp_stream_opener(php_stream_wrapper *wrapper, cons
+ 
+ /* {{{ php_ssh2_sftp_dirstream_read
+  */
++#if PHP_VERSION_ID < 70400
+ static size_t php_ssh2_sftp_dirstream_read(php_stream *stream, char *buf, size_t count)
++#else
++static ssize_t php_ssh2_sftp_dirstream_read(php_stream *stream, char *buf, size_t count)
++#endif
+ {
+ 	php_ssh2_sftp_handle_data *data = (php_ssh2_sftp_handle_data*)stream->abstract;
+ 	php_stream_dirent *ent = (php_stream_dirent*)buf;
