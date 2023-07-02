@@ -1,0 +1,444 @@
+php-apcu (5.1.20+4.0.11-1+0~20210304.24+rnx2) unstable; urgency=medium
+
+  * Rebuild for PHP8.1/8.2
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 09 Jan 2023 09:13:09 +0100
+
+php-apcu (5.1.20+4.0.11-1+0~20210304.24+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Tue, 13 Apr 2021 08:33:27 +0200
+
+php-apcu (5.1.20+4.0.11-1+0~20210304.24+debian9~1.gbp1c3d4d) unstable; urgency=medium
+
+  ** SNAPSHOT build @1c3d4d2679b28c5e695008ba81e729b309d173ea **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 04 Mar 2021 16:44:17 +0100
+
+php-apcu (5.1.20+4.0.11-1) unstable; urgency=medium
+
+  * New upstream version 5.1.20+4.0.11
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 04 Mar 2021 16:37:31 +0100
+
+php-apcu (5.1.19+4.0.11-7) unstable; urgency=medium
+
+  * Bump B-D to dh-php >= 3.1~
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 18:06:35 +0100
+
+php-apcu (5.1.19+4.0.11-6) unstable; urgency=medium
+
+  * Revert arch:all change, as it breaks shlibs:Depends
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 13:21:25 +0100
+
+php-apcu (5.1.19+4.0.11-5) unstable; urgency=medium
+
+  * The main dummy package is arch:all
+  * Bump dh-php Build-Depends to >= 3.0~
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 07:50:25 +0100
+
+php-apcu (5.1.19+4.0.11-4) unstable; urgency=medium
+
+  * Sync the changelog with Debian bullseye
+  * Update d/gbp.conf for debian/main branch
+  * Update standards version to 4.5.1 (no change)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Feb 2021 12:10:39 +0100
+
+php-apcu (5.1.19+4.0.11-3) unstable; urgency=medium
+
+  * Update d/watch to use https://pecl.php.net
+  * Lower the dh-php dependency to Debian sid version
+  * Update d/gbp.conf for Debian bullseye
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 14 Feb 2021 16:39:29 +0100
+
+php-apcu (5.1.19+4.0.11-2) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:28:18 +0200
+
+php-apcu (5.1.19+4.0.11-1) unstable; urgency=medium
+
+  * New upstream version 5.1.19+4.0.11
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 15:17:57 +0200
+
+php-apcu (5.1.18+4.0.11-7) unstable; urgency=medium
+
+  * Don't fail the build when tests fail (the occasionally do)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 28 Sep 2020 15:59:14 +0200
+
+php-apcu (5.1.18+4.0.11-6) unstable; urgency=medium
+
+  * Remove php-user-cache virtual package
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 28 Sep 2020 15:04:59 +0200
+
+php-apcu (5.1.18+4.0.11-5) unstable; urgency=medium
+
+  * The main package has to be arch:any otherwise the build doesn't work
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 28 Sep 2020 14:51:01 +0200
+
+php-apcu (5.1.18+4.0.11-4) unstable; urgency=medium
+
+  * Add Breaks and Replaces on the old package
+  * Bump dh-php dependency to >= 1.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 28 Sep 2020 14:17:38 +0200
+
+php-apcu (5.1.18+4.0.11-3) unstable; urgency=medium
+
+  * B-D on dh_php >= 0.38~ to get independent binary packages
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 28 Sep 2020 13:37:06 +0200
+
+php-apcu (5.1.18+4.0.11-2) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Depend on new dh_php which generates phpX.Y-<name> binary
+    packages.
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 28 Sep 2020 13:36:25 +0200
+
+php-apcu (5.1.18+4.0.11-1) unstable; urgency=medium
+
+  * New upstream version 5.1.18+4.0.11
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 11:44:13 +0100
+
+php-apcu (5.1.17+4.0.11-2) unstable; urgency=medium
+
+  * No change rebuild for Debian buster
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 28 Aug 2019 09:16:26 +0200
+
+php-apcu (5.1.17+4.0.11-1) unstable; urgency=medium
+
+  * New upstream version 5.1.17+4.0.11
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 08 Feb 2019 16:18:59 +0000
+
+php-apcu (5.1.16+4.0.11-1) unstable; urgency=medium
+
+  * New upstream version 5.1.16+4.0.11
+  * Add Pre-Depends on php-common >= 0.69~
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 17 Dec 2018 10:22:56 +0000
+
+php-apcu (5.1.12+4.0.11-2) unstable; urgency=medium
+
+  * Bump the dependency on dh-php to >= 0.33
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 09:11:56 +0000
+
+php-apcu (5.1.12+4.0.11-1) unstable; urgency=medium
+
+  * New upstream version 5.1.12+4.0.11 (Closes: #906274)
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899947)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 11:50:51 +0000
+
+php-apcu (5.1.11+4.0.11-1) unstable; urgency=medium
+
+  * New upstream version 5.1.11+4.0.11
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 21 Mar 2018 11:41:00 +0000
+
+php-apcu (5.1.9+4.0.11-1) unstable; urgency=medium
+
+  * Update Vcs-* links to salsa.d.o
+  * New upstream version 5.1.9+4.0.11
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 05 Jan 2018 15:18:10 +0000
+
+php-apcu (5.1.8+4.0.11-1) unstable; urgency=medium
+
+  * New upstream version 5.1.8+4.0.11
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 23 Jan 2017 11:24:34 +0100
+
+php-apcu (5.1.7+4.0.11-2) unstable; urgency=medium
+
+  * Build-Depend on dh_php >= 0.23~ to fix missing PHP 7.0 build
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 07 Nov 2016 12:30:50 +0100
+
+php-apcu (5.1.7+4.0.11-1) unstable; urgency=medium
+
+  * Imported Upstream version 5.1.7+4.0.11
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 07 Nov 2016 11:20:33 +0100
+
+php-apcu (5.1.5-8-gdbb1d14+tysonandre+4.0.11-1) unstable; urgency=medium
+
+  * Imported Upstream version 5.1.5-8-gdbb1d14+tysonandre+4.0.11
+    + Contains fixes from https://github.com/TysonAndre/apcu
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 26 Sep 2016 15:37:43 +0200
+
+php-apcu (5.1.5+4.0.11-1) unstable; urgency=medium
+
+  * Imported Upstream version 5.1.5+4.0.11
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Aug 2016 12:14:08 +0200
+
+php-apcu (5.1.3+4.0.11+unpack-1) unstable; urgency=medium
+
+  * Imported Upstream version 5.1.3+4.0.11+unpack
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 12:02:47 +0200
+
+php-apcu (5.1.3+4.0.11-1) unstable; urgency=medium
+
+  * gbp.conf back at master/pristine-tar/upstream
+  * Update d/rules to work with upstream tgz files
+  * Imported Upstream version 5.1.3+4.0.11
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 27 Apr 2016 22:27:33 +0200
+
+php-apcu (5.1.3+4.0.10-2) unstable; urgency=medium
+
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Feb 2016 14:44:27 +0100
+
+php-apcu (5.1.3+4.0.10-1) unstable; urgency=medium
+
+  * Imported Upstream version 5.1.3+4.0.10
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 26 Jan 2016 13:02:19 +0100
+
+php-apcu (5.1.2+4.0.10-2) unstable; urgency=medium
+
+  * Re-upload with lintian override for PHP license
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 15 Jan 2016 14:55:50 +0100
+
+php-apcu (5.1.2+4.0.10-1) unstable; urgency=medium
+
+  * Imported Upstream version 5.1.2+4.0.10
+  * Enable dual build for PHP 5.6 and 7.0
+  * Override wrong license-problem-php-license lintian check for packages
+    from PECL
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 18 Dec 2015 15:43:00 +0100
+
+php-apcu (5.1.2-2) unstable; urgency=medium
+
+  * Recommend php-apcu-bc for backwards compatibility
+  * Use generic d/rules that guess most variables
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 10 Dec 2015 17:40:07 +0100
+
+php-apcu (5.1.2-1) unstable; urgency=medium
+
+  * Workaround build for PHP 7.0 without pkg-php-tools
+  * Imported Upstream version 5.1.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 08 Dec 2015 14:42:11 +0100
+
+php-apcu (4.0.10-1) unstable; urgency=medium
+
+  * Imported Upstream version 4.0.10
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 07 Dec 2015 16:04:30 +0100
+
+php-apcu (4.0.7-1) unstable; urgency=medium
+
+  * Bump standards version to 3.9.6; no change
+  * New upstream version 4.0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 23 Oct 2014 11:07:19 +0200
+
+php-apcu (4.0.6-1) unstable; urgency=medium
+
+  * New upstream version 4.0.6
+  * Remove PHP 5.6 support patch - merged upstream
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 24 Jun 2014 10:52:52 +0200
+
+php-apcu (4.0.4-2) unstable; urgency=medium
+
+  * Add a patch to support php5.6 (via UPGRADING.INTERNALS)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 01 Jun 2014 22:51:26 +0200
+
+php-apcu (4.0.4-1) unstable; urgency=medium
+
+  * New upstream release
+  * Fix VCS-Browser URL
+
+ -- Lior Kaplan <kaplan@debian.org>  Mon, 07 Apr 2014 01:16:22 +0300
+
+php-apcu (4.0.3-1) unstable; urgency=medium
+
+  * New upstream release
+  * Don't try to create a documentation symlink for php-apc (Closes: #732459)
+  * Remove headers and php tests added in the previous upload.
+
+ -- Lior Kaplan <kaplan@debian.org>  Sat, 08 Feb 2014 23:54:40 +0200
+
+php-apcu (4.0.2-2) unstable; urgency=low
+
+  * Move the package under the PHP PECL team umbrella
+  * Convert to dh-php5 and pkg-php-tools
+  * Needs pkg-php-tools >= 1.9 to support multiple packages
+  * Add upstream documentation to the package
+  * Specify destdir to php5-apcu since the second package is only transitional
+  * Don't compress apc.php in docs
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 22 Oct 2013 10:02:00 +0200
+
+php-apcu (4.0.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Lior Kaplan <kaplan@debian.org>  Wed, 18 Sep 2013 02:16:58 +0200
+
+php-apcu (4.0.1-4) unstable; urgency=low
+
+  * Add php5-user-cache virtual package support
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 05 Jun 2013 10:58:14 +0200
+
+php-apcu (4.0.1-3) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 05 Jun 2013 09:09:02 +0200
+
+php-apcu (4.0.1-2) experimental; urgency=low
+
+  * Fix typo in php5enmod apc -> apcu (Closes: #710540)
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 31 May 2013 21:12:45 +0200
+
+php-apcu (4.0.1-1) experimental; urgency=low
+  
+  * Imported Upstream version 4.0.1 (Closes: #708332)
+  * New upstream replacement package for APC (Closes: #708330)
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 15 May 2013 09:43:58 +0200
+
+php-apc (3.1.13-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Lior Kaplan <kaplan@debian.org>  Tue, 04 Sep 2012 20:01:23 +0300
+
+php-apc (3.1.12-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Lior Kaplan <kaplan@debian.org>  Thu, 16 Aug 2012 23:11:16 +0300
+
+php-apc (3.1.11-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Lior Kaplan <kaplan@debian.org>  Tue, 07 Aug 2012 08:58:24 +0300
+
+php-apc (3.1.10-1) unstable; urgency=low
+
+  * New upstream release
+    - Adds PHP 5.4 support
+  * Manage ini file with php5enmod and php5enmod (Closes: #667773)
+
+ -- Lior Kaplan <kaplan@debian.org>  Thu, 12 Apr 2012 20:44:07 +0300
+
+php-apc (3.1.9+svn324329-1) unstable; urgency=low
+
+  * New upstream release (SVN revision 324329)
+    - Adds PHP 5.4 support (Closes: #664880)
+  * Add myself as uploader.
+
+ -- Lior Kaplan <kaplan@debian.org>  Sat, 31 Mar 2012 22:37:31 +0300
+
+php-apc (3.1.9-0.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * New upstream release (Closes: #646344)
+  * debian/control: 
+    - Add build dependency on libpcre3-dev
+    - Drop build dependency on apache2-prefork-dev, apxs2 isn't needed
+    - Bump Standards-Version to 3.9.2 (no changes needed)
+  * debian/rules:
+    - Drop --with-apxs configure flag, which was removed in version 3.1.2.
+    - Touch the right build-stamp to prevent compiling twice on each build.
+    - Don't compress apc.php (Closes: #626892)
+  * Fix typo in README.Debian (Closes: #626893)
+
+ -- Lior Kaplan <kaplan@debian.org>  Sun, 19 Feb 2012 01:20:52 +0200
+
+php-apc (3.1.7-1) unstable; urgency=low
+
+  * New upstream release.
+  * Remove duplicate sentence on package description (Closes: #577790).
+  * Conflicts with php5-xcache (Closes: #614685).
+  * Updated standards to 3.9.1 (no changes).
+
+ -- Pietro Monteiro <pietro@riseup.net>  Sat, 19 Feb 2011 15:23:03 -0800
+
+php-apc (3.1.3p1-2) unstable; urgency=low
+
+  * Upload package to unstable
+     (Closes: #572525 - "completely unusable with php 5.3",
+      Closes: #571661 - "Version in sid uninstallable...",
+      Closes: #572205 - "unstable with php-5.3",
+      Closes: #572529 - "APC 3.0.19 contains a race condition..." and
+      Closes: #536843 - "Newer version 3.1.2 is available")
+
+ -- Pietro Ferrari <pietro@riseup.net>  Sat, 27 Mar 2010 16:55:11 -0700
+
+php-apc (3.1.3p1-1) experimental; urgency=low
+
+  * New upstream release.
+  * Switch to dpkg-source 3.0 (quilt) format.
+  * Drop patches needed to build 3.0.19-3.
+
+ -- Pietro Ferrari <pietro@riseup.net>  Tue, 02 Mar 2010 11:43:15 -0800
+
+php-apc (3.0.19-3) unstable; urgency=low
+
+  * Fix FTBFS when building with php 5.3 (Closes: #566209, #569117)
+  * Updated standards to 3.8.4 (no changes)
+
+ -- Pietro Ferrari <pietro@riseup.net>  Sun, 21 Feb 2010 23:40:57 -0800
+
+php-apc (3.0.19-2) unstable; urgency=low
+
+  * Include apc.php script from upstream (Closes: #494273).
+  * Create a README.Debian file with information about the apc.php script.
+  * Suggest php5-gd so apc.php can provides graphics.
+  * Build-depend on apache2-prefork-mpm-dev instead of apache2-dev.
+
+ -- Pietro Ferrari <pietro@riseup.net>  Wed, 17 Dec 2008 11:23:39 -0500
+
+php-apc (3.0.19-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #488703)
+  * Fix CFLAGS on debian/rules
+  * Updated standards to 3.8.0 (no changes)
+
+ -- Pietro Ferrari <pietro@riseup.net>  Thu, 19 Jul 2008 12:43:09 -0300
+
+php-apc (3.0.18-1) unstable; urgency=low
+
+  * Initial Release (Closes: #335404).
+
+ -- Pietro Ferrari <pietro@riseup.net>  Thu, 10 Apr 2008 00:13:29 -0300
+

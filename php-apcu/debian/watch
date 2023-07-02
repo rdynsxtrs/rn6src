@@ -1,0 +1,3 @@
+version=3
+https://pecl.php.net/package/APCu \
+  /get/apcu-([\d\.p?]*).tgz  debian  uupdate
