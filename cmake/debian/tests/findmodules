@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -ev
+
+SRCDIR="$(pwd)"
+
+cd "$ADTTMP"
+
+cmake "$SRCDIR/debian/tests/findmodules_data"
