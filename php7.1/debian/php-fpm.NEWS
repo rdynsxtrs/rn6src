@@ -1,0 +1,11 @@
+php@PHP_VERSION@ (7.1.5-1) unstable; urgency=medium
+
+  * The configuration for handled file extensions has been changed:
+      + the .phar extension has been added
+      - the .pht, .php3, .php4 and .php5 extension has been removed
+
+    Now only .php, .phtml, .phar and .phps extensions are handled by
+    PHP in the default configuration.  Please make sure that this doesn't
+    cause any unintended consequences in your web roots.
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 04 May 2017 11:44:05 +0200

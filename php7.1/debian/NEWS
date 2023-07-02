@@ -1,0 +1,15 @@
+php7.0 (7.0.3-6) unstable; urgency=medium
+
+  * Several extensions have been split into separate extension packages:
+   - php-dba - Database (dbm-style) Abstraction Layer
+   - php-mbstring - Multibyte String
+   - php-soap - SOAP
+   - php-xml - DOM, SimpleXML, WDDX, XML, XMLReader and XMLWriter
+   - php-zip - Zip
+  * The new packages are not installed automatically, so you will need to
+    install them by hand, if you use the functions in those modules.
+  * Most modules that have been builtin before are now included in
+    php7.0-common package and they are enabled by default for your
+    convenience.  You can disable unneede modules via phpdismod tool.
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 22 Feb 2016 12:37:09 +0100

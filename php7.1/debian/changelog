@@ -1,0 +1,753 @@
+php7.1 (7.1.33-24+0~20201103.44+rnx2) unstable; urgency=medium
+
+  * fix fpm user for ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Wed, 30 Dec 2020 19:30:34 +0100
+
+php7.1 (7.1.33-24+0~20201103.44+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 06 Dec 2020 16:10:33 +0100
+
+php7.1 (7.1.33-24+0~20201103.44+debian9~1.gbp50e805) unstable; urgency=medium
+
+  ** SNAPSHOT build @50e8054737d24bc3fbbec7efaaea65239f929398 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Tue, 03 Nov 2020 15:33:26 +0100
+
+php7.1 (7.1.33-24) unstable; urgency=medium
+
+  * Files from auxdir needs to go into the basedir, not in the build/
+    directory
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 31 Oct 2020 17:55:14 +0100
+
+php7.1 (7.1.33-23) unstable; urgency=medium
+
+  * Move the non-m4 files from LIBTOOL_FILES to FILES_BUILD
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 31 Oct 2020 11:00:49 +0100
+
+php7.1 (7.1.33-22) unstable; urgency=medium
+
+  * Move the system wide phpize files to LIBTOOL_FILES
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 30 Oct 2020 20:53:51 +0100
+
+php7.1 (7.1.33-21) unstable; urgency=medium
+
+  * In phpize, copy the foreign files from their respective packages
+    (libtool, pkg-config, shtool)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 18 Oct 2020 23:07:34 +0200
+
+php7.1 (7.1.33-20) unstable; urgency=medium
+
+  [ Chris Hofstaedtler ]
+  * Use netcat-openbsd to build instead of netcat-traditional (Closes: #963261)
+
+  [ Pino Toscano ]
+  * Disable AppArmor support on non-Linux archs (Closes: #951857)
+  * Enable systemd integration only on Linux archs (Closes: #951834)
+
+  [ Ondřej Surý ]
+  * Use system-wide pkg.m4 from pkg-config package in phpize
+  * Add pkg-config m4 files to phpize script
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 17 Oct 2020 09:20:39 +0200
+
+php7.1 (7.1.33-19) unstable; urgency=medium
+
+  * Disable the MySQL extension testing as it's too complicated
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 21:42:10 +0200
+
+php7.1 (7.1.33-18) unstable; urgency=medium
+
+  * Backported from 7.2.34
+   - Core:
+    . Fixed bug #79699 (PHP parses encoded cookie names so malicious `__Host-`
+      cookies can be sent). (CVE-2020-7070)
+   - OpenSSL:
+    . Fixed bug #79601 (Wrong ciphertext/tag in AES-CCM encryption for a 12
+      bytes IV). (CVE-2020-7069)
+    . Fixed bug #78079 (openssl_encrypt_ccm.phpt fails with OpenSSL 1.1.1c).
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 06 Oct 2020 14:50:43 +0200
+
+php7.1 (7.1.33-17) unstable; urgency=medium
+
+  * Update branch names
+  * Finish updating the packaging to dh compat level 10
+  * Backported from 7.2.33
+   - Core:
+    . Fixed bug #79877 (getimagesize function silently truncates after a
+      null byte)
+   - Phar:
+    . Fixed bug #79797 (Use of freed hash key in the phar_parse_zipfile
+      function). (CVE-2020-7068)
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 07 Aug 2020 16:37:23 +0200
+
+php7.1 (7.1.33-16) unstable; urgency=medium
+
+  * Add upstream patch to fix bug #76895
+  * Add patch to reduce BC break introduced in libzip 1.6.0
+  * Backported from 7.2.31
+   - Core:
+    . Fixed bug #78875 (Long filenames cause OOM and temp files are not cleaned).
+      (CVE-2019-11048)
+    . Fixed bug #78876 (Long variables in multipart/form-data cause OOM and temp
+      files are not cleaned). (CVE-2019-11048)
+  * Add upstream patch to allow numeric [UG]ID in FPM listen.{owner,group}
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 14 May 2020 10:15:53 +0200
+
+php7.1 (7.1.33-15) unstable; urgency=medium
+
+  * Backported from 7.2.30
+   - Standard:
+    . Fixed bug #79330 (shell_exec silently truncates after a null byte).
+    . Fixed bug #79465 (OOB Read in urldecode). (CVE-2020-7067)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Apr 2020 09:53:32 +0200
+
+php7.1 (7.1.33-14) unstable; urgency=medium
+
+  * Add (non-existent) systemd-tmpfiles package as alternative to systemd
+  * php-fpm has to depend on procps due kill usage in systemd service file
+    (Closes: #861855)
+  * Backported from 7.2.29
+   - Core:
+    . Fixed bug #79329 (get_headers() silently truncates after a null
+      byte) (CVE-2020-7066)
+   - EXIF:
+    . Fixed bug #79282 (Use-of-uninitialized-value in exif)
+      (CVE-2020-7064)
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 20 Mar 2020 14:56:03 +0100
+
+php7.1 (7.1.33-13) unstable; urgency=medium
+
+  * Use pkg-config for PHP_SETUP_LIBXML
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 23 Feb 2020 16:19:48 +0100
+
+php7.1 (7.1.33-12) unstable; urgency=medium
+
+  * Update version in debian/php-fpm.maintscript
+  * Remove /etc/init/php@PHP_VERSION@-fpm.conf, not
+    /etc/init/php@PHP_VERSION@.conf
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 23 Feb 2020 08:16:48 +0100
+
+php7.1 (7.1.33-11) unstable; urgency=medium
+
+  * Remove the PIDFile= setting from systemd unit file (it should not be
+    needed with Type=notify)
+  * Use php-fpm-socket-helper from php-common >= 1:73 to update the
+    default socket
+  * Fixup upstart removal (missing prepare-files update) (Closes: #951745)
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 21 Feb 2020 18:39:17 +0100
+
+php7.1 (7.1.33-10) unstable; urgency=medium
+
+  * Remove upstart support, use systemd-tmpfiles to create tmpfiles
+    (Closes: #923032)
+  * Backported from 7.2.28
+   - DOM:
+    . Fixed bug #77569: (Write Access Violation in DomImplementation).
+   - Phar:
+    . Fixed bug #79082 (Files added to tar with Phar::buildFromIterator
+      have all-access permissions). (CVE-2020-7063)
+   - Session:
+    . Fixed bug #79221 (Null Pointer Dereference in PHP Session Upload
+      Progress). (CVE-2020-7062)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 20 Feb 2020 13:43:15 +0100
+
+php7.1 (7.1.33-9) unstable; urgency=medium
+
+  * Use absolute path to update-alternatives
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 05 Feb 2020 17:46:43 +0100
+
+php7.1 (7.1.33-8) unstable; urgency=medium
+
+  * Move the update-alternatives call from postinst/prerm to systemd startup script
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 01 Feb 2020 19:02:45 +0100
+
+php7.1 (7.1.33-7) unstable; urgency=medium
+
+  * Make the creation of the default socket work on new installs
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 01 Feb 2020 14:13:27 +0100
+
+php7.1 (7.1.33-6) unstable; urgency=medium
+
+  * Use a mock socket file for setting up FPM socket alternatives
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 01 Feb 2020 13:16:02 +0100
+
+php7.1 (7.1.33-5) unstable; urgency=medium
+
+  * Bump the debhelper compat to 10
+  * Bump the Standards Version (no change)
+  * Disable dh_autoreconf for PHP, it breaks the build
+  * Create a generic /run/php/php-fpm.sock socket using update-alternatives
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 01 Feb 2020 11:20:46 +0100
+
+php7.1 (7.1.33-4) unstable; urgency=medium
+
+  * Backported from 7.2.27
+   - Mbstring:
+    . Fixed bug #79037 (global buffer-overflow in `mbfl_filt_conv_big5_wchar`).
+      (CVE-2020-7060)
+   - Session:
+    . Fixed bug #79091 (heap use-after-free in session_create_id()).
+   - Standard:
+    . Fixed bug #79099 (OOB read in php_strip_tags_ex). (CVE-2020-7059).
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 22 Jan 2020 10:18:44 +0100
+
+php7.1 (7.1.33-3) unstable; urgency=medium
+
+  * Backported from 7.2.26
+   - Bcmath:
+    . Fixed bug #78878 (Buffer underflow in bc_shift_addsub). (CVE-2019-11046).
+   - Core:
+    . Fixed bug #78862 (link() silently truncates after a null byte on Windows).
+      (CVE-2019-11044).
+    . Fixed bug #78863 (DirectoryIterator class silently truncates after a null
+      byte). (CVE-2019-11045).
+   - EXIF:
+    . Fixed bug #78793 (Use-after-free in exif parsing under memory sanitizer).
+      (CVE-2019-11050).
+    . Fixed bug #78910 (Heap-buffer-overflow READ in exif). (CVE-2019-11047).
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 18 Dec 2019 15:51:47 +0100
+
+php7.1 (7.1.33-2) unstable; urgency=medium
+
+  * Use mysqld --initialize-insecure for MySQL 8.0 (for Ubuntu 19.10)
+  * Disable MySQL X Plugin in the tests
+  * Remove --skip-grant-tables to fix FTBFS with MySQL 8.0
+  * Remove --without-mysqlx from MySQL 5.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Nov 2019 08:40:40 +0100
+
+php7.1 (7.1.33-1) unstable; urgency=medium
+
+  * New upstream version 7.1.33
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 26 Oct 2019 21:25:13 +0200
+
+php7.1 (7.1.32-2) unstable; urgency=medium
+
+  * [CVE-2019-11043]: Add fix for RCE in FPM
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 24 Oct 2019 20:42:32 +0200
+
+php7.1 (7.1.32-1) unstable; urgency=medium
+
+  * New upstream version 7.1.32
+
+ -- Ondřej Surý <ondrej@sury.org>  Mon, 02 Sep 2019 15:22:53 +0200
+
+php7.1 (7.1.31-1) unstable; urgency=medium
+
+  * New upstream version 7.1.31
+  * Rebase patches for PHP 7.1.31
+
+ -- Ondřej Surý <ondrej@sury.org>  Wed, 07 Aug 2019 12:19:51 +0200
+
+php7.1 (7.1.30-2) unstable; urgency=medium
+
+  * Bump the version to cleanup stretch->buster transition
+
+ -- Ondřej Surý <ondrej@sury.org>  Wed, 10 Jul 2019 14:14:37 +0200
+
+php7.1 (7.1.30-1) unstable; urgency=medium
+
+  * New upstream version 7.1.30
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 31 May 2019 13:24:27 +0200
+
+php7.1 (7.1.29-1) unstable; urgency=medium
+
+  * New upstream version 7.1.29
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 03 May 2019 11:50:04 +0200
+
+php7.1 (7.1.28-1) unstable; urgency=medium
+
+  * Update d/watch for new php.net pages
+  * New upstream version 7.1.28
+  * Enforce C++11 for intl compilation on older distributions
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 10 Apr 2019 07:06:21 +0000
+
+php7.1 (7.1.27-1) unstable; urgency=medium
+
+  * New upstream version 7.1.27
+  * Add patch for OpenSSL 1.1.1b (Courtesy of RemiRepo)
+  * Add getallheaders() function to FPM SAPI (Courtesy of RemiRepo)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 07 Mar 2019 19:33:22 +0000
+
+php7.1 (7.1.26-2) unstable; urgency=medium
+
+  * Add patch to use pkg-config instead of icu-config to detect icu
+    libraries.
+  * Fix rl_completion_matches compilation with newer libedit
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 15 Feb 2019 15:33:45 +0000
+
+php7.1 (7.1.26-1) unstable; urgency=medium
+
+  * New upstream version 7.1.26
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 11 Jan 2019 14:09:53 +0000
+
+php7.1 (7.1.25-1) unstable; urgency=medium
+
+  * New upstream version 7.1.25
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 07 Dec 2018 08:12:14 +0000
+
+php7.1 (7.1.24-1) unstable; urgency=medium
+
+  * New upstream version 7.1.24
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 12 Nov 2018 09:19:03 +0000
+
+php7.1 (7.1.23-4) unstable; urgency=medium
+
+  * Restore correct patch name for
+    0040-Add-patch-to-install-php7-module-directly-to-APXS_LI.patch
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 04 Nov 2018 04:51:13 +0000
+
+php7.1 (7.1.23-3) unstable; urgency=medium
+
+  * Add patch to use pkg-config for FreeType2 detection
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 25 Oct 2018 06:40:30 +0000
+
+php7.1 (7.1.23-2) unstable; urgency=medium
+
+  * Remove ancient mv_conffile (from php5)
+  * Downgrade dh-php from Recommends to Suggests (Closes: #910620)
+  * Disable the enabled modules in prerm, because in postrm the phpquery
+    script is not aware of already removed sapi (Closes: #911018)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 15 Oct 2018 11:34:03 +0000
+
+php7.1 (7.1.23-1) unstable; urgency=medium
+
+  * Fix Vcs-* links
+  * New upstream version 7.1.23
+  * Rebase patches for PHP 7.1.23
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 13 Oct 2018 13:26:22 +0000
+
+php7.1 (7.1.22-1) unstable; urgency=medium
+
+  * New upstream version 7.1.22
+  * Rebase patches for PHP 7.1.22
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 01 Oct 2018 11:42:20 +0000
+
+php7.1 (7.1.20-1) unstable; urgency=medium
+
+  [ Ondřej Surý ]
+  * New upstream version 7.1.20
+  * Add <!nocheck> profile to all default-mysql-server alternatives
+
+ -- Lior Kaplan <kaplan@debian.org>  Fri, 03 Aug 2018 06:45:34 +0300
+
+php7.1 (7.1.19-1) unstable; urgency=medium
+
+  * Add nocheck Build Profile to disable mysql-server installation
+  * New upstream version 7.1.19
+  * Rebased patches for PHP 7.1.19
+  * Update Vcs-* links to salsa.d.o
+  * Update maintainer address to team+pkg-php@tracker.d.o (Closes: #899656)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 09 Jul 2018 13:07:27 +0000
+
+php7.1 (7.1.16-1) unstable; urgency=medium
+
+  * New upstream version 7.1.16
+  * Rebase patches on top of new upstream release.
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 05 Apr 2018 08:44:02 +0000
+
+php7.1 (7.1.15-1) unstable; urgency=medium
+
+  * New upstream version 7.1.15
+  * Rebase patches on top of new upstream release.
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 06 Mar 2018 10:50:10 +0000
+
+php7.1 (7.1.14-1) unstable; urgency=medium
+
+  * New upstream version 7.1.14
+  * Refresh patches for new upstream release
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 09 Feb 2018 09:14:34 +0000
+
+php7.1 (7.1.13-3) unstable; urgency=medium
+
+  * Add explicit libpcre3 >= 2:8.35 dependency as dh_genshlibs is failing
+    to add versioned dependency for some reason.
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 06 Feb 2018 16:08:52 +0000
+
+php7.1 (7.1.13-2) unstable; urgency=medium
+
+  * Remove explicit libpcre3 dependency and let dh_genshlibs do its magic
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 06 Feb 2018 13:04:37 +0000
+
+php7.1 (7.1.13-1) unstable; urgency=medium
+
+  * Update the Vcs-* to salsa.d.o
+  * Add Sara Golemon's GPG key to d/upstream/signing-key.asc
+  * New upstream version 7.1.13
+  * Rebase patches on top of new upstream release.
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 05 Jan 2018 12:14:37 +0000
+
+php7.1 (7.1.12-3) unstable; urgency=medium
+
+  * Pull upstream fix for 'Narrowing occurred during type inference.' bug.
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 14 Dec 2017 14:39:17 +0000
+
+php7.1 (7.1.12-2) unstable; urgency=medium
+
+  * Fix upstream segmentation fault in 7.1.12 and 7.0.26
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 07 Dec 2017 16:05:25 +0000
+
+php7.1 (7.1.12-1) unstable; urgency=medium
+
+  * New upstream version 7.1.12
+  * Rebase patches for new upstream version.
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 29 Nov 2017 10:01:08 +0000
+
+php7.1 (7.1.11-1) unstable; urgency=medium
+
+  * New upstream version 7.1.11
+  * Rebase patches for new upstream release.
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 27 Oct 2017 13:47:15 +0000
+
+php7.1 (7.1.10-1) unstable; urgency=medium
+
+  * New upstream version 7.1.10
+  * Refresh patches for PHP 7.1.10
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Sep 2017 19:02:49 +0200
+
+php7.1 (7.1.9-1) unstable; urgency=medium
+
+  * Allow libgcrypt11-dev when it's not a transitional package
+  * New upstream version 7.1.9
+  * Rebase patches on top of PHP 7.1.9
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 02 Sep 2017 07:53:00 +0200
+
+php7.1 (7.1.8-2) unstable; urgency=medium
+
+  * Update Vcs-* links to https://gitlab.com/deb.sury.org/...
+  * Stop depending on obsolete automake1.11 (Closes: #865136)
+  * Switch build-depends to libgcrypt20-dev (Closes: #864129)
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 04 Aug 2017 11:56:45 +0200
+
+php7.1 (7.1.8-1) unstable; urgency=medium
+
+  * New upstream version 7.1.8
+  * Rebase patches for PHP 7.1.8
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 03 Aug 2017 20:35:23 +0200
+
+php7.1 (7.1.7.retag-1) unstable; urgency=medium
+
+  * New upstream version 7.1.7 (retagged)
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 07 Jul 2017 11:37:12 +0200
+
+php7.1 (7.1.7-1) unstable; urgency=medium
+
+  * New upstream version 7.1.7
+  * Rebase patches on top of PHP 7.1.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 06 Jul 2017 11:11:57 +0200
+
+php7.1 (7.1.6-2) unstable; urgency=medium
+
+  * Add upstream patch to fix broken support for HOST/PATH ini sections
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 14 Jun 2017 07:31:31 +0200
+
+php7.1 (7.1.6-1) unstable; urgency=medium
+
+  * Kill extra TAB character in the ini file that was causing insserv
+    troubles
+  * Add signature support to d/watch
+  * New upstream version 7.1.6
+  * Add Davey Shafik PGP key to upstream keyring
+  * Rebase patches on top of PHP 7.1.6 release
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 09 Jun 2017 10:23:49 +0200
+
+php7.1 (7.1.5-1) unstable; urgency=medium
+
+  * The default file extension configuration has been changed to add .phar
+    and remove (some) obsolete extensions
+  * New upstream version 7.1.5
+  * Remove upstream patches merged upstream
+  * Rebase patches on top of PHP 7.1.5
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 11 May 2017 16:06:08 +0200
+
+php7.1 (7.1.4-2) unstable; urgency=medium
+
+  * Change Vcs-* URLs to gitlab.sury.org
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 19 Apr 2017 14:55:37 +0200
+
+php7.1 (7.1.4-1) unstable; urgency=medium
+
+  * New upstream version 7.1.4
+  * Refresh patches on top of PHP 7.1.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 12 Apr 2017 00:01:47 +0200
+
+php7.1 (7.1.3+-3) unstable; urgency=medium
+
+  * Add two patches to fix microseconds in 'new DateTime()'
+    and IntlDateFormatter->format()
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 25 Mar 2017 14:55:28 +0100
+
+php7.1 (7.1.3+-2) unstable; urgency=medium
+
+  * Always use custom php_ap_map_http_request_error to support older
+    apache2 at the runtime
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 15 Mar 2017 10:15:19 +0100
+
+php7.1 (7.1.3+-1) unstable; urgency=medium
+
+  * New upstream version 7.1.3 (fix the errorneous import of 7.0.17)
+  * Refresh patches for PHP 7.1.3 (the real one)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 14 Mar 2017 19:19:35 +0100
+
+php7.1 (7.1.3-1) unstable; urgency=medium
+
+  * New upstream version 7.1.3
+  * Refresh patches for PHP 7.1.3
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 14 Mar 2017 19:05:19 +0100
+
+php7.1 (7.1.2-4) unstable; urgency=medium
+
+  * Sync debian packaging for PHP 5.6, 7.0 and 7.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 02 Mar 2017 11:38:28 +0100
+
+php7.1 (7.1.2-3) unstable; urgency=medium
+
+  * Fix generating recommends for php extensions
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 22 Feb 2017 11:04:05 +0100
+
+php7.1 (7.1.2-2) unstable; urgency=medium
+
+  * Apply patch to remedy missing getrandom syscall
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 18 Feb 2017 12:15:08 +0100
+
+php7.1 (7.1.2-1) unstable; urgency=medium
+
+  * New upstream version 7.1.2
+  * Rebase patches on top of PHP 7.1.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 17 Feb 2017 13:42:58 +0100
+
+php7.1 (7.1.1-1) unstable; urgency=medium
+
+  * New upstream version 7.1.1
+  * Update patches on top of PHP 7.1.1
+  * Fix check for CURL include in M-A directory
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 25 Jan 2017 15:31:59 +0100
+
+php7.1 (7.1.0-5) unstable; urgency=medium
+
+  * Pull one more opcache fix patch
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 22 Dec 2016 14:28:48 +0100
+
+php7.1 (7.1.0-4) unstable; urgency=medium
+
+  * Pull upstream opcache fixes
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 22 Dec 2016 09:56:43 +0100
+
+php7.1 (7.1.0-3) unstable; urgency=medium
+
+  * Use --skip-grant-tables for mysqld instance running PHP tests
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 07 Dec 2016 10:37:57 +0100
+
+php7.1 (7.1.0-2) unstable; urgency=medium
+
+  * Fix couple of lintian errors
+  * Add support for MariaDB in setup-mysql.sh test script
+  * Pull upstream fix for overflow check to fix arm64 builds
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Dec 2016 13:34:22 +0100
+
+php7.1 (7.1.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 7.1.0
+  * Rebase patches on top of 7.1.0 release
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 02 Dec 2016 13:55:21 +0100
+
+php7.1 (7.1.0~rc6-1) experimental; urgency=medium
+
+  * Really remove Thijs from Uploaders
+  * Imported Upstream version 7.1.0~rc6
+  * Rebase patches on top of 7.1.0~rc6 release
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 14 Nov 2016 04:35:30 +0100
+
+php7.1 (7.1.0~rc5-1) experimental; urgency=medium
+
+  * Imported Upstream version 7.1.0~rc5
+  * Rebase patches on top of 7.1.0~rc5 release
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 01 Nov 2016 13:10:41 +0100
+
+php7.1 (7.1.0~rc4-1) experimental; urgency=medium
+
+  * Update systz database patch (Courtesy of Remi Collet)
+  * Imported Upstream version 7.1.0~rc4
+  * Rebase patches on top of PHP 7.1.0~rc4
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 20 Oct 2016 11:48:13 +0200
+
+php7.1 (7.1.0~rc3-2) experimental; urgency=medium
+
+  * Ignore .list files from timezone database (Closes: #805591)
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 07 Oct 2016 14:17:18 +0200
+
+php7.1 (7.1.0~rc3-1) experimental; urgency=medium
+
+  * Imported Upstream version 7.1.0~rc3
+  * Rebase patches on top of 7.1.0~rc3
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 30 Sep 2016 11:03:58 +0200
+
+php7.1 (7.1.0~rc2-1) experimental; urgency=medium
+
+  * Imported Upstream version 7.1.0~rc2
+  * Rebase patches on top of PHP 7.1.0~rc2
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 18 Sep 2016 10:45:28 +0200
+
+php7.1 (7.1.0~rc1-1) experimental; urgency=medium
+
+  * Imported Upstream version 7.1.0~rc1
+  * Rebase patches on top of PHP 7.1.0~rc1
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 02 Sep 2016 10:21:19 +0200
+
+php7.1 (7.1.0~beta3-2) experimental; urgency=medium
+
+  * Use ${Package} instead of ${binary:Package} for dpkg-query output
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Aug 2016 12:44:29 +0200
+
+php7.1 (7.1.0~beta3-1) experimental; urgency=medium
+
+  * Imported Upstream version 7.1.0~beta3
+  * Rebase patches on top of 7.1.0~beta3 release
+  * Declare dependency on mpm_prefork in apache2 phpX.Y.load file
+    (Closes: #834092)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 22 Aug 2016 14:33:41 +0200
+
+php7.1 (7.1.0~beta2-1) experimental; urgency=medium
+
+  [ Ondřej Surý ]
+  * Tighten depends on pcre3 to workaround symbols brokeness
+  * Improve libapache2-mod-php script to switch MPM only on fresh installs
+
+  [ Marc Deslauriers ]
+  * Re-enable test suite
+
+  [ Ondřej Surý ]
+  * libapache2-mod-phpX.Y now recommends apache2 package (as this is what
+    most people want anyway)
+  * Revert the changes to setup-mysql.sh as they work only with MySQL 5.7
+  * Update d/setup-mysql.sh to support MySQL 5.5, 5.6 and 5.7 and
+    build-depend on libnss-myhostname so mysql_install_db --force option
+    is not needed
+  * phpX.Y-snmp needs to depend on snmp to avoid 'Cannot adopt OID in *' failures
+  * Use correct libpcre3 (>= 1:8.20) instead of libpcre3 (>= 2:8.20)
+  * Run tests only on arch builds (Closes: #830800)
+  * Move the test mysql datadir to $datadir/data to prevent setup-mysql
+    failures (Closes: #832500)
+  * Remove PHP 5 references from README.Debian
+  * Disable tests and libnss-hostname build dependency on kfreebsd-any and
+    hurd-any (Closes: #833699)
+  * Imported Upstream version 7.1.0~beta2
+  * Rebase patches on top of 7.1.0~beta2 release
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 11 Aug 2016 10:42:04 +0200
+
+php7.1 (7.1.0~beta1-1) experimental; urgency=medium
+
+  * Imported Upstream version 7.1.0~beta1
+  * Rebase patches on top of PHP-7.1.0beta1
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 21 Jul 2016 14:33:47 +0200
+
+php7.1 (7.1.0~alpha3-1) experimental; urgency=medium
+
+  * Imported Upstream version 7.1.0~alpha3
+  * Rebase patches on top of 7.1.0~alpha3 release
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 11 Jul 2016 12:13:25 +0200
+
+php7.1 (7.1.0~alpha2-1) experimental; urgency=medium
+
+  * Imported Upstream version 7.1.0~alpha2
+  * Rebase patches on top of 7.1.0~alpha2
+  * Adjust tidy extension for tidy-html5
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 27 Jun 2016 11:14:19 +0200
+
+php7.1 (7.1.0~alpha1-1) experimental; urgency=low
+
+  * Imported Upstream version 7.1.0~alpha1
+  * Rebase patches on top of 7.1.0~alpha1
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 10 Jun 2016 10:56:53 +0200
