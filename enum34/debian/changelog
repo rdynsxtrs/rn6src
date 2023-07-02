@@ -1,0 +1,157 @@
+enum34 (1.1.6-1+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Thu, 23 Dec 2021 22:50:10 +0100
+
+enum34 (1.1.6-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/control: Add `Breaks: python-enum` to ensure that package (since
+    removed from the archive) gets uninstalled when python-enum34 is
+    installed. (Closes: #830712)
+  * d/python-enum34.lintian-overrides: Added to suppress the warning on
+    unversioned Breaks.
+
+ -- Barry Warsaw <barry@debian.org>  Wed, 13 Jul 2016 10:14:18 -0400
+
+enum34 (1.1.5-1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * Fixed VCS URL (https)
+
+  [ Barry Warsaw ]
+  * New upstream release.
+    - Closes: #793506
+    - Closes: #820312
+  * d/control:
+    - Bump Standards-Version to 3.9.8 with no other changes needed.
+    - Swap Maintainer and Uploaders.
+    - Add Testsuite: autopkgtest (we can't use autopkgtest-pkg-python)
+  * d/tests/control: Add simple DEP-8 tests.
+  * d/pypy-enum34.pyremove: Added.
+
+ -- Barry Warsaw <barry@debian.org>  Wed, 11 May 2016 14:39:45 -0400
+
+enum34 (1.1.2-1) unstable; urgency=medium
+
+  * Team upload.
+  * d/python-enum34.pydist: Add pydist file.
+  * New upstream version.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Sat, 23 Jan 2016 03:46:00 +0200
+
+enum34 (1.0.4-3) unstable; urgency=medium
+
+  * Team upload.
+  * d/control:
+    - Build pypy-enum34 package.
+    - Fix python-enum34-doc to mention documentation in the description.
+  * d/rules: Add --with pypy.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Tue, 15 Sep 2015 16:01:38 +0200
+
+enum34 (1.0.4-2) unstable; urgency=medium
+
+  * d/control:
+    - Remove all traces of the python3-enum34 binary package.  There's no
+      reason for us to provide this any more as all supported versions of
+      Python 3 in Debian already have it available as the stdlib enum
+      package.
+    - Remove python3-* packages from Build-Depends.
+    - Build-Depends on debhelper v9.
+  * d/rules:
+    - Remove python3 from dh --with.
+    - Remove override_dh_auto_install as no longer necessary.
+  * d/compat: Bump to version 9.
+
+ -- Barry Warsaw <barry@debian.org>  Mon, 24 Aug 2015 18:05:57 -0400
+
+enum34 (1.0.4-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/watch: Update to use pypi.debian.net proxy.
+
+ -- Barry Warsaw <barry@debian.org>  Tue, 02 Jun 2015 12:01:43 -0400
+
+enum34 (1.0.3-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/control: Bumped Standards-Version with no other changes necessary.
+
+ -- Barry Warsaw <barry@debian.org>  Fri, 24 Oct 2014 22:04:04 -0400
+
+enum34 (1.0-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Barry Warsaw <barry@debian.org>  Fri, 16 May 2014 19:04:02 -0400
+
+enum34 (0.9.23-2) unstable; urgency=medium
+
+  * d/python-enum34.links: Remove obsolete link.  (Closes: #743620)
+
+ -- Barry Warsaw <barry@debian.org>  Thu, 24 Apr 2014 14:38:44 -0400
+
+enum34 (0.9.23-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Barry Warsaw <barry@debian.org>  Thu, 13 Feb 2014 16:56:59 -0500
+
+enum34 (0.9.21-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/patches/python3r-fixes.patch: Removed; fixed upstream.
+
+ -- Barry Warsaw <barry@debian.org>  Fri, 07 Feb 2014 10:33:28 -0500
+
+enum34 (0.9.20-1) unstable; urgency=medium
+
+  * New upstream release.
+  * d/control: Bump Standards-Version to 3.9.5 with no other changes necessary.
+  * d/patches/python34-fixes.patch: Fix test failures with Python 3.4, and
+    at least one with Python 3.3 also.  (Closes: #737878)
+
+ -- Barry Warsaw <barry@debian.org>  Thu, 06 Feb 2014 14:34:39 -0500
+
+enum34 (0.9.19-1) unstable; urgency=low
+
+  * New upstream release.
+  * Switch to pybuild build system.
+    - d/rules: Remove everything that pybuild obsoletes.  Also, upstream
+      no longer provides an enum34/NEWS.rst file.
+    - d/control: Add dh-python to Build-Depend.  Also, wrap-and-sort.
+    - d/*.install: Obsoleted by pybuild; removed.
+  * d/python-enum34.pyremove: Remove the installed LICENSE file (currently
+    only works for dh_python2) to avoid the extra-license-file lintian
+    warning.
+  * d/rules: Manually remove the LICENSE file for Python 3.  (FIXME when
+    dh_python3 support for d/*.pyremove is enabled).
+
+ -- Barry Warsaw <barry@debian.org>  Tue, 05 Nov 2013 16:15:44 -0500
+
+enum34 (0.9.18-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Barry Warsaw <barry@debian.org>  Tue, 08 Oct 2013 14:00:16 -0400
+
+enum34 (0.9.16-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Barry Warsaw <barry@debian.org>  Tue, 13 Aug 2013 12:21:14 -0400
+
+enum34 (0.9.14-1) unstable; urgency=low
+
+  * New upstream release.
+    - d/rules: Update test command.
+
+ -- Barry Warsaw <barry@debian.org>  Mon, 12 Aug 2013 10:19:46 -0400
+
+enum34 (0.9.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #712881)
+
+ -- Barry Warsaw <barry@debian.org>  Mon, 01 Jul 2013 16:46:46 -0400

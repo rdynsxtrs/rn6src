@@ -1,0 +1,55 @@
+Source: enum34
+Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+Uploaders: Barry Warsaw <barry@debian.org>
+Homepage: https://pypi.python.org/pypi/enum34
+Section: python
+X-Python-Version: >= 2.6
+Priority: optional
+Build-Depends: debhelper (>= 9),
+               dh-python,
+               pypy,
+               pypy-setuptools,
+               python-all (>= 2.6.6-3~),
+               python-docutils,
+               python-setuptools
+Standards-Version: 3.9.8
+Testsuite: autopkgtest
+Vcs-Git: https://anonscm.debian.org/git/python-modules/packages/enum34.git
+Vcs-Browser: https://anonscm.debian.org/cgit/python-modules/packages/enum34.git
+
+Package: python-enum34-doc
+Architecture: all
+Section: doc
+Depends: ${misc:Depends}
+Description: backport of Python 3.4's enum package (documentation)
+ PEP 435 adds an enumeration to Python 3.4.  This module provides a
+ backport of that data type for older Python versions.  It defines two
+ enumeration classes that can be used to define unit sets of names and
+ values: Enum and IntEnum.
+ .
+ This is the common documentation package.
+
+Package: python-enum34
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}
+Suggests: python-enum34-doc
+Breaks: python-enum
+Description: backport of Python 3.4's enum package
+ PEP 435 adds an enumeration to Python 3.4.  This module provides a
+ backport of that data type for older Python versions.  It defines two
+ enumeration classes that can be used to define unit sets of names and
+ values: Enum and IntEnum.
+ .
+ This is the Python 2 compatible package.
+
+Package: pypy-enum34
+Architecture: all
+Depends: ${misc:Depends}, ${pypy:Depends}
+Suggests: python-enum34-doc
+Description: backport of Python 3.4's enum package (PyPy package)
+ PEP 435 adds an enumeration to Python 3.4.  This module provides a
+ backport of that data type for older Python versions.  It defines two
+ enumeration classes that can be used to define unit sets of names and
+ values: Enum and IntEnum.
+ .
+ This is the PyPy compatible package.

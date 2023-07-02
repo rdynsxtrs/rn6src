@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME=enum34
+
+%:
+	dh $@ --with python2,pypy --buildsystem=pybuild
+
+# override_dh_installdocs:
+	# mkdir -p debian/tmp
+	# rst2html enum/doc/enum.rst debian/tmp/enum34.html
+	# dh_installdocs

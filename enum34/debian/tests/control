@@ -1,0 +1,8 @@
+# We can't use autodep8 because the name of the Debian package is
+# 'enum34' but the name of the Python module is 'enum'.
+
+Test-Command: cd "$ADTTMP" ; python -c "import enum; print enum"
+Depends: python-enum34
+
+Test-Command: cd "$ADTTMP" ; pypy -c "import enum; print enum"
+Depends: pypy-enum34
