@@ -1,0 +1,96 @@
+From: Remi Collet <remi@remirepo.net>
+Date: Mon, 31 Aug 2020 16:10:37 +0200
+Subject: split test
+
+---
+ amqp-1.10.2/tests/amqptimestamp.phpt      |  4 +--
+ amqp-1.10.2/tests/amqptimestamp_php8.phpt | 60 +++++++++++++++++++++++++++++++
+ 2 files changed, 62 insertions(+), 2 deletions(-)
+ create mode 100644 amqp-1.10.2/tests/amqptimestamp_php8.phpt
+
+diff --git a/amqp-1.10.2/tests/amqptimestamp.phpt b/amqp-1.10.2/tests/amqptimestamp.phpt
+index 9835883..6424f8b 100644
+--- a/amqp-1.10.2/tests/amqptimestamp.phpt
++++ b/amqp-1.10.2/tests/amqptimestamp.phpt
+@@ -2,7 +2,7 @@
+ AMQPTimestamp
+ --SKIPIF--
+ <?php
+-if (!extension_loaded("amqp") || version_compare(PHP_VERSION, '5.3', '<')) {
++if (!extension_loaded("amqp") || version_compare(PHP_VERSION, '5.3', '<') || version_compare(PHP_VERSION, '8.0', '>')) {
+   print "skip";
+ }
+ --FILE--
+@@ -52,4 +52,4 @@ bool(true)
+ string(20) "18446744073709551616"
+ string(1) "0"
+ 
+-==END==
+\ No newline at end of file
++==END==
+diff --git a/amqp-1.10.2/tests/amqptimestamp_php8.phpt b/amqp-1.10.2/tests/amqptimestamp_php8.phpt
+new file mode 100644
+index 0000000..dabecc5
+--- /dev/null
++++ b/amqp-1.10.2/tests/amqptimestamp_php8.phpt
+@@ -0,0 +1,60 @@
++--TEST--
++AMQPTimestamp
++--SKIPIF--
++<?php
++if (!extension_loaded("amqp") || version_compare(PHP_VERSION, '8.0', '<')) {
++  print "skip";
++}
++--FILE--
++<?php
++
++$timestamp = new AMQPTimestamp(100000);
++var_dump($timestamp->getTimestamp(), (string) $timestamp);
++
++$timestamp = new AMQPTimestamp(100000.1);
++var_dump($timestamp->getTimestamp(), (string) $timestamp);
++
++try {
++	new AMQPTimestamp();
++} catch(ArgumentCountError $e) {
++	echo $e->getMessage() . "\n";
++}
++try {
++	new AMQPTimestamp("string");
++} catch(TypeError $e) {
++	echo $e->getMessage() . "\n";
++}
++
++try {
++    new AMQPTimestamp(AMQPTimestamp::MIN - 1);
++} catch (AMQPValueException $e) {
++    echo $e->getMessage() . "\n";
++}
++
++try {
++    new AMQPTimestamp(INF);
++} catch (AMQPValueException $e) {
++    echo $e->getMessage() . "\n";
++}
++
++var_dump((new ReflectionClass("AMQPTimestamp"))->isFinal());
++
++var_dump(AMQPTimestamp::MAX);
++var_dump(AMQPTimestamp::MIN);
++?>
++
++==END==
++--EXPECTF--
++string(6) "100000"
++string(6) "100000"
++string(6) "100000"
++string(6) "100000"
++AMQPTimestamp::__construct() expects exactly 1 parameter, 0 given
++AMQPTimestamp::__construct(): Argument #1 ($timestamp) must be of type float, string given
++The timestamp parameter must be greater than 0.
++The timestamp parameter must be less than 18446744073709551616.
++bool(true)
++string(20) "18446744073709551616"
++string(1) "0"
++
++==END==

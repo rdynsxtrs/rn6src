@@ -1,0 +1,156 @@
+php-amqp (1.10.2-3+0~20201211.13+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 19:02:38 +0100
+
+php-amqp (1.10.2-3+0~20201211.13+debian9~1.gbp505947) unstable; urgency=medium
+
+  ** SNAPSHOT build @50594714a609b5bfd563579d0727f62cecd01661 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 11 Dec 2020 10:49:13 +0100
+
+php-amqp (1.10.2-3) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:36:41 +0200
+
+php-amqp (1.10.2-2) unstable; urgency=medium
+
+  * Make the package dh_php >= 1.0 compatible
+  * Pull patches to support PHP 8.0 (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 21:21:18 +0200
+
+php-amqp (1.10.2-1) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * New upstream version 1.10.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 07 Jul 2020 10:24:45 +0200
+
+php-amqp (1.9.4-3) unstable; urgency=medium
+
+  * Don't fail on failed tests
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 23 Feb 2020 16:28:34 +0100
+
+php-amqp (1.9.4-2) unstable; urgency=medium
+
+  * No change rebuild.
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 28 Aug 2019 09:12:11 +0200
+
+php-amqp (1.9.4-1) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+  * New upstream version 1.9.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 19 Jan 2019 05:15:43 +0000
+
+php-amqp (1.9.3-4) unstable; urgency=medium
+
+  * Bump the dependency on dh-php to >= 0.33
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 09:18:17 +0000
+
+php-amqp (1.9.3-3) unstable; urgency=medium
+
+  * Add PHP 7.3 patches (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 16:05:10 +0000
+
+php-amqp (1.9.3-2) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899635)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 12:02:58 +0000
+
+php-amqp (1.9.3-1) unstable; urgency=medium
+
+  * New upstream version 1.9.3
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 05 Dec 2017 13:22:12 +0000
+
+php-amqp (1.9.1-1) unstable; urgency=medium
+
+  * New upstream version 1.9.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 27 Jun 2017 09:30:05 +0200
+
+php-amqp (1.9.0-1) unstable; urgency=medium
+
+  * New upstream version 1.9.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 30 May 2017 10:13:09 +0200
+
+php-amqp (1.7.1-1) unstable; urgency=medium
+
+  * Imported Upstream version 1.7.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Dec 2016 11:27:57 +0100
+
+php-amqp (1.7.0-3) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+  * Bump standards-version to 3.9.8
+  * amqp d/rules doesn't need HAVE_MBSTRING
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 10:01:11 +0200
+
+php-amqp (1.7.0-2) unstable; urgency=medium
+
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 12:05:52 +0200
+
+php-amqp (1.7.0-1) unstable; urgency=medium
+
+  * gbp.conf back at master/pristine-tar/upstream
+  * Imported Upstream version 1.7.0
+  * Add code to generate phpX.Y-<ext> provides for every PHP version
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 10:55:01 +0200
+
+php-amqp (1.7.0~alpha2-4) unstable; urgency=medium
+
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Feb 2016 16:46:54 +0100
+
+php-amqp (1.7.0~alpha2-3) unstable; urgency=medium
+
+  * Remove cut&paste cruft from d/tests
+  * Remove old debian/* copyright as whole debian/ has been replaced
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 22 Jan 2016 11:44:18 +0100
+
+php-amqp (1.7.0~alpha2-2) unstable; urgency=medium
+
+  * Re-upload with lintian override for PHP license
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 15 Jan 2016 14:57:01 +0100
+
+php-amqp (1.7.0~alpha2-1) unstable; urgency=medium
+
+  * Build amqp PECL extension for PHP 5.6 and 7.0
+  * Imported Upstream version 1.7.0~alpha2
+  * Override wrong license-problem-php-license lintian check for packages
+    from PECL
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 12 Jan 2016 15:24:11 +0100
+
+php-amqp (1.7.0~alpha1-1) unstable; urgency=low
+
+  * Initial release (Closes: #805643)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 10 Dec 2015 13:39:40 +0100

@@ -1,0 +1,49 @@
+From: mmokhi <mokhi64@gmail.com>
+Date: Thu, 30 Jul 2020 11:25:33 +0200
+Subject: Add build support for PHP8.0 (#381)
+
+---
+ amqp-1.10.2/amqp_envelope.h |  7 +++++++
+ amqp-1.10.2/php7_support.h  | 11 +++++++++++
+ 2 files changed, 18 insertions(+)
+
+diff --git a/amqp-1.10.2/amqp_envelope.h b/amqp-1.10.2/amqp_envelope.h
+index e63a3a5..e315682 100644
+--- a/amqp-1.10.2/amqp_envelope.h
++++ b/amqp-1.10.2/amqp_envelope.h
+@@ -20,6 +20,13 @@
+   | - Jonathan Tansavatdi                                                |
+   +----------------------------------------------------------------------+
+ */
++
++#if PHP_MAJOR_VERSION >= 7
++        #include "php7_support.h"
++#else
++        #include "php5_support.h"
++#endif
++
+ extern zend_class_entry *amqp_envelope_class_entry;
+ 
+ void convert_amqp_envelope_to_zval(amqp_envelope_t *amqp_envelope, zval *envelope TSRMLS_DC);
+diff --git a/amqp-1.10.2/php7_support.h b/amqp-1.10.2/php7_support.h
+index 47ce983..d3f2efa 100644
+--- a/amqp-1.10.2/php7_support.h
++++ b/amqp-1.10.2/php7_support.h
+@@ -101,6 +101,17 @@ typedef zval PHP5to7_zend_resource_le_t;
+ 
+ #define PHP5to7_ZEND_ACC_FINAL_CLASS ZEND_ACC_FINAL
+ 
++/* Small change to let it build after a major internal change for php8.0
++ * More info:
++ * https://github.com/php/php-src/blob/amqp-1.10.2/php-8.0.0alpha3/UPGRADING.INTERNALS#L47
++ */
++#if PHP_MAJOR_VERSION >= 8
++# define TSRMLS_DC
++# define TSRMLS_D
++# define TSRMLS_CC
++# define TSRMLS_C
++# endif
++
+ #endif //PHP_AMQP_PHP7_SUPPORT_H
+ 
+ /*
