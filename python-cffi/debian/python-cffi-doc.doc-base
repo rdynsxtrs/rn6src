@@ -1,0 +1,17 @@
+Document: python-cffi-doc
+Title: cffi Foreign Function Interface for Python calling C code
+Abstract: Convenient and reliable way of calling C code from Python.
+ The aim of this project is to provide a convenient and reliable way of calling
+ C code from Python. It keeps Python logic in Python, and minimises the C
+ required. It is able to work at either the C API or ABI level, unlike most
+ other approaches, that only support the ABI level.
+Author: Armin Rigo
+Section: Programming/Python
+
+# Format: HTML
+# Index: /usr/share/doc/python-cffi-doc/html/index.html
+# Files: /usr/share/doc/python-cffi-doc/html/*.html
+
+Format: text
+Index: /usr/share/doc/python-cffi-doc/rst/index.rst.txt
+Files: /usr/share/doc/python-cffi-doc/rst/*.txt

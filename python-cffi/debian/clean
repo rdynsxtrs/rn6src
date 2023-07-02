@@ -1,0 +1,4 @@
+*.egg-info/*
+debian/*.pydist
+doc/build/
+.pytest_cache/
