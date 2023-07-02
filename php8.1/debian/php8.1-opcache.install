@@ -1,0 +1,2 @@
+usr/lib/php/*/opcache.so
+usr/share/php8.1-opcache/opcache/opcache.ini

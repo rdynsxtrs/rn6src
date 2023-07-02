@@ -1,0 +1,2 @@
+usr/lib/php/*/pdo_firebird.so
+usr/share/php8.2-interbase/interbase/pdo_firebird.ini

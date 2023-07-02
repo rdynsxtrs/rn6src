@@ -1,0 +1,20 @@
+#!/bin/sh
+
+MATCH="^[[:space:]]*($|;)"
+
+echo "==== Additional PHP 8.1 information ====" >&3
+echo "" >&3
+echo "++++ PHP @PHP_VERSION SAPI (php8.1query -S): ++++" >&3
+/usr/sbin/php8.1query -S >&3
+echo "" >&3
+echo "++++ PHP 8.1 Extensions (php8.1query -M -v): ++++" >&3
+/usr/sbin/php8.1query -M -v >&3
+echo "" >&3
+
+echo "++++ Configuration files: ++++" >&3
+for dsoname in intl; do
+    inifile=${dsoname}.ini
+    echo "**** /etc/php/8.1/mods-available/$dsoname.ini ****" >&3
+    grep -Ev "$MATCH" "/etc/php/8.1/mods-available/$dsoname.ini" >&3
+    echo "" >&3
+done

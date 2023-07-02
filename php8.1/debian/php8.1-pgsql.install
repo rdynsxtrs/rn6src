@@ -1,0 +1,4 @@
+usr/lib/php/*/pgsql.so
+usr/share/php8.1-pgsql/pgsql/pgsql.ini
+usr/lib/php/*/pdo_pgsql.so
+usr/share/php8.1-pgsql/pgsql/pdo_pgsql.ini

@@ -1,0 +1,5 @@
+php8.1-common: maintainer-script-empty prerm
+php8.1-common: non-standard-dir-perm var/lib/php/8.1/sessions/ 1733 != 0755
+php8.1-common: package-contains-empty-directory usr/lib/php/8.1/libexec/
+php8.1-common: missing-dependency-on-phpapi
+php8.1-common: embedded-library usr/lib/php/*/fileinfo.so: file

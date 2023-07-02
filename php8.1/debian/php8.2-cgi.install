@@ -1,0 +1,4 @@
+usr/bin/php-cgi8.2
+usr/share/man/man1/php-cgi8.2.1
+usr/lib/cgi-bin/php8.2
+usr/lib/php/8.2/sapi/cgi

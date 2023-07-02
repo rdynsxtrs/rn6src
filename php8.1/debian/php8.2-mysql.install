@@ -1,0 +1,6 @@
+usr/lib/php/*/mysqlnd.so
+usr/share/php8.2-mysql/mysql/mysqlnd.ini
+usr/lib/php/*/mysqli.so
+usr/share/php8.2-mysql/mysql/mysqli.ini
+usr/lib/php/*/pdo_mysql.so
+usr/share/php8.2-mysql/mysql/pdo_mysql.ini
