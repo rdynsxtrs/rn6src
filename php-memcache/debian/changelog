@@ -1,0 +1,368 @@
+php-memcache (8.0+4.0.5.2+3.0.9~20170802.e702b5f9-1+0~20201211.19+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 16:58:10 +0100
+
+php-memcache (8.0+4.0.5.2+3.0.9~20170802.e702b5f9-1+0~20201211.19+debian9~1.gbpbbf1de) unstable; urgency=medium
+
+  ** SNAPSHOT build @bbf1de45a86055f2b720550abde176767273af88 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 11 Dec 2020 10:49:46 +0100
+
+php-memcache (8.0+4.0.5.2+3.0.9~20170802.e702b5f9-1) unstable; urgency=medium
+
+  * New upstream version 8.0+4.0.5.2+3.0.9~20170802.e702b5f9
+   + Adds PHP 8.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 07 Dec 2020 12:38:57 +0100
+
+php-memcache (4.0.5.2+3.0.9~20170802.e702b5f9-2) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Update for dh-php >= 2.0 support
+  * Build the extension only for PHP 5 and PHP 7
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 17 Oct 2020 06:22:45 +0200
+
+php-memcache (4.0.5.2+3.0.9~20170802.e702b5f9-1) unstable; urgency=medium
+
+  * New upstream version 4.0.5.2+3.0.9~20170802.e702b5f9
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 03 Mar 2020 08:18:41 +0100
+
+php-memcache (4.0.5.2+3.0.8-1) unstable; urgency=medium
+
+  * New upstream version 4.0.5.2+3.0.8
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Mar 2020 08:59:31 +0100
+
+php-memcache (3.0.9~20170802.e702b5f-4) unstable; urgency=medium
+
+  * PHP 7.4 Rebuild
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 23 Feb 2020 16:49:42 +0100
+
+php-memcache (3.0.9~20170802.e702b5f-3) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+
+ -- Ondřej Surý <ondrej@sury.org>  Mon, 19 Aug 2019 08:13:40 +0200
+
+php-memcache (3.0.9~20170802.e702b5f-2) unstable; urgency=medium
+
+  * Bump the dependency on dh-php to >= 0.33
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 10:14:07 +0000
+
+php-memcache (3.0.9~20170802.e702b5f-1) unstable; urgency=medium
+
+  * New upstream version 3.0.9~20170802.e702b5f
+  * Add patch for PHP 7.3 (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 03 Oct 2018 07:40:48 +0000
+
+php-memcache (3.0.9~20160311.4991c2f-8) unstable; urgency=medium
+
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899643)
+  * Update Vcs-* links to salsa.d.o
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 12:41:23 +0000
+
+php-memcache (3.0.9~20160311.4991c2f-7) unstable; urgency=medium
+
+  * Failed to read session data with 7.1/7.2 (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 22 Oct 2017 14:11:56 +0000
+
+php-memcache (3.0.9~20160311.4991c2f-6) unstable; urgency=medium
+
+  * Trigger rebuild for PHP 7.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 06 Dec 2016 21:31:11 +0100
+
+php-memcache (3.0.9~20160311.4991c2f-5) unstable; urgency=medium
+
+  * Fix minor typos in package description
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 13 May 2016 09:48:16 +0200
+
+php-memcache (3.0.9~20160311.4991c2f-4) unstable; urgency=medium
+
+  * Update memcache.ini with correct configuration option examples
+    (Closes: #823846)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 10 May 2016 09:40:24 +0200
+
+php-memcache (3.0.9~20160311.4991c2f-3) unstable; urgency=medium
+
+  * Fix missing comma in d/control
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 03 May 2016 11:35:29 +0200
+
+php-memcache (3.0.9~20160311.4991c2f-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:17:51 +0200
+
+php-memcache (3.0.9~20160311.4991c2f-1) unstable; urgency=medium
+
+  * Move the package under pkg-php
+  * Imported Upstream version 3.0.9~20160311.4991c2f  
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 15:42:37 +0200
+
+php-memcache (3.0.9~20151130.fdbd46b-2) unstable; urgency=medium
+
+  * Remove Sergey from Uploaders per his request and thanks for all his
+    work for all these years
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Feb 2016 22:18:26 +0100
+
+php-memcache (3.0.9~20151130.fdbd46b-1) unstable; urgency=medium
+
+  * Sync with Ubuntu on package version, so we don't have version clashes
+    in the future
+  * Imported Upstream version 3.0.9~20151130.fdbd46b
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 19 Feb 2016 14:57:17 +0100
+
+php-memcache (3.0.8-46-gfdbd46b-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.0.8-46-gfdbd46b taken from
+    https://github.com/websupport-sk/pecl-memcache that supports PHP 7.0
+  * Update packaging to PHP 7.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 19 Feb 2016 14:32:34 +0100
+
+php-memcache (3.0.8-5) unstable; urgency=medium
+
+  * Bump up Standards-Version (to 3.9.6)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Sat, 25 Oct 2014 17:56:21 +0400
+
+php-memcache (3.0.8-4) unstable; urgency=low
+
+  * Move the package under the PHP PECL team umbrella
+  * Bump up Standards-Version (to 3.9.5)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Wed, 08 Jan 2014 12:56:03 +0400
+
+php-memcache (3.0.8-3) unstable; urgency=low
+
+  * Correct changelog
+  * Fix lintian error: vcs-field-not-canonical
+  * Add --with php5 to fix lintian W: missing-pkg-php-tools-addon
+  * Add dh-php5 deps
+  * Add Breaks: header to debian/control
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Thu, 07 Nov 2013 17:00:22 +0400
+
+php-memcache (3.0.8-2) unstable; urgency=low
+
+  * Use pkg-php-tools to build package
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Sun, 06 Oct 2013 16:51:04 +0400
+
+php-memcache (3.0.8-1) unstable; urgency=low
+
+  * Imported Upstream version 3.0.8
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Fri, 19 Apr 2013 13:23:26 +0400
+
+php-memcache (3.0.7-2) unstable; urgency=low
+
+  * Drop DMUA, fix lintian warning
+  * Bump up Standards-Version (to 3.9.4)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Wed, 19 Dec 2012 12:47:39 +0400
+
+php-memcache (3.0.7-1) unstable; urgency=low
+
+  * Add VCS-* fields
+  * Imported Upstream version 3.0.7
+  * Drop unnecessary fix_paths_m4.patch
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Sat, 13 Oct 2012 20:12:02 +0400
+
+php-memcache (3.0.6-6) unstable; urgency=low
+
+  * Fix lintian warning (build-depends-on-1-revision)
+  * Change dh compat to 9, enable hardening support
+  * Install memcache.php in examples
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Fri, 01 Jun 2012 16:43:36 +0400
+
+php-memcache (3.0.6-5) unstable; urgency=low
+
+  * Install README and example.php
+  * Use php5{en,dis}mod for conffile handling (Closes: #667775)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Sat, 07 Apr 2012 23:27:49 +0400
+
+php-memcache (3.0.6-4) unstable; urgency=low
+
+  * Revert change of defaults for memcache.ini, introduced in 3.0.6-3
+    for bug #665907.  Uncomment extension in preinst file (Closes:
+    #665907)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Fri, 30 Mar 2012 16:22:24 +0400
+
+php-memcache (3.0.6-3) unstable; urgency=low
+
+  * Restore dependence on ucf (be gone after wheezy)
+  * Comment out extension by default (as for squeeze version).  Closes:
+    #665907.
+  * Cleanup ucf's stuff in preinst for install|upgrade targets.
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Wed, 28 Mar 2012 19:51:51 +0400
+
+php-memcache (3.0.6-2) unstable; urgency=low
+
+  * Reformat debian/copyright according to accepted DEP5 spec
+  * Bump up Standards-Version to 3.9.3 (no changes)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Mon, 05 Mar 2012 15:20:02 +0400
+
+php-memcache (3.0.6-1) unstable; urgency=low
+
+  * Imported Upstream version 3.0.6 (Closes: #630097)
+  * Use DEP5 debian/copyright format
+  * New maintainer (Closes: #620029), bump-up Standards-Version to 3.9.2
+  * Rename & document patch 01_fix_paths_m4.patch, don't use obsoleted
+    tarball.mk and simple-patchsys.mk
+  * Use dh instead of cdbs, drop cdbs dependence
+  * Don't use ucf, drop ucf dependence
+  * Added "DM-Upload-Allowed: yes" control field
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Sun, 30 Oct 2011 00:07:43 +0400
+
+php-memcache (3.0.5-1) unstable; urgency=low
+
+  * New upstream release
+    - Fixed PECL bug #16059 (Build error: 'MSG_NOSIGNAL' undeclared)
+    - Added method MemcachePool::findServer(key) 
+      which returns the server a key hashes to
+    - Changed MemcachePool::findServer() to return 
+      only "hostname:port" since tcp port is significant
+    - Fixed PECL bug #16536 (Weight of 0 causes SegFault 
+      on memcache_add_server)
+    - Fixed PECL bug #17566 (3.0.4 cache delete bug)
+    - Fixed PECL Bug #16442 (memcache_set fail with integer value)
+  * Standards-Version: 3.9.1
+
+ -- Ivan Borzenkov <ivan1986@list.ru>  Wed, 06 Oct 2010 11:28:45 +0400
+
+php-memcache (3.0.4-4) unstable; urgency=low
+
+  * add memcached to suggests (Closes: #583109)
+  * close old bug (Closes: #576239)
+
+ -- Ivan Borzenkov <ivan1986@list.ru>  Tue, 25 May 2010 20:11:49 +0400
+
+php-memcache (3.0.4-3) unstable; urgency=low
+
+  * Build for php 5.3.1
+  * Change compat to 7
+  * Update to debsrc3.0
+  * close lenny bug (Closes: #544560)
+  * close old bug from 3.0.1 - not repeated (Closes: #528638, #506827)
+
+ -- Ivan Borzenkov <ivan1986@list.ru>  Tue, 09 Feb 2010 20:30:54 +0300
+
+php-memcache (3.0.4-2) unstable; urgency=low
+
+  * change quilt to simple-patchsys for support format 3.0 (quilt) (Closes: #538579)
+
+ -- Ivan Borzenkov <ivan1986@list.ru>  Sun, 26 Jul 2009 10:21:28 +0400
+
+php-memcache (3.0.4-1) unstable; urgency=low
+
+  * New upstream release (Closes: #503467, #523409)
+  * New mantainer. (Closes: #529677)
+  * make some lintian cleaned
+    - change -p0 to -p1 for fix_paths_m4.patch
+    - remove .pc/.version
+  * Standards-Version: 3.8.2
+
+ -- Ivan Borzenkov <ivan1986@list.ru>  Thu, 02 Jul 2009 22:58:17 +0400
+
+php-memcache (3.0.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Enable memcache modules by default. (Closes: #471177)
+  * debian/control added ${shlibs:Depends}.
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Tue, 25 Mar 2008 01:48:13 -0300
+
+php-memcache (3.0.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Standards-Version: 3.7.3
+  * Updated "Homepage:" pseudo-header as Reference 1.14.6.
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Wed, 12 Dec 2007 14:43:03 -0200
+
+php-memcache (2.2.0-1) unstable; urgency=low
+
+  * New upstream release
+  * New Mantainer, (closes: #445843)
+  * debian/watch added.
+  * debian/control
+    - added Homepage.
+    - debhelper >= 5.0.0
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Thu, 25 Oct 2007 00:17:55 +0000
+
+php-memcache (2.1.2-3) unstable; urgency=low
+
+  * Orphan package: set maintainer to Debian QA Group (#445843).
+
+ -- Pierre Habouzit <madcoder@debian.org>  Mon, 08 Oct 2007 16:36:22 +0200
+
+php-memcache (2.1.2-2) unstable; urgency=low
+
+  * Dropping php4 support (Closes: #418304).
+
+ -- Pierre Habouzit <madcoder@debian.org>  Tue, 10 Apr 2007 21:35:03 +0200
+
+php-memcache (2.1.2-1) unstable; urgency=low
+
+  * New upstream release (Closes: 417664).
+
+  * Move to the new php configuration scheme (Closes: 402020):
+     + hence we don't need templates anymore (Closes: 381430, 399250), anyway
+       thanks Christian for the NMU.
+     + use ucf to deal with the configuration file in /etc/php?/conf.d
+
+  * Use quilt to manage patches:
+     + patches/fix_paths_m4.patch: don't try to be clever detectecting where
+       php_session.h is, default works.
+
+ -- Pierre Habouzit <madcoder@debian.org>  Wed, 04 Apr 2007 12:44:30 +0200
+
+php-memcache (2.0.1-1.1) unstable; urgency=low
+
+  * Non-maintainer upload to fix pending l10n bugs.
+  * Debconf translations:
+    - Portuguese. Closes: #381430
+    - German. Closes: #399250
+
+ -- Christian Perrier <bubulle@debian.org>  Tue, 13 Feb 2007 22:47:27 +0100
+
+php-memcache (2.0.1-1) unstable; urgency=low
+
+  * Initial release (closes: #320744).
+
+ -- Pierre Habouzit <madcoder@debian.org>  Thu, 13 Apr 2006 00:12:19 +0200
+

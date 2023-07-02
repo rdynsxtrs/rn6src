@@ -1,0 +1,37 @@
+Source: php-memcache
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev,
+               zlib1g-dev
+Standards-Version: 3.9.8
+Homepage: https://github.com/websupport-sk/pecl-memcache
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-memcache.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-memcache
+
+Package: php-memcache
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Suggests: memcached,
+          ${pecl:Suggests}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Recommends: ${pecl:Recommends}
+Description: memcache extension module for PHP
+ Memcached is a caching daemon designed especially for dynamic web applications
+ to decrease database load by storing objects in memory.
+ .
+ This extension allows you to work with memcached through handy OO and
+ procedural interfaces in your php5 applications.
+ .
+ This is an updated version for PHP 7 with non-blocking I/O taken from
+ https://github.com/websupport-sk/pecl-memcache
