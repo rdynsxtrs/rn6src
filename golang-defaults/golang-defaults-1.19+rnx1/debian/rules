@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# export GOVER := $(shell debian/helpers/getver.pl)
+export GOVER := $(shell perl -w -mDpkg::Version -e 'print(Dpkg::Version->new(`dpkg-parsechangelog -SVersion`)->version())' | sed -e 's/\([0-9]\+\.[0-9]\+\).*/\1/g')
+
+%:
+	dh $@
+
+override_dh_gencontrol:
+	echo $(GOVER)
+	dh_gencontrol -- -Vgolang:GOVER=$(GOVER)

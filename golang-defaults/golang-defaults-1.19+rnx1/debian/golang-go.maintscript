@@ -1,0 +1,2 @@
+#!/usr/bin/dh-exec
+dir_to_symlink /usr/lib/go go-${GOVER} 2:1.6.1+2~

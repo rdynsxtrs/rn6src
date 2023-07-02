@@ -1,0 +1,4 @@
+#!/usr/bin/dh-exec
+usr/lib/go-${GOVER} usr/lib/go
+usr/lib/go-${GOVER}/bin/go usr/bin/go
+usr/lib/go-${GOVER}/bin/gofmt usr/bin/gofmt

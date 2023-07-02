@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+	upgrade)
+		# When golang-go was not a dependency package, it used alternatives to
+		# manage /usr/bin/go, and unfortunately did not remove the alternative on
+		# prerm upgrade (just uninstall|deconfigure). So remove it here.
+		update-alternatives --remove go /usr/lib/go/bin/go
+		;;
+	install)
+		;;
+	*)
+		echo "preinst called with unknown argument \`$1'" >&2
+		exit 0
+		;;
+esac
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,174 @@
+Source: golang-defaults
+Maintainer: Go Compiler Team <team+go-compiler@tracker.debian.org>
+Uploaders: Michael Stapelberg <stapelberg@debian.org>,
+           Paul Tagliamonte <paultag@debian.org>,
+           Tianon Gravi <tianon@debian.org>,
+           Michael Hudson-Doyle <mwhudson@debian.org>,
+           Martín Ferrari <tincho@debian.org>,
+           Dr. Tobias Quathamer <toddy@debian.org>,
+           Anthony Fok <foka@debian.org>
+Section: main
+Priority: optional
+Build-Depends: dh-exec
+Standards-Version: 4.5.0
+Vcs-Browser: https://salsa.debian.org/go-team/compiler/golang-defaults
+Vcs-Git: https://salsa.debian.org/go-team/compiler/golang-defaults.git
+Homepage: https://golang.org
+Rules-Requires-Root: no
+
+Package: golang-go
+Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el riscv64 s390x
+Depends: golang-${golang:GOVER}-go,
+         golang-src (>= ${source:Version}),
+         ${misc:Depends}
+Suggests: git
+Breaks: gccgo-5 (<< 5.3.1-12~),
+        gccgo-6 (<< 6-20160319-1~),
+        golang-doc (<< 2:1.6.1+1~),
+        golang-go-darwin-386,
+        golang-go-darwin-amd64,
+        golang-go-freebsd-386,
+        golang-go-freebsd-amd64,
+        golang-go-freebsd-arm,
+        golang-go-linux-386,
+        golang-go-linux-amd64,
+        golang-go-linux-arm,
+        golang-go-netbsd-386,
+        golang-go-netbsd-amd64,
+        golang-go-windows-386,
+        golang-go-windows-amd64,
+        golang-go.tools (<< 1:0.0~git20151026.0.0f9d71c-1~),
+        golang-golang-x-tools (<< 1:0.0~git20151026.0.0f9d71c-1~)
+Conflicts: gccgo-go
+Replaces: golang-doc (<< 2:1.6.1+1~),
+          golang-go-darwin-386,
+          golang-go-darwin-amd64,
+          golang-go-freebsd-386,
+          golang-go-freebsd-amd64,
+          golang-go-freebsd-arm,
+          golang-go-linux-386,
+          golang-go-linux-amd64,
+          golang-go-linux-arm,
+          golang-go-netbsd-386,
+          golang-go-netbsd-amd64,
+          golang-go-windows-386,
+          golang-go-windows-amd64,
+          golang-go.tools (<< 1:0.0~git20151026.0.0f9d71c-1~),
+          golang-golang-x-tools (<< 1:0.0~git20151026.0.0f9d71c-1~)
+Description: Go programming language compiler, linker, compiled stdlib
+ The Go programming language is an open source project to make programmers more
+ productive. Go is expressive, concise, clean, and efficient. Its concurrency
+ mechanisms make it easy to write programs that get the most out of multicore
+ and networked machines, while its novel type system enables flexible and
+ modular program construction. Go compiles quickly to machine code yet has the
+ convenience of garbage collection and the power of run-time reflection. It's a
+ fast, statically typed, compiled language that feels like a dynamically typed,
+ interpreted language.
+ .
+ This is a dependency package that depends on the default Go toolchain and
+ compiled standard library. It is only built on architectures that have a
+ native toolchain ("gc compiler"). Packages that want to build with whichever
+ of gc or gccgo is available should depend on golang-any.
+
+Package: golang-any
+Architecture: any
+Depends: golang-go (>= ${source:Version}) | gccgo-go (>= ${source:Version}),
+         ${misc:Depends}
+Multi-Arch: same
+Description: Go programming language -- gccgo on "non-Go" platforms
+ The Go programming language is an open source project to make programmers more
+ productive. Go is expressive, concise, clean, and efficient. Its concurrency
+ mechanisms make it easy to write programs that get the most out of multicore
+ and networked machines, while its novel type system enables flexible and
+ modular program construction. Go compiles quickly to machine code yet has the
+ convenience of garbage collection and the power of run-time reflection. It's a
+ fast, statically typed, compiled language that feels like a dynamically typed,
+ interpreted language.
+ .
+ This is a dependency package that depends on the default Go toolchain and
+ compiled standard library or gccgo on architectures that do not have a native
+ toolchain ("gc compiler") port. Because the gccgo and Go releases are not on
+ the same schedule, it is not guaranteed that the version of the Go language
+ provided by the version of gccgo that this package depends upon will match the
+ version of this package.
+
+Package: gccgo-go
+Architecture: any
+Depends: gccgo-10,
+         ${misc:Depends}
+Conflicts: golang-go
+Multi-Arch: same
+Description: Go programming language -- gccgo
+ The Go programming language is an open source project to make programmers more
+ productive. Go is expressive, concise, clean, and efficient. Its concurrency
+ mechanisms make it easy to write programs that get the most out of multicore
+ and networked machines, while its novel type system enables flexible and
+ modular program construction. Go compiles quickly to machine code yet has the
+ convenience of garbage collection and the power of run-time reflection. It's a
+ fast, statically typed, compiled language that feels like a dynamically typed,
+ interpreted language.
+ .
+ Installing this package will install the gccgo implementation as /usr/bin/go.
+ It conflicts with golang-go.
+
+Package: golang-src
+Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el riscv64 s390x
+Depends: golang-${golang:GOVER}-src,
+         ${misc:Depends}
+Multi-Arch: same
+Description: Go programming language - source files
+ The Go programming language is an open source project to make programmers more
+ productive. Go is expressive, concise, clean, and efficient. Its concurrency
+ mechanisms make it easy to write programs that get the most out of multicore
+ and networked machines, while its novel type system enables flexible and
+ modular program construction. Go compiles quickly to machine code yet has the
+ convenience of garbage collection and the power of run-time reflection. It's a
+ fast, statically typed, compiled language that feels like a dynamically typed,
+ interpreted language.
+ .
+ This is a dependency package that depends on the default Go standard library
+ source code, which is needed for the go build process.
+
+Package: golang-doc
+Architecture: all
+Section: doc
+Depends: golang-${golang:GOVER}-doc,
+         golang-go (>= ${source:Version}),
+         ${misc:Depends}
+Description: Go programming language - documentation
+ The Go programming language is an open source project to make
+ programmers more productive. Go is expressive, concise, clean, and
+ efficient. Its concurrency mechanisms make it easy to write programs
+ that get the most out of multicore and networked machines, while its
+ novel type system enables flexible and modular program construction.
+ Go compiles quickly to machine code yet has the convenience of
+ garbage collection and the power of run-time reflection. It's a fast,
+ statically typed, compiled language that feels like a dynamically
+ typed, interpreted language.
+ .
+ This is a dependency package that depends on the default Go documentation. You
+ can view the formatted documentation by installing the golang-golang-x-tools
+ package, running "godoc --http=:6060", and then visiting
+ http://localhost:6060/doc/install.html.
+
+Package: golang
+Architecture: amd64 arm64 armel armhf i386 mips mips64el mipsel ppc64el riscv64 s390x
+Depends: golang-${golang:GOVER},
+         golang-doc (>= ${source:Version}),
+         golang-go (>= ${source:Version}),
+         golang-src (>= ${source:Version}),
+         ${misc:Depends}
+Multi-Arch: same
+Description: Go programming language compiler - metapackage
+ The Go programming language is an open source project to make
+ programmers more productive. Go is expressive, concise, clean, and
+ efficient. Its concurrency mechanisms make it easy to write programs
+ that get the most out of multicore and networked machines, while its
+ novel type system enables flexible and modular program construction.
+ Go compiles quickly to machine code yet has the convenience of
+ garbage collection and the power of run-time reflection. It's a
+ fast, statically typed, compiled language that feels like a
+ dynamically typed, interpreted language.
+ .
+ This package is a metapackage that, when installed, guarantees
+ that (most of) a full Go development environment is installed.

@@ -1,0 +1,2 @@
+# Thanks for the concern, lintian, but this is OK :-)
+golang-defaults: dh-exec-subst-unknown-variable
