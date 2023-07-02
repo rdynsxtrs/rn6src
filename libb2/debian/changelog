@@ -1,0 +1,111 @@
+libb2 (0.98.1-1.1+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Thu, 29 Apr 2021 15:26:01 +0200
+
+libb2 (0.98.1-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Mark the packages as M-A: same.
+  * Fix lintian warnings.
+  * Bump standards version.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 09 Sep 2019 13:16:31 +0200
+
+libb2 (0.98.1-1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+  * d/copyright: Use https protocol in Format field
+
+  [ Gianfranco Costamagna ]
+  * New upstream version 0.98.1
+  * Team upload (collab-maint)
+  * Bump compat level to 12
+  * Drop comments on rules file
+  * Bump std-version to 4.3.0, no changes required
+  * Drop pre-depends keyword, useless since jessie
+  * Fixup copyright years
+  * Install pkgconfig file
+  * Add patch to stop overriding CFLAGS from the system
+  * Include architecture.mk to avoid defining DEB_*_ARCH
+  * Add dependency on pkg-config
+  * Make lintian happy, remove duplicated section line, drop trailing newline
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Thu, 14 Mar 2019 10:25:20 +0100
+
+libb2 (0.98-1) unstable; urgency=medium
+
+  * Team upload (collab-maint)
+  * Add stub of watch file
+  * Move VCS fields to salsa.d.o
+  * Find the archive url
+  * New upstream version 0.98
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Wed, 15 Aug 2018 13:04:46 +0200
+
+libb2 (0.97+git20171226-2) unstable; urgency=medium
+
+  * Team upload (collab-maint)
+  * Upload to unstable
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Fri, 29 Dec 2017 21:35:03 +0100
+
+libb2 (0.97+git20171226-1) experimental; urgency=medium
+
+  * Team upload (collab-maint)
+  * New upstream snapshot
+    - closes: #884958
+  * Drop patches, upstream
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 26 Dec 2017 18:11:32 +0100
+
+libb2 (0.97-4) unstable; urgency=medium
+
+  * Team upload (collab-maint)
+  * debian/patches/b044244959bd7c050656c54711290f7dfc934c9a.patch:
+    Fix endianess failure in test.
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Tue, 10 Oct 2017 14:31:54 +0200
+
+libb2 (0.97-3) unstable; urgency=medium
+
+  [ Robert Ransom ]
+  * debian/copyright: Add text of CC0 (reported by Thorsten Alteholz)
+
+  [ Gianfranco Costamagna ]
+  * Team upload (Collab-maint)
+  * Add VCS-Browser field (Closes: #842377)
+  * Bump compat level to 10, drop autoreconf
+  * Bump std-version to 4.1.1, no changes required
+  * Conditionally disable fat on non-i386 architectures (Closes: #842379)
+
+ -- Gianfranco Costamagna <locutusofborg@debian.org>  Mon, 09 Oct 2017 16:26:11 +0200
+
+libb2 (0.97-2) unstable; urgency=medium
+
+  * debian/control: Point Vcs-Git at Alioth repo
+  * Add man page
+  * debian/watch: Remove (not currently useful due to upstream changes)
+
+ -- Robert Ransom <rransom.8774@gmail.com>  Wed, 28 Oct 2015 09:22:23 -0700
+
+libb2 (0.97-1) unstable; urgency=medium
+
+  [ Ramakrishnan Muthukrishnan ]
+  * debian/copyright: conform to the machine-readable copyright spec
+
+  [ Robert Ransom ]
+  * debian/copyright: Use the more specific license identifier "CC0"
+  * Imported upstream version 0.97
+  * debian/control: Standards-Version: 3.9.6 (no changes required)
+  * Add debian/watch file
+  * debian/control: Add Vcs-Git field
+
+ -- Robert Ransom <rransom.8774@gmail.com>  Mon, 28 Sep 2015 07:32:43 -0700
+
+libb2 (0.96-1) unstable; urgency=low
+
+  * Initial release (Closes: #733849)
+
+ -- Robert Ransom <rransom.8774@gmail.com>  Tue, 25 Feb 2014 15:38:36 -0800

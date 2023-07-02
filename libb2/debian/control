@@ -1,0 +1,54 @@
+Source: libb2
+Priority: optional
+Maintainer: Robert Ransom <rransom.8774@gmail.com>
+Build-Depends: pkg-config
+Standards-Version: 4.4.0
+Section: libs
+Homepage: https://blake2.net/
+Vcs-Git: https://salsa.debian.org/debian/libb2.git
+Vcs-Browser: https://salsa.debian.org/debian/libb2
+
+Package: libb2-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libb2-1 (= ${binary:Version}), ${misc:Depends}
+Description: BLAKE2 family of hash functions -- development files
+ The BLAKE2 family of hash functions is an improved version of the
+ SHA-3 finalist BLAKE.
+ .
+ BLAKE2b is optimized for 64-bit platforms and produces up to 64 bytes
+ of output; BLAKE2s is optimized for 32-bit platforms and produces up
+ to 32 bytes of output.
+ .
+ BLAKE2bp and BLAKE2sp are parallel versions of BLAKE2b and BLAKE2s
+ designed for increased performance on multicore and large-vector SIMD
+ processors.
+ .
+ libb2 provides a portable implementation of BLAKE2, optimized
+ implementations for IA-32 and AMD64 processors, and an interface
+ layer that automatically selects the best implementation for the
+ processor it is run on.
+ .
+ This package contains the development files for libb2.
+
+Package: libb2-1
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: BLAKE2 family of hash functions
+ The BLAKE2 family of hash functions is an improved version of the
+ SHA-3 finalist BLAKE.
+ .
+ BLAKE2b is optimized for 64-bit platforms and produces up to 64 bytes
+ of output; BLAKE2s is optimized for 32-bit platforms and produces up
+ to 32 bytes of output.
+ .
+ BLAKE2bp and BLAKE2sp are parallel versions of BLAKE2b and BLAKE2s
+ designed for increased performance on multicore and large-vector SIMD
+ processors.
+ .
+ libb2 provides a portable implementation of BLAKE2, optimized
+ implementations for IA-32 and AMD64 processors, and an interface
+ layer that automatically selects the best implementation for the
+ processor it is run on.

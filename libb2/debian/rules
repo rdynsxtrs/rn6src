@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+# for DEB_HOST_ARCH variable
+include /usr/share/dpkg/architecture.mk
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+ifneq (,$(filter $(DEB_HOST_ARCH), amd64 i386 hurd-i386 kfreebsd-amd64 kfreebsd-i386 x32))
+	dh_auto_configure -- --enable-fat  --disable-native
+else
+	dh_auto_configure -- --disable-fat --disable-native
+endif
+
+override_dh_install:
+	dh_install
+	rm debian/tmp/usr/lib/*/*.la

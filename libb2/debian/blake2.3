@@ -1,0 +1,263 @@
+.Dd October 17, 2015
+.\" Please adjust this date whenever you revise the manpage.
+.Dt BLAKE2 3
+.Os
+.Sh NAME
+.Nm blake2s ,
+.Nm blake2b ,
+.Nm blake2sp ,
+.Nm blake2bp ,
+.Nm blake2s_init ,
+.Nm blake2s_init_key ,
+.Nm blake2s_init_param ,
+.Nm blake2s_update ,
+.Nm blake2s_final ,
+.Nm blake2b_init ,
+.Nm blake2b_init_key ,
+.Nm blake2b_init_param ,
+.Nm blake2b_update ,
+.Nm blake2b_final ,
+.Nm blake2sp_init ,
+.Nm blake2sp_init_key ,
+.Nm blake2sp_update ,
+.Nm blake2sp_final ,
+.Nm blake2bp_init ,
+.Nm blake2bp_init_key ,
+.Nm blake2bp_update ,
+.Nm blake2bp_final
+.Nd BLAKE2 cryptographic hash functions
+.Sh SYNOPSIS
+.In blake2.h
+.Ft int
+.Fn blake2s "uint8_t *out" "const void *in" "const void *key" "size_t outlen" "size_t inlen" "size_t keylen"
+.Ft int
+.Fn blake2b "uint8_t *out" "const void *in" "const void *key" "size_t outlen" "size_t inlen" "size_t keylen"
+.Ft int
+.Fn blake2sp "uint8_t *out" "const void *in" "const void *key" "size_t outlen" "size_t inlen" "size_t keylen"
+.Ft int
+.Fn blake2bp "uint8_t *out" "const void *in" "const void *key" "size_t outlen" "size_t inlen" "size_t keylen"
+.\"
+.Ft int
+.Fn blake2s_init "blake2s_state *S" "size_t outlen"
+.Ft int
+.Fn blake2s_init_key "blake2s_state *S" "size_t outlen" "const void *key" "size_t keylen"
+.Ft int
+.Fn blake2s_init_param "blake2s_state *S" "const blake2s_param *P"
+.Ft int
+.Fn blake2s_update "blake2s_state *S" "const uint8_t *in" "size_t inlen"
+.Ft int
+.Fn blake2s_final "blake2s_state *S" "uint8_t *out" "size_t outlen"
+.\"
+.Ft int
+.Fn blake2b_init "blake2b_state *S" "size_t outlen"
+.Ft int
+.Fn blake2b_init_key "blake2b_state *S" "size_t outlen" "const void *key" "size_t keylen"
+.Ft int
+.Fn blake2b_init_param "blake2b_state *S" "const blake2b_param *P"
+.Ft int
+.Fn blake2b_update "blake2b_state *S" "const uint8_t *in" "size_t inlen"
+.Ft int
+.Fn blake2b_final "blake2b_state *S" "uint8_t *out" "size_t outlen"
+.\"
+.Ft int
+.Fn blake2sp_init "blake2sp_state *S" "size_t outlen"
+.Ft int
+.Fn blake2sp_init_key "blake2sp_state *S" "size_t outlen" "const void *key" "size_t keylen"
+.Ft int
+.Fn blake2sp_update "blake2sp_state *S" "const uint8_t *in" "size_t inlen"
+.Ft int
+.Fn blake2sp_final "blake2sp_state *S" "uint8_t *out" "size_t outlen"
+.\"
+.Ft int
+.Fn blake2bp_init "blake2bp_state *S" "size_t outlen"
+.Ft int
+.Fn blake2bp_init_key "blake2bp_state *S" "size_t outlen" "const void *key" "size_t keylen"
+.Ft int
+.Fn blake2bp_update "blake2bp_state *S" "const uint8_t *in" "size_t inlen"
+.Ft int
+.Fn blake2bp_final "blake2bp_state *S" "uint8_t *out" "size_t outlen"
+.\"
+.Sh DESCRIPTION
+The BLAKE2 family of cryptographic hash functions is an improved
+version of the SHA-3 finalist BLAKE.
+.Pp
+BLAKE2b is optimized for 64-bit platforms and produces up to 64 bytes
+of output; BLAKE2s is optimized for 32-bit platforms and produces up
+to 32 bytes of output.
+.Pp
+BLAKE2bp and BLAKE2sp are parallel versions of BLAKE2b and BLAKE2s
+designed for increased performance on multicore and large-vector SIMD
+processors.
+.\"
+.Pp
+The
+.Fn blake2s_init ,
+.Fn blake2b_init ,
+.Fn blake2sp_init ,
+and
+.Fn blake2bp_init
+functions initialize a hash state
+.Fa S
+to hash a message to an output of
+.Fa outlen
+bytes,
+without using a key.
+.\"
+.Pp
+.Fa S
+must be allocated by the caller.
+.\"
+.Pp
+The
+.Fn blake2s_init_key ,
+.Fn blake2b_init_key ,
+.Fn blake2sp_init_key ,
+and
+.Fn blake2bp_init_key
+functions initialize a hash state
+.Fa S
+to hash a message to an output of
+.Fa outlen
+bytes,
+using the key
+.Fa key
+of length
+.Fa keylen .
+.\"
+.Pp
+The
+.Fn blake2s_init_param
+and
+.Fn blake2b_init_param
+initialize a hash state
+.Fa S
+using a custom parameter block
+.Fa P ,
+which must have been filled in completely by the caller.
+See the BLAKE2 paper and the
+.In blake2.h
+header file for details.
+.\"
+.Pp
+The
+.Fn blake2s_update ,
+.Fn blake2b_update ,
+.Fn blake2sp_update ,
+and
+.Fn blake2bp_update
+functions hash the input buffer
+.Fa in
+of length
+.Fa inlen
+bytes into the hash state
+.Fa S .
+.\"
+.Pp
+The
+.Fn blake2s_final ,
+.Fn blake2b_final ,
+.Fn blake2sp_final ,
+and
+.Fn blake2bp_final
+functions compute the hash value accumulated in
+.Fa S
+and store it into
+.Fa out .
+.Fa outlen
+must have the same value that was passed to
+the corresponding init function.
+.\"
+.Pp
+The
+.Fn blake2s ,
+.Fn blake2b ,
+.Fn blake2sp ,
+and
+.Fn blake2bp
+functions hash a single-buffer input in one function call,
+optionally using a key.
+.Pp
+To use the latter functions without a key, set
+.Fa keylen
+to 0 and
+.Fa key
+to NULL.
+.Pp
+For all functions, the lengths
+.Fa outlen ,
+.Fa inlen ,
+and
+.Fa keylen
+are specified in bytes.
+.\"
+.Pp
+.Fa outlen
+must be positive and no greater than
+.Dv BLAKE2S_OUTBYTES
+(32)
+for the blake2s and blake2sp functions,
+or positive and no greater than
+.Dv BLAKE2B_OUTBYTES
+(64)
+for the blake2b and blake2bp functions.
+.\"
+.Pp
+.Fa keylen
+must be positive and no greater than
+.Dv BLAKE2S_KEYBYTES
+(32)
+for the blake2s and blake2sp functions,
+or positive and no greater than
+.Dv BLAKE2B_KEYBYTES
+(64)
+for the blake2b and blake2bp functions.
+.\"
+.Sh RETURN VALUES
+All of these functions return 0 if successful,
+or -1 if they detect an error.
+.Pp
+All detected, reported errors are caused by
+invalid pointer arguments
+or out-of-bounds length arguments.
+.Pp
+Not all invalid arguments are detected.
+.Pp
+These functions do
+.Em not
+set
+.Va errno
+themselves,
+but do call standard C library functions
+which might set
+.Va errno .
+.\"
+.Sh BUGS
+The library does not include a self-test function.
+.Pp
+The library does not attempt to detect or report an error
+if the caller exceeds the input length limits
+specified for the BLAKE2 functions,
+even for BLAKE2s and BLAKE2sp, whose length limits
+(2**64-1 bytes and 2**67-1 bytes respectively)
+could theoretically be reached.
+.Pp
+.Fn blake2s_final ,
+.Fn blake2b_final ,
+.Fn blake2sp_final ,
+and
+.Fn blake2bp_final
+do not erase the state
+.Fa S ,
+and do not treat the hash value as sensitive,
+even if they are used to compute a keyed hash.
+.Pp
+.Fn blake2s_final ,
+.Fn blake2b_final ,
+.Fn blake2sp_final ,
+and
+.Fn blake2bp_final
+alter the state such that further calls
+to the _update or _final functions
+will produce poorly-behaved results,
+and do not mark the state as no longer valid
+in order to detect and prevent such programmer errors.
