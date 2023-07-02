@@ -1,0 +1,103 @@
+xxhash (0.8.0-2+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Thu, 29 Apr 2021 15:33:50 +0200
+
+xxhash (0.8.0-2) unstable; urgency=medium
+
+  * Use hardware-accelerated XXH3 computation on x86 architecture, and
+    install the hardware-accelerating header file. 
+    Thanks to Julian Andres Klode. (Closes: #977345)
+  * Cherry-pick upstream: Fix empty version in .pc file (Closes: #979758)
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 11 Jan 2021 21:57:57 +0900
+
+xxhash (0.8.0-1) unstable; urgency=medium
+
+  * New upstream version 0.8.0
+  * update patch
+  * bump standards version, no changes necessary
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 10 Aug 2020 01:02:50 +0900
+
+xxhash (0.7.4-1) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Set upstream metadata fields: Bug-Submit.
+
+  [ Norbert Preining ]
+  * New upstream version 0.7.4
+  * Update symbols file
+
+ -- Norbert Preining <norbert@preining.info>  Tue, 30 Jun 2020 17:10:59 +0900
+
+xxhash (0.7.3-2) unstable; urgency=medium
+
+  [ Chris Lamb ]
+  * Make the build reproducible (Closes: #956583)
+
+ -- Norbert Preining <norbert@preining.info>  Mon, 13 Apr 2020 19:00:33 +0900
+
+xxhash (0.7.3-1) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * Trim trailing whitespace.
+  * Bump debhelper from old 11 to 12.
+  * Set debhelper-compat version in Build-Depends.
+  * Set upstream metadata fields: Bug-Database, Repository, Repository-
+    Browse.
+
+  [ Norbert Preining ]
+  * New upstream version 0.7.3
+  * Install new files (pkg-config, header, new tool xxh128sum plus man)
+
+ -- Norbert Preining <norbert@preining.info>  Fri, 13 Mar 2020 03:32:28 +0900
+
+xxhash (0.7.2-1) unstable; urgency=medium
+
+  * New upstream version 0.7.2
+
+ -- Norbert Preining <norbert@preining.info>  Sat, 12 Oct 2019 23:39:04 +0900
+
+xxhash (0.7.1-1) unstable; urgency=medium
+
+  * New upstream version 0.7.1
+  * Update symbols file
+
+ -- Norbert Preining <norbert@preining.info>  Tue, 03 Sep 2019 10:36:52 +0900
+
+xxhash (0.7.0-2) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Norbert Preining <norbert@preining.info>  Wed, 10 Jul 2019 17:37:07 +0900
+
+xxhash (0.7.0-1) experimental; urgency=medium
+
+  * New upstream version 0.7.0
+  * Update symbols file
+
+ -- Norbert Preining <norbert@preining.info>  Tue, 23 Apr 2019 20:09:44 +0900
+
+xxhash (0.6.5-3) unstable; urgency=medium
+
+  * update VCS and email
+
+ -- Norbert Preining <norbert@preining.info>  Sun, 03 Mar 2019 09:19:39 +0900
+
+xxhash (0.6.5-2) unstable; urgency=medium
+
+  [ Matthias Klose ]
+  * Add a symbols file. (Closes: #913873)
+
+  [ Norbert Preining ]
+  * Bump standards version, no changes necessary
+
+ -- Norbert Preining <preining@debian.org>  Sat, 17 Nov 2018 01:17:27 +0900
+
+xxhash (0.6.5-1) unstable; urgency=low
+
+  * Initial release (Closes: #908175)
+
+ -- Norbert Preining <preining@debian.org>  Fri, 07 Sep 2018 12:10:46 +0900
