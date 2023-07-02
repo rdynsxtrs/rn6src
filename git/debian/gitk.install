@@ -1,0 +1,3 @@
+debian/tmp/usr/bin/gitk usr/bin
+debian/tmp/usr/share/man/man1/gitk.1 usr/share/man/man1
+debian/tmp/usr/share/gitk/lib usr/share/gitk

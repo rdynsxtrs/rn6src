@@ -1,0 +1,315 @@
+Source: git
+Section: vcs
+Priority: optional
+Maintainer: Jonathan Nieder <jrnieder@gmail.com>
+Uploaders: Anders Kaseorg <andersk@mit.edu>
+Build-Depends: libz-dev, gettext,
+ libpcre2-dev | libpcre3-dev,
+ libcurl4-gnutls-dev, libexpat1-dev,
+ subversion, libsvn-perl, libyaml-perl,
+ tcl, python3,
+ libhttp-date-perl | libtime-parsedate-perl,
+ libcgi-pm-perl,
+ liberror-perl,
+ libmailtools-perl,
+ cvs, cvsps, libdbd-sqlite3-perl,
+ unzip, libio-pty-perl,
+ dh-exec (>= 0.7),
+ dh-apache2,
+ dpkg-dev (>= 1.16.2~)
+Build-Depends-Indep: asciidoc (>= 8.6.9), xmlto, docbook-xsl
+Standards-Version: 4.3.0.1
+Homepage: https://git-scm.com/
+Vcs-Git: https://repo.or.cz/r/git/debian.git/
+Vcs-Browser: https://repo.or.cz/w/git/debian.git/
+
+Package: git
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}, perl, liberror-perl,
+ git-man (>> ${source:Upstream-Version}), git-man (<< ${source:Upstream-Version}-.)
+Pre-Depends: ${misc:Pre-Depends}
+Recommends: ca-certificates, patch, less, ssh-client
+Suggests: gettext-base, git-daemon-run | git-daemon-sysvinit,
+ git-doc, git-email, git-gui, gitk, gitweb,
+ git-cvs, git-mediawiki, git-svn
+Breaks: bash-completion (<< 1:1.90-1),
+ dgit (<< 5.1~),
+ git-buildpackage (<< 0.6.5),
+ git-el (<< 1:2.32.0~rc2-1~),
+ cogito (<= 0.18.2+),
+ openssh-client (<< 1:6.8),
+ stgit (<< 0.15), stgit-contrib (<< 0.15), gitpkg (<< 0.15),
+ guilt (<< 0.33), gitosis (<< 0.2+20090917-7)
+Provides: git-completion, git-core
+Description: fast, scalable, distributed revision control system
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ This package provides the git main components with minimal dependencies.
+ Additional functionality, e.g. a graphical user interface and revision
+ tree visualizer, tools for interoperating with other VCS's, or a web
+ interface, is provided as separate git* packages.
+
+Package: git-man
+Section: doc
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}
+Description: fast, scalable, distributed revision control system (manual pages)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ This package provides reference documentation for use by the 'man'
+ utility and the 'git help' command.
+
+Package: git-doc
+Section: doc
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}
+Suggests: git, git-cvs, git-svn, git-email, gitk, gitweb
+Description: fast, scalable, distributed revision control system (documentation)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ This package provides the documentation.
+
+Package: git-cvs
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), cvsps, libdbd-sqlite3-perl
+Suggests: git-doc, cvs
+Description: fast, scalable, distributed revision control system (cvs interoperability)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ This package provides the git cvsimport, cvsexportcommit, and cvsserver
+ tools, which allow Git to read from and write to CVS repositories and
+ offer access over CVS protocol to Git repositories.
+ .
+ The git cvsimport tool can incrementally import from a repository that
+ is being actively developed and only requires remote access over CVS
+ protocol. Unfortunately, in many situations the import leads to
+ incorrect results. For reliable, one-shot imports, cvs2git from the
+ cvs2svn package or parsecvs may be a better fit.
+
+Package: git-svn
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), libsvn-perl, libyaml-perl, libterm-readkey-perl
+Suggests: git-doc, subversion
+Breaks: git (<< 1:1.8.3~rc1-1.)
+Replaces: git (<< 1:1.8.3~rc1-1.)
+Description: fast, scalable, distributed revision control system (svn interoperability)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ This package provides tools for interoperating with Subversion repositories,
+ and importing SVN development history.
+
+Package: git-mediawiki
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.),
+ libmediawiki-api-perl (>= 0.39), liblwp-protocol-https-perl, libdatetime-format-iso8601-perl
+Suggests: mediawiki
+Description: fast, scalable, distributed revision control system (MediaWiki remote helper)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ This package provides the mediawiki remote helper, which allows Git to
+ read from and write to a wiki such as Wikipedia as though it were a
+ remote Git repository, and a 'git mw' command that can show a preview
+ of how wiki markup will be rendered before pushing.
+
+Package: git-email
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.)
+Recommends: libemail-valid-perl,
+ libmailtools-perl,
+ perl (>> 5.21.5) | libnet-smtp-ssl-perl,
+ libauthen-sasl-perl,
+ libio-socket-ssl-perl (>= 1.951)
+Suggests: git-doc
+Description: fast, scalable, distributed revision control system (email add-on)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ This package provides the git-send-email program for sending series of
+ patch emails.
+
+Package: git-daemon-run
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), runit, adduser
+Conflicts: git-daemon-sysvinit
+Description: fast, scalable, distributed revision control system (git-daemon service)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ git-daemon, as provided by the git package, is a simple server for git
+ repositories, ideally suited for read-only updates, i.e. pulling from git
+ repositories through the network.  This package provides a runit service
+ for running git-daemon permanently.  This configuration is simpler and
+ more reliable than git-daemon-sysvinit, at a cost of being less
+ familiar for administrators accustomed to sysvinit.
+
+Package: git-daemon-sysvinit
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), adduser, lsb-base (>= 3.0-6)
+Conflicts: git-daemon-run
+Description: fast, scalable, distributed revision control system (git-daemon service)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ git-daemon, as provided by the git package, is a simple server for git
+ repositories, ideally suited for read-only updates, i.e. pulling from git
+ repositories through the network.  This package provides a sysvinit service
+ for running git-daemon permanently.  Unlike git-daemon-run, this
+ package provides the usual sysvinit service management commands
+ ("service git-daemon start/stop") for git-daemon.
+
+Package: git-gui
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), tk
+Recommends: gitk
+Suggests: git-doc, aspell, meld
+Description: fast, scalable, distributed revision control system (GUI)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ This package provides the git graphical user interface.
+ .
+ If aspell is installed, it can check the spelling of commit messages
+ as the user types.
+ .
+ If meld is installed, it can be used for displaying diffs and for
+ interactive merge conflict resolution.
+
+Package: gitk
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.), tk
+Suggests: git-doc
+Description: fast, scalable, distributed revision control system (revision tree visualizer)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ This package provides the gitk program, a tcl/tk revision tree visualizer.
+
+Package: gitweb
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.),
+ perl, libcgi-pm-perl
+Pre-Depends: ${misc:Pre-Depends}
+Recommends: ${misc:Recommends}, libhttp-date-perl | libtime-parsedate-perl
+Breaks: apache2.2-common (<< 2.3~)
+Suggests: httpd-cgi | libcgi-fast-perl, git-doc
+Description: fast, scalable, distributed revision control system (web interface)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ This package configures a web interface for browsing git repositories.
+ .
+ If apache2 is installed, the web interface is automatically made
+ available at http://localhost/gitweb.  Other servers that support CGI
+ or mod_perl are supported through manual configuration.
+ .
+ If libcgi-fast-perl is installed, gitweb can also be run over FastCGI
+ (and served by nginx, for example).
+
+Package: git-all
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, git (>> ${source:Upstream-Version}), git (<< ${source:Upstream-Version}-.),
+ git-doc, git-cvs, git-mediawiki, git-svn,
+ git-email, git-gui, gitk, gitweb
+Suggests: git-daemon-run | git-daemon-sysvinit
+Description: fast, scalable, distributed revision control system (all subpackages)
+ Git is popular version control system designed to handle very large
+ projects with speed and efficiency; it is used for many high profile
+ open source projects, most notably the Linux kernel.
+ .
+ Git falls in the category of distributed source code management tools.
+ Every Git working directory is a full-fledged repository with full
+ revision tracking capabilities, not dependent on network access or a
+ central server.
+ .
+ This is a dummy package which brings in all subpackages.

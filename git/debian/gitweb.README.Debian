@@ -1,0 +1,18 @@
+gitweb for Debian
+-----------------
+
+The gitweb CGI by default looks into the directory /var/lib/git/ for
+browsable repositories (this is configured in /etc/gitweb.conf).  It expects
+the repositories' .git subdirectories in /var/lib/git/, symlinks pointing
+to the corresponding subdirectories in the repositories are just fine, e.g.:
+
+ ln -s ~pape/git/foo/.git /var/lib/git/foo.git
+
+On systems with an Apache webserver, gitweb is automatically made available at
+http://localhost/gitweb. This requires CGI support, so you may need to run
+"a2enmod cgi".  You can deactivate the site by running "a2disconf gitweb" or
+tweak it by modifying /etc/apache2/conf-available/gitweb.conf
+
+For more details about setting up gitweb for a git.example.org server, and
+on how to make the git core tools such as 'git clone' work through http, see
+/usr/share/doc/git/README.Debian.

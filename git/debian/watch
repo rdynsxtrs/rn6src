@@ -1,0 +1,4 @@
+version=3
+https://www.kernel.org/pub/software/scm/git/git-([\d.]+)\.tar\.xz
+opts="uversionmangle=s/\.rc/~rc/" \
+https://www.kernel.org/pub/software/scm/git/testing/git-([\d.]+rc\d+)\.tar\.xz

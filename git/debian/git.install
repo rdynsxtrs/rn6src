@@ -1,0 +1,5 @@
+#!/usr/bin/dh-exec
+contrib/completion/git-completion.bash => usr/share/bash-completion/completions/git
+contrib/completion/git-prompt.sh => usr/lib/git-core/git-sh-prompt
+debian/git-prompt.completion => etc/bash_completion.d/git-prompt
+contrib/hooks usr/share/git-core/contrib

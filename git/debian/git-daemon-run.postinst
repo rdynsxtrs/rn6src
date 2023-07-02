@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+#DEBHELPER#
+
+test "$1" = 'configure' || exit 0
+
+getent passwd gitlog >/dev/null || \
+  adduser --system --home /nonexistent --no-create-home gitlog
+getent passwd gitdaemon >/dev/null || \
+  adduser --system --home /nonexistent --no-create-home gitdaemon
+
+# enable git-daemon service
+update-service --add /etc/sv/git-daemon
+
+# restart git-daemon service if it was running
+test -z "$2" || sv -v term git-daemon || :

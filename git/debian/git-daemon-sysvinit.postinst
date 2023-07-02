@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+test "$1" != 'configure' || \
+getent passwd gitdaemon >/dev/null || \
+  adduser --system --home /nonexistent --no-create-home gitdaemon
+
+#DEBHELPER#

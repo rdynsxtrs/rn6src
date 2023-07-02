@@ -1,0 +1,6 @@
+usr/share/bash-completion/completions/git usr/share/bash-completion/completions/gitk
+usr/share/gitweb/gitweb.cgi usr/share/gitweb/index.cgi
+usr/share/git-core/contrib/hooks usr/share/doc/git/contrib/hooks
+# These licenses are checked for equivalent contents in override_dh_installdocs.
+usr/share/common-licenses/Apache-2.0 usr/share/doc/git/contrib/persistent-https/LICENSE
+usr/share/common-licenses/GPL-2 usr/share/doc/git/contrib/subtree/COPYING

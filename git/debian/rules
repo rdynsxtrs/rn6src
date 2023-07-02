@@ -1,0 +1,174 @@
+#!/usr/bin/make -f
+
+CC =gcc
+CPPFLAGS :=$(shell dpkg-buildflags --get CPPFLAGS)
+CFLAGS :=-Wall $(shell dpkg-buildflags --get CFLAGS) $(CPPFLAGS)
+LDFLAGS :=$(shell dpkg-buildflags --get LDFLAGS)
+HOST_CPU := $(shell dpkg-architecture -qDEB_HOST_GNU_CPU)
+TEST =test
+TEST_OPTS =
+OPTS =NO_OPENSSL=1 prefix=/usr gitexecdir=/usr/lib/git-core \
+  mandir=/usr/share/man htmldir=/usr/share/doc/git/html \
+  INSTALLDIRS=vendor \
+  SANE_TOOL_PATH= INSTALL=install TAR=tar \
+  NO_CROSS_DIRECTORY_HARDLINKS=1 NO_INSTALL_HARDLINKS=1 \
+  NO_PERL_CPAN_FALLBACKS=1 \
+  PYTHON_PATH=/usr/bin/python3 \
+  DEFAULT_PAGER=pager DEFAULT_EDITOR=editor \
+  CC='$(CC)' CFLAGS='$(CFLAGS)' LDFLAGS='$(LDFLAGS)' \
+  HOST_CPU='$(HOST_CPU)'
+DOCS =html
+DOC_OPTS =prefix=/usr htmldir=/usr/share/doc/git/html \
+  ASCIIDOC8=1 ASCIIDOC_NO_ROFF=1
+
+# https://wiki.debian.org/ReproducibleBuilds/TimestampsInDocumentationGeneratedByAsciidoc
+DOC_OPTS += ASCIIDOC='TZ=UTC asciidoc'
+
+ifeq (,$(findstring terse,$(DEB_BUILD_OPTIONS)))
+  OPTS += V=1
+  DOC_OPTS += V=1
+  TEST_OPTS = --verbose
+endif
+ifneq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
+  TEST =
+endif
+ifneq (,$(findstring nodoc,$(DEB_BUILD_OPTIONS)))
+  DOCS =
+endif
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+  NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+  MAKEFLAGS += -j$(NUMJOBS)
+  # Setting this with a pattern-specific rule prevents -O from
+  # affecting the top-level make, which would break realtime build
+  # output (unless dh is run as +dh, which causes other problems).
+  %: MAKEFLAGS += -O
+endif
+ifneq (,$(shell dpkg-query -f '$${Version}' -W libpcre2-dev))
+  OPTS += USE_LIBPCRE2=1
+else
+  OPTS += USE_LIBPCRE1=1
+endif
+
+TMP = $(CURDIR)/debian/tmp
+GIT = $(CURDIR)/debian/git
+
+%:
+	dh $@ --with apache2 --without autoreconf
+
+override_dh_auto_configure:
+
+build-stamp:
+	-$(CC) -v
+	$(MAKE) all $(OPTS)
+	touch $@
+
+override_dh_auto_build-arch: build-stamp
+	$(MAKE) -C contrib/subtree all $(OPTS)
+	ln -s contrib/subtree/git-subtree
+
+override_dh_auto_test-arch:
+	test -z '$(TEST)' || \
+	  GIT_SKIP_TESTS="t9128 t9167" \
+	  GIT_TEST_OPTS='$(TEST_OPTS)' $(MAKE) $(TEST) $(OPTS)
+	test -z '$(TEST)' || \
+	  GIT_TEST_OPTS='$(TEST_OPTS)' \
+	  $(MAKE) -C t \
+	  t9128-git-svn-cmd-branch.sh \
+	  t9167-git-svn-cmd-branch-subproject.sh \
+	  $(OPTS) || :
+	test -z '$(TEST)' || \
+	  GIT_TEST_OPTS='$(TEST_OPTS)' $(MAKE) -C contrib/subtree $(TEST) $(OPTS)
+
+override_dh_auto_build-indep: build-stamp
+	# git-man, git-doc
+	$(MAKE) -CDocumentation man $(DOCS) $(DOC_OPTS)
+	# git-mediawiki
+	$(MAKE) -Ccontrib/mw-to-git all $(OPTS)
+
+override_dh_auto_test-indep:
+
+override_dh_auto_clean:
+	$(MAKE) -C contrib/mw-to-git clean $(OPTS)
+	$(MAKE) -C contrib/subtree clean $(OPTS)
+	$(MAKE) clean $(OPTS)
+	rm -f git-subtree
+
+override_dh_clean:
+	dh_clean -Xmailinfo.c.orig
+
+override_dh_auto_install-arch:
+	# git
+	DESTDIR='$(GIT)' $(MAKE) install $(OPTS)
+	DESTDIR='$(GIT)' $(MAKE) -C contrib/subtree install $(OPTS)
+	install -d -m0755 '$(GIT)'/var/lib/git
+	rm -rf '$(GIT)'/usr/share/man
+	# don't include arch, cvs, p4, svn, email, gui tools, and gitk program
+	for i in git-archimport git-cvs git-p4 git-svn git-send-email \
+	 git-gui git-citool; do \
+	  rm -f '$(GIT)'/usr/lib/git-core/$$i*; \
+	done
+	rm -f '$(GIT)'/usr/bin/git-cvsserver
+	rm -f '$(GIT)'/usr/bin/gitk
+	# don't include git-gui's lib
+	rm -rf '$(GIT)'/usr/share/git-gui/
+	# don't include gitk's lib
+	rm -rf '$(GIT)'/usr/share/gitk/
+	# don't include git-svn's lib
+	rm -rf '$(GIT)'/usr/share/perl5/Git/SVN*
+	# sanity check that #642603 fix is still in place
+	test $$(stat -c%h \
+	  '$(GIT)'/usr/lib/git-core/git-branch) -le 10
+
+override_dh_auto_install-indep:
+	DESTDIR='$(TMP)' $(MAKE) install install-doc $(OPTS)
+	DESTDIR='$(TMP)' $(MAKE) -Ccontrib/mw-to-git install $(OPTS) \
+	  INSTLIBDIR=/usr/share/perl5
+	test -z '$(DOCS)' || \
+	  $(MAKE) -CDocumentation install-webdoc WEBDOC_DEST='$(TMP)'/html \
+	  2>/dev/null
+	test -z '$(DOCS)' || \
+	  DESTDIR='$(TMP)' $(MAKE) -Ccontrib/subtree install-doc $(OPTS)
+	install -m 0644 contrib/subtree/git-subtree.txt '$(TMP)'/html
+	# RelNotes are shipped in git
+	rm -rf '$(TMP)'/html/RelNotes
+	# don't include git-p4 man page
+	rm -f '$(TMP)'/html/git-p4.*
+
+override_dh_install-arch:
+	dh_install --arch
+	rm -rf '$(GIT)'/usr/share/git-core/contrib/hooks/multimail
+
+override_dh_install-indep:
+	dh_install --indep
+	for i in git-archimport git-cvs git-p4 git-svn git-send-email gitk \
+	 git-gui git-citool; do \
+	  rm -f '$(GIT)'-man/usr/share/man/man1/$$i*; \
+	done
+
+override_dh_installdocs-arch:
+	dh_installdocs --arch -X.gitignore
+	# These licenses are replaced with symlinks in git.links.
+	diff -q '$(GIT)'/usr/share/doc/git/contrib/persistent-https/LICENSE /usr/share/common-licenses/Apache-2.0
+	diff -bq '$(GIT)'/usr/share/doc/git/contrib/subtree/COPYING /usr/share/common-licenses/GPL-2
+	rm -rf '$(GIT)'/usr/share/doc/git/contrib/completion
+	rm -rf '$(GIT)'/usr/share/doc/git/contrib/emacs
+	rm -rf '$(GIT)'/usr/share/doc/git/contrib/hooks
+	rm -rf '$(GIT)'/usr/share/doc/git/contrib/mw-to-git
+	rm -f '$(GIT)'/usr/share/doc/git/contrib/subtree/git-subtree.1
+	rm -f '$(GIT)'/usr/share/doc/git/contrib/subtree/git-subtree.html
+	rm -f '$(GIT)'/usr/share/doc/git/contrib/subtree/git-subtree.xml
+	find '$(GIT)'/usr/share/doc/git/ -name .gitattributes | xargs rm -f
+	find '$(GIT)'/usr/share/doc/git/ -name .gitignore | xargs rm -f
+
+override_dh_installdocs-indep:
+	dh_installdocs --indep -X.gitignore
+
+override_dh_installchangelogs:
+	dh_installchangelogs debian/changelog.upstream
+
+override_dh_installinit:
+	dh_installinit -pgit-daemon-sysvinit --name=git-daemon
+	dh_installinit
+
+override_dh_compress:
+	dh_compress -X.txt -Xcontrib

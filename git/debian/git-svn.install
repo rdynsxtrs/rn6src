@@ -1,0 +1,3 @@
+debian/tmp/usr/lib/git-core/git-svn* usr/lib/git-core
+debian/tmp/usr/share/man/man1/git-svn* usr/share/man/man1
+debian/tmp/usr/share/perl5/Git/SVN* usr/share/perl5/Git

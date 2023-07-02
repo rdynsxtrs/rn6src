@@ -1,0 +1,64 @@
+git (1:1.8.4~rc0-1) experimental; urgency=low
+
+  Starting with this version, gitweb and "git daemon" on Debian are
+  configured to look for repositories under /var/lib/git by default
+  instead of /var/cache/git.  You may want to adjust your inetd,
+  rsyncd, and web server configuration to use the new base path.
+
+  See /usr/share/doc/git/README.Debian for details.
+
+  Symlinks are installed during the upgrade to ensure existing
+  repositories remain accessible.  If no local scripts or
+  configuration depend on /var/cache/git then it is safe to remove
+  the old directory after replacing these symlinks with their
+  targets:
+
+    mv --backup /var/cache/git/* /var/lib/git/
+    rmdir /var/cache/git
+    rm /var/lib/git/*~
+
+ -- Jonathan Nieder <jrnieder@gmail.com>  Sun, 28 Jul 2013 17:46:05 -0700
+
+git (1:1.8.2~rc0-1) experimental; urgency=low
+
+  The default behavior of "git push" when run without specifying any
+  ref names will change in the upcoming Git 2.0 release.
+
+  The previous default behavior was to use "matching" semantics: push
+  all branches for which there is already a branch of the same name on
+  the remote end.  The new default is "simple" semantics: push the
+  current branch to a branch of the same name, provided that "git
+  pull" is configured to integrate with that branch.  You can get a
+  glimpse of the future with
+
+  	echo '[push] default = simple' >>~/.gitconfig
+
+  See Documentation/RelNotes/1.8.2.txt and the entry on push.default
+  in git-config(1) for details.
+
+ -- Jonathan Nieder <jrnieder@gmail.com>  Mon, 18 Feb 2013 16:48:53 -0800
+
+git (1:1.8.0-1) experimental; urgency=low
+
+  Git's bash completion script is now loaded on the fly when tab
+  completion is attempted for the 'git' or 'gitk' command.  This
+  change involved moving the completion script.  If your ~/.bashrc
+  previously contained
+
+    . /etc/bash_completion.d/git
+
+  then it should be corrected to
+
+    if [ -e /usr/share/bash-completion/completions/git ]; then
+      . /usr/share/bash-completion/completions/git
+    elif [ -e /etc/bash_completion.d/git ]; then
+      . /etc/bash_completion.d/git
+    fi
+
+  or, better,
+
+    . /etc/bash_completion
+
+  See /usr/share/doc/bash-completion/README.Debian for details.
+
+ -- Jonathan Nieder <jrnieder@gmail.com>  Sun, 13 Jan 2013 08:59:42 -0800

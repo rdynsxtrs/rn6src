@@ -1,0 +1,3 @@
+debian/tmp/usr/share/perl5/Git/Mediawiki.pm usr/share/perl5/Git
+debian/tmp/usr/lib/git-core/git-mw usr/lib/git-core
+debian/tmp/usr/lib/git-core/git-remote-mediawiki usr/lib/git-core
