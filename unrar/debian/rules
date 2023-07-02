@@ -1,0 +1,66 @@
+#!/usr/bin/make -f
+
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+RNX_BUILD_ARCH       ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
+ifeq (amd64, $(RNX_BUILD_ARCH))
+  CFLAGS += -march=atom -mtune=atom -mfpmath=sse -msse2
+  CXXFLAGS += -march=atom -mtune=atom -mfpmath=sse -msse2
+endif
+ifeq (i386, $(RNX_BUILD_ARCH))
+  CFLAGS += -march=i686 -mtune=i686 -mfpmath=sse -msse2
+  CXXFLAGS += -march=i686 -mtune=i686 -mfpmath=sse -msse2
+  CC = gcc-4.7
+  CXX = g++-4.7
+endif
+ifeq (armel, $(RNX_BUILD_ARCH))
+  CFLAGS += -march=armv7-r -mtune=cortex-r4 -mfpu=vfpv3-d16 -mfloat-abi=softfp
+  CXXFLAGS += -march=armv7-r -mtune=cortex-r4 -mfpu=vfpv3-d16 -mfloat-abi=softfp
+endif
+ifeq (sparc, $(RNX_BUILD_ARCH))
+  CFLAGS += -mcpu=v8 -mtune=v8 -fgnu89-inline
+  CXXFLAGS += -mcpu=v8 -mtune=v8 -fgnu89-inline
+endif
+
+build: build-arch build-indep
+build-arch: build-stamp
+build-indep: build-stamp
+build-stamp:
+	dh_testdir
+	make -f makefile
+
+clean:
+	dh_testdir
+	dh_testroot
+
+	make -f makefile clean
+	rm -rf unrar
+	dh_clean
+
+binary-indep:
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	mkdir -p debian/unrar/usr/bin
+	install -o root -g root -s -m 0755 unrar debian/unrar/usr/bin/unrar-nonfree
+
+	dh_installdocs
+	dh_installman debian/unrar-nonfree.1
+	dh_installchangelogs
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary
