@@ -1,0 +1,30 @@
+Source: php-uploadprogress
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 2.0~),
+               dh-php (>= 2.0~),
+               php-all-dev (>= 17~)
+Standards-Version: 3.9.8
+Homepage: https://pecl.php.net/package/uploadprogress
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-uploadprogress.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-uploadprogress
+
+Package: php-uploadprogress
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ucf,
+         ${misc:Depends},
+         ${pecl:Depends}
+         ${shlibs:Depends},
+         ${php:Depends}
+Recommends: libapache2-mod-php,
+            ${pecl:Recommends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: file upload progress tracking extension for PHP
+ An PHP extension to track progress of a file upload.
