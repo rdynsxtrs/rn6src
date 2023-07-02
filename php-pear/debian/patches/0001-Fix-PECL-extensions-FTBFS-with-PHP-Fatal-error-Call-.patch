@@ -1,0 +1,29 @@
+From: Mathieu Parent <math.parent@gmail.com>
+Date: Sat, 19 Mar 2016 22:01:11 +0100
+Subject: Fix "PECL extensions FTBFS with PHP Fatal error: Call to a member
+ function getFilelist() on null" (Closes: #805222)
+
+---
+ PEAR/Config.php | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/PEAR/Config.php b/PEAR/Config.php
+index ea4c320..5fe9778 100644
+--- a/PEAR/Config.php
++++ b/PEAR/Config.php
+@@ -2119,12 +2119,13 @@ class PEAR_Config extends PEAR
+                 if ($layer == 'ftp' || !isset($this->_registry[$layer])) {
+                     continue;
+                 }
+-                $this->_registry[$layer] =
+-                    new PEAR_Registry(
++                $r = new PEAR_Registry(
+                         $this->get('php_dir', $layer, 'pear.php.net'), false, false,
+                         $this->get('metadata_dir', $layer, 'pear.php.net'));
++                $this->_registry[$layer] = &$r;
+                 $this->_registry[$layer]->setConfig($this, false);
+                 $this->_regInitialized[$layer] = false;
++                unset($r);
+             }
+         }
+     }

@@ -1,0 +1,26 @@
+Source: php-pear
+Section: php
+Priority: optional
+Maintainer: Debian PHP Maintainers <team+pkg-php@tracker.debian.org>
+Uploaders: Mathieu Parent <sathieu@debian.org>,
+	   Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9),
+               php-cli,
+	       php-xml
+Standards-Version: 4.4.0
+Vcs-Browser: https://salsa.debian.org/php-team/pear/php-pear
+Vcs-Git: https://salsa.debian.org/php-team/pear/php-pear.git
+Homepage: https://pear.php.net/package/PEAR
+
+Package: php-pear
+Architecture: all
+Depends: ${misc:Depends},
+         ${phppear:Debian-Depends},
+	 php-xml
+Recommends: ${phppear:Debian-Recommends}
+Provides: php-console-getopt,
+          php-structures-graph,
+          php-xml-util
+Breaks: ${phppear:Debian-Breaks}
+Description: ${phppear:summary}
+ ${phppear:description}

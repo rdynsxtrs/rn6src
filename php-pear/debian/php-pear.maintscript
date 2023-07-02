@@ -1,0 +1,2 @@
+symlink_to_dir /usr/share/doc/php-pear php5-common 1:0 php-pear
+mv_conffile /etc/pear.conf /etc/pear/pear.conf 1:1.10.1+submodules+notgz-5~ php-pear

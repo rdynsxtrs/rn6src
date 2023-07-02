@@ -1,0 +1,95 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: PEAR
+Source: http://pear.php.net/package/PEAR
+
+Files: *
+Copyright:
+ 1996-2005 Daniel Stenberg <daniel@haxx.se>
+ 1997-2006 The PHP Group
+ 2004 The PEAR Group
+ 2004-2005 Michael Wallner <mike@iworks.at>
+ 2004-2008 Greg Beaver <cellog@php.net>
+ Alexander Merz <alexmerz@php.net>
+ Baba Buehler <baba@babaz.com>
+ Bertrand Mansion <bmansion@mamasam.com>
+ David C. Morse <morse@php.net>
+ Hannes Magnusson <bjori@php.net>
+ Hans Lellelid <hans@velum.net>
+ Helgi Þormar Þorbjörnsson <helgi@php.net>
+ Ian Eure <ieure@php.net>
+ Mark Wiesemann <wiesemann@php.net>
+ Martin Jansen <mj@php.net>
+ Moritz Heidkamp <moritz.heidkamp@invision-team.de>
+ Paul M. Jones <pmjones@php.net>
+ Pierre-Alain Joye <paj@pearfr.org>
+ Sara Golemon <pollita@php.net>
+ Stephan Schmidt
+ Sterling Hughes <sterling@php.net>
+ Stig Bakken <ssb@php.net>
+ Tatsuhiko Miyagawa
+ Tomas V. V. Cox <cox@idecnet.com>
+ Vincent Blavet <vincent@blavet.net>
+ Wez Furlong <wez@thebrainroom.com>
+License: BSD-2-clause
+
+Files: submodules/Archive_Tar/*
+Copyright: 1997-2008 Vincent Blavet <vincent@phpconcept.net>
+License: BSD-2-clause
+
+Files: submodules/Console_Getopt/*
+Copyright: 2001-2015 The PEAR developers
+License: BSD-2-clause
+
+Files: submodules/Structures_Graph/*
+Copyright: 2003 Sérgio Gonçalves Carvalho
+License: LGPL-3.0+
+
+Files: submodules/XML_Util/*
+Copyright:
+ 2003-2008 Stephan Schmidt <schst@php.net>
+ 2008 Chuck Burgess <ashnazg@php.net>
+License: BSD-2-clause
+
+Files: debian/*
+Copyright: Mathieu Parent <sathieu@debian.org>
+License: BSD-2-clause
+
+License: BSD-2-clause
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions
+ are met:
+ .
+ 1. Redistributions of source code must retain the above copyright
+ notice, this list of conditions and the following disclaimer.
+ .
+ 2. Redistributions in binary form must reproduce the above copyright
+ notice, this list of conditions and the following disclaimer in the
+ documentation and/or other materials provided with the distribution.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE AUTHOR AS IS'' AND ANY EXPRESS OR
+ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+License: LGPL-3.0+
+ This package is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 3 of the License, or (at your option) any later version.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <https://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU Lesser General
+ Public License can be found in "/usr/share/common-licenses/LGPL-3".

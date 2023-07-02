@@ -1,0 +1,153 @@
+#!/usr/bin/make -f
+
+export PHP_PEAR_SYSCONF_DIR=/etc/pear
+
+%:
+	dh $@
+
+.PHONY: debian/php-pear.substvars-static
+debian/php-pear.substvars-static:
+	pkgtools phppear substvars > debian/php-pear.substvars-static
+
+override_dh_auto_install:
+	# Mimics phppear buildsystem:
+	# - Removing no-op commands
+	mkdir -p debian/php-pear
+	# PEAR
+	php \
+	    -d include_path=submodules/Archive_Tar:submodules/Console_Getopt:submodules/Structures_Graph:submodules/XML_Util \
+	    ./scripts/pearcmd.php \
+	    -c debian/pearrc \
+	    -d download_dir=/tmp \
+	    -d php_bin=/usr/bin/php \
+	    -d bin_dir=/usr/bin \
+	    -d php_dir=/usr/share/php \
+	    -d data_dir=/usr/share/php/data \
+	    -d doc_dir="/usr/share/doc/php-pear" \
+	    -d test_dir=/usr/share/php/tests \
+	    install \
+	    --offline \
+	    --nodeps \
+	    -P "debian/php-pear" \
+	     ./package2.xml
+	# PEAR manpages
+	php \
+	    -d include_path=submodules/Archive_Tar:submodules/Console_Getopt:submodules/Structures_Graph:submodules/XML_Util \
+	    ./scripts/pearcmd.php \
+	    -c debian/pearrc \
+	    -d download_dir=/tmp \
+	    -d php_bin=/usr/bin/php \
+	    -d bin_dir=/usr/bin \
+	    -d php_dir=/usr/share/php \
+	    -d data_dir=/usr/share/php/data \
+	    -d doc_dir="/usr/share/doc/php-pear" \
+	    -d test_dir=/usr/share/php/tests \
+	    install \
+	    --offline \
+	    --nodeps \
+	    -P "debian/php-pear" \
+	     ./package-manpages.xml
+	# Archive_Tar
+	php \
+	    -d include_path=submodules/Archive_Tar:submodules/Console_Getopt:submodules/Structures_Graph:submodules/XML_Util \
+	    ./scripts/pearcmd.php \
+	    -c debian/pearrc \
+	    -d download_dir=/tmp \
+	    -d php_bin=/usr/bin/php \
+	    -d bin_dir=/usr/bin \
+	    -d php_dir=/usr/share/php \
+	    -d data_dir=/usr/share/php/data \
+	    -d doc_dir="/usr/share/doc/php-pear" \
+	    -d test_dir=/usr/share/php/tests \
+	    install \
+	    --offline \
+	    --nodeps \
+	    -P "debian/php-pear" \
+	     submodules/Archive_Tar/package.xml
+	# Console_Getopt
+	php \
+	    -d include_path=submodules/Archive_Tar:submodules/Console_Getopt:submodules/Structures_Graph:submodules/XML_Util \
+	    ./scripts/pearcmd.php \
+	    -c debian/pearrc \
+	    -d download_dir=/tmp \
+	    -d php_bin=/usr/bin/php \
+	    -d bin_dir=/usr/bin \
+	    -d php_dir=/usr/share/php \
+	    -d data_dir=/usr/share/php/data \
+	    -d doc_dir="/usr/share/doc/php-pear" \
+	    -d test_dir=/usr/share/php/tests \
+	    install \
+	    --offline \
+	    --nodeps \
+	    -P "debian/php-pear" \
+	     submodules/Console_Getopt/package.xml
+	# Structures_Graph
+	php \
+	    -d include_path=submodules/Archive_Tar:submodules/Console_Getopt:submodules/Structures_Graph:submodules/XML_Util \
+	    ./scripts/pearcmd.php \
+	    -c debian/pearrc \
+	    -d download_dir=/tmp \
+	    -d php_bin=/usr/bin/php \
+	    -d bin_dir=/usr/bin \
+	    -d php_dir=/usr/share/php \
+	    -d data_dir=/usr/share/php/data \
+	    -d doc_dir="/usr/share/doc/php-pear" \
+	    -d test_dir=/usr/share/php/tests \
+	    install \
+	    --offline \
+	    --nodeps \
+	    -P "debian/php-pear" \
+	     submodules/Structures_Graph/package.xml
+	# XML_Util
+	php \
+	    -d include_path=submodules/Archive_Tar:submodules/Console_Getopt:submodules/Structures_Graph:submodules/XML_Util \
+	    ./scripts/pearcmd.php \
+	    -c debian/pearrc \
+	    -d download_dir=/tmp \
+	    -d php_bin=/usr/bin/php \
+	    -d bin_dir=/usr/bin \
+	    -d php_dir=/usr/share/php \
+	    -d data_dir=/usr/share/php/data \
+	    -d doc_dir="/usr/share/doc/php-pear" \
+	    -d test_dir=/usr/share/php/tests \
+	    install \
+	    --offline \
+	    --nodeps \
+	    -P "debian/php-pear" \
+	     submodules/XML_Util/package.xml
+
+	# remove unwanted files
+	rmdir --ignore-fail-on-non-empty debian/php-pear/usr/share/php/.registry/.channel.pecl.php.net
+	rm -rf debian/php-pear/usr/share/php/.registry/.channel.doc.php.net
+	rm -rf debian/php-pear/usr/share/php/.registry/.channel.__uri
+
+	# workaround pear install which will copy docs file into a subdir
+	# (skipped)
+	# delete COPYING and LICENSE files and prune empty directories
+	find debian/php-pear/usr/share/doc -type f -name LICENSE -delete
+	find debian/php-pear/usr/share/doc -type d -empty -delete
+	# Remove tests files
+	rm -rf debian/php-pear/usr/share/php/tests
+	# add package.xml and changelog to doc dir
+	cp package2.xml debian/php-pear/usr/share/doc/php-pear/PEAR_package2.xml
+	cp submodules/Archive_Tar/package.xml debian/php-pear/usr/share/doc/php-pear/Archive_Tar_package.xml
+	cp submodules/Console_Getopt/package.xml debian/php-pear/usr/share/doc/php-pear/Console_Getopt_package.xml
+	cp submodules/Structures_Graph/package.xml debian/php-pear/usr/share/doc/php-pear/Structures_Graph_package.xml
+	cp submodules/XML_Util/package.xml debian/php-pear/usr/share/doc/php-pear/XML_Util_package.xml
+	# TODO /usr/share/doc/php-pear/changelog
+	# End of: Mimics phppear buildsystem
+
+	# Move config
+	sed -i -re "s#('PEAR_CONFIG_SYSCONFDIR', PHP_SYSCONFDIR)#\1 . '/pear'#" $(CURDIR)/debian/php-pear/usr/share/php/PEAR/Config.php
+
+	# Remove db files
+	rm debian/php-pear/usr/share/php/.depdb
+	rm debian/php-pear/usr/share/php/.filemap
+
+	# Clean up
+	rm debian/php-pear/usr/share/doc/php-pear/PEAR/INSTALL
+
+override_dh_link:
+	# This mimic dh_phppear
+	cat debian/php-pear.substvars-static >> debian/php-pear.substvars
+	dh_link
