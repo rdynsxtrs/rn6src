@@ -1,0 +1,32 @@
+Source: php-imagick
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Guillaume Delacour <gui@iroqwa.org>,
+           Lior Kaplan <kaplan@debian.org>
+Build-Depends: debhelper (>= 10~),
+               dh-php (>= 4~),
+               libmagickwand-6.q16-dev | libmagickwand-dev,
+               php-all-dev
+Standards-Version: 4.5.1
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-imagick
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-imagick.git
+Homepage: http://pecl.php.net/package/imagick
+
+Package: php-imagick
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Recommends: fonts-dejavu-core,
+            ghostscript
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: Provides a wrapper to the ImageMagick library
+ Imagick is a native php extension to create and modify images using the
+ ImageMagick API.

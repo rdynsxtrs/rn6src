@@ -1,0 +1,25 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Thu, 3 Mar 2022 10:24:00 +0100
+Subject: Disable test that fails with PHPUnit\Runner\Exception: No PHPT
+ expectation
+
+---
+ imagick-3.7.0/tests/bug81235.phpt | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/imagick-3.7.0/tests/bug81235.phpt b/imagick-3.7.0/tests/bug81235.phpt
+index 3ad4e72..62be549 100644
+--- a/imagick-3.7.0/tests/bug81235.phpt
++++ b/imagick-3.7.0/tests/bug81235.phpt
+@@ -1,7 +1,10 @@
+ --TEST--
+ Bug #81235 (Imagick::newPseudoImage gives open_basedir restriction error)
+ --SKIPIF--
+-<?php require_once(__DIR__ . '/skipif.inc'); ?>
++<?php
++die('skip test fails with php8.1 on debian-ish systems');
++require_once(dirname(__FILE__) . '/skipif.inc');
++?>
+ --FILE--
+ <?php
+ ini_set('open_basedir', __DIR__);

@@ -1,0 +1,22 @@
+From: Debian PHP PECL Maintainers <pkg-php-pecl@lists.alioth.debian.org>
+Date: Tue, 8 Dec 2015 16:29:48 +0100
+Subject: 
+ Hardcode-path-to-usrsharefontstruetypettf-dejavuDejaVuSans.ttf-in-captcha.php
+
+---
+ imagick-3.7.0/examples/captcha.php | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/imagick-3.7.0/examples/captcha.php b/imagick-3.7.0/examples/captcha.php
+index a9176a3..a76c1cb 100644
+--- a/imagick-3.7.0/examples/captcha.php
++++ b/imagick-3.7.0/examples/captcha.php
+@@ -17,7 +17,7 @@ $bg->setColor( 'white' );
+ $ImagickDraw = new ImagickDraw();
+ 
+ /* Set font and font size. You can also specify /path/to/font.ttf */
+-$ImagickDraw->setFont( 'Helvetica Regular' );
++$ImagickDraw->setFont( '/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf' );
+ $ImagickDraw->setFontSize( 20 );
+ 
+ /* Create the text */

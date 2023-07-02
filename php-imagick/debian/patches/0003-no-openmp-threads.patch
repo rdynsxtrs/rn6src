@@ -1,0 +1,29 @@
+From: Steve Langasek <steve.langasek@ubuntu.com>
+Date: Sat, 10 Oct 2020 12:25:53 +0200
+Subject: limit the number of openmp threads used to 1
+
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/1549942
+
+The php-imagick 3.4.0 test suite fails with various segfaults when openmp
+threads are in use.  Force the openmp thread count to 1 to avoid this
+problem.
+
+This patch is a workaround only; it is currently unknown if the root bug
+lies in php-imagick or in imagemagick.
+---
+ imagick-3.7.0/imagick.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/imagick-3.7.0/imagick.c b/imagick-3.7.0/imagick.c
+index 5606e7f..9aafb81 100644
+--- a/imagick-3.7.0/imagick.c
++++ b/imagick-3.7.0/imagick.c
+@@ -1120,6 +1120,8 @@ PHP_MINIT_FUNCTION(imagick)
+ 		checkImagickVersion();
+ 	}
+ 
++	SetMagickResourceLimit(ThreadResource, 1);
++
+ 	return SUCCESS;
+ }
+ 

@@ -1,0 +1,6 @@
+0001-Hardcode-path-to-usrsharefontstruetypettf-dejavuDeja.patch
+0002-Skip-version-check-by-default.patch
+0003-no-openmp-threads.patch
+0004-Disable-test-014-which-fails-due-to-system-resources.patch
+0005-Disable-remaining-tests-failing-with-7.4.patch
+0006-Disable-test-that-fails-with-PHPUnit-Runner-Exceptio.patch

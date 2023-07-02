@@ -1,0 +1,755 @@
+php-imagick (3.7.0-3+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 09 Jan 2023 09:49:03 +0100
+
+php-imagick (3.7.0-3+0~20221209.38+debian10~1.gbp8a8977) unstable; urgency=medium
+
+  ** SNAPSHOT build @8a89777ede3b1dedca9a7dac2bbc10837a976d6e **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 09 Dec 2022 14:53:40 +0100
+
+php-imagick (3.7.0-3) unstable; urgency=medium
+
+  * Regenerate d/control for PHP 8.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 09 Dec 2022 13:40:07 +0100
+
+php-imagick (3.7.0-2) unstable; urgency=medium
+
+  * Swap ttf-dejavu-core for fonts-dejavu-core (Closes: #1008005)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 20 Mar 2022 18:09:06 +0100
+
+php-imagick (3.7.0-1) unstable; urgency=medium
+
+  * New upstream version 3.7.0
+  * Disable test that fails with PHPUnit\Runner\Exception: No PHPT
+    expectation (Closes: #1003669)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 03 Mar 2022 10:27:57 +0100
+
+php-imagick (3.6.0-4) unstable; urgency=medium
+
+  * Fix the d/control for PHP 8.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 03 Jan 2022 15:01:25 +0100
+
+php-imagick (3.6.0-3) unstable; urgency=medium
+
+  * Regenerate d/control for PHP 8.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 01 Jan 2022 13:09:48 +0100
+
+php-imagick (3.6.0-1) unstable; urgency=medium
+
+  * New upstream version 3.6.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 31 Dec 2021 09:29:11 +0100
+
+php-imagick (3.5.1-3) unstable; urgency=medium
+
+  * Recompile for PHP 7.4 until the transition is complete
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 26 Nov 2021 11:25:53 +0100
+
+php-imagick (3.5.1-2) unstable; urgency=medium
+
+  * Update the packaging to dh-php >= 4~
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 10 Nov 2021 12:00:56 +0100
+
+php-imagick (3.5.1-1) unstable; urgency=medium
+
+  * New upstream version 3.5.1
+  * Update patches for imagick 3.5.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 25 Aug 2021 16:35:48 +0200
+
+php-imagick (3.4.4+php8.0+3.4.4-7) unstable; urgency=medium
+
+  * Fix the extra test from PHP 8.0 patches to apply only to
+    imagick-3.4.4+php8.0/ directory (Closes: #983607)
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 05 Mar 2021 11:47:36 +0100
+
+php-imagick (3.4.4+php8.0+3.4.4-6) unstable; urgency=medium
+
+  * Use only the main version to run the autopkgtest
+  * Strip down information in d/control
+  * Bump B-D to dh-php >= 3.1~
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 18:07:03 +0100
+
+php-imagick (3.4.4+php8.0+3.4.4-5) unstable; urgency=medium
+
+  * Revert arch:all change, as it breaks shlibs:Depends
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 13:21:32 +0100
+
+php-imagick (3.4.4+php8.0+3.4.4-4) unstable; urgency=medium
+
+  * The main dummy package is arch:all
+  * Bump dh-php Build-Depends to >= 3.0~
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 07:50:44 +0100
+
+php-imagick (3.4.4+php8.0+3.4.4-3) unstable; urgency=medium
+
+  * Sync the changelog with Debian bullseye
+  * Update d/gbp.conf for debian/main branch
+  * Update standards version to 4.5.1 (no change)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Feb 2021 12:10:47 +0100
+
+php-imagick (3.4.4+php8.0+3.4.4-2) unstable; urgency=medium
+
+  * Update d/watch to use https://pecl.php.net
+  * Lower the dh-php dependency to Debian sid version
+  * Update d/gbp.conf for Debian bullseye
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 14 Feb 2021 16:40:03 +0100
+
+php-imagick (3.4.4+php8.0+3.4.4-1) unstable; urgency=medium
+
+  * New upstream version 3.4.4+php8.0+3.4.4
+   + Add extra source for PHP 8.0 and keep the 3.4.4 unpatched
+     for PHP 5.x and PHP 7.x
+  * Duplicate the patches for PHP 8.0 version
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 23 Dec 2020 18:18:03 +0100
+
+php-imagick (3.4.4-10) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:35:31 +0200
+
+php-imagick (3.4.4-9) unstable; urgency=medium
+
+  * Update d/gbp.conf for main branch
+  * Pull patches to support PHP 8 (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 12:50:29 +0200
+
+php-imagick (3.4.4-8) unstable; urgency=medium
+
+  * Build-Depend on dh-php >= 1.1~
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 28 Sep 2020 14:56:06 +0200
+
+php-imagick (3.4.4-7) unstable; urgency=medium
+
+  * Build-Depend on debhelper >= 10~
+  * Build-Depend on dh_php >= 0.38~ to get independent binary packages
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 28 Sep 2020 13:35:20 +0200
+
+php-imagick (3.4.4-6) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Build-Depend on dh_php >= 0.37~ to get independent binary packages
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 28 Sep 2020 13:18:49 +0200
+
+php-imagick (3.4.4-5) unstable; urgency=medium
+
+  * Don't fail on failed tests - the tests are still too fragile to cause
+    hard fail
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Mar 2020 11:32:31 +0100
+
+php-imagick (3.4.4-4) unstable; urgency=medium
+
+  [ Ondřej Surý ]
+  * Pull Ubuntu changes to the php-imagick package (Closes: #854707, #826998)
+
+  [ Bryce Harrington ]
+  * d/t/control: Restore Restriction: needs-recommends since the tests
+    require the -extra libmagickcore package
+  * d/p/no-openmp-threads.patch: limit the number of openmp threads used
+    to 1.
+  * d/p/0003-Disable-test-014-which-fails-due-to-system-resources.patch:
+    Disable 014-setresourcelimit.phpt to fix autopkgtest failure. The test
+    describes itself as 'flaky', and appears to suffer from sensitivity to
+    system resource limit policies with ImageMagick.
+
+   [ Christian Ehrhardt ]
+   * d/rules: re-enable to fail on build time tests
+   * d/p/0004-Disable-remaining-tests-failing-with-7.4.patch to at least
+     retain the remaining coverage
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Mar 2020 10:04:48 +0100
+
+php-imagick (3.4.4-3) unstable; urgency=medium
+
+  * Don't fail on failed tests
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 23 Feb 2020 16:36:26 +0100
+
+php-imagick (3.4.4-2) unstable; urgency=medium
+
+  * PHP 7.4 Rebuild
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 23 Feb 2020 16:33:12 +0100
+
+php-imagick (3.4.4-1) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+  * New upstream version 3.4.4
+  * Rebase patches for php-imagick 3.4.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 23 Feb 2020 16:32:41 +0100
+
+php-imagick (3.4.3-4) unstable; urgency=medium
+
+  * Bump the required dh-php version to >= 0.33~
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 15 Oct 2018 19:08:12 +0000
+
+php-imagick (3.4.3-1) unstable; urgency=medium
+
+  * New upstream version 3.4.3
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+  * Rebase patches for php-imagick 3.4.3
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 12:30:09 +0000
+
+php-imagick (3.4.3~rc2-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload. (On behalf of the Debian Edu team).
+    Reason: gosa got removed from Debian testing due to the
+    below RC bug in this package.
+
+  * debian/control:
+    + Move Ondřej Surý from Uploaders: to Maintainer: field.
+      (Closes: #899805). This is a temporary work-around and should
+      get re-addressed by the PHP/PECL Debian team.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Thu, 19 Jul 2018 15:46:21 +0200
+
+php-imagick (3.4.3~rc2-2) unstable; urgency=medium
+
+  [ Jeremy Bicha ]
+  * Update debian/tests/control (from Ubuntu) (Closes: #816724)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 24 Jan 2017 12:47:41 +0100
+
+php-imagick (3.4.3~rc2-1) unstable; urgency=medium
+
+  [ Jeremy Bicha ]
+  * Have d/tests/control depend on imagemagick-6.q16 and its recommends
+
+  [ Ondřej Surý ]
+  * New upstream version 3.4.3~rc2
+  * Rebase patches on top of 3.4.3~rc2
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 23 Jan 2017 10:22:26 +0100
+
+php-imagick (3.4.3~rc1-4) unstable; urgency=medium
+
+  * Use $LIBS instead of $LDFLAGS when searching for MagickWand symbols
+  * Reinstate --as-needed as this was fixed in php-imagick
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 15 Dec 2016 16:06:27 +0100
+
+php-imagick (3.4.3~rc1-3) unstable; urgency=medium
+
+  * Use $LIBS instead of $LDFLAGS
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 15 Dec 2016 16:05:26 +0100
+
+php-imagick (3.4.3~rc1-2) unstable; urgency=medium
+
+  * Rebuild without --as-needed (needs dh_php >= 0.24~)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 15 Dec 2016 15:24:50 +0100
+
+php-imagick (3.4.3~rc1-1) unstable; urgency=medium
+
+  * Skip Imagick version check by default -- re-enable with
+    'imagick.skip_version_check = false' (Closes: #842658)
+  * Imported Upstream version 3.4.3~rc1 (stable)
+  * Rebase patches on top of 3.4.3~rc1 release
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 01 Nov 2016 09:00:36 +0100
+
+php-imagick (3.4.2-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:17:33 +0200
+
+php-imagick (3.4.2-1) unstable; urgency=medium
+
+  * gbp.conf back at master/pristine-tar/upstream
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+  * Imported Upstream version 3.4.2
+  * Adjust version number in the font path patch
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 13:39:48 +0200
+
+php-imagick (3.4.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.4.0
+  * Fix failures in autopkgtests (LP: #1549942)
+    - d/tests/control: run phpunit from tests/ subdirectory to pick up
+      the SKIP helper.
+    - d/tests/control: limit imagemagick to 1 thread to avoid openmp
+      related segfaults.
+    - d/tests/control: add gsfonts and libmagickcore-6.q16-2-extra as
+      test dependencies.
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 07 Mar 2016 12:47:48 +0100
+
+php-imagick (3.4.0~rc6-2) unstable; urgency=medium
+
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Feb 2016 22:16:55 +0100
+
+php-imagick (3.4.0~rc6-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.4.0~rc6
+  * Update patch to 3.4.0~rc6 release
+  * Add License for Anonymous Pro Minus font included in tests
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Feb 2016 11:03:29 +0100
+
+php-imagick (3.4.0~rc5-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.4.0~rc5
+  * Rebase patches on top of 3.4.0~rc5 release
+  * Override wrong license-problem-php-license lintian check for packages
+    from PECL
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 13 Jan 2016 14:05:57 +0100
+
+php-imagick (3.4.0~rc4-2) unstable; urgency=medium
+
+  * Make php-imagick compile with PHP 5.6 and PHP 7.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 04 Jan 2016 16:19:31 +0100
+
+php-imagick (3.4.0~rc4-1) unstable; urgency=medium
+
+  * Add libmagickwand-dev as alternative build-dependency
+  * Add static description
+  * Imported Upstream version 3.4.0~rc4 (Closes: #809445)
+  * Update patch with 3.4.0~rc4 path
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 30 Dec 2015 20:23:09 +0100
+
+php-imagick (3.4.0~rc2-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.4.0~rc2
+  * Drop pkg-php-tools build system to support PHP 7.0
+  * Rebase patches using gbp pq and drop safe mode support
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 08 Dec 2015 16:33:02 +0100
+
+php-imagick (3.3.0~rc2-1) unstable; urgency=medium
+
+  * New upstream release
+  * Tests: Use phpunit instead of relying on build generated run-test.php
+
+ -- Guillaume Delacour <gui@iroqwa.org>  Sun, 14 Jun 2015 18:43:17 +0000
+
+php-imagick (3.3.0~rc1-1) unstable; urgency=medium
+
+  * New upstream release
+    + drop debian/patches/imagick_count_php_5.6.patch
+    + drop debian/patches/imagemagick_pkgconfig_detection.patch
+  * debian/tests: Execute upstream test suite
+  * debian/rules: failed test removal no more needed
+
+ -- Guillaume Delacour <gui@iroqwa.org>  Tue, 26 May 2015 02:26:30 +0200
+
+php-imagick (3.2.0~rc1-1) unstable; urgency=medium
+
+  * New upstream release, drop 002-use-pkgconfig-for-imagemagick as upstream
+    has changed the detection of imagemagick by using pkg-config
+  * Depends ${phppear:Debian-Depends} and Recommend ${phppear:Debian-Recommends}
+    drop unused ucf and obsolete ${php5:Depends} in Build-Depends
+  * Use ${phppear:summary} and ${phppear:description} for debian/control
+    corresponding fields
+  * Cherry-pick fix (with minor changes) for Imagick::count() with
+    PHP >= 5.6.0RC2 in debian/patches/imagick_count_php_5.6.patch
+  * Remove /etc/php5/conf.d/imagick.ini in {pre,post}inst and prerm
+    (LP: #1017908, #1066230, #1264207)
+  * Bump to Standards-Version 3.9.6
+  * debian/rules: remove test/*.sh failed tests to re-build the package
+    (see debian/TODO)
+  * Update maintainer to PHP PECL Maintainers list
+  * Build-Depends on libmagickwand-6.q16-dev to replace libmagickwand-dev
+    transition package and use pkgconfig for version detection instead of
+    Wand-config shell script
+
+ -- Guillaume Delacour <gui@iroqwa.org>  Thu, 09 Oct 2014 22:56:11 +0200
+
+php-imagick (3.1.2-1.1) unstable; urgency=medium
+
+  * NMU
+  * Fix FTBFS with newer imagemagick. Will ease imagemagick
+    transition. Use pkgconfig instead of hardcoding path in
+    config script (Closes: #747857)
+
+ -- Bastien Roucariès <roucaries.bastien+debian@gmail.com>  Wed, 06 Aug 2014 08:48:06 +0200
+
+php-imagick (3.1.2-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Lior Kaplan <kaplan@debian.org>  Tue, 01 Oct 2013 14:19:06 +0200
+
+php-imagick (3.1.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Update maintainer to PHP PEAR Maintainers list (Closes: #656977)
+
+ -- Lior Kaplan <kaplan@debian.org>  Wed, 18 Sep 2013 10:12:55 +0200
+
+php-imagick (3.1.0~rc2-1) unstable; urgency=low
+
+  * Disable ltmain.sh patch since it cannot be applied cleanly on all Ubuntus
+  * Update patches to RC2
+  * Update imagick to use dh_php5 and dh_phppear (Closes: #717214)
+  * Imported Upstream version 3.1.0~rc2
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 18 Jul 2013 15:24:47 +0200
+
+php-imagick (3.1.0~rc1-1) unstable; urgency=low
+
+  [ Guillaume Delacour ]
+  * New upstream release
+  * debian/control: Add Vcs-{Browser,Git} field, point to pkg-php git repo
+  * debian/rules: export LDFLAGS and refresh ltmain.sh.patch
+    to pass -Wl,--as-needed flag to linker at right place (Closes: #652200)
+  [ Thomas Goirand ]
+  * Made examples work if the added Recommends: are installed.
+
+ -- Guillaume Delacour <gui@iroqwa.org>  Wed, 28 Dec 2011 15:30:14 +0100
+
+php-imagick (3.0.1-1) unstable; urgency=low
+
+  * New upstream release
+  * Bump to Standards-Version 3.9.2 (no changes needed)
+  * debian/rules: delete "touch examples/ and CREDITS" to update timestamp
+    (fixed upstream)
+
+ -- Guillaume Delacour <gui@iroqwa.org>  Wed, 04 May 2011 22:26:04 +0200
+
+php-imagick (3.0.0~rc1-1) unstable; urgency=low
+
+  * New upstream release (Closes: #524863, #570649, #573139)
+  * New maintainer (Closes: #530621)
+  * Change Build-Depends from libmagick9-dev to libmagickwand-dev
+    (Thanks Ivan Borzenkov)
+  * debian/rules:
+    + Rewrite php5 oriented only, work in progress to adapt multi php version
+    + Remove tarball mode rules
+    + Fix generated path of debian/post{inst,rm} in clean rule
+    + Delete "--with-regex" and "--disable-rpath" options (enabled by default)
+      in configure call (unrecognized options)
+    + Delete lintian override (no-shlibs-control-file)
+    + Touch examples/ and CREDITS in upstream tarball
+      (lintian package-contains-ancient-file rule)
+    + Delete unnecessary patch rule
+    + phpize5 --clean is now called in clean rule
+    + Set CFLAGS to -Wl,--as-needed, to not link against some libX11
+  * Bump to Standards-Version 3.8.4 (move section from web to php)
+  * Bump to compatibility 7 in debian/{control,compat}
+  * debian/phpX-imagick.post{inst,rm}:
+    + add "set -e" (instead of "#!/bin/sh -e")
+    + comment loading on remove (Closes: #498150)
+    (Thanks Ivan Borzenkov)
+  * debian/imagick.ini: change comment style from "#" to ";"
+    (Closes: #563433, #566970, thanks Thijs Kinkhorst)
+  * debian/{changelog,copyright}: suppress unnecessary spaces
+  * Switch to dpkg-source 3.0 (quilt) format
+  * debian/watch: mangle version according Debian Policy 5.6.12
+  * debian/ltmain.patch: Patch to reorder linker argument after phpize
+    (From BTS#347650)
+
+ -- Guillaume Delacour <gui@iroqwa.org>  Tue, 09 Mar 2010 17:58:50 +0000
+
+php-imagick (2.1.1RC1-1) unstable; urgency=low
+
+  * New upstream release
+  * Added Depends ${shlibs:Depends}, now it put libmagick* dependence.
+    (Closes: #459874)
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Tue, 25 Mar 2008 02:02:54 -0300
+
+php-imagick (2.1.0RC1-1) unstable; urgency=low
+
+  * New upstream release
+  * Standards-Version: 3.7.3
+  * Updated "Homepage:" pseudo-header as Reference 1.14.6.
+  * Fixed segfault on 64 archs caused by implicit pointer conversion.
+    (Closes: #425734)
+  * debian/copyright: Updated copyright holders. (closes: #453443)
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Wed, 12 Dec 2007 17:09:02 -0200
+
+php-imagick (2.0.1-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #445033)
+  * Package was reorganized to use cdbs and php5/conf.d. (Closes: #431337)
+  * debian/control:
+    removed "dpatch", "bison" and "flex" build dependence.
+    added "ucf" dependence.
+  * debian/rules: updated to complain with cdbs.
+  * debian/copyright: updated PHP License, version 3.01.
+  * debian/php5-imagick.postinst: updated to use ucf.
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Sat, 03 Nov 2007 04:04:35 +0000
+
+php-imagick (2.0.0b3-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Fri, 21 Sep 2007 17:00:57 -0300
+
+php-imagick (2.0.0a2-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #421786)
+  * Removed suport to php4 due php4 removal. (Closes: #418309)
+  * Removed debian/.template and debian/po files, as isnt no more necessary.
+  * Removed debian/.postrm and debian/.config files no more used.
+  * Added debian/imagick.ini file used by php5.
+  * Added debian/dh_pecl5 and changed rules to call it.
+  * Removed no more used 02_examples.dpatch.
+  * Removed no more used 03_nographicsmagickplease.dpatch.
+  * Removed no more used 04_Magick-config_to_php-config.dpatch.
+  * Removed build-dependence from libmagick-dev, as this package can call
+    graphicsmagick that isnt supported by php-imagick.
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Thu, 17 May 2007 19:21:15 -0300
+
+php-imagick (0.9.13-1) unstable; urgency=low
+
+  * New upstream release
+  * Build Depends on php4-dev (>= 4:4.4.4-9), php5-dev (>= 5.2.0-10), now
+    depends on phpapi-20050606+lfs. (Closes: #400527)
+  * Patched config.m4 (Magick-config_to_php-config.dpatch) to use php-config.
+    (Closes: #400786)
+  * Updated to use new config files schema with conf.d directory and
+    module.ini files. (Closes: #401631)
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Fri, 27 Apr 2007 20:48:42 -0300
+
+php-imagick (0.9.11+1-4.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Sourcefull NMU to rebuild against php 5.2. Closes: #398585
+
+ -- Andreas Barth <aba@not.so.argh.org>  Tue, 28 Nov 2006 09:24:33 +0100
+
+php-imagick (0.9.11+1-4) unstable; urgency=low
+
+  * Bump Standards-Version: 3.7.2
+  * Updated Japanese debconf translation, thanks to Kenshi Muto
+    <kmuto@debian.org>. (Closes: #379941)
+  * Updated Danish debconf translation, thanks to  Claus Hindsgaul 	
+    <claus.hindsgaul@gmail.com>. (Closes: #382476)
+  * Updated Spanish debconf translation, thanks to Carlos Valdivia Yagüe
+    <valyag@dat.etsit.upm.es>.
+  * Updated Vietnamese debconf translation, thanks to Clytie Siddall
+    <clytie@riverland.net.au>.
+  * Updated Swedish debconf translation, thanks to Daniel Nylander
+    <po@danielnylander.se>.
+  * Updated Czech debconf translation, thanks to Miroslav Kure
+    <kurem@upcase.inf.upol.cz>. (Closes: #382540)
+  * Updated French debconf translation, thanks to Florentin Duneau
+    <f.baced@wanadoo.fr>. (Closes: #383043)
+  * Updated Portuguese debconf translation, thanks to Miguel Figueiredo
+    <elmig@debianpt.org>
+  * Updated German debconf translation, thanks to Alwin Meschede
+    <ameschede@gmx.de>
+  * Updated Turkish debconf translation, thanks to Osman Yüksel
+    <yuxel@sonsuzdongu.com>
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Wed,  9 Aug 2006 17:45:27 -0300
+
+php-imagick (0.9.11+1-3) unstable; urgency=low
+
+  * Updated Debconf French translation. Thanks to Florentin Duneau
+    <fduneau@gmail.com>. (closes: #361609)
+  * Updated Debconf Czech translation. Thanks to Miroslav Kure
+    <kurem@upcase.inf.upol.cz>. (closes: #366739)
+  * Updated Debconf Russian translation. Thanks to Yuriy Talakan
+    <yt@amur.elektra.ru>. (closes: #367163)
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Thu, 11 May 2006 20:48:39 -0300
+
+php-imagick (0.9.11+1-2) unstable; urgency=low
+
+  * Updated debian po Danish translation, Thanks to Claus Hindsgaul
+    <claus.hindsgaul@gmail.com>. (closes: #357987)
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Mon, 27 Mar 2006 16:56:49 -0300
+
+php-imagick (0.9.11+1-1) unstable; urgency=low
+
+  * Changed source name from php4-imagick to php-imagick.
+  * Build-Depends on debhelper >=5, removed compat file and put DH_COMPAT in
+    rules file.
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Fri, 17 Mar 2006 14:40:09 -0300
+
+php4-imagick (0.9.11-5) unstable; urgency=low
+
+  * Added suport to generate php5-imagick binary (files php5-imagick.* and
+    changed control file). (closes: #333388)
+  * Updated all debian/po/.* files to suport php5 binary.
+  * Updated debian/rules file based in php-imap.
+  * Changed 02_examples.dpatch to do not call imagick_setfillcolor function.
+    (closes: #337686)
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Wed, 28 Dec 2005 14:07:54 -0200
+
+php4-imagick (0.9.11-4) unstable; urgency=low
+
+  * New maintainer. (closes: #303616)
+  * Updated debian/CHANGELOG.
+  * Updated debian/README.Debian, debian/copyright, debian/php4-imagick.postinst
+    and debian/php4-imagick.prerm files.
+
+ -- Jose Carlos Medeiros <debian@psabs.com.br>  Thu,  6 Oct 2005 18:24:48 -0300
+
+php4-imagick (0.9.11-3) unstable; urgency=low
+
+  * QA upload.
+  * Build-depend on `libmagick9-dev | libmagick-dev'.  Closes: #332460.
+  * debian/po/sv.po: Add translation by Daniel Nylander.  Closes: #330760.
+
+ -- Matej Vela <vela@debian.org>  Thu,  6 Oct 2005 18:32:27 +0200
+
+php4-imagick (0.9.11-2) unstable; urgency=low
+
+  * QA upload.
+  * Update for php4/php5 split (s/phpize/phpize4/; s/php-config/php-config4/).
+  * Recompile for phpapi-20050606.  Closes: #317634, #324005, #272687.
+  * Update templates based on php4 4:4.4.0-1 (which includes a Vietnamese
+    translation).  Closes: #316823.
+  * Update debconf dependency.
+  * debian/copyright: Update upstream URL.
+  * debian/watch: Add.
+  * Conforms to Standards version 3.6.2.
+
+ -- Matej Vela <vela@debian.org>  Sun, 11 Sep 2005 08:34:04 +0200
+
+php4-imagick (0.9.11-1) unstable; urgency=low
+
+  * QA upload.
+  * Package is orphaned (see #303616); set maintainer to Debian QA Group.
+  * Use updated debconf translations from php4.
+  * debian/php4-imagick.prerm: s/@extname@/imagick/
+  * debian/rules:
+    - Remove support for DEB_BUILD_OPTIONS=debug.
+    - Add support for DEB_BUILD_OPTIONS=noopt.
+    - Let dh_strip handle DEB_BUILD_OPTIONS=nostrip.
+
+ -- Matej Vela <vela@debian.org>  Mon, 25 Apr 2005 22:57:49 +0200
+
+php4-imagick (0.9.11-0.2) unstable; urgency=medium
+
+  * NMU
+  * Bump the php4-dev build-dependency again, and switch back to
+    non-threaded phpapi since ZTS isn't happening for sarge
+    (closes: #301328).
+  * Drop support for caudium SAPI again, now that it's also been dropped
+
+ -- Steve Langasek <vorlon@debian.org>  Tue, 29 Mar 2005 17:07:17 -0800
+
+php4-imagick (0.9.11-0.1) unstable; urgency=medium
+
+  * NMU
+  * Build-dep on php4-dev (>= 4:4.3.10-3) and make sure that we're also
+    depending on a threaded phpapi (closes: #294001)
+  * Add support for cli and caudium SAPIs
+
+ -- Adam Conrad <adconrad@0c3.net>  Sun, 13 Feb 2005 21:31:51 -0700
+
+php4-imagick (0.9.11-0) unstable; urgency=low
+
+  * New upstream versions (Closes: #266335)
+  * Acknowledge NMU (Closes: #246478, #249088, #262845, #224238)
+    (Closes: #226001, #226407, #224727)
+  * Updated postinst and config to reuse php4's debconf dialogs
+  * Remove RPATH from image.so (Closes: #266161)
+
+ -- Bruno Rodrigues <bruno.rodrigues@litux.org>  Tue, 17 Aug 2004 21:27:06 +0200
+
+php4-imagick (0.9.7-1.3) unstable; urgency=medium
+
+  * NMU
+  * Rebuild for libtiff4 transition (closes: #262845)
+  * Bump libmagick build-dep to libmagick6-dev (closes: #246478, #249088)
+  * Patched imagick.h to DTRT with libmagick6 headers.
+
+ -- Adam Conrad <adconrad@0c3.net>  Thu,  5 Aug 2004 00:03:26 -0600
+
+php4-imagick (0.9.7-1.2) unstable; urgency=medium
+
+  * NMU
+  * [debian/control] Tightened ImageMagick build dependency again to follow
+    libmagick's so name reversal. (Closes: #226001)
+
+ -- J.H.M. Dassen (Ray) <jdassen@debian.org>  Sat,  3 Jan 2004 19:10:05 +0100
+
+php4-imagick (0.9.7-1.1) unstable; urgency=medium
+
+  * NMU
+  * [debian/control] Tightened ImageMagick build dependency to follow
+    libmagick's so name change. (Closes: #224238)
+
+ -- J.H.M. Dassen (Ray) <jdassen@debian.org>  Sun, 21 Dec 2003 13:47:52 +0100
+
+php4-imagick (0.9.7-1) unstable; urgency=low
+
+  * Sponsored by Steve Langasek <vorlon@debian.org>
+  * New upstream version. From upstream changelog:
+    - fixed to work with versions of ImageMagick >= 5.5.7 (Closes: #206960)
+    - test compiled against ImageMagick 5.5.3, 5.5.6 and 5.5.7 with success.
+  * Rebuild to get the right PHP dependencies (phpapi instead of zendapi).
+    (Closes: #208485)
+  * Run phpize in debian/rules instead of including a big patch with it
+
+ -- Bruno Rodrigues <bruno.rodrigues@litux.org>  Mon,  8 Sep 2003 20:24:31 +0100
+
+php4-imagick (0.9.6-1) unstable; urgency=low
+
+  * New upstream version
+  * Updated to Standards-Version: 3.5.10
+  * Added upstream changelog converted from webpage
+
+ -- Bruno Rodrigues <bruno.rodrigues@litux.org>  Mon, 26 May 2003 17:39:54 +0000
+
+php4-imagick (0.9.5-1) unstable; urgency=low
+
+  * New package (Closes: #181169)
+  * Rewrite examples/*.php to output result images instead of writting files
+
+ -- Bruno Rodrigues <bruno.rodrigues@litux.org>  Tue, 18 Mar 2003 23:39:59 +0000
+
+php4-imagick (0.9.5-0) unstable; urgency=low
+
+  * New upstream version
+
+ -- Bruno Rodrigues <bruno.rodrigues@litux.org>  Wed, 12 Mar 2003 17:20:34 +0000
+
+php4-imagick (0.9.4-1) unstable; urgency=low
+
+  * Initial debianize
+
+ -- Bruno Rodrigues <bruno.rodrigues@litux.org>  Sat, 15 Feb 2003 23:21:25 +0000
+

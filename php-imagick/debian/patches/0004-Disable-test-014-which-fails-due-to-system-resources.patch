@@ -1,0 +1,28 @@
+From: Bryce Harrington <bryce@canonical.com>
+Date: Thu, 27 Feb 2020 03:40:31 +0000
+Subject: [PATCH] Disable test 014 which fails due to system resource limit
+ policy
+
+Origin: vendor
+Forwarded: no
+X-Not-Forwarded-Reason: Only applicable to Ubuntu build environments
+Author: Bryce Harrington <bryce@canonical.com>
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/1864961
+Last-Update: 2020-02-27
+---
+ imagick-3.7.0/tests/014-setresourcelimit.phpt | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/imagick-3.7.0/tests/014-setresourcelimit.phpt b/imagick-3.7.0/tests/014-setresourcelimit.phpt
+index 14ea263..9c35725 100644
+--- a/imagick-3.7.0/tests/014-setresourcelimit.phpt
++++ b/imagick-3.7.0/tests/014-setresourcelimit.phpt
+@@ -2,6 +2,8 @@
+ Imagick::setResourceLimit test
+ --SKIPIF--
+ <?php 
++die('skip test fails with php7.4 on debian-ish systems');
++
+ $imageMagickRequiredVersion=0x692;
+ require_once(dirname(__FILE__) . '/skipif.inc'); 
+ ?>
