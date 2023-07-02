@@ -1,0 +1,23 @@
+#!/bin/sh
+
+MATCH="^[[:space:]]*($|;)"
+
+echo "==== Additional PHP 8.0 information ====" >&3
+echo "" >&3
+echo "++++ PHP 8.0 SAPI (php8.0query -S): ++++" >&3
+/usr/sbin/php8.0query -S >&3
+echo "" >&3
+echo "++++ PHP 8.0 Extensions (php8.0query -M -v): ++++" >&3
+/usr/sbin/php8.0query -M -v >&3
+echo "" >&3
+
+echo "++++ Configuration files: ++++" >&3
+"**** /etc/php/8.0/fpm/php.ini ****" >&3
+grep -Ev "$MATCH" /etc/php/8.0/fpm/php.ini >&3
+echo "" >&3
+find /etc/php/8.0/fpm/conf.d/ -name '*.ini' | \
+while read CONF; do
+    echo "**** $CONF ****" >&3
+    grep -Ev "$MATCH" "$CONF" >&3
+    echo "" >&3
+done

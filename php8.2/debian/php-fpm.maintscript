@@ -1,0 +1,1 @@
+rm_conffile /etc/init/php@PHP_VERSION@-fpm.conf 7.4.3-4~ php@PHP_VERSION@-fpm

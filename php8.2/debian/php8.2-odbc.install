@@ -1,0 +1,4 @@
+usr/lib/php/*/odbc.so
+usr/share/php8.2-odbc/odbc/odbc.ini
+usr/lib/php/*/pdo_odbc.so
+usr/share/php8.2-odbc/odbc/pdo_odbc.ini

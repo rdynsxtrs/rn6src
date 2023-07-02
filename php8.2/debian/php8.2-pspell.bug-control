@@ -1,0 +1,1 @@
+report-with: php8.2-common php8.2-cli libphp8.2-embed libapache2-mod-php8.2 libapache2-mod-php8.2filter php8.2-cgi php8.2-fpm

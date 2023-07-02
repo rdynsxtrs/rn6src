@@ -1,0 +1,29 @@
+#!/bin/sh
+
+set -e
+
+#EXTRA#
+
+php_enable() { return 0; }
+
+if [ "$1" = "remove" ]; then
+    if [ -e /usr/lib/php/php-maintscript-helper ]; then
+	. /usr/lib/php/php-maintscript-helper
+
+	mods=$(phpquery -M -v @PHP_VERSION@)
+	for mod in $mods; do
+	    php_invoke dismod @PHP_VERSION@ @sapi@ $mod
+	done
+    else
+	for mod in /etc/php/@PHP_VERSION@/@sapi@/conf.d/*.ini; do 
+	    rm -f $mod
+	    for ext in '~' '%' .bak .ucf-new .ucf-old .ucf-dist;  do
+		rm -f $mod$ext
+	    done
+	done
+    fi
+fi
+
+#DEBHELPER#
+
+exit 0

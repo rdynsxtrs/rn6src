@@ -1,0 +1,20 @@
+#!/bin/sh
+
+MATCH="^[[:space:]]*($|;)"
+
+echo "==== Additional PHP 8.0 information ====" >&3
+echo "" >&3
+echo "++++ PHP @PHP_VERSION SAPI (php8.0query -S): ++++" >&3
+/usr/sbin/php8.0query -S >&3
+echo "" >&3
+echo "++++ PHP 8.0 Extensions (php8.0query -M -v): ++++" >&3
+/usr/sbin/php8.0query -M -v >&3
+echo "" >&3
+
+echo "++++ Configuration files: ++++" >&3
+for dsoname in bcmath; do
+    inifile=${dsoname}.ini
+    echo "**** /etc/php/8.0/mods-available/$dsoname.ini ****" >&3
+    grep -Ev "$MATCH" "/etc/php/8.0/mods-available/$dsoname.ini" >&3
+    echo "" >&3
+done
