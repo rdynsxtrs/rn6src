@@ -1,0 +1,50 @@
+# Automatically added by dh_php
+# Hey emacs, this is -*- shell-script -*-
+
+for name in xhprof ; do
+    find /etc/php -mindepth 3 -maxdepth 3 -name "${name}.ini*" | \
+    sed -Ee "s,.dpkg-(remove|bak|backup)$,," | \
+    grep "/etc/php/[.0-9]*/mods-available/${name}.ini" | \
+    fgrep -v "$(for version in 5.6 ; do echo "/etc/php/${version}/mods-available/${name}.ini"; done)" | \
+    while read conffile; do
+	dpkg-maintscript-helper rm_conffile "${conffile}" -- "$@"
+	for dir in \
+	    "$(dirname $(dirname "${conffile}"))"/mods-available \
+	    "$(dirname $(dirname "${conffile}"))" \
+	    /etc/php;
+	do
+	    if [ -d $dir ]; then
+		rmdir --ignore-fail-on-non-empty $dir
+	    fi
+	done
+    done
+done
+
+if [ "$1" = "remove" ]; then
+    if [ -e /usr/lib/php/php-maintscript-helper ] ; then
+	. /usr/lib/php/php-maintscript-helper
+
+	for version in 5.6 ; do
+	    for name in xhprof ; do
+		php_invoke dismod "$version" ALL "$name" || exit $?
+	    done
+	done
+    fi
+fi
+
+if [ "$1" = "purge" ] ; then
+    # Final cleanup of possible leftover symlinks
+    for version in 5.6 ; do
+	inidir="/etc/php/$version"
+	for name in xhprof; do
+	    inifile="${name}.ini"
+	    find "${inidir}" -xtype l 2>/dev/null | \
+	    while read symlink; do
+	        if [ "$(basename "$(readlink -m "${symlink}")")" = "${inifile}" ]; then
+		    rm -f "${symlink}"
+		fi
+	    done
+	done
+    done
+fi
+# End automatically added section

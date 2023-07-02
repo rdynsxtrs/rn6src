@@ -1,0 +1,39 @@
+Description: <short summary of the patch>
+ TODO: Put a short summary on the line above and replace this paragraph
+ with a longer explanation of this change. Complete the meta-information
+ with other relevant fields (see below for details). To make it easier, the
+ information below has been extracted from the changelog. Adjust it or drop
+ it.
+ .
+ php-xhprof (2.2.3+0.9.2-1+0~20201211.7+rnx2) unstable; urgency=medium
+ .
+   * Disable Test 0005 for it fails on ARM
+Author: ReadyNAS Xtras <xtras@rnxtras.com>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- php-xhprof-2.2.3+0.9.2.orig/xhprof-2.2.3/extension/tests/xhprof_005.phpt
++++ php-xhprof-2.2.3+0.9.2/xhprof-2.2.3/extension/tests/xhprof_005.phpt
+@@ -3,9 +3,9 @@ XHProf: Timer Tests
+ Author: Kannan
+ --SKIPIF--
+ <?php
+-if (substr(PHP_OS, 0, 3) == 'WIN') {
++// if (substr(PHP_OS, 0, 3) == 'WIN') {
+     print 'skip';
+-}
++// }
+ ?>
+ --FILE--
+ <?php

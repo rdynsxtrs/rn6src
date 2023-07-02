@@ -1,0 +1,35 @@
+Source: php-xhprof
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <pkg-php-pecl@lists.alioth.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>,
+           László Böszörményi <gcs@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev
+Homepage: https://pecl.php.net/package/xhprof
+Standards-Version: 3.9.8
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-xhprof.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-xhprof
+
+Package: php-xhprof
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends}
+         ${shlibs:Depends},
+         ${php:Depends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: Hierarchical Profiler for PHP 5.x
+ XHProf is a function-level hierarchical profiler for PHP and has a
+ simple HTML based navigational interface. The raw data collection
+ component is implemented in C (as a PHP extension). The reporting/UI
+ layer is all in PHP. It is capable of reporting function-level
+ inclusive and exclusive wall times, memory usage, CPU times and
+ number of calls for each function. Additionally, it supports ability
+ to compare two runs (hierarchical DIFF reports), or aggregate results
+ from multiple runs.

@@ -1,0 +1,31 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Fri, 8 Sep 2017 08:18:54 +0200
+Subject: Use clock_gettime(CLOCK_REALTIME,
+ ...) instead of rdtsc to support all architectures
+
+---
+ xhprof-0.9.4/extension/xhprof.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/xhprof-0.9.4/extension/xhprof.c b/xhprof-0.9.4/extension/xhprof.c
+index a053ede..347d2c1 100644
+--- a/xhprof-0.9.4/extension/xhprof.c
++++ b/xhprof-0.9.4/extension/xhprof.c
+@@ -1218,11 +1218,14 @@ void hp_sample_check(hp_entry_t **entries  TSRMLS_DC) {
+  * @return 64 bit unsigned integer
+  * @author cjiang
+  */
++
+ inline uint64 cycle_timer() {
+-  uint32 __a,__d;
+   uint64 val;
+-  asm volatile("rdtsc" : "=a" (__a), "=d" (__d));
+-  (val) = ((uint64)__a) | (((uint64)__d)<<32);
++  struct timespec ts;
++  clock_gettime(CLOCK_REALTIME, &ts);
++  val = ts.tv_sec;
++  val = val * 1000000000ULL;
++  val += ts.tv_nsec;
+   return val;
+ }
+ 
