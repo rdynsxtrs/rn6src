@@ -1,0 +1,59 @@
+Source: asn1crypto
+Section: python
+Priority: optional
+Maintainer: Tristan Seligmann <mithrandi@debian.org>
+Build-Depends:
+ debhelper (>= 9),
+ dh-python,
+ pypy,
+ pypy-setuptools,
+ python-all,
+ python-setuptools,
+ python3-all,
+ python3-setuptools,
+Standards-Version: 4.1.2
+Homepage: https://github.com/wbond/asn1crypto
+Vcs-Git: https://anonscm.debian.org/git/python-modules/packages/asn1crypto.git
+Vcs-Browser: https://anonscm.debian.org/git/python-modules/packages/asn1crypto.git
+
+Package: python-asn1crypto
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}
+Recommends: ${python:Recommends}
+Suggests: ${python:Suggests}
+Description: Fast ASN.1 parser and serializer (Python 2)
+ asn1crypto focuses on:
+  - Delayed parsing of byte string values
+  - Persistence of original ASN.1 encoded data until a value is changed
+  - Lazy loading of child fields
+  - Utilization of high-level Python stdlib modules
+ .
+ This package contains the Python 2 version of asn1crypto.
+
+Package: python3-asn1crypto
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}
+Recommends: ${python3:Recommends}
+Suggests: ${python3:Suggests}
+Description: Fast ASN.1 parser and serializer (Python 3)
+ asn1crypto focuses on:
+  - Delayed parsing of byte string values
+  - Persistence of original ASN.1 encoded data until a value is changed
+  - Lazy loading of child fields
+  - Utilization of high-level Python stdlib modules
+ .
+ This package contains the Python 3 version of asn1crypto.
+
+Package: pypy-asn1crypto
+Architecture: all
+Depends: ${misc:Depends}, ${pypy:Depends}
+Recommends: ${pypy:Recommends}
+Suggests: ${pypy:Suggests}
+Description: Fast ASN.1 parser and serializer (PyPy)
+ asn1crypto focuses on:
+  - Delayed parsing of byte string values
+  - Persistence of original ASN.1 encoded data until a value is changed
+  - Lazy loading of child fields
+  - Utilization of high-level Python stdlib modules
+ .
+ This package contains the PyPy version of asn1crypto.

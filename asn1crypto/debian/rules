@@ -1,0 +1,8 @@
+#! /usr/bin/make -f
+
+export PYBUILD_NAME=asn1crypto
+%:
+	dh $@ --with python3,python2,pypy --buildsystem=pybuild
+
+# Disable test suite since the tests are not shipped
+override_dh_auto_test:

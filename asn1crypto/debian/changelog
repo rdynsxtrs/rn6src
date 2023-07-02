@@ -1,0 +1,26 @@
+asn1crypto (0.24.0-1~bpo9+1+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Tue, 28 Dec 2021 16:10:31 +0100
+
+asn1crypto (0.24.0-1~bpo9+1) stretch-backports; urgency=medium
+
+  * backport to stretch (Closes: #910064)
+
+ -- Hans-Christoph Steiner <hans@eds.org>  Wed, 10 Oct 2018 13:21:07 +0200
+
+asn1crypto (0.24.0-1) unstable; urgency=medium
+
+  * Add some missing files to debian/copyright.
+  * New upstream release.
+  * Bump Standards-Version to 4.1.2 (no changes).
+  * Upstream now ships a changelog, drop Lintian override.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Sat, 23 Dec 2017 20:29:58 +0200
+
+asn1crypto (0.22.0-1) unstable; urgency=low
+
+  * Initial upload (closes: #832804).
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Tue, 20 Jun 2017 20:53:15 +0200
