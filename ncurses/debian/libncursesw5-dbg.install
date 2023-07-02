@@ -1,0 +1,4 @@
+obj-wide-debug/lib/libncursesw.so.* usr/lib/debug
+obj-wide-debug/lib/libformw.so.* usr/lib/debug
+obj-wide-debug/lib/libmenuw.so.* usr/lib/debug
+obj-wide-debug/lib/libpanelw.so.* usr/lib/debug

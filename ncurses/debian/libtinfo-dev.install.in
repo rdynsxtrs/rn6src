@@ -1,0 +1,7 @@
+usr/lib/${DEB_HOST_MULTIARCH}/libtic.so
+usr/lib/${DEB_HOST_MULTIARCH}/libtinfo.a
+usr/lib/${DEB_HOST_MULTIARCH}/libtic.a
+usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig/tinfo.pc
+usr/lib/${DEB_HOST_MULTIARCH}/pkgconfig/tic.pc
+debian/libtermcap.so  usr/lib/${DEB_HOST_MULTIARCH}
+misc/ncurses.supp  usr/lib/valgrind/

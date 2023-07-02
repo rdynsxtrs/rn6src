@@ -1,0 +1,4 @@
+obj-debug/lib/libncurses.so.* usr/lib/debug
+obj-debug/lib/libform.so.* usr/lib/debug
+obj-debug/lib/libmenu.so.* usr/lib/debug
+obj-debug/lib/libpanel.so.* usr/lib/debug
