@@ -1,0 +1,9 @@
+debian/patches/0062-Fix-bug-77540-Invalid-Read-on-exif_process_SOFn.patch
+debian/patches/0063-Fix-bug-77563-Uninitialized-read-in-exif_process_IFD.patch
+debian/patches/0074-Fix-bug-77753-Heap-buffer-overflow-in-php_ifd_get32s.patch
+debian/patches/0079-Fix-bug-77950-Heap-buffer-overflow-in-_estrndup-via-.patch
+debian/patches/0084-Fix-bug-77988-heap-buffer-overflow-on-php_jpg_get16.patch
+debian/patches/0082-Fix-bug-78069-Out-of-bounds-read-in-iconv.c-_php_ico.patch
+debian/patches/0088-Fix-bug-78222-heap-buffer-overflow-on-exif_scan_thum.patch
+debian/patches/0089-Fix-bug-78256-heap-buffer-overflow-on-exif_process_u.patch
+debian/patches/0135-Fix-79797-Use-of-freed-hash-key-in-the-phar_parse_zi.patch
