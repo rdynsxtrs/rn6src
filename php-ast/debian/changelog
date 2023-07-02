@@ -1,0 +1,114 @@
+php-ast (1.0.10-3+0~20201211.12+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 18:52:07 +0100
+
+php-ast (1.0.10-3+0~20201211.12+debian9~1.gbpe17bc5) unstable; urgency=medium
+
+  ** SNAPSHOT build @e17bc5ef9f7d27251fdbea54d3e8dfd9ec2849b9 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 11 Dec 2020 10:49:11 +0100
+
+php-ast (1.0.10-3) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 17 Oct 2020 07:22:37 +0200
+
+php-ast (1.0.10-2) unstable; urgency=medium
+
+  * Don't fail on failed tests
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 12 Oct 2020 12:02:31 +0200
+
+php-ast (1.0.10-1) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * New upstream version 1.0.10
+   + Includes support for PHP 8.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 21:23:48 +0200
+
+php-ast (1.0.6-1) unstable; urgency=medium
+
+  * New upstream version 1.0.6
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Mar 2020 08:52:28 +0100
+
+php-ast (1.0.5-1) unstable; urgency=medium
+
+  * New upstream version 1.0.5
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 11:46:35 +0100
+
+php-ast (1.0.3-1) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+  * New upstream version 1.0.3
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 08 Aug 2019 08:22:05 +0200
+
+php-ast (0.1.6-2) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899964)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 12:04:39 +0000
+
+php-ast (0.1.6-1) unstable; urgency=medium
+
+  * Fix the README.md location (Closes: #887353)
+  * New upstream version 0.1.6 (Closes: #887351)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 01 Feb 2018 15:20:35 +0000
+
+php-ast (0.1.5-1) unstable; urgency=medium
+
+  * Change debian/watch to PECL
+  * Switch packaging to PECL version
+  * New upstream version 0.1.5
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 31 Jul 2017 19:01:54 +0200
+
+php-ast (0.1.4-1) unstable; urgency=medium
+
+  * Add d/watch
+  * New upstream version 0.1.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 06 Jul 2017 14:55:46 +0200
+
+php-ast (0.1.2-3) unstable; urgency=medium
+
+  * Use custom d/rules with override to actually build anything usefull
+    (Closes: #847293)
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 07 Dec 2016 10:34:22 +0100
+
+php-ast (0.1.2-2) unstable; urgency=medium
+
+  * Convert to dh_php package debian/rules
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Dec 2016 11:55:41 +0100
+
+php-ast (0.1.2-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.1.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Dec 2016 11:38:12 +0100
+
+php-ast (0.1.1-2) unstable; urgency=medium
+
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Feb 2016 16:48:59 +0100
+
+php-ast (0.1.1-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 18 Dec 2015 15:43:00 +0100
