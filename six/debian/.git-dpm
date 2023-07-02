@@ -1,0 +1,11 @@
+# see git-dpm(1) from git-dpm package
+c15c545e09c17b7d0dc415cdb9682c6cc1b2d07a
+c15c545e09c17b7d0dc415cdb9682c6cc1b2d07a
+c15c545e09c17b7d0dc415cdb9682c6cc1b2d07a
+c15c545e09c17b7d0dc415cdb9682c6cc1b2d07a
+six_1.10.0.orig.tar.gz
+30d480d2e352e8e4c2aae042cf1bf33368ff0920
+29630
+debianTag="debian/%e%v"
+patchedTag="patched/%e%v"
+upstreamTag="upstream/%e%u"
