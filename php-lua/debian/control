@@ -1,0 +1,31 @@
+Source: php-lua
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               liblua5.2-dev,
+               php-all-dev (>= 17~)
+Standards-Version: 3.9.8
+Homepage: https://pecl.php.net/package/lua
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-lua.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-lua
+
+Package: php-lua
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ucf,
+         ${misc:Depends},
+         ${pecl:Packages},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${pecl:Packages},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Recommends: ${pecl:Recommends}
+Description: PHP Embedded lua interpreter
+ This extension embeds the lua interpreter and offers an OO-API to lua
+ variables and functions.

@@ -1,0 +1,3 @@
+0001-Sync-config.m4-from-2.0.3-to-1.1.0-to-support-Lua-ve.patch
+0002-Use-DEB_HOST_MULTIARCH-in-config.m4.patch
+0003-Build-the-extension-only-for-PHP-5-and-PHP-7.patch

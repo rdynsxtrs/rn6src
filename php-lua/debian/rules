@@ -1,0 +1,4 @@
+#!/usr/bin/make -f
+PECL_CONFIGURE_MAINT_APPEND := --with-lua-version=5.2
+export DEB_HOST_MULTIARCH
+include /usr/share/dh-php/pkg-pecl.mk

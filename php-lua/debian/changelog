@@ -1,0 +1,94 @@
+php-lua (2.0.7+1.1.0-2+0~20201211.13+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 17:07:48 +0100
+
+php-lua (2.0.7+1.1.0-2+0~20201211.13+debian9~1.gbp56afad) unstable; urgency=medium
+
+  ** SNAPSHOT build @56afad78440ac213a04ed4eda6ba14d05e3b217e **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 11 Dec 2020 10:49:41 +0100
+
+php-lua (2.0.7+1.1.0-2) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+  * Build the extension only for PHP 5 and PHP 7
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 17 Oct 2020 06:20:02 +0200
+
+php-lua (2.0.7+1.1.0-1) unstable; urgency=medium
+
+  * New upstream version 2.0.7+1.1.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 21 Mar 2020 10:53:52 +0100
+
+php-lua (2.0.6+1.1.0+-2) unstable; urgency=medium
+
+  * PHP 7.4 Rebuild
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 25 Feb 2020 09:31:04 +0100
+
+php-lua (2.0.6+1.1.0+-1) unstable; urgency=medium
+
+  * New upstream version 2.0.6+1.1.0+
+  * Fixed the package-5.xml upstream file (package2.xml has to be used).
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 08 Aug 2019 09:37:28 +0200
+
+php-lua (2.0.6+1.1.0-1) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+  * New upstream version 2.0.6+1.1.0
+  * Rebase patches for php-lua_2.0.6+1.1.0
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 08 Aug 2019 08:46:02 +0200
+
+php-lua (2.0.5+1.1.0-3) unstable; urgency=medium
+
+  * Bump the dependency on dh-php to >= 0.33
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 10:11:38 +0000
+
+php-lua (2.0.5+1.1.0-2) unstable; urgency=medium
+
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 12:32:06 +0000
+
+php-lua (2.0.5+1.1.0-1) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * New upstream version 2.0.5+1.1.0
+  * Refresh patches
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 08 Apr 2018 06:29:18 +0000
+
+php-lua (2.0.4+1.1.0+-1) unstable; urgency=medium
+
+  * New upstream version 2.0.4+1.1.0+
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 31 Jul 2017 20:04:20 +0200
+
+php-lua (2.0.4+1.1.0-1) unstable; urgency=medium
+
+  * New upstream version 2.0.4+1.1.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 31 Jul 2017 19:09:44 +0200
+
+php-lua (2.0.3+1.1.0-2) unstable; urgency=medium
+
+  * Use DEB_HOST_MULTIARCH in config.m4
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 30 May 2017 12:06:14 +0200
+
+php-lua (2.0.3+1.1.0-1) unstable; urgency=low
+
+  * New upstream version 2.0.3+1.1.0
+  * Initial release
+  * Compile with Lua 5.2 (that's what's available on Ubuntu Trusty)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 30 May 2017 11:12:04 +0200
