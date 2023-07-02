@@ -1,0 +1,4 @@
+usr/bin/php-config@PHP_VERSION@ usr/bin/php-config.default
+usr/share/man/man1/php-config@PHP_VERSION@.1.gz usr/share/man/man1/php-config.default.1.gz
+usr/bin/phpize@PHP_VERSION@ usr/bin/phpize.default
+usr/share/man/man1/phpize@PHP_VERSION@.1.gz usr/share/man/man1/phpize.default.1.gz

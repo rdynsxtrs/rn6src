@@ -1,0 +1,14 @@
+#!/bin/sh
+# postrm script for php-common
+#
+# see: dh_installdeb(1)
+
+set -e
+
+if [ "$1" = "purge" ]; then
+    rm -rf /var/lib/php
+fi
+
+#DEBHELPER#
+
+exit 0

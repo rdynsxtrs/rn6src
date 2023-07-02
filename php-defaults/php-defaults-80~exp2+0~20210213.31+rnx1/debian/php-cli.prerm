@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "remove" ] || [ "$1" = "deconfigure" ]; then
+    for binary in php phar phar phar.phar; do
+        update-alternatives --remove ${binary} /usr/bin/${binary}.default
+    done
+fi
+
+#DEBHELPER#
+
+exit 0

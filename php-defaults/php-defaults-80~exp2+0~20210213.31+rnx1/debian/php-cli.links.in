@@ -1,0 +1,6 @@
+usr/bin/php@PHP_VERSION@ usr/bin/php.default
+usr/share/man/man1/php@PHP_VERSION@.1.gz usr/share/man/man1/php.default.1.gz
+usr/bin/phar@PHP_VERSION@ usr/bin/phar.default
+usr/share/man/man1/phar@PHP_VERSION@.1.gz usr/share/man/man1/phar.default.1.gz
+usr/bin/phar.phar@PHP_VERSION@ usr/bin/phar.phar.default
+usr/share/man/man1/phar.phar@PHP_VERSION@.1.gz usr/share/man/man1/phar.phar.default.1.gz
