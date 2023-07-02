@@ -1,0 +1,3 @@
+version=3
+http://pecl.php.net/package/solr \
+  /get/solr-([\d\.]*).tgz  debian  uupdate

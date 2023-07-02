@@ -1,0 +1,59 @@
+Source: php-solr
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Facundo Guerrero <guerremdq@gmail.com>
+Build-Depends: chrpath,
+               debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               libcurl4-openssl-dev,
+               liblzma-dev,
+               libxml2-dev,
+               php-all-dev (>= 79~),
+               php-curl,
+               php-xml,
+               pkg-config,
+               po-debconf,
+               xsltproc,
+               zlib1g-dev
+Standards-Version: 3.9.8
+Homepage: http://pecl.php.net/package/solr
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-solr.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-solr
+
+Package: php-solr
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Provides}
+Description: PHP extension for communicating with Apache Solr server
+ The Apache Solr PHP extension is an extremely fast, light-weight,
+ feature-rich library that allows PHP applications to communicate
+ easily and efficiently with Apache Solr server instances using an
+ object-oriented API.
+ .
+ It effectively simplifies the process of interacting
+ with Apache Solr using PHP and it already comes with built-in
+ readiness for the latest features.
+ .
+ The extension has features such as built-in, serializable query
+ string builder objects which effectively simplifies the manipulation
+ of name-value pair request parameters across repeated requests.  The
+ response from the Solr server is also automatically parsed into
+ native php objects whose properties can be accessed as array keys or
+ object properties without any additional configuration on the
+ client-side.
+ .
+ Its advanced HTTP client reuses the same connection across multiple
+ requests and provides built-in support for connecting to Solr servers
+ secured behind HTTP Authentication or HTTP proxy servers.  It is also
+ able to connect to SSL-enabled containers.
+ .
+ PECL Solr 2+ is only compatible with Apache Solr Server 4.0+.

@@ -1,0 +1,148 @@
+php-solr (2.5.1+2.4.0-4+0~20201204.16+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 07 Dec 2020 00:39:48 +0100
+
+php-solr (2.5.1+2.4.0-4+0~20201204.16+debian9~1.gbp3906d2) unstable; urgency=medium
+
+  ** SNAPSHOT build @3906d214651435feccf3f1e91d93fcdcf80b543f **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 04 Dec 2020 14:32:50 +0100
+
+php-solr (2.5.1+2.4.0-4) unstable; urgency=medium
+
+  * Pull all XML extensions via new php-all-dev >= 79~
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 20:15:39 +0200
+
+php-solr (2.5.1+2.4.0-3) unstable; urgency=medium
+
+  * Add php-curl and php-xml to build-depends
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:44:21 +0200
+
+php-solr (2.5.1+2.4.0-2) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+  * Add curl extension to package*.xml dependencies
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:43:21 +0200
+
+php-solr (2.5.1+2.4.0-1) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * New upstream version 2.5.1+2.4.0
+  * Build with dh-php >= 1.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 22:35:58 +0200
+
+php-solr (2.5.0+2.4.0-4) unstable; urgency=medium
+
+  * Append path to curl and libxml2 to d/rules
+  * Fix the xml2-config bug that misses zlib1g-dev and liblzma-dev B-D
+  * Don't fail the build on failed tests
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 23 Feb 2020 15:56:36 +0100
+
+php-solr (2.5.0+2.4.0-3) unstable; urgency=medium
+
+  * Add pkg-config to B-D
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 29 Oct 2019 15:25:40 +0100
+
+php-solr (2.5.0+2.4.0-2) unstable; urgency=medium
+
+  * Also patch solr-2.4.0 to remove curl extra header check
+
+ -- Ondřej Surý <ondrej@sury.org>  Wed, 28 Aug 2019 08:58:38 +0200
+
+php-solr (2.5.0+2.4.0-1) unstable; urgency=medium
+
+  * New upstream version 2.5.0+2.4.0
+
+ -- Ondřej Surý <ondrej@sury.org>  Tue, 27 Aug 2019 15:00:30 +0200
+
+php-solr (2.5.0-1) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+  * New upstream version 2.5.0
+  * Rebase patches for php-solr_2.5.0
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 08 Aug 2019 09:03:16 +0200
+
+php-solr (2.4.0-7) unstable; urgency=medium
+
+  * Bump the required dh-php version to >= 0.33~
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 12:06:04 +0000
+
+php-solr (2.4.0-6) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899652)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 13:31:38 +0000
+
+php-solr (2.4.0-5) unstable; urgency=medium
+
+  * Add PHP 7.2 compatibility patch (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 08 Sep 2017 07:13:35 +0200
+
+php-solr (2.4.0-4) unstable; urgency=high
+
+  * Remove extra check for curl headers (Closes: #852912)
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 01 Feb 2017 10:34:33 +0100
+
+php-solr (2.4.0-3) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:20:07 +0200
+
+php-solr (2.4.0-2) unstable; urgency=medium
+
+  [ David Prévot ]
+  * Fix team PEAR -> PECL
+  * Fix section
+
+  [ Ondřej Surý ]
+  * Add ${php:Provides} to d/control
+  * Define PHP_RPATH=no in d/rules to prevent setting rpath
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 09:30:24 +0200
+
+php-solr (2.4.0-1) unstable; urgency=medium
+
+  * Team upload
+  * Imported Upstream version 2.4.0
+  * Update packaging to PHP 7.0
+  * Remove rpath after installation
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 31 Mar 2016 15:51:52 +0200
+
+php-solr (1.0.2-2) unstable; urgency=medium
+
+  * License update (Closes: #752648).
+  * Explicit depend on libcurl-openssl-dev.
+  * Group upload.
+
+ -- Facundo Guerrero <guerremdq@gmail.com>  Mon, 21 Jul 2014 13:37:31 -0300
+
+php-solr (1.0.2-1) unstable; urgency=low
+
+  * Initial Release (Closes: #737236)
+  * This dupload has been sponsored by OLX Inc.
+
+ -- Facundo Guerrero <guerremdq@gmail.com>  Wed, 29 Jan 2014 16:16:50 -0300
+

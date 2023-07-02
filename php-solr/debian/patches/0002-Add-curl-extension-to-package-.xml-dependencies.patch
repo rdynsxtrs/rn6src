@@ -1,0 +1,37 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Sun, 11 Oct 2020 14:43:00 +0200
+Subject: Add curl extension to package*.xml dependencies
+
+---
+ package-5.xml | 3 +++
+ package.xml   | 3 +++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/package-5.xml b/package-5.xml
+index aa663d5..ea58ab1 100644
+--- a/package-5.xml
++++ b/package-5.xml
+@@ -266,6 +266,9 @@ PECL Solr 2+ is only compatible with Apache Solr Server 4.0+</description>
+    <extension>
+     <name>libxml</name>
+    </extension>
++   <extension>
++    <name>curl</name>
++   </extension>
+   </required>
+  </dependencies>
+  <providesextension>solr</providesextension>
+diff --git a/package.xml b/package.xml
+index dda7e71..cd8bb1c 100644
+--- a/package.xml
++++ b/package.xml
+@@ -311,6 +311,9 @@ https://github.com/php/pecl-search_engine-solr</description>
+    <extension>
+     <name>libxml</name>
+    </extension>
++   <extension>
++    <name>curl</name>
++   </extension>
+   </required>
+  </dependencies>
+  <providesextension>solr</providesextension>

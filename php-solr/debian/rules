@@ -1,0 +1,4 @@
+#!/usr/bin/make -f
+export REPORT_EXIT_STATUS:=0
+PECL_CONFIGURE_MAINT_APPEND := --with-libxml-dir=shared,/usr --with-curl=shared,/usr
+include /usr/share/dh-php/pkg-pecl.mk

@@ -1,0 +1,1 @@
+mod debian/solr.ini

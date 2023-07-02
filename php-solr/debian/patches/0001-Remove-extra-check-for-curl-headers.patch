@@ -1,0 +1,59 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Wed, 1 Feb 2017 10:33:51 +0100
+Subject: Remove extra check for curl headers
+
+---
+ solr-2.4.0/config.m4 | 14 +-------------
+ solr-2.5.1/config.m4 | 14 +-------------
+ 2 files changed, 2 insertions(+), 26 deletions(-)
+
+diff --git a/solr-2.4.0/config.m4 b/solr-2.4.0/config.m4
+index 965eed5..021b7bc 100644
+--- a/solr-2.4.0/config.m4
++++ b/solr-2.4.0/config.m4
+@@ -7,19 +7,7 @@ dnl Configuring the CURL external library
+ dnl This folder is the grand-parent folder of easy.h
+ PHP_ARG_WITH(curl, for cURL support, [  --with-curl[=DIR]		SOLR : libcurl install prefix])
+ 
+-if test -r $PHP_CURL/include/curl/easy.h; then
+-	CURL_DIR=$PHP_CURL
+-	AC_MSG_RESULT(curl headers found in $PHP_CURL)
+-else
+-	AC_MSG_CHECKING(for cURL in default path)
+-	for i in /usr/local /usr; do
+-	  	if test -r $i/include/curl/easy.h; then
+-			CURL_DIR=$i
+-			AC_MSG_RESULT(found in $i)
+-			break
+-	  	fi
+-	done
+-fi
++CURL_DIR=$PHP_CURL
+ 
+ if test -z "$CURL_DIR"; then
+ 	AC_MSG_RESULT(not found)
+diff --git a/solr-2.5.1/config.m4 b/solr-2.5.1/config.m4
+index 69ae623..8d508e2 100644
+--- a/solr-2.5.1/config.m4
++++ b/solr-2.5.1/config.m4
+@@ -4,19 +4,7 @@ dnl Configuring the CURL external library
+ dnl This folder is the grand-parent folder of easy.h
+ PHP_ARG_WITH(curl, for cURL support, [  --with-curl[=DIR]		SOLR : libcurl install prefix])
+ 
+-if test -r $PHP_CURL/include/curl/easy.h; then
+-	CURL_DIR=$PHP_CURL
+-	AC_MSG_RESULT(curl headers found in $PHP_CURL)
+-else
+-	AC_MSG_CHECKING(for cURL in default path)
+-	for i in /usr/local /usr; do
+-	  	if test -r $i/include/curl/easy.h; then
+-			CURL_DIR=$i
+-			AC_MSG_RESULT(found in $i)
+-			break
+-	  	fi
+-	done
+-fi
++CURL_DIR=$PHP_CURL
+ 
+ if test -z "$CURL_DIR"; then
+ 	AC_MSG_RESULT(not found)
