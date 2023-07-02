@@ -1,0 +1,13 @@
+Index: libgd2/tests/Makefile.am
+===================================================================
+--- libgd2.orig/tests/Makefile.am
++++ libgd2/tests/Makefile.am
+@@ -72,7 +72,7 @@ include webp/Makemodule.am
+ include xbm/Makemodule.am
+ include xpm/Makemodule.am
+ 
+-LDADD = libgdtest.a ../src/libgd.la
++LDADD = libgdtest.a -lgd
+ AM_CPPFLAGS = -I$(top_srcdir)/src -I$(top_srcdir)/tests/gdtest
+ 
+ check_PROGRAMS = $(libgd_test_programs) $(libgd_helper_programs)

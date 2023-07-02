@@ -1,0 +1,33 @@
+From: GD team <pkg-gd-devel@lists.alioth.debian.org>
+Date: Wed, 18 Jan 2017 12:10:55 +0100
+Subject: disable-tests-gdimagegrayscale-as-it-breaks-on-32-bit
+
+---
+ tests/CMakeLists.txt | 1 -
+ tests/Makefile.am    | 1 -
+ 2 files changed, 2 deletions(-)
+
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 7eef4bf..1b0fd2e 100755
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -49,7 +49,6 @@ if (BUILD_TEST)
+ 		gdimagefilltoborder
+ 		gdimagefilter
+ 		gdimageflip
+-		gdimagegrayscale
+ 		gdimageline
+ 		gdimagenegate
+ 		gdimageopenpolygon
+diff --git a/tests/Makefile.am b/tests/Makefile.am
+index 5f8b624..6847d25 100755
+--- a/tests/Makefile.am
++++ b/tests/Makefile.am
+@@ -44,7 +44,6 @@ include gdimagefilledrectangle/Makemodule.am
+ include gdimagefilltoborder/Makemodule.am
+ include gdimagefilter/Makemodule.am
+ include gdimageflip/Makemodule.am
+-include gdimagegrayscale/Makemodule.am
+ include gdimageline/Makemodule.am
+ include gdimagenegate/Makemodule.am
+ include gdimageopenpolygon/Makemodule.am

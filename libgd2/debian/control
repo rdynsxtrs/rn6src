@@ -1,0 +1,78 @@
+Source: libgd2
+Section: graphics
+Priority: optional
+Maintainer: GD Team <team+gd@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: autotools-dev,
+	       debhelper (>= 9),
+	       libpng-dev,
+	       libz-dev,
+	       libjpeg-dev,
+	       libfreetype6-dev,
+	       libxpm-dev,
+	       libx11-dev,
+	       libxt-dev,
+	       libfontconfig-dev,
+	       libwebp-dev,
+	       libtiff-dev,
+	       dh-autoreconf,
+	       html2text
+Vcs-Git: https://salsa.debian.org/debian/libgd2.git
+Vcs-Browser: https://salsa.debian.org/debian/libgd2
+Standards-Version: 3.9.3
+Homepage: http://www.libgd.org/
+
+Package: libgd-tools
+Architecture: any
+Depends: ${shlibs:Depends}, ${perl:Depends}, ${misc:Depends}
+Suggests: libgd-dev
+Description: GD command line tools and example code
+ GD is a graphics library. It allows your code to quickly draw images
+ complete with lines, arcs, text, multiple colours, cut and paste from
+ other images, flood fills, and write out the result as a PNG file.
+ This is particularly useful in World Wide Web applications, where PNG is
+ one of the formats accepted for inline images by most browsers.
+ .
+ This is some simple command line tools and example code that use the GD
+ graphics library.
+
+Package: libgd-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: libgd3 (= ${binary:Version}),
+	 ${misc:Depends},
+	 libpng-dev,
+	 libz-dev,
+	 libjpeg-dev,
+	 libfreetype6-dev,
+	 libxpm-dev,
+	 libx11-dev,
+	 libxt-dev,
+	 libfontconfig-dev,
+	 libvpx-dev,
+	 libtiff-dev
+Description: GD Graphics Library (development version)
+ GD is a graphics library. It allows your code to quickly draw images
+ complete with lines, arcs, text, multiple colours, cut and paste from
+ other images, flood fills, and write out the result as a PNG file.
+ This is particularly useful in World Wide Web applications, where PNG is
+ one of the formats accepted for inline images by most browsers.
+ .
+ This is the full development version of the library.
+
+Package: libgd3
+Architecture: any
+Multi-Arch: same
+Section: libs
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: libgd-tools
+Description: GD Graphics Library
+ GD is a graphics library. It allows your code to quickly draw images
+ complete with lines, arcs, text, multiple colours, cut and paste from
+ other images, flood fills, and write out the result as a PNG file.
+ This is particularly useful in World Wide Web applications, where PNG is
+ one of the formats accepted for inline images by most browsers.
+ .
+ This is the runtime package of the library.

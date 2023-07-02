@@ -1,0 +1,21 @@
+From: =?utf-8?q?Ond=C5=99ej_Sur=C3=BD?= <ondrej@sury.org>
+Date: Tue, 5 Sep 2017 13:46:42 +0200
+Subject: Disable gdimagerotate/bug00067 because it FTBFS on i386
+
+---
+ tests/gdimagerotate/Makemodule.am | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/tests/gdimagerotate/Makemodule.am b/tests/gdimagerotate/Makemodule.am
+index 9d375f3..9fadf18 100755
+--- a/tests/gdimagerotate/Makemodule.am
++++ b/tests/gdimagerotate/Makemodule.am
+@@ -1,8 +1,4 @@
+ if HAVE_LIBPNG
+-if HAVE_LIBJPEG
+-libgd_test_programs += \
+-	gdimagerotate/bug00067
+-endif
+ 
+ libgd_test_programs += \
+ 	gdimagerotate/php_bug_64898 \

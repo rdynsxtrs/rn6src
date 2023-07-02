@@ -1,0 +1,24 @@
+From: =?utf-8?q?Ond=C5=99ej_Sur=C3=BD?= <ondrej@sury.org>
+Date: Mon, 31 Oct 2016 10:48:02 +0100
+Subject: Fix error: ISO C99 requires at least one argument for the "..." in a
+ variadic macro
+
+---
+ tests/gdimagefile/gdnametest.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/gdimagefile/gdnametest.c b/tests/gdimagefile/gdnametest.c
+index b6b7c56..c8bd7f9 100755
+--- a/tests/gdimagefile/gdnametest.c
++++ b/tests/gdimagefile/gdnametest.c
+@@ -49,8 +49,8 @@ gdImagePtr mkcross() {
+ void
+ do_test() {
+ 
+-    gdTestAssertMsg(strchr("123",'2') != 0, "strchr() is not functional.\n");
+-    gdTestAssertMsg(strcasecmp("123abC","123Abc") == 0, "strcasecmp() is not functional.\n");
++    gdTestAssertMsg(strchr("123",'2') != 0, "%s is not functional.\n", "strchr()");
++    gdTestAssertMsg(strcasecmp("123abC","123Abc") == 0, "%s is not functional.\n", "strcasecmp()");
+     
+     int n;
+     struct {

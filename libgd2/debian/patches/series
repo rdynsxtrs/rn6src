@@ -1,0 +1,12 @@
+0004-Fix-error-ISO-C99-requires-at-least-one-argument-for.patch
+disable-tests-gdimagegrayscale-as-it-breaks-on-32-bit.patch
+0005-Fix-tiff_invalid_read-check.patch
+0004-Fix-OOB-read-due-to-crafted-GD-GD2-images.patch
+0005-Disable-failing-test-that-breaks-some-builds.patch
+0006-Disable-gdimagerotate-bug00067-because-it-FTBFS-on-i.patch
+tests-make-a-little-change-for-autopkgtest.patch
+Fix-420-Potential-infinite-loop-in-gdImageCreateFrom.patch
+bmp-check-return-value-in-gdImageBmpPtr.patch
+CVE-2019-6977.patch
+Fix-492-Potential-double-free-in-gdImage-Ptr.patch
+Fix-501-Uninitialized-read-in-gdImageCreateFromXbm.patch

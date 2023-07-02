@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e
+
+DATA=$(cat <<EOF)
+pngtogd gdtopng testfile.png image/png
+pngtogd2 gd2topng testfile.png image/png 1024 2
+giftogd2 gd2togif testfile.gif image/gif 1024 2
+EOF
+echo "$DATA" | while read tool reverse source_file expected_mime args; do
+    $tool debian/tests/$source_file $AUTOPKGTEST_TMP/$source_file.gd $args
+    $reverse $AUTOPKGTEST_TMP/$source_file.gd $AUTOPKGTEST_TMP/1-$source_file
+    rm $AUTOPKGTEST_TMP/$source_file.gd
+    $tool $AUTOPKGTEST_TMP/1-$source_file $AUTOPKGTEST_TMP/$source_file.gd $args
+    $reverse $AUTOPKGTEST_TMP/$source_file.gd $AUTOPKGTEST_TMP/$source_file
+
+    test "$(stat -c "%s" $AUTOPKGTEST_TMP/$source_file)" -gt 1000 && file -i $AUTOPKGTEST_TMP/$source_file | grep -q $expected_mime  &&
+        diff -q $AUTOPKGTEST_TMP/$source_file $AUTOPKGTEST_TMP/1-$source_file || {
+            echo "File $AUTOPKGTEST_TMP/$source_file unsatisfactory:"
+            ls -l $AUTOPKGTEST_TMP/$source_file
+            file -i $AUTOPKGTEST_TMP/$source_file
+            false
+        }
+    
+done
+    

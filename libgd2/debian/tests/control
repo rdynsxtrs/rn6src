@@ -1,0 +1,11 @@
+Tests: make-test-script
+Depends: @builddeps@, @
+Restrictions: allow-stderr
+
+Test-Command: debian/tests/make-test-script valgrind
+Depends: @builddeps@, @, valgrind, libtool-bin
+Restrictions: allow-stderr
+
+Tests: tools-test
+Depends: libgd-tools, file
+Restrictions: allow-stderr

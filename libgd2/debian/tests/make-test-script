@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -e
+
+TESTOPTS=
+
+while [ "$#" -gt 0 ]; do
+    case $1 in
+        valgrind)
+            TESTOPTS="$TESTOPTS LOG_DRIVER=$PWD/debian/tests/valgrind-driver"
+            ;;
+    esac
+    shift
+done
+    
+autoreconf
+./configure
+make check $TESTOPTS || {
+    cp tests/test-suite.log $AUTOPKGTEST_ARTIFACTS
+    false
+}
