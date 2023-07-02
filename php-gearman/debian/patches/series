@@ -1,0 +1,2 @@
+0001-Fix-segfaults-in-PHP-7.4-because-free_obj-is-set-to-.patch
+0002-Build-the-extension-only-for-PHP-7.patch

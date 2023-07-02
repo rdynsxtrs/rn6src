@@ -1,0 +1,31 @@
+Source: php-gearman
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               libgearman-dev (>= 1.0.0),
+               php-all-dev
+Standards-Version: 3.9.8
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-gearman.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-gearman
+Homepage: https://pecl.php.net/package/gearman
+
+Package: php-gearman
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Suggests: gearman-server,
+          ${pecl:Suggest}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Recommends: ${pecl:Recommends}
+Description: PHP wrapper to libgearman
+ This extension uses libgearman library to provide API for
+ communicating with gearmand, and writing clients and workers.

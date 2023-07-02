@@ -1,0 +1,174 @@
+php-gearman (2.0.6+1.1.2-9+0~20201211.20+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 17:22:10 +0100
+
+php-gearman (2.0.6+1.1.2-9+0~20201211.20+debian9~1.gbpbf5c86) unstable; urgency=medium
+
+  ** SNAPSHOT build @bf5c86cff807260e2092266f03afc7be8fb37566 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 11 Dec 2020 10:49:29 +0100
+
+php-gearman (2.0.6+1.1.2-9) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Update for dh-php >= 2.0 support
+  * Build the extension only for PHP 7
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 17 Oct 2020 06:02:57 +0200
+
+php-gearman (2.0.6+1.1.2-8) unstable; urgency=medium
+
+  * Add patch to fix gearman segfault in PHP 7.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 06 May 2020 15:52:14 +0200
+
+php-gearman (2.0.6+1.1.2-7) unstable; urgency=medium
+
+  * Try PHP 7.4 rebuild
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 20 Jan 2020 09:19:19 +0100
+
+php-gearman (2.0.6+1.1.2-6) unstable; urgency=medium
+
+  * Update the PHP version limit patch
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 23 Dec 2019 16:07:39 +0100
+
+php-gearman (2.0.6+1.1.2-5) unstable; urgency=medium
+
+  * Disable the tests properly with dh-php >= 0.35
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 13:15:27 +0100
+
+php-gearman (2.0.6+1.1.2-4) unstable; urgency=medium
+
+  * Really disable the tests
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 13:02:39 +0100
+
+php-gearman (2.0.6+1.1.2-3) unstable; urgency=medium
+
+  * Disable running tests as they are broken
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 12:55:00 +0100
+
+php-gearman (2.0.6+1.1.2-2) unstable; urgency=medium
+
+  * Limit gearman to <= PHP 7.3
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 12:33:56 +0100
+
+php-gearman (2.0.6+1.1.2-1) unstable; urgency=medium
+
+  * New upstream version 2.0.6+1.1.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 11:37:11 +0100
+
+php-gearman (2.0.5+1.1.2-4) unstable; urgency=medium
+
+  * No change rebuild for Debian buster
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 28 Aug 2019 09:17:51 +0200
+
+php-gearman (2.0.5+1.1.2-3) unstable; urgency=medium
+
+  * Bump the dependency on dh-php to >= 0.33
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 09:43:36 +0000
+
+php-gearman (2.0.5+1.1.2-2) unstable; urgency=medium
+
+  * Add package.xml patch for php-gearman 2.0.x PHP 7 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 20 Aug 2018 07:05:14 +0000
+
+php-gearman (2.0.5+1.1.2-1) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899779)
+  * New upstream version 2.0.5+1.1.2
+  * Remove all patches; merged upstream
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 12:15:23 +0000
+
+php-gearman (2.0.3+1.1.2+-3) unstable; urgency=medium
+
+  * Update gbp.conf section name(s)
+  * Update Vcs-* links to gitlab.com
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 08 Sep 2017 08:51:08 +0200
+
+php-gearman (2.0.3+1.1.2+-2) unstable; urgency=medium
+
+  * Add upstream patch to fix segfault in GearmanWorker::addFunction()
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 08 Sep 2017 08:47:48 +0200
+
+php-gearman (2.0.3+1.1.2+-1) unstable; urgency=medium
+
+  * New upstream version 2.0.3+1.1.2+
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 30 Mar 2017 11:42:48 +0200
+
+php-gearman (2.0.3+1.1.2-1) unstable; urgency=medium
+
+  * New upstream version 2.0.3+1.1.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 29 Mar 2017 23:28:31 +0200
+
+php-gearman (2.0.2+1.1.2-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.2+1.1.2
+  * Remove obsolete patches
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Dec 2016 12:07:56 +0100
+
+php-gearman (1.1.2-96-ge77f981+1.1.2+-4) unstable; urgency=medium
+
+  * Fix PHP versions in package-7.xml (Closes: #844383)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 15 Nov 2016 05:25:52 +0100
+
+php-gearman (1.1.2-96-ge77f981+1.1.2+-3) unstable; urgency=medium
+
+  * Properly build-depend on required libgearman-dev (>= 1.0.0)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 21 Jul 2016 16:35:42 +0200
+
+php-gearman (1.1.2-96-ge77f981+1.1.2+-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:16:45 +0200
+
+php-gearman (1.1.2-96-ge77f981+1.1.2+-1) unstable; urgency=medium
+
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+  * Imported Upstream version 1.1.2-96-ge77f981+1.1.2+
+  * Update PHP 7.0 /package/version/release in package-7.xml
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 13:26:03 +0200
+
+php-gearman (1.1.2-96-ge77f981+1.1.2-1) unstable; urgency=medium
+
+  * Use standard master/pristine-tar/upstream branches
+  * Imported Upstream version 1.1.2-96-ge77f981+1.1.2
+  * Update packaging to co-installable PHP versions
+  * Add lintian-override for PHP License
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 15 Apr 2016 15:41:20 +0200
+
+php-gearman (1.1.2-1) unstable; urgency=low
+
+  * Initial Release (Closes: #573894).
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 21 Oct 2013 11:06:11 +0200
