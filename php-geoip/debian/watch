@@ -1,0 +1,4 @@
+# watch control file for uscan(1)
+version=3
+# Homepage  Pattern  [Version  [Action]]
+http://pecl.php.net/package/geoip \/get\/geoip-([\d\.]*)\.tgz debian uupdate

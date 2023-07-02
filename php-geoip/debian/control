@@ -1,0 +1,35 @@
+Source: php-geoip
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               libgeoip-dev (>= 1.4.0),
+               php-all-dev
+Standards-Version: 3.9.8
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-geoip.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-geoip
+Homepage: http://pecl.php.net/package/geoip/
+
+Package: php-geoip
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Recommends: geoip-database,
+            ${pecl:Recommends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: GeoIP module for PHP
+ This PHP module allows you to find the location of an IP address -
+ City, State, Country, Longitude, Latitude, and other information as
+ all, such as ISP and connection type.
+ .
+ For more info, please visit Maxmind's website:
+ http://www.maxmind.com/
