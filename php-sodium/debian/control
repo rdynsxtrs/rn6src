@@ -1,0 +1,29 @@
+Source: php-sodium
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <pkg-php-pecl@lists.alioth.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               libsodium-dev (>= 1.0.9),
+               php-all-dev
+Standards-Version: 3.9.8
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-sodium.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-sodium
+Homepage: http://pecl.php.net/package/libsodium
+
+Package: php-sodium
+Architecture: any
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Recommends: ${misc:Recommends},
+            ${pecl:Recommends}
+Suggests: ${pecl:Suggests}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Description: PHP wrapper for the Sodium cryptographic library
+ A simple, low-level PHP extension for sodium.

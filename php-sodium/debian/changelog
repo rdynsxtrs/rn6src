@@ -1,0 +1,55 @@
+php-sodium (2.0.22-2+0~20201204.6+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 07 Dec 2020 00:43:56 +0100
+
+php-sodium (2.0.22-2+0~20201204.6+debian9~1.gbp247934) unstable; urgency=medium
+
+  ** SNAPSHOT build @247934fa23476ad6db24ccab7ed458fe50cfdd58 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 04 Dec 2020 14:40:08 +0100
+
+php-sodium (2.0.22-2) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 17 Oct 2020 06:50:27 +0200
+
+php-sodium (2.0.22-1) unstable; urgency=medium
+
+  * Update patches for php-sodium 2.0.10
+  * New upstream version 2.0.22
+
+ -- Ondřej Surý <ondrej@sury.org>  Wed, 09 Oct 2019 07:40:46 +0200
+
+php-sodium (2.0.10-1) unstable; urgency=medium
+
+  * New upstream version 2.0.10
+  * Update Vcs-* links to salsa.d.o
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Feb 2018 15:59:53 +0000
+
+php-sodium (2.0.4-2) unstable; urgency=medium
+
+  * Fix double initialization of sodium_init() when libsodium 1.x is loaded
+  * Don't build sodium extension for PHP 7.2
+  * libsodim >= 1.0.9 is required
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 25 Aug 2017 11:51:13 +0200
+
+php-sodium (2.0.4-1) unstable; urgency=medium
+
+  * New upstream version 2.0.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 31 Jul 2017 20:39:01 +0200
+
+php-libsodium (1.0.6-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 11 Jul 2016 16:55:23 +0200
