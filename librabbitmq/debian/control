@@ -1,0 +1,58 @@
+Source: librabbitmq
+Priority: optional
+Section: libs
+Maintainer: Michael Fladischer <fladi@debian.org>
+Uploaders: Brian May <bam@debian.org>
+Build-Depends: cmake,
+               debhelper (>= 9),
+               docbook-to-man,
+               libpopt-dev,
+               libssl-dev,
+               libtool
+Standards-Version: 3.9.8
+Homepage: https://github.com/alanxz/rabbitmq-c
+Vcs-Git: https://salsa.debian.org/debian/librabbitmq.git
+Vcs-Browser: https://salsa.debian.org/debian/librabbitmq
+
+Package: librabbitmq-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: librabbitmq4 (= ${binary:Version}),
+         ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: AMQP client library written in C - Dev Files
+ RabbitMQ provides robust messaging for applications. It is easy to use, fit
+ for purpose at cloud scale and supported on all major operating systems and
+ developer platforms. librabbitmq is a C-language AMQP client library for use
+ with AMQP servers such as RabbitMQ speaking protocol versions 0-9-1.
+ .
+ This package provides the files needed for development.
+
+Package: librabbitmq4
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: AMQP client library written in C
+ RabbitMQ provides robust messaging for applications. It is easy to use, fit
+ for purpose at cloud scale and supported on all major operating systems and
+ developer platforms. librabbitmq is a C-language AMQP client library for use
+ with AMQP servers such as RabbitMQ speaking protocol versions 0-9-1.
+ .
+ This package includes the library itself.
+
+Package: amqp-tools
+Architecture: any
+Section: net
+Depends: librabbitmq4 (= ${binary:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: Command-line utilities for interacting with AMQP servers
+ RabbitMQ provides robust messaging for applications. It is easy to use, fit
+ for purpose at cloud scale and supported on all major operating systems and
+ developer platforms. librabbitmq is a C-language AMQP client library for use
+ with AMQP servers such as RabbitMQ speaking protocol versions 0-9-1.
+ .
+ This package includes command line utilities.

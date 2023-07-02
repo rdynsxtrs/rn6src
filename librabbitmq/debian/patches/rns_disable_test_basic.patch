@@ -1,0 +1,45 @@
+Description: Disables the basic connection test
+ ReadyNAS dev environment doesn't provide for an easy way to spin
+ up a RabbitMQ server for testing
+ .
+ librabbitmq (0.9.0-0.1+0~20181001131456.2+rnx1) unstable; urgency=medium
+ .
+   * Non-maintainer upload.
+   * Backported to ReadyNAS OS 6
+Author: ReadyNAS Xtras <xtras@rnxtras.com>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- librabbitmq-0.9.0.orig/tests/CMakeLists.txt
++++ librabbitmq-0.9.0/tests/CMakeLists.txt
+@@ -29,13 +29,13 @@ add_executable(test_status_enum
+ target_link_libraries(test_status_enum rabbitmq-static)
+ add_test(status_enum test_status_enum)
+ 
+-add_executable(test_basic
+-               test_basic.c)
+-target_link_libraries(test_basic rabbitmq-static)
++# add_executable(test_basic
++#                test_basic.c)
++# target_link_libraries(test_basic rabbitmq-static)
+ 
+-if (NOT APPLE)
+-  add_test(basic test_basic)
+-endif()
++# if (NOT APPLE)
++#   add_test(basic test_basic)
++# endif()
+ 
+ add_executable(test_sasl_mechanism test_sasl_mechanism.c)
+ target_link_libraries(test_sasl_mechanism rabbitmq-static)

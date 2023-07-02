@@ -1,0 +1,6 @@
+# Upstream does not provide PGP signatures for its source tarballs.
+librabbitmq source: debian-watch-may-check-gpg-signature
+# CMakePushCheckState.cmake is included in the tarball but removed by use_cmake_package.patch.
+librabbitmq source: wildcard-matches-nothing-in-dep5-copyright cmake/CMakePushCheckState.cmake (paragraph at line 16)
+# CMakePushCheckState.cmake is included in the tarball but removed by use_cmake_package.patch.
+librabbitmq source: unused-file-paragraph-in-dep5-copyright paragraph at line 16

@@ -1,0 +1,5 @@
+amqp-consume.1
+amqp-declare-queue.1
+amqp-delete-queue.1
+amqp-get.1
+amqp-publish.1

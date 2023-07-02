@@ -1,0 +1,129 @@
+librabbitmq (0.9.0-0.1+0~20181001131456.2+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 05 Dec 2020 18:43:30 +0100
+
+librabbitmq (0.9.0-0.1+0~20181001131456.2+stretch~1.gbp3879d4) unstable; urgency=medium
+
+  ** SNAPSHOT build @3879d44672e92c4087098eb7e11b14792bdfe427 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Mon, 01 Oct 2018 13:14:57 +0000
+
+librabbitmq (0.9.0-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * Update Vcs-* links
+  * New upstream version 0.9.0
+  * Rebase patches for librabbitmq 0.9.0
+  * Update librabbitmq4.symbols file
+  * Replace old manual dbg package with auto dbgsym packages
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 01 Oct 2018 12:54:12 +0000
+
+librabbitmq (0.8.0-1) unstable; urgency=medium
+
+  * Update Vcs-Git header to use https.
+  * Update standards version to 3.9.8.
+  * New upstream version. Closes: #824792.
+  * Distribute static archive. Closes: #686829.
+
+ -- Brian May <bam@debian.org>  Sun, 24 Jul 2016 11:14:26 +1000
+
+librabbitmq (0.7.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Bump Standards-Version to 3.9.6.
+  * Upstream bumped SONAME to 4, renaming packages accordingly.
+  * Add amqp_get_client_properties@Base to symbols file.
+  * Refresh cmake_with_ssl.patch.
+  * Set correct URL for Vcs-Browser.
+  * Change my email address to fladi@debian.org.
+
+ -- Michael Fladischer <fladi@debian.org>  Thu, 19 Nov 2015 10:56:19 +0100
+
+librabbitmq (0.5.2-2) unstable; urgency=medium
+
+  * Add patch to enable SSL for tools (Closes: #764080).
+
+ -- Michael Fladischer <FladischerMichael@fladi.at>  Fri, 17 Oct 2014 08:11:08 +0200
+
+librabbitmq (0.5.2-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #761655).
+  * Add patch and lintian-overrides to remove cmake file already included in
+    cmake-data package (Closes: 760227).
+  * Fix path for m4/ax_python_module.m4 in d/copyright.
+  * Move wildcard section to top in d/copyright to fix lintian checks for
+    superfluous files.
+  * Drop python-simplejson from Build-Depends as there is no rebuild of the AMQP
+    frame definitions.
+  * Wrap Depends lines.
+  * Remove PHONY target declarations.
+
+ -- Michael Fladischer <FladischerMichael@fladi.at>  Tue, 16 Sep 2014 14:02:06 +0200
+
+librabbitmq (0.5.1-1) unstable; urgency=low
+
+  * New upstream release (Closes: #758089).
+  * Remove amqp_get_server_properties patch as it was included upstream.
+
+ -- Michael Fladischer <FladischerMichael@fladi.at>  Thu, 14 Aug 2014 15:27:18 +0200
+
+librabbitmq (0.5.0-1) unstable; urgency=medium
+
+  [ Michael Fladischer ]
+  * New upstream release (Closes: #757553).
+  * Update librabbitmq1.symbols.
+  * Drop cmake_multiarch.patch as it has been included upstream.
+  * Add lintian override for missing PGP signature on source tarball.
+  * Make package multi-arch capable.
+
+  [ Brian May ]
+  * Add missing amqp_get_server_properties symbol. Closes: #757745.
+
+ -- Brian May <bam@debian.org>  Mon, 11 Aug 2014 13:26:37 +1000
+
+librabbitmq (0.4.1-1) unstable; urgency=low
+
+  * Imported Upstream version 0.4.1
+  * Add libssl-dev to Build-Depends.
+  * Update librabbitmq1.symbols.
+  * Switch buildsystem to cmake.
+    + Add cmake_multiarch.patch to fix multiarch installation paths for shared
+      library files in cmake.
+    * Add cmake to Build-Depends.
+    * Drop dh-autoreconf from Build-Depends.
+  * Format packaging files with wrap-and-sort.
+  * Update d/watch file to use github releases instead of tags.
+  * Bump Standards version to 3.9.5.
+
+ -- Michael Fladischer <FladischerMichael@fladi.at>  Mon, 04 Nov 2013 20:15:55 +0100
+
+librabbitmq (0.3.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Set myself as maintainer.
+  * Make package multi-arch.
+  * Update to dh 9.
+  * Force build with autotools.
+  * Bump SONAME to 1 for libmemcached.
+  * Bump Standards version to 3.9.4.
+  * Use github tags in d/watch.
+  * Build manpages from SGML sources.
+  * Add dh-autoreconf to B-D.
+  * Drop get-orig-source target.
+  * Format packaging files with wrap-and-sort.
+  * Update Homepage field.
+  * Update information and format in d/copyright to DEP5.
+
+ -- Michael Fladischer <FladischerMichael@fladi.at>  Thu, 06 Jun 2013 21:22:35 +0200
+
+librabbitmq (0.0.1.hg216-1) unstable; urgency=low
+
+  * Initial release. (Closes: #602549)
+
+ -- Monty Taylor <mordred@inaugust.com>  Fri, 05 Nov 2010 11:37:32 -0700

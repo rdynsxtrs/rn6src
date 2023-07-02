@@ -1,0 +1,28 @@
+From: Michael Fladischer <fladi@debian.org>
+Date: Mon, 1 Oct 2018 12:38:04 +0000
+Subject: Enable SSL support for tools.
+
+Add WITH_SSL preprocessor macro it SSL support is enabled. Otherwise tools
+would abort it they see an SSL URL.
+Last-Update: 2014-10-17
+Bug-Debian: https://bugs.debian.org/764080
+Forwarded: https://github.com/alanxz/rabbitmq-c/pull/220
+---
+ tools/CMakeLists.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/tools/CMakeLists.txt b/tools/CMakeLists.txt
+index 1471043..f13bbb3 100644
+--- a/tools/CMakeLists.txt
++++ b/tools/CMakeLists.txt
+@@ -75,6 +75,10 @@ if (ENABLE_SSL_SUPPORT)
+   add_definitions(-DWITH_SSL=1)
+ endif()
+ 
++if (ENABLE_SSL_SUPPORT)
++  add_definitions(-DWITH_SSL=1)
++endif()
++
+ install(TARGETS amqp-publish amqp-get amqp-consume amqp-declare-queue amqp-delete-queue
+ 	RUNTIME DESTINATION bin
+ 	LIBRARY DESTINATION lib

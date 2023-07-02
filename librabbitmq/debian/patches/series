@@ -1,0 +1,3 @@
+cmake_with_ssl.patch
+use_cmake_package.patch
+rns_disable_test_basic.patch
