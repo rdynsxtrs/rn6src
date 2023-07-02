@@ -1,0 +1,2 @@
+# Override invalid PHP license problem for PHP extensions coming from PECL.PHP.NET
+php-igbinary source: license-problem-php-license *

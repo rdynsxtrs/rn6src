@@ -1,0 +1,32 @@
+Source: php-igbinary
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Mathieu Parent <sathieu@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev,
+               php-apcu
+Standards-Version: 3.9.8
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-igbinary
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-igbinary.git
+Homepage: http://pecl.php.net/package/igbinary
+
+Package: php-igbinary
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: igbinary PHP serializer
+ Igbinary is a drop in replacement for the standard PHP serializer.
+ Instead of time and space consuming textual representation, igbinary
+ stores PHP data structures in a compact binary form.  Savings are
+ significant when using memcached or similar memory based storages for
+ serialized data.
