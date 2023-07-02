@@ -1,0 +1,29 @@
+Source: php-radius
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>,
+           Roberto Lumbreras <rover@debian.org>
+Build-Depends: debhelper (>= 9),
+               dh-php (>= 0.33~),
+               php-all-dev,
+               po-debconf
+Standards-Version: 3.9.8
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-radius.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-radius
+Homepage: http://pecl.php.net/package/radius
+
+Package: php-radius
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${php:Provides}
+Description: radius client library for PHP
+ This package is based on the libradius of FreeBSD, with some
+ modifications and extensions.  This PECL provides full support for
+ RADIUS authentication (RFC 2865) and RADIUS accounting (RFC 2866),
+ works on Unix and on Windows. Its an easy way to authenticate your
+ users against the user-database of your OS (for example against
+ Windows Active-Directory via IAS).

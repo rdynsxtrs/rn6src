@@ -1,0 +1,4 @@
+# Override invalid PHP license problem for PHP extensions coming from PECL.PHP.NET
+php-radius source: license-problem-php-license *
+# Override the custom public domain license
+php-radius source: empty-short-license-in-dep5-copyright *
