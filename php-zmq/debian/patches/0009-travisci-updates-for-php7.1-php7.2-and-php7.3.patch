@@ -1,0 +1,128 @@
+From: Sebastian Jennen <sebastian.jennen@gmx.de>
+Date: Fri, 28 Feb 2020 13:45:44 +0100
+Subject: travisci updates for php7.1, php7.2 and php7.3
+
+- fixed unstable tests
+- add pthreads for php7.2
+---
+ zmq-1.1.3/tests/028-xpub.phpt     |  3 ++
+ zmq-1.1.3/tests/052-pthreads.phpt | 66 ++++++++++++++++++++++++++++-----------
+ 2 files changed, 51 insertions(+), 18 deletions(-)
+
+diff --git a/zmq-1.1.3/tests/028-xpub.phpt b/zmq-1.1.3/tests/028-xpub.phpt
+index 29a6be1..4e87fa9 100644
+--- a/zmq-1.1.3/tests/028-xpub.phpt
++++ b/zmq-1.1.3/tests/028-xpub.phpt
+@@ -4,6 +4,9 @@ Test send / recv with XPUB and XSUB sockets
+ <?php 
+     require_once(dirname(__FILE__) . '/skipif.inc'); 
+     if(!defined('ZMQ::SOCKET_XPUB')) die('skip');
++    if (!defined('ZMQ::LIBZMQ_VERSION_MAJOR') || ZMQ::LIBZMQ_VERSION_MAJOR < 3) {
++         die ("skip This test is for libzmq version 3.x and up");
++    }
+ ?>
+ --FILE--
+ <?php
+diff --git a/zmq-1.1.3/tests/052-pthreads.phpt b/zmq-1.1.3/tests/052-pthreads.phpt
+index 523ae30..7a4d189 100644
+--- a/zmq-1.1.3/tests/052-pthreads.phpt
++++ b/zmq-1.1.3/tests/052-pthreads.phpt
+@@ -17,7 +17,7 @@ Test pthreads integration
+ $threads = 10;
+ 
+ class MyWorker extends Thread {
+-	public $sendThisBack;
++	private $sendThisBack;
+ 
+ 	public function __construct($sendThisBack){
+ 		$this->sendThisBack = $sendThisBack;
+@@ -25,41 +25,71 @@ class MyWorker extends Thread {
+ 
+ 	public function run() {
+ 		$context = ZMQContext::acquire();
+-
+ 		$socket = $context->getSocket(ZMQ::SOCKET_PUSH);
+ 		$socket->connect ("inproc://pthreads-test");
+ 		$socket->send($this->sendThisBack);
+-		
+-		sleep(2);
++		usleep(500 * 1000);
+ 	}
+ }
+ 
+-$context = ZMQContext::acquire();
+-
+-
+-$socket = $context->getSocket(ZMQ::SOCKET_PULL);
+-$socket->bind("inproc://pthreads-test");
+-$socket->setSockOpt(ZMQ::SOCKOPT_HWM, 1000);
++class MyServer extends Thread {
++	private $threads;
++	
++	public function __construct($threads){
++		$this->threads = $threads;
++	}
++	
++	public function run() {
++		$context = ZMQContext::acquire();
++		$socket = $context->getSocket(ZMQ::SOCKET_PULL);
++		$socket->bind("inproc://pthreads-test");
++		$socket->setSockOpt(ZMQ::SOCKOPT_HWM, 1000);
++		usleep(500 * 1000);
++		
++		echo 'Receiving responses' . PHP_EOL;
++		$responses = array();
++		for ($i = 0; $i < $this->threads; $i++) {
++			$responses[] = $socket->recv();
++		}
++		sort($responses);
++		foreach($responses as $response){
++			echo $response . PHP_EOL;
++		}
++	}
++}
+ 
+-$request = array();
++$server = new MyServer($threads);
++$server->start();
++echo 'Server started' . PHP_EOL;
+ 
++$requests = array();
+ for ($i = 0; $i < $threads; $i++) {
+ 	$requests[$i] = new MyWorker("thr_$i");
+ 	$requests[$i]->start();
+ }
+-
+-var_dump($context->getSocketCount());
++echo 'Workers started' . PHP_EOL;
+ 
+ for ($i = 0; $i < $threads; $i++) {
+ 	$requests[$i]->join();
+ }
+-
+-for ($i = 0; $i < $threads; $i++) {
+-	$socket->recv();
+-}
++$server->join();
++echo 'All requests pushed' . PHP_EOL;
+ 
+ echo "OK";
+ 
+ --EXPECT--
+-int(11)
++Server started
++Workers started
++Receiving responses
++thr_0
++thr_1
++thr_2
++thr_3
++thr_4
++thr_5
++thr_6
++thr_7
++thr_8
++thr_9
++All requests pushed
+ OK
+\ No newline at end of file

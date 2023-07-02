@@ -1,0 +1,134 @@
+From: Remi Collet <remi@remirepo.net>
+Date: Wed, 27 Jun 2018 14:42:27 +0200
+Subject: Fix for PHP 7.3
+
+---
+ zmq-1.1.3/zmq.c         | 18 +++++++++++++-----
+ zmq-1.1.3/zmq_helpers.c |  4 ++--
+ zmq-1.1.3/zmq_pollset.c |  6 +++---
+ 3 files changed, 18 insertions(+), 10 deletions(-)
+
+diff --git a/zmq-1.1.3/zmq.c b/zmq-1.1.3/zmq.c
+index 57ebd11..0618009 100644
+--- a/zmq-1.1.3/zmq.c
++++ b/zmq-1.1.3/zmq.c
+@@ -82,7 +82,7 @@ zend_class_entry *php_zmq_device_exception_sc_entry_get ()
+ }
+ 
+ static
+-zend_long php_zmq_context_socket_count_get(php_zmq_context *context) 
++zend_long php_zmq_context_socket_count_get(php_zmq_context *context)
+ {
+ 	zend_long value = 0;
+ 
+@@ -235,7 +235,11 @@ php_zmq_context *php_zmq_context_get(zend_long io_threads, zend_bool is_persiste
+ 		le.type = php_zmq_context_list_entry();
+ 		le.ptr  = context;
+ 
++#if PHP_VERSION_ID < 70300
++		GC_REFCOUNT(&le) = 1;
++#else
+ 		GC_SET_REFCOUNT(&le, 1);
++#endif
+ 
+ 		/* plist_key is not a persistent allocated key, thus we use str_update here */
+ 		if (zend_hash_str_update_mem(&EG(persistent_list), plist_key->val, plist_key->len, &le, sizeof(le)) == NULL) {
+@@ -274,7 +278,7 @@ PHP_METHOD(zmq, clock)
+ #ifdef PHP_ZMQ_HAVE_Z85
+ 
+ /* {{{ proto string ZMQ::z85Encode(string $data)
+-	
++
+ */
+ PHP_METHOD(zmq, z85encode)
+ {
+@@ -305,7 +309,7 @@ PHP_METHOD(zmq, z85encode)
+ /* }}} */
+ 
+ /* {{{ proto string ZMQ::z85Decode(string $z85_encoded_data)
+-	
++
+ */
+ PHP_METHOD(zmq, z85decode)
+ {
+@@ -341,7 +345,7 @@ PHP_METHOD(zmq, z85decode)
+ #define PHP_ZMQ_KEY_SIZE 41
+ 
+ /* {{{ proto array ZMQ::curveKeypair()
+-	
++
+ */
+ PHP_METHOD(zmq, curvekeypair)
+ {
+@@ -535,7 +539,11 @@ void php_zmq_socket_store(php_zmq_socket *zmq_sock_p, zend_long type, zend_strin
+ 	le.type = php_zmq_socket_list_entry();
+ 	le.ptr  = zmq_sock_p;
+ 
++#if PHP_VERSION_ID < 70300
++	GC_REFCOUNT(&le) = 1;
++#else
+ 	GC_SET_REFCOUNT(&le, 1);
++#endif
+ 
+ 	plist_key = php_zmq_socket_plist_key(type, persistent_id, use_shared_ctx);
+ 
+@@ -1079,7 +1087,7 @@ PHP_METHOD(zmqsocket, monitor)
+ 
+ #endif
+ 
+-/** {{{ string ZMQ::getPersistentId() 
++/** {{{ string ZMQ::getPersistentId()
+ 	Returns the persistent id of the object
+ */
+ PHP_METHOD(zmqsocket, getpersistentid)
+diff --git a/zmq-1.1.3/zmq_helpers.c b/zmq-1.1.3/zmq_helpers.c
+index 5d0c801..964539a 100644
+--- a/zmq-1.1.3/zmq_helpers.c
++++ b/zmq-1.1.3/zmq_helpers.c
+@@ -63,7 +63,7 @@ char *php_zmq_printable_func (zend_fcall_info *fci, zend_fcall_info_cache *fci_c
+ 	char *buffer = NULL;
+ 
+ 	if (fci->object) {
+-		spprintf (&buffer, 0, "%s::%s", fci->object->ce->name->val, fci_cache->function_handler->common.function_name);
++		spprintf (&buffer, 0, "%s::%s", fci->object->ce->name->val, ZSTR_VAL(fci_cache->function_handler->common.function_name));
+ 	} else {
+ 		if (Z_TYPE (fci->function_name) == IS_OBJECT) {
+ 			spprintf (&buffer, 0, "%s", Z_OBJCE (fci->function_name)->name->val);
+@@ -74,4 +74,4 @@ char *php_zmq_printable_func (zend_fcall_info *fci, zend_fcall_info_cache *fci_c
+ 	}
+ 	return buffer;
+ }
+-/* }}} */
+\ No newline at end of file
++/* }}} */
+diff --git a/zmq-1.1.3/zmq_pollset.c b/zmq-1.1.3/zmq_pollset.c
+index 59f8c09..8363c23 100644
+--- a/zmq-1.1.3/zmq_pollset.c
++++ b/zmq-1.1.3/zmq_pollset.c
+@@ -169,7 +169,7 @@ static
+ zend_string *s_create_key(zval *entry)
+ {
+ 	if (Z_TYPE_P(entry) == IS_RESOURCE) {
+-		return strpprintf(0, "r:%ld", Z_RES_P(entry)->handle);
++		return strpprintf(0, "r:%d", Z_RES_P(entry)->handle);
+ 	}
+ 	else {
+ 		zend_string *hash = php_spl_object_hash(entry);
+@@ -222,7 +222,7 @@ size_t php_zmq_pollset_num_items(php_zmq_pollset *set)
+ zend_string *php_zmq_pollset_add(php_zmq_pollset *set, zval *entry, int events, int *error) 
+ {
+ 	zend_string *key;
+-	size_t num_items, index;
++	size_t index;
+ 	zmq_pollitem_t item;
+ 
+ 	*error = 0;
+@@ -233,7 +233,7 @@ zend_string *php_zmq_pollset_add(php_zmq_pollset *set, zval *entry, int events,
+ 		return key;
+ 	}
+ 
+-	num_items = php_zmq_pollset_num_items(set);
++	php_zmq_pollset_num_items(set);
+ 	memset(&item, 0, sizeof(zmq_pollitem_t));
+ 
+ 	if (Z_TYPE_P(entry) == IS_RESOURCE) {

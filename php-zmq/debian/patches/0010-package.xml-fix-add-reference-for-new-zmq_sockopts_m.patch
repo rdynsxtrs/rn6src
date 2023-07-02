@@ -1,0 +1,20 @@
+From: Sebastian Jennen <sebastian.jennen@gmx.de>
+Date: Fri, 28 Feb 2020 16:41:30 +0100
+Subject: package.xml fix: add reference for new zmq_sockopts_makros.h
+
+---
+ package.xml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/package.xml b/package.xml
+index 6c7205b..be63d0c 100644
+--- a/package.xml
++++ b/package.xml
+@@ -43,6 +43,7 @@
+    </file>
+    <file md5sum="7a6b9eefe907d9d2857c74b1e34c055f" name="php5/php_zmq_private.h" role="src" />
+    <file md5sum="721ad02952ff68b2f0a1eb212858c949" name="php5/php_zmq_pollset.h" role="src" />
++   <file md5sum="c8c50f2b5e4a10e2eab13c2e66cfe6c0" name="zmq_sockopts_makros.h" role="src" />
+    <file md5sum="883ba03820c9263477a92909420f721c" name="tests/001-send.phpt" role="test" />
+    <file md5sum="de9e0dd8af81a79746e4aec495443ab5" name="tests/002-test-binary.phpt" role="test" />
+    <file md5sum="799d6f02ecbf40f2616efa5b3a2733f3" name="tests/003-getpersistentid.phpt" role="test" />

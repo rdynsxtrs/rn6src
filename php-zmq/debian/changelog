@@ -1,0 +1,107 @@
+php-zmq (1.1.3-13+0~20201204.12+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 06 Dec 2020 22:32:51 +0100
+
+php-zmq (1.1.3-13+0~20201204.12+debian9~1.gbpa8cc3b) unstable; urgency=medium
+
+  ** SNAPSHOT build @a8cc3bfe5271340199564b532e809beffa46ba7c **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 04 Dec 2020 14:33:03 +0100
+
+php-zmq (1.1.3-13) unstable; urgency=medium
+
+  * Add a more thorough set of upstream patches to fix the PHP 7.4 and 8.0 compatibility
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 12 Oct 2020 14:20:07 +0200
+
+php-zmq (1.1.3-12) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Add upstream patch for PHP 8.0 support (Courtesy of Remi Collet)
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 12 Oct 2020 12:52:18 +0200
+
+php-zmq (1.1.3-11) unstable; urgency=medium
+
+  * Don't fail on failed tests
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 26 Feb 2020 10:36:58 +0100
+
+php-zmq (1.1.3-10) unstable; urgency=medium
+
+  * No change rebuild for Debian buster
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 28 Aug 2019 09:23:37 +0200
+
+php-zmq (1.1.3-9) unstable; urgency=medium
+
+  * Add PHP 7.3 compatibility patch (Courtesy of Alex/AT)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 17 Dec 2018 08:48:45 +0000
+
+php-zmq (1.1.3-8) unstable; urgency=medium
+
+  * Bump the required dh-php version to >= 0.33~
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 12:24:39 +0000
+
+php-zmq (1.1.3-7) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org (Closes: #899655)
+  * Add patch for PHP 7.3 (Courtesy of Remi Collet) (Builds but segfaults in tests)
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 03 Oct 2018 07:22:01 +0000
+
+php-zmq (1.1.3-6) unstable; urgency=medium
+
+  * Rebuild with PHP 7.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Dec 2016 12:31:25 +0100
+
+php-zmq (1.1.3-5) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:21:14 +0200
+
+php-zmq (1.1.3-4) unstable; urgency=medium
+
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 16:47:32 +0200
+
+php-zmq (1.1.3-3) unstable; urgency=medium
+
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Feb 2016 22:36:21 +0100
+
+php-zmq (1.1.3-2) unstable; urgency=medium
+
+  * Clarify license of rose.jpg taken from ImageMagick and used in tests/
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 17 Feb 2016 14:42:33 +0100
+
+php-zmq (1.1.3-1) unstable; urgency=medium
+
+  * Imported Upstream version 1.1.3
+  * Update package for PHP 7.0 packaging style
+  * Add optional dependencies on libzmq5-dev | libzmq3-dev
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 17 Feb 2016 10:50:33 +0100
+
+php-zmq (1.1.2-1) unstable; urgency=low
+
+  * Initial release. (Closes: #663535)
+
+ -- Prach Pongpanich <prachpub@gmail.com>  Wed, 26 Mar 2014 17:17:56 +0700

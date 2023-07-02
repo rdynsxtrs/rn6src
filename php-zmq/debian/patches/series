@@ -1,0 +1,16 @@
+0001-Fix-build-with-old-GCC.patch
+0002-PHP-7.3-compatibility-and-bugfixes.patch
+0003-Fix-for-PHP-7.3.patch
+0004-sockopt-autocreate-cleanup.patch
+0005-start-DEVELOPERS.md-for-build-and-maintain-instructi.patch
+0006-sockopt-update-to-czmq-v4.0.0.patch
+0007-add-libzmq-4.1.7-support.patch
+0008-sockopts-code-condensed-by-moving-to-makros.patch
+0009-travisci-updates-for-php7.1-php7.2-and-php7.3.patch
+0010-package.xml-fix-add-reference-for-new-zmq_sockopts_m.patch
+0011-updates-for-php7.4-and-php8.0.patch
+0012-Fix-build-warnings-since-7.4-The-read-and-write-oper.patch
+0013-fix-Wformat.patch
+0014-sockopts-updated-to-4.3.patch
+0015-sockopts-fix-for-major_changed.patch
+0016-fix-for-PHP-8.0.0beta2.patch

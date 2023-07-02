@@ -1,0 +1,76 @@
+From: Remi Collet <remi@remirepo.net>
+Date: Fri, 6 Mar 2020 10:53:11 +0100
+Subject: Fix build warnings - since 7.4,
+ The read and write operations of php_stream_ops now return ssize_t,
+ with negative values indicating an error. - since 7.0,
+ function_name is a zend_string - handle is an "int"
+
+---
+ zmq-1.1.3/zmq_fd_stream.c | 14 ++++++++++++--
+ zmq-1.1.3/zmq_helpers.c   |  8 ++++++--
+ 2 files changed, 18 insertions(+), 4 deletions(-)
+
+diff --git a/zmq-1.1.3/zmq_fd_stream.c b/zmq-1.1.3/zmq_fd_stream.c
+index d7ece65..4ebfc79 100644
+--- a/zmq-1.1.3/zmq_fd_stream.c
++++ b/zmq-1.1.3/zmq_fd_stream.c
+@@ -43,13 +43,23 @@ typedef struct _php_zmq_stream_container {
+ } php_zmq_stream_container;
+ 
+ static
+-size_t php_zmq_fd_read(php_stream *stream, char *buf, size_t count)
++#if PHP_VERSION_ID < 70400
++size_t
++#else
++ssize_t
++#endif
++php_zmq_fd_read(php_stream *stream, char *buf, size_t count)
+ {
+ 	return 0;
+ }
+ 
+ static
+-size_t php_zmq_fd_write(php_stream *stream, const char *buf, size_t count)
++#if PHP_VERSION_ID < 70400
++size_t
++#else
++ssize_t
++#endif
++php_zmq_fd_write(php_stream *stream, const char *buf, size_t count)
+ {
+ 	return 0;
+ }
+diff --git a/zmq-1.1.3/zmq_helpers.c b/zmq-1.1.3/zmq_helpers.c
+index 964539a..eb608ea 100644
+--- a/zmq-1.1.3/zmq_helpers.c
++++ b/zmq-1.1.3/zmq_helpers.c
+@@ -33,7 +33,7 @@
+ 
+ /** {{{ char *php_zmq_libzmq_version()
+ */
+-char *php_zmq_get_libzmq_version() 
++char *php_zmq_get_libzmq_version()
+ {
+ 	char *buffer = NULL;
+ 
+@@ -47,7 +47,7 @@ char *php_zmq_get_libzmq_version()
+ 
+ /** {{{ zend_long php_zmq_libzmq_version_id()
+ */
+-zend_long php_zmq_get_libzmq_version_id() 
++zend_long php_zmq_get_libzmq_version_id()
+ {
+ 	int major = 0, minor = 0, patch = 0;
+ 
+@@ -63,7 +63,11 @@ char *php_zmq_printable_func (zend_fcall_info *fci, zend_fcall_info_cache *fci_c
+ 	char *buffer = NULL;
+ 
+ 	if (fci->object) {
++#if PHP_VERSION_ID < 70000
++		spprintf (&buffer, 0, "%s::%s", fci->object->ce->name->val, fci_cache->function_handler->common.function_name);
++#else
+ 		spprintf (&buffer, 0, "%s::%s", fci->object->ce->name->val, ZSTR_VAL(fci_cache->function_handler->common.function_name));
++#endif
+ 	} else {
+ 		if (Z_TYPE (fci->function_name) == IS_OBJECT) {
+ 			spprintf (&buffer, 0, "%s", Z_OBJCE (fci->function_name)->name->val);

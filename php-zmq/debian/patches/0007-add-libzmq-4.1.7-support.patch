@@ -1,0 +1,80 @@
+From: Sebastian Jennen <sebastian.jennen@gmx.de>
+Date: Sun, 16 Feb 2020 22:16:24 +0100
+Subject: add libzmq 4.1.7 support
+
+This adds support for the socks proxy
+
+api.php update created with DocThor, see DEVELOPERS.md
+---
+ package.xml                          |  1 +
+ zmq-1.1.3/DEVELOPERS.md              |  1 -
+ zmq-1.1.3/tests/055-socks-proxy.phpt | 36 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 37 insertions(+), 1 deletion(-)
+ create mode 100644 zmq-1.1.3/tests/055-socks-proxy.phpt
+
+diff --git a/package.xml b/package.xml
+index 8f7cfe6..6c7205b 100644
+--- a/package.xml
++++ b/package.xml
+@@ -97,6 +97,7 @@
+    <file md5sum="89065f9a6e3927678fa824c508ef6820" name="tests/052-pthreads.phpt" role="test" />
+    <file md5sum="a25dd7dcbb40b144265acf18426b66cb" name="tests/053-z85.phpt" role="test" />
+    <file md5sum="7f29ef8d8dbb136eb717c89da59a962c" name="tests/054-curvekeypair.phpt" role="test" />
++   <file md5sum="f6bf1257c03ae7765123f4a0544d89c3" name="055-socks-proxy.phpt" role="test" />
+    <file md5sum="ef50cc7b8abc1433457a24d24f175c2f" name="tests/bug_gh_156.phpt" role="test" />
+    <file md5sum="e7e22dbfa9852d7c67a83fdab3ec8e9d" name="tests/bug_gh_43.phpt" role="test" />
+    <file md5sum="94450fb75836a1eff4a90a2e5c452646" name="tests/bug_gh_49.phpt" role="test" />
+diff --git a/zmq-1.1.3/DEVELOPERS.md b/zmq-1.1.3/DEVELOPERS.md
+index eb5ff11..f77d813 100644
+--- a/zmq-1.1.3/DEVELOPERS.md
++++ b/zmq-1.1.3/DEVELOPERS.md
+@@ -36,6 +36,5 @@ line.
+ 
+ ```shell
+ git clone https://github.com/SegFaulty/DocThor
+-php DocThor/DocThor.php --sourceDir=./ zmq
+ php -d extension=modules/zmq.so DocThor.php --sourceDir=./ zmq
+ ```
+diff --git a/zmq-1.1.3/tests/055-socks-proxy.phpt b/zmq-1.1.3/tests/055-socks-proxy.phpt
+new file mode 100644
+index 0000000..f0d450e
+--- /dev/null
++++ b/zmq-1.1.3/tests/055-socks-proxy.phpt
+@@ -0,0 +1,36 @@
++--TEST--
++Test socks proxy
++--SKIPIF--
++<?php
++require_once(dirname(__FILE__) . '/skipif.inc');
++if(!fsockopen('127.0.0.1', 5557, $errCode, $errStr, 0.1))
++    die ('skip test requires local SOCKS5 proxy on port 5557');
++?>
++--FILE--
++<?php
++
++// local socks proxy can be enabled by running sshd and also running
++// ssh -D 5557 -C -N root@localhost
++
++include dirname(__FILE__) . '/zeromq_test_helper.inc';
++
++$context = new ZMQContext();
++$server  = $context->getSocket(ZMQ::SOCKET_REP, null)
++               ->bind('tcp://127.0.0.1:5556');
++$context = new ZMQContext();
++$client  = $context->getSocket(ZMQ::SOCKET_REQ, null);
++$client->setSockOpt(ZMQ::SOCKOPT_SOCKS_PROXY, "localhost:5557");
++$client ->connect('tcp://127.0.0.1:5556');
++
++$client->sendmsg("Hello world!");
++
++$message = $server->recvmsg();
++var_dump($message);
++$server->sendmsg($message);
++
++$message = $client->recvmsg();
++var_dump($message);
++
++--EXPECT--
++string(12) "Hello world!"
++string(12) "Hello world!"
+\ No newline at end of file

@@ -1,0 +1,53 @@
+From: Remi Collet <remi@remirepo.net>
+Date: Fri, 6 Mar 2020 11:06:04 +0100
+Subject: fix [-Wformat=]
+
+---
+ zmq-1.1.3/zmq.c         | 4 ++--
+ zmq-1.1.3/zmq_sockopt.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/zmq-1.1.3/zmq.c b/zmq-1.1.3/zmq.c
+index 91adf13..17dfb3e 100644
+--- a/zmq-1.1.3/zmq.c
++++ b/zmq-1.1.3/zmq.c
+@@ -207,7 +207,7 @@ php_zmq_context *php_zmq_context_get(zend_long io_threads, zend_bool is_persiste
+ 
+ 	if (is_persistent) {
+ 		zend_resource *le_p = NULL;
+-		plist_key = strpprintf(0, "zmq_context=[%ld]", io_threads);
++		plist_key = strpprintf(0, "zmq_context=[%ld]", (long)io_threads);
+ 
+ 		if ((le_p = zend_hash_find_ptr(&EG(persistent_list), plist_key)) != NULL) {
+ 			if (le_p->type == php_zmq_context_list_entry()) {
+@@ -527,7 +527,7 @@ php_zmq_socket *php_zmq_socket_new(php_zmq_context *context, zend_long type, zen
+ static
+ zend_string *php_zmq_socket_plist_key(zend_long type, zend_string *persistent_id, zend_bool use_shared_ctx)
+ {
+-	return strpprintf(0, "zmq_socket:[%ld]-[%s]-[%d]", type, persistent_id->val, use_shared_ctx);
++	return strpprintf(0, "zmq_socket:[%ld]-[%s]-[%d]", (long)type, persistent_id->val, use_shared_ctx);
+ }
+ 
+ static
+diff --git a/zmq-1.1.3/zmq_sockopt.c b/zmq-1.1.3/zmq_sockopt.c
+index b0f18cd..cf100e9 100644
+--- a/zmq-1.1.3/zmq_sockopt.c
++++ b/zmq-1.1.3/zmq_sockopt.c
+@@ -1038,7 +1038,7 @@ PHP_METHOD(zmqsocket, getsockopt)
+ # endif /* ZMQ_LAST_ENDPOINT */
+ 
+         default:
+-            zend_throw_exception_ex(php_zmq_socket_exception_sc_entry_get (), PHP_ZMQ_INTERNAL_ERROR, "Unknown option key %ld", key);
++            zend_throw_exception_ex(php_zmq_socket_exception_sc_entry_get (), PHP_ZMQ_INTERNAL_ERROR, "Unknown option key %ld", (long)key);
+             return;
+     }
+ 
+@@ -2196,7 +2196,7 @@ PHP_METHOD(zmqsocket, setsockopt)
+ 
+ 
+         default:
+-            zend_throw_exception_ex(php_zmq_socket_exception_sc_entry_get (), PHP_ZMQ_INTERNAL_ERROR, "Unknown option key %ld", key);
++            zend_throw_exception_ex(php_zmq_socket_exception_sc_entry_get (), PHP_ZMQ_INTERNAL_ERROR, "Unknown option key %ld", (long)key);
+             return;
+     }
+     ZMQ_RETURN_THIS;
