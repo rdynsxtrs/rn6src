@@ -1,0 +1,520 @@
+python-py (1.4.32-3+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Fri, 24 Dec 2021 00:44:26 +0100
+
+python-py (1.4.32-3) unstable; urgency=medium
+
+  * debian/tests:
+    - Temporarily remove byte code before running tests.
+    - Allow pypy failures since it is currently not (fully) supported upstream.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Tue, 03 Jan 2017 20:50:50 +0100
+
+python-py (1.4.32-2) unstable; urgency=medium
+
+  * debian/patches: Apply upstream patch to mark pytest 3.0 incompatible tests
+    as xfail.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Wed, 21 Dec 2016 15:55:19 +0100
+
+python-py (1.4.32-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control: Update Homepage.
+  * debian/{control,compat}: Bump debhelper compat to 10.
+  * debian/copyright: Update copyright years.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Tue, 20 Dec 2016 19:28:35 +0100
+
+python-py (1.4.31-2) unstable; urgency=medium
+
+  [ Tristan Seligmann ]
+  * Fix VCS-Browser URI.
+
+  [ Sebastian Ramacher ]
+  * debian/control:
+    - Update Vcs-Git.
+    - Bump Standards-Version.
+
+  [ Julian Taylor ]
+  * add pypy-py package
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Mon, 29 Aug 2016 22:11:39 +0200
+
+python-py (1.4.31-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Wed, 02 Dec 2015 00:32:10 +0100
+
+python-py (1.4.30-2) unstable; urgency=medium
+
+  * debian/rules: Install correct changelog. (Closes: #793562)
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Sun, 26 Jul 2015 21:10:04 +0200
+
+python-py (1.4.30-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Rename source package to python-py to better match the name of the
+    upstream project.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Fri, 03 Jul 2015 09:34:24 +0200
+
+codespeak-lib (1.4.29-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control:
+    * Move package to collab-maint and git.
+    * Set myself as Maintainer.
+    * Remove XS-Testsuite.
+  * debian/gbp.conf: Added.
+  * Remove extra comma
+  * Imported Upstream version 1.4.29
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Tue, 23 Jun 2015 22:16:43 +0200
+
+codespeak-lib (1.4.28-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Mon, 01 Jun 2015 23:24:23 +0200
+
+codespeak-lib (1.4.27-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Sat, 09 May 2015 23:59:19 +0200
+
+codespeak-lib (1.4.26-2) unstable; urgency=medium
+
+  * Upload to unstable.
+  * debian/control: Update Homepage.
+  * debian/watch: Use pypi.debian.net.
+  * debian/copyright: Update copyright years.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Sat, 25 Apr 2015 12:10:44 +0200
+
+codespeak-lib (1.4.26-1) experimental; urgency=medium
+
+  * New upstream release.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Wed, 29 Oct 2014 02:22:59 +0100
+
+codespeak-lib (1.4.25-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control: Bump Standards-Version, no changes required.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Sat, 18 Oct 2014 19:01:28 +0200
+
+codespeak-lib (1.4.24-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Sat, 13 Sep 2014 12:09:21 +0200
+
+codespeak-lib (1.4.23-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Thu, 07 Aug 2014 21:20:25 +0200
+
+codespeak-lib (1.4.22-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/copyright: Bump copyright years.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Sun, 20 Jul 2014 11:33:16 +0200
+
+codespeak-lib (1.4.20-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control:
+    - New maintainer. (Closes: #738291)
+    - Update python3-py's Suggests to include Python 3 packages.
+    - Update Description.
+    - Remove obsolete Breaks, Replaces, Provides: python-codespeak-lib. Even
+      squeeze has python-py.
+    - Bump Standards-Version to 3.9.5, no changes required.
+    - Update Vcs-* for new location.
+  * New upstream release
+  * Use pybuild.
+    - debian/rules: Rewrite to use pybuild.
+    - debian/control: Add dh-python to Build-Depends.
+    - debian/python{,3}.install: Add install files.
+  * Bump debhelper compat to 9.
+    - debian/control: Build-Depend on debhelper (>= 9).
+  * debian/copyright:
+    - Convert to Copyright Format 1.0.
+    - Update copyright information.
+    - Add myself.
+  * debian/tests:
+    - Split tests for Python 2 and Python 3.
+    - Run tests against all available Python 2 and Python 3 versions.
+    - Run with LANG=C.UTF-8.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Tue, 11 Feb 2014 00:17:41 +0100
+
+codespeak-lib (1.4.19-2) unstable; urgency=medium
+
+  * Orphaning package.
+
+ -- Chris Lamb <lamby@debian.org>  Sat, 08 Feb 2014 23:47:28 +0000
+
+codespeak-lib (1.4.19-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #732032)
+
+ -- Chris Lamb <lamby@debian.org>  Thu, 12 Dec 2013 18:38:48 +0000
+
+codespeak-lib (1.4.18-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #731354)
+
+ -- Chris Lamb <lamby@debian.org>  Wed, 04 Dec 2013 14:52:45 +0000
+
+codespeak-lib (1.4.15-2) unstable; urgency=low
+
+  * Enable test suite (as DEP-8 tests). Patch and thanks to Michael Terry
+    <michael.terry@canonical.com> and Barry Warsaw (barry). (Closes: #678398)
+
+ -- Chris Lamb <lamby@debian.org>  Mon, 22 Jul 2013 19:24:27 +0100
+
+codespeak-lib (1.4.15-1) unstable; urgency=low
+
+  * New upstream version. (Closes: #716782)
+  * Update homepage. Thanks to Yaroslav Halchenko. (Closes: #711228)
+
+ -- Chris Lamb <lamby@debian.org>  Sat, 13 Jul 2013 23:30:17 +0100
+
+codespeak-lib (1.4.14-1) unstable; urgency=low
+
+  * New upstream release.
+  * Update debian/watch file. Thanks to Simon Chopin.
+
+ -- Chris Lamb <lamby@debian.org>  Mon, 13 May 2013 23:09:47 +0100
+
+codespeak-lib (1.4.12-1) unstable; urgency=low
+
+  * New upstream release (Closes: #692365)
+  * Alter X-Python3-Version to be optimistic rather than pessimistic about
+    future version support. Thanks to Dmitrijs Ledkovs
+    <dmitrijs.ledkovs@canonical.com> (Closes: #692391)
+  * Bump Standards-Version to 3.9.3.
+
+ -- Chris Lamb <lamby@debian.org>  Thu, 08 Nov 2012 23:32:57 +0000
+
+codespeak-lib (1.4.9-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Chris Lamb <lamby@debian.org>  Mon, 02 Jul 2012 11:25:02 +0100
+
+codespeak-lib (1.4.8-1) unstable; urgency=low
+
+  * New upstream release. Thanks to Simon Chopin <chopin.simon@gmail.com>.
+  * Add python3-setuptools to Build-Depends.
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 27 May 2012 22:01:22 +0100
+
+codespeak-lib (1.4.7-3) unstable; urgency=low
+
+  * Update package description. (Closes: #666682)
+
+ -- Chris Lamb <lamby@debian.org>  Wed, 04 Apr 2012 11:40:05 +0100
+
+codespeak-lib (1.4.7-2) unstable; urgency=low
+
+  [ Simon Chopin ]
+  * Change the package description to reflect the parting of py.test
+  * Add a Python3 package
+
+  [Chris Lamb]
+  * Reflow long description.
+
+ -- Chris Lamb <lamby@debian.org>  Tue, 20 Mar 2012 10:55:39 +0000
+
+codespeak-lib (1.4.7-1) unstable; urgency=low
+
+  [ Chris Lamb ]
+  * Bump Standards-Version to 3.9.2.
+  * Use dh_python2.
+  * Drop unnecessary Build-Depends
+  * Drop pysupport override in debian/rules
+
+  [ Simon Chopin ]
+  * New upstream release. (Closes: #620988)
+  * Fix the debian/watch file to use the .zip file extension.
+  * Remove all the manpages since the binaries are now part of separate
+    projects.
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 11 Mar 2012 22:38:13 +0000
+
+codespeak-lib (1.3.4-2) unstable; urgency=low
+
+  * Rebuild with no source changes to fix importability issue with Python 2.7.
+    (Closes: #623099)
+
+ -- Chris Lamb <lamby@debian.org>  Wed, 20 Apr 2011 17:05:21 +0100
+
+codespeak-lib (1.3.4-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #620988)
+  * Update Vcs-{Browser,Git}.
+
+ -- Chris Lamb <lamby@debian.org>  Tue, 05 Apr 2011 19:30:33 +0100
+
+codespeak-lib (1.3.3-2) unstable; urgency=low
+
+  * Rebuild in a saner environment to avoid "Depends: python (< 2.6)"
+    (Closes: #591510)
+  * Bump Python dependency to >= 2.5
+
+ -- Chris Lamb <lamby@debian.org>  Tue, 03 Aug 2010 13:56:05 -0400
+
+codespeak-lib (1.3.3-1) unstable; urgency=low
+
+  * New upstream release.
+  * Bump Standards-Version to 3.9.1.
+  * Fix typo in py.test manpage.
+  * Prefer Breaks: over Conflicts.
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 01 Aug 2010 16:24:01 -0400
+
+codespeak-lib (1.2.1-4) unstable; urgency=low
+
+  * Depend on python-pytest-xdist instead of python-execnet.
+  * Update py.test manpage. Thanks to Adam Schmalhofer
+    <Adam.Schmalhofer@gmx.de>.
+  * Update author/copyright of py.test manpage.
+  * Switch to '3.0 (quilt)' dpkg source format.
+
+ -- Chris Lamb <lamby@debian.org>  Mon, 26 Apr 2010 19:52:01 +0100
+
+codespeak-lib (1.2.1-3) unstable; urgency=low
+
+  * Rename binary package to python-py to fit Python Policy (Closes: #569711).
+  * Drop README.Debian; information too obsolete.
+
+ -- Chris Lamb <lamby@debian.org>  Tue, 23 Mar 2010 23:25:59 +0000
+
+codespeak-lib (1.2.1-2) unstable; urgency=low
+
+  * Rebuild for Python 2.6 support (Closes: #569825)
+
+ -- Chris Lamb <lamby@debian.org>  Thu, 18 Feb 2010 23:47:05 +0000
+
+codespeak-lib (1.2.1-1) unstable; urgency=low
+
+  * New upstream release.
+    - Don't install the (eg.) py.which-2.{4,5} executables
+  * Bump Standards-Version to 3.8.3.
+
+ -- Chris Lamb <lamby@debian.org>  Thu, 11 Feb 2010 15:02:03 +0000
+
+codespeak-lib (1.1.1-3) unstable; urgency=low
+
+  * Update README.Debian to reflect new package names. Thanks to Adam
+    Schmalhofer <Adam.Schmalhofer@gmx.de>. (Closes: #559042)
+  * Also clean py.egg-info/SOURCES.txt to prevent .diff.gz changing on rebuild.
+    Thanks to Adam Schmalhofer <Adam.Schmalhofer@gmx.de>.
+  * Tidy Suggests: after upstream removed functionality.
+  * Add python-execnet to Suggests.
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 13 Dec 2009 21:31:48 +0000
+
+codespeak-lib (1.1.1-2) unstable; urgency=low
+
+  * Drop reference to py.execnet - not in codespeak-lib package anymore.
+    (Closes: #559042)
+
+ -- Chris Lamb <lamby@debian.org>  Wed, 02 Dec 2009 00:20:57 +0000
+
+codespeak-lib (1.1.1-1) unstable; urgency=low
+
+  * New upstream release.
+    - Embedded code copies removed upstream (Closes: #555420)
+  * Update manpages:
+    - Remove py.rest manpage.
+    - Add py.convert_unittest manpage.
+
+ -- Chris Lamb <lamby@debian.org>  Mon, 30 Nov 2009 23:56:02 +0000
+
+codespeak-lib (1.0.2-2) unstable; urgency=low
+
+  * Add missing dependency on python-pkg-resources (Closes: #550066)
+
+ -- Chris Lamb <lamby@debian.org>  Thu, 08 Oct 2009 15:19:11 +0100
+
+codespeak-lib (1.0.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * Rebuild with newer debhelper. (Closes: #549374, #549675)
+  * Clean extra LICENSE file to silence Lintian.
+
+ -- Chris Lamb <lamby@debian.org>  Mon, 05 Oct 2009 17:35:57 +0100
+
+codespeak-lib (1.0.1-2) unstable; urgency=low
+
+  * Update py.test(1) manpage. (Closes: #545587)
+
+ -- Chris Lamb <lamby@debian.org>  Tue, 08 Sep 2009 22:31:17 +0100
+
+codespeak-lib (1.0.1-1) unstable; urgency=low
+
+  * New upstream release. (Closes: #541437)
+  * Vastly simplify packaging:
+    - Package is now architecture independent
+    - Move to debhelper 7
+    - Drop entire patch series; applied upstream or not applicable to this
+      version.
+    - Move Docbook manpages under debian/manpages/
+    - Drop ancient Replaces, etc.
+  * Add manpages for py.which and py.svnwcrevert.
+  * Update package short and long descriptions.
+  * New maintainer email address.
+  * Bump Standards-Version to 3.8.3.
+  * Fix new upstream tarball location in debian/watch.
+  * Add Vcs-{Git,Browser} headers to debian/control.
+
+ -- Chris Lamb <lamby@debian.org>  Tue, 25 Aug 2009 02:57:21 +0100
+
+codespeak-lib (0.9.1-3) unstable; urgency=low
+
+  * Add patch to fix infinitely looping Subversion tests under Subversion
+    1.5. (Closes: #489102)
+  * Move to quilt patch system.
+  * Add patch to make documentation generation during build more verbose.
+  * Remove unnecessary Lintian overrides.
+  * debian/control:
+    - Replace some obsolete Suggests
+    - Add Depends on ${misc:Depends}
+    - Bump Standards-Version to 3.8.0.
+
+ -- Chris Lamb <chris@chris-lamb.co.uk>  Tue, 15 Jul 2008 19:59:14 +0100
+
+codespeak-lib (0.9.1-2) unstable; urgency=low
+
+  * Tidy debian/rules.
+  * Don't install /usr/share/pyshared/UNKNOWN-0.0.0.egg-info (Closes: #476606)
+
+ -- Chris Lamb <chris@chris-lamb.co.uk>  Sat, 31 May 2008 15:11:06 +0100
+
+codespeak-lib (0.9.1-1) unstable; urgency=low
+
+  * New upstream release (Closes: #473528)
+     - Documentation is now installed with sensible filenames (Closes:
+     #413665)
+  * Adjust Maintainers with permission from Guilherme Salgado and Alexandre
+    Fayolle.
+  * Remove '/usr/bin' from path when executing py.test to prevent collision
+    with pypy-dev (Closes: #463568).
+  * Disable buildcmodule.py from deleting greenlet module /usr/lib. Thanks to
+    Mark Wooding <mdw@distorted.org.uk> (Closes: #471844).
+  * Remove python-tkinter from Recommends (Closes: #448894, #473833)
+  * Add texlive-extra-utils to Build-Depends.
+  * Install "webdata" HTML and JavaScript files to fix web-based py.test.
+    Patch by Alexandre Fayolle <afayolle@debian.org> (Closes: #434226).
+  * Add debian/watch file.
+  * Change doc-base section to "Programming/Python" from "Apps/Programming".
+  * Update Lintian overrides to match new installed directories.
+
+ -- Chris Lamb <chris@chris-lamb.co.uk>  Thu, 03 Apr 2008 13:16:40 +0100
+
+codespeak-lib (0.9.0-4) unstable; urgency=low
+
+  * Add myself to Uploaders:
+  * Use Homepage: field in debian/control.
+  * Bump Standards-Version to 3.7.3.
+  * Add openssh-client to Build-depends. (Closes: #419969)
+  * Re-add missing documentation (broken by NMU) and rework how
+    documentation is generated. (Closes: #441698)
+
+ -- Chris Lamb <chris@chris-lamb.co.uk>  Mon, 04 Feb 2008 16:15:21 +0000
+
+codespeak-lib (0.9.0-3.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Disable apigen invocation. (closes: #439953)
+
+ -- Bastian Blank <waldi@debian.org>  Sat, 08 Sep 2007 19:40:36 +0200
+
+codespeak-lib (0.9.0-3) unstable; urgency=low
+
+  * Added missing build dependencies on subversion and ssh
+  * Patched code depending on the presence of .svn directories in apigen
+
+ -- Alexandre Fayolle <afayolle@debian.org>  Wed, 21 Feb 2007 10:04:13 +0100
+
+codespeak-lib (0.9.0-2) unstable; urgency=low
+
+  * Added patch to allow the apigen documentation to build even if the
+    platform does not support greenlets
+
+ -- Alexandre Fayolle <afayolle@debian.org>  Tue, 20 Feb 2007 14:21:08 +0100
+
+codespeak-lib (0.9.0-1) unstable; urgency=low
+
+  * Added myself to the list of uploaders, with Guilherme's assent
+  * New upstream release (closes: #411058)
+  * Fixed greenlet build (closes: #355143)
+  * removed deprecated script rst2pdf (closes: #399839), use py.rest instead.
+  * Updated build dependencies and binary dependencies
+  * Wrote an stdlib distutils based setup.py to install the modules
+  * Build HTML documentation
+  * Added man pages for py.rest, py.test, py.cleanup, py.lookup and py.countloc
+  * Acknowledge Matthias Klose's NMU (closes: #361203)
+
+ -- Alexandre Fayolle <afayolle@debian.org>  Thu, 15 Feb 2007 09:54:51 +0100
+
+codespeak-lib (0.7-svn20060621-1) unstable; urgency=low
+
+  * New upstream version.
+  * Split the patches inside debian/patches/ and use dpatch.
+
+ -- Guilherme Salgado <salgado@async.com.br>  Tue, 18 Jul 2006 8:44:23 -0300
+
+codespeak-lib (0.7-svn20050721-5) unstable; urgency=low
+
+  * Convert to updated python policy. Closes: #373304.
+  * Add the upstream name 'pylib' in the short package description.
+    Closes: #361203.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 17 Jun 2006 13:43:51 +0200
+
+codespeak-lib (0.7-svn20050721-4) unstable; urgency=low
+
+  * Fix debian/rules to not add #!python2.4 on the files for the 2.3 package. 
+    (Closes: #345383)
+  * Add a -X.py to dh_compress to make sure .py files are not gziped.
+    (Closes: #361201)
+
+ -- Guilherme Salgado <salgado@async.com.br>  Mon, 17 Apr 2006 16:04:23 -0300
+
+codespeak-lib (0.7-svn20050721-3) unstable; urgency=low
+
+  * Make sure greenlet.so is installed in the right path. (Closes: #345727)
+
+ -- Guilherme Salgado <salgado@async.com.br>  Sun, 22 Jan 2006 17:04:23 -0200
+
+codespeak-lib (0.7-svn20050721-2) unstable; urgency=low
+
+  * Fixed some installation problems and removed windows-specific scripts.
+
+ -- Guilherme Salgado <salgado@async.com.br>  Mon, 12 Dec 2005 16:41:23 -0200
+
+codespeak-lib (0.7.20050829-0ubuntu1) breezy; urgency=low
+
+  * Clean up the packaging.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 29 Aug 2005 16:36:09 +0200
+
+codespeak-lib (0.7-svn20050721) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Guilherme Salgado <salgado@async.com.br>  Sat, 23 Jul 2005 10:48:20 -0300
+

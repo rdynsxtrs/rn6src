@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+# Enter testing directory so that we don't accidentally find 'py' directory but
+# instead use the system py module.
+cd testing
+
+find -name "*.pyc" -delete
+TMPDIR="$ADDTMP" LANG=C.UTF-8 pypy -m pytest . || true

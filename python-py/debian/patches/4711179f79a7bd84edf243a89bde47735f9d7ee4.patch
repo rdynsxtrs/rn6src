@@ -1,0 +1,73 @@
+From 4711179f79a7bd84edf243a89bde47735f9d7ee4 Mon Sep 17 00:00:00 2001
+From: Ronny Pfannschmidt <ronny.pfannschmidt@redhat.com>
+Date: Wed, 21 Sep 2016 10:47:25 +0200
+Subject: [PATCH] mark excinfo and assertion tests as xfail
+
+they depend on pytest
+---
+ testing/code/test_assertion.py |  5 ++++-
+ testing/code/test_excinfo.py   | 17 +++++++++++++----
+ 2 files changed, 17 insertions(+), 5 deletions(-)
+
+diff --git a/testing/code/test_assertion.py b/testing/code/test_assertion.py
+index e2154d0..c3b0cc7 100644
+--- a/testing/code/test_assertion.py
++++ b/testing/code/test_assertion.py
+@@ -1,4 +1,7 @@
+-import pytest, py
++import pytest
++import py
++
++pytestmark = pytest.mark.xfail(reason='broken by removal of reinterpretation')
+ 
+ def exvalue():
+     return py.std.sys.exc_info()[1]
+diff --git a/testing/code/test_excinfo.py b/testing/code/test_excinfo.py
+index 8f19f65..e94d77b 100644
+--- a/testing/code/test_excinfo.py
++++ b/testing/code/test_excinfo.py
+@@ -1,10 +1,9 @@
+ # -*- coding: utf-8 -*-
+ 
+ import py
+-from py._code.code import FormattedExcinfo, ReprExceptionInfo
+-queue = py.builtin._tryimport('queue', 'Queue')
++import pytest
+ 
+-failsonjython = py.test.mark.xfail("sys.platform.startswith('java')")
++from py._code.code import FormattedExcinfo, ReprExceptionInfo
+ from test_source import astonly
+ 
+ try:
+@@ -13,20 +12,30 @@
+     invalidate_import_caches = None
+ else:
+     invalidate_import_caches = getattr(importlib, "invalidate_caches", None)
++queue = py.builtin._tryimport('queue', 'Queue')
++failsonjython = py.test.mark.xfail("sys.platform.startswith('java')")
++
++pytestmark = pytest.mark.xfail(
++    strict=False, reason="tests are dependent on external pytest api")
+ 
+-import pytest
+ pytest_version_info = tuple(map(int, pytest.__version__.split(".")[:3]))
+ 
++
+ class TWMock:
+     def __init__(self):
+         self.lines = []
++
+     def sep(self, sep, line=None):
+         self.lines.append((sep, line))
++
+     def line(self, line, **kw):
+         self.lines.append(line)
++
+     def markup(self, text, **kw):
+         return text
+ 
++    write = line
++
+     fullwidth = 80
+ 
+ def test_excinfo_simple():

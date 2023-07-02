@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ --with python2,python3,pypy --buildsystem=pybuild
+
+override_dh_auto_test:
+	# Do not run tests during package build. They require python(3)-pytest.
+
+override_dh_installchangelogs:
+	dh_installchangelogs CHANGELOG

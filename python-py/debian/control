@@ -1,0 +1,73 @@
+Source: python-py
+Section: python
+Priority: optional
+Maintainer: Sebastian Ramacher <sramacher@debian.org>
+Build-Depends:
+ debhelper (>= 10),
+ dh-python,
+ pypy,
+ pypy-setuptools,
+ python-all (>= 2.6.6-3~),
+ python3-all (>= 3.1.2-6~),
+ python-setuptools,
+ python3-setuptools
+Standards-Version: 3.9.8
+Homepage: https://github.com/pytest-dev/py
+X-Python3-Version: >= 3.2
+Vcs-Git: https://anonscm.debian.org/git/collab-maint/python-py.git
+Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/python-py.git/
+
+Package: python3-py
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python3:Depends},
+ python3-pkg-resources
+Suggests:
+ subversion,
+ python3-pytest
+Description: Advanced Python development support library (Python 3)
+ The Codespeak py lib aims at supporting a decent Python development process
+ addressing deployment, versioning and documentation perspectives. It includes:
+ .
+  * py.path: path abstractions over local and Subversion files
+  * py.code: dynamic code compile and traceback printing support
+ .
+ This package provides the Python 3 modules.
+
+Package: python-py
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${python:Depends},
+ python-pkg-resources
+Suggests:
+ subversion,
+ python-pytest,
+ python-pytest-xdist
+Description: Advanced Python development support library (Python 2)
+ The Codespeak py lib aims at supporting a decent Python development process
+ addressing deployment, versioning and documentation perspectives. It includes:
+ .
+  * py.path: path abstractions over local and Subversion files
+  * py.code: dynamic code compile and traceback printing support
+ .
+ This package provides the Python 2 modules.
+
+Package: pypy-py
+Architecture: all
+Depends:
+ ${misc:Depends},
+ ${pypy:Depends},
+ pypy-pkg-resources
+Suggests:
+ subversion,
+ pypy-pytest
+Description: Advanced Python development support library (PyPy)
+ The Codespeak py lib aims at supporting a decent Python development process
+ addressing deployment, versioning and documentation perspectives. It includes:
+ .
+  * py.path: path abstractions over local and Subversion files
+  * py.code: dynamic code compile and traceback printing support
+ .
+ This package provides the PyPy 2 modules.

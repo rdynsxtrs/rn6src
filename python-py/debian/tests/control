@@ -1,0 +1,8 @@
+Tests: python2
+Depends: python-all, python-py, python-pytest
+
+Tests: python3
+Depends: python3-all, python3-py, python3-pytest
+
+Tests: pypy
+Depends: pypy-py, pypy-pytest
