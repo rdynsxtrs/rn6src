@@ -1,0 +1,112 @@
+php-mailparse (3.1.1+2.1.7~dev20160128-2+0~20201211.16+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 17:02:06 +0100
+
+php-mailparse (3.1.1+2.1.7~dev20160128-2+0~20201211.16+debian9~1.gbp4be69a) unstable; urgency=medium
+
+  ** SNAPSHOT build @4be69ab1a14bbf27e9edcc44a20f07ef0357e0c7 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 11 Dec 2020 10:49:43 +0100
+
+php-mailparse (3.1.1+2.1.7~dev20160128-2) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:45:59 +0200
+
+php-mailparse (3.1.1+2.1.7~dev20160128-1) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Make package compatible with dh-php >= 1.0
+  * New upstream version 3.1.1+2.1.7~dev20160128
+   + Includes support for PHP 8.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 21:37:32 +0200
+
+php-mailparse (3.1.0+2.1.7~dev20160128-1) unstable; urgency=medium
+
+  * New upstream version 3.1.0+2.1.7~dev20160128
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 23 Apr 2020 08:55:25 +0200
+
+php-mailparse (3.0.4+2.1.7~dev20160128.orig-1) unstable; urgency=medium
+
+  * New upstream version 3.0.4+2.1.7~dev20160128.orig
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 12:21:23 +0100
+
+php-mailparse (3.0.3+2.1.7~dev20160128-2) unstable; urgency=medium
+
+  * No change rebuild for Debian buster
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 28 Aug 2019 09:19:17 +0200
+
+php-mailparse (3.0.3+2.1.7~dev20160128-1) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+  * New upstream version 3.0.3+2.1.7~dev20160128
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 10 Apr 2019 08:23:29 +0000
+
+php-mailparse (3.0.3~dev20181093+2.1.7~dev20160128-1) unstable; urgency=medium
+
+  * Remove all unneeded patches
+  * New upstream version 3.0.3~dev20181093+2.1.7~dev20160128 (Closes: #910666)
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 07 Nov 2018 07:39:56 +0000
+
+php-mailparse (3.0.2+2.1.6-12-gae1ef14-3) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899913)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 12:33:34 +0000
+
+php-mailparse (3.0.2+2.1.6-12-gae1ef14-2) unstable; urgency=medium
+
+  * Revert release in package-5.xml back to 2.1.6
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 23 Jan 2017 11:53:38 +0100
+
+php-mailparse (3.0.2+2.1.6-12-gae1ef14-1) unstable; urgency=medium
+
+  * New upstream version 3.0.2+2.1.6-12-gae1ef14
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 23 Jan 2017 11:33:10 +0100
+
+php-mailparse (3.0.1+2.1.6-12-gae1ef14-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.0.1+2.1.6-12-gae1ef14
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 14 Jul 2016 10:22:27 +0200
+
+php-mailparse (3.0.1+2.1.6+-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+  * mailparse d/rules needs HAVE_MBSTRING
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:17:41 +0200
+
+php-mailparse (3.0.1+2.1.6+-1) unstable; urgency=medium
+
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+  * Imported Upstream version 3.0.1+2.1.6+
+  * Workaround for builtin mbstring check
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 13:41:41 +0200
+
+php-mailparse (3.0.1+2.1.6-1) unstable; urgency=medium
+
+  * Initial release
+  * Load mailparse after mbstring by setting priority to 25
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 11 Mar 2016 19:48:01 +0100

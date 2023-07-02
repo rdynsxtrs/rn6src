@@ -1,0 +1,32 @@
+Source: php-mailparse
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               libpcre3-dev,
+               php-all-dev,
+               php-mbstring
+Standards-Version: 3.9.8
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-mailparse.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-mailparse
+Homepage: http://pecl.php.net/package/mailparse
+
+Package: php-mailparse
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: Email message manipulation for PHP
+ Mailparse is an extension for parsing and working with email
+ messages.
+ .
+ It can deal with rfc822 and rfc2045 (MIME) compliant messages.
