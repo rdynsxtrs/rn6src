@@ -1,0 +1,34 @@
+php-pcov (1.0.6-3+0~20201211.7+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 09:35:13 +0100
+
+php-pcov (1.0.6-3+0~20201211.7+debian9~1.gbp013809) unstable; urgency=medium
+
+  ** SNAPSHOT build @013809a4e86b6e2f5f49ee730508fdea68321322 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 11 Dec 2020 11:00:47 +0100
+
+php-pcov (1.0.6-3) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Update for dh-php >= 2.0 support
+  * Build the extension only for PHP 7.1+
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 17 Oct 2020 06:34:16 +0200
+
+php-pcov (1.0.6-2) unstable; urgency=medium
+
+  * PHP 7.4 Rebuild
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 25 Feb 2020 11:48:14 +0100
+
+php-pcov (1.0.6-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 08 Aug 2019 08:35:19 +0200

@@ -1,0 +1,28 @@
+Source: php-pcov
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Lior Kaplan <kaplan@debian.org>,
+           Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev
+Standards-Version: 4.4.0.1
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-pcov.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-pcov
+Homepage: http://pecl.php.net/package/pcov
+
+Package: php-pcov
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: Code coverage driver
+ A self contained php-code-coverage compatible driver for PHP7.
