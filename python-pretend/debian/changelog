@@ -1,0 +1,19 @@
+python-pretend (1.0.8-2+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 22 Mar 2021 09:26:53 +0100
+
+python-pretend (1.0.8-2) unstable; urgency=medium
+
+  * Switch debian/watch to pypi.debian.net redirector.
+  * Remove distutils patch since we can now use setuptools.
+  * Bump S-V to 3.9.6.
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Sun, 09 Aug 2015 18:57:50 +0200
+
+python-pretend (1.0.8-1) unstable; urgency=medium
+
+  * Initial release. (Closes: #739705)
+
+ -- Tristan Seligmann <mithrandi@debian.org>  Fri, 21 Feb 2014 18:36:35 +0200

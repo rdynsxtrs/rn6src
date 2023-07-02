@@ -1,0 +1,55 @@
+Source: python-pretend
+Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+Uploaders: Tristan Seligmann <mithrandi@debian.org>
+Section: python
+Priority: optional
+Build-Depends:
+ debhelper (>= 9),
+ dh-python,
+ python-all,
+ python3-all,
+ pypy,
+ python-setuptools,
+ python3-setuptools,
+ pypy-setuptools,
+Standards-Version: 3.9.6
+Homepage: https://github.com/alex/pretend
+Vcs-Svn: svn://anonscm.debian.org/python-modules/packages/python-pretend/trunk/
+Vcs-Browser: http://anonscm.debian.org/viewvc/python-modules/packages/python-pretend/trunk/
+XS-Python-Version: >= 2.6
+X-Python3-Version: >= 3.2
+
+Package: python-pretend
+Architecture: all
+Depends: ${python:Depends}, ${misc:Depends}
+Description: Python library for stubbing (Python 2)
+ Pretend is a library to make stubbing with Python easier.
+ .
+ Stubbing is a technique for writing tests. You may hear the term mixed up with
+ mocks, fakes, or doubles. Basically a stub is an object that returns pre-canned
+ responses, rather than doing any computation.
+ .
+ This package contains the Python 2 version of pretend.
+
+Package: python3-pretend
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends}
+Description: Python library for stubbing (Python 3)
+ Pretend is a library to make stubbing with Python easier.
+ .
+ Stubbing is a technique for writing tests. You may hear the term mixed up with
+ mocks, fakes, or doubles. Basically a stub is an object that returns pre-canned
+ responses, rather than doing any computation.
+ .
+
+Package: pypy-pretend
+Architecture: all
+Depends: ${pypy:Depends}, ${misc:Depends}
+Description: Python library for stubbing (PyPy)
+ Pretend is a library to make stubbing with Python easier.
+ .
+ Stubbing is a technique for writing tests. You may hear the term mixed up with
+ mocks, fakes, or doubles. Basically a stub is an object that returns pre-canned
+ responses, rather than doing any computation.
+ .
+ This package contains the PyPy version of pretend.
