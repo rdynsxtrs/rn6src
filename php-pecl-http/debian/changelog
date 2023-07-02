@@ -1,0 +1,212 @@
+php-pecl-http (3.2.3+2.6.0+nophp8-1+0~20201211.13+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 09:25:52 +0100
+
+php-pecl-http (3.2.3+2.6.0+nophp8-1+0~20201211.13+debian9~1.gbp6d8d4d) unstable; urgency=medium
+
+  ** SNAPSHOT build @6d8d4d1e9d6320a3607b691444801e039ea6d5a8 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 11 Dec 2020 10:54:23 +0100
+
+php-pecl-http (3.2.3+2.6.0+nophp8-1) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Update for dh-php >= 2.0 support
+  * New upstream version 3.2.3+2.6.0+nophp8
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 20:39:35 +0200
+
+php-pecl-http (3.2.3+2.6.0-4) unstable; urgency=medium
+
+  * Disable the tests properly with dh-php >= 0.35
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 13:17:44 +0100
+
+php-pecl-http (3.2.3+2.6.0-3) unstable; urgency=medium
+
+  * Really disable the tests
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 13:03:09 +0100
+
+php-pecl-http (3.2.3+2.6.0-2) unstable; urgency=medium
+
+  * Disable running tests, as they require raphf extension while the make
+    test disable loading of all system extensions
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 12:52:24 +0100
+
+php-pecl-http (3.2.3+2.6.0-1) unstable; urgency=medium
+
+  * New upstream version 3.2.3+2.6.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 12:27:07 +0100
+
+php-pecl-http (3.2.1+2.6.0-2) unstable; urgency=medium
+
+  * Build-Depend on libidn2 instead of old libidn11
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 12 Sep 2019 10:38:02 +0200
+
+php-pecl-http (3.2.1+2.6.0-1) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+  * New upstream version 3.2.1+2.6.0
+  * Rebase patches for php-pecl-http_3.2.1+2.6.0
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 08 Aug 2019 09:15:15 +0200
+
+php-pecl-http (3.2.0+2.6.0-2) unstable; urgency=medium
+
+  * Bump the dependency on dh-php to >= 0.33
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 10:24:23 +0000
+
+php-pecl-http (3.2.0+2.6.0-1) unstable; urgency=medium
+
+  * New upstream version 3.2.0+2.6.0
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899646)
+  * Remove ntoh patch; merged upstream
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 13:02:52 +0000
+
+php-pecl-http (3.1.0+2.6.0-4) unstable; urgency=medium
+
+  * Use ntohl instead of doing LE conversion yourself (Closes: #849954)
+  * Make sure e->ctx value is used aligned
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 23 Jan 2017 11:09:32 +0100
+
+php-pecl-http (3.1.0+2.6.0-3) unstable; urgency=medium
+
+  * Add libidn11-dev and libicu-dev to Build-Depends (Closes: #849939)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Jan 2017 15:41:14 +0100
+
+php-pecl-http (3.1.0+2.6.0-2) unstable; urgency=medium
+
+  * Recompile with libcurl4-openssl-dev to fix build failure with GnuTLS
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Jan 2017 14:31:28 +0100
+
+php-pecl-http (3.1.0+2.6.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.1.0+2.6.0
+  * Change PHP 5 maximum version to 6.0.0
+  * Add libgnutls-dev to Build-Depends
+  * Hint CFLAGS with GnuTLS include dirs
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 01 Jan 2017 21:38:25 +0100
+
+php-pecl-http (3.0.1+2.5.6-7) unstable; urgency=medium
+
+  [ Mathieu Parent ]
+  * Mention fixed bugs
+
+  [ Ondřej Surý ]
+  * Compile pecl_http with libevent-dev
+  * Build-depend on zlib1g-dev (Closes: #843965)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 14 Nov 2016 04:03:22 +0100
+
+php-pecl-http (3.0.1+2.5.6-6) unstable; urgency=medium
+
+  * Depend on php-propro and php-raphf (Closes: #824349, #824408)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 06 Jun 2016 14:03:56 +0200
+
+php-pecl-http (3.0.1+2.5.6-5) unstable; urgency=medium
+
+  * Finish PHP 7.0 transition (Closes: #821551, #821552, #821703)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 24 May 2016 10:57:57 +0200
+
+php-pecl-http (3.0.1+2.5.6-4) unstable; urgency=medium
+
+  * dh-php 0.16 reads package/name to guess the correct directory itself
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 15:39:43 +0200
+
+php-pecl-http (3.0.1+2.5.6-3) unstable; urgency=medium
+
+  * Adjust d/rules for _OVERRIDE variables
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 13:31:23 +0200
+
+php-pecl-http (3.0.1+2.5.6-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:28:09 +0200
+
+php-pecl-http (3.0.1+2.5.6-1) unstable; urgency=medium
+
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+  * Imported Upstream version 3.0.1+2.5.6
+  * Define PHP_RPATH=no in d/rules to prevent setting rpath
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 17:23:44 +0200
+
+php-pecl-http (3.0.1-1) unstable; urgency=medium
+
+  * Add libcurl-dev to Build-Depends
+  * Move the package to Debian PHP PECL Maintainers
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 06 Apr 2016 19:44:37 +0200
+
+php-pecl-http (3.0.1-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * PHP PECL Team upload.
+  * New upstream version 3.0.1 (Closes: #784826)
+  * Update packaging for PHP 7 based on Nish's workin Ubuntu and
+   + Build with PHP 7 json (Closes: #818445)
+   + Rename the main package to php-http to be consistent with rest of
+     the archive
+   + Kill php-pecl-http-dev as we don't need one-file packages
+   + Build with dh_php (Closes: #751931)
+   + Set priority to 25 to load after propro and raphf (Closes: #791529)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 05 Apr 2016 12:54:09 +0200
+
+php-pecl-http (3.0.1-0ubuntu3) xenial; urgency=medium
+
+  * d/php-pecl-http.install: fix install-path (LP: #1566078).
+
+ -- Nishanth Aravamudan <nish.aravamudan@canonical.com>  Mon, 04 Apr 2016 14:56:59 -0700
+
+php-pecl-http (3.0.1-0ubuntu2) xenial; urgency=medium
+
+  * debian/patches/package.xml-refer-to-2.0.0-not-2.0.0dev.patch: php-
+    pecl-http is not installable due to package.xml.  Closes LP:
+    #1564566.
+
+ -- Nishanth Aravamudan <nish.aravamudan@canonical.com>  Fri, 01 Apr 2016 16:58:12 -0700
+
+php-pecl-http (3.0.1-0ubuntu1) xenial; urgency=medium
+
+  * New upstream release.  LP: #1564566.
+
+ -- Nishanth Aravamudan <nish.aravamudan@canonical.com>  Thu, 31 Mar 2016 11:59:35 -0700
+
+php-pecl-http (2.0.4-1build1) vivid; urgency=medium
+
+  * No change rebuild against PHP 5.6 (phpapi-20131226).
+
+ -- Robie Basak <robie.basak@ubuntu.com>  Tue, 27 Jan 2015 15:57:49 +0000
+
+php-pecl-http (2.0.4-1) unstable; urgency=low
+
+  * Initial Release (Closes: #737227)
+  * This dupload has been sponsored by OLX Inc.
+
+ -- Facundo Guerrero <guerremdq@gmail.com>  Wed, 29 Jan 2014 13:12:25 -0300

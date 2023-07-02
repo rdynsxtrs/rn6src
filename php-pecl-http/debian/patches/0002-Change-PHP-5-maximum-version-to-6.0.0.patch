@@ -1,0 +1,22 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Sun, 1 Jan 2017 21:10:32 +0100
+Subject: Change PHP 5 maximum version to 6.0.0
+
+---
+ package-5.xml | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/package-5.xml b/package-5.xml
+index 29c5f80..39acd0e 100644
+--- a/package-5.xml
++++ b/package-5.xml
+@@ -370,8 +370,7 @@ Changes from beta2:
+   <required>
+    <php>
+     <min>5.3.0</min>
+-    <max>7.0.0</max>
+-    <exclude>7.0.0</exclude>
++    <max>6.0.0</max>
+    </php>
+    <pearinstaller>
+     <min>1.4.1</min>

@@ -1,0 +1,28 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Sun, 1 Jan 2017 21:09:25 +0100
+Subject: package.xml-refer-to-2.0.0-not-2.0.0dev
+
+---
+ package-7.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/package-7.xml b/package-7.xml
+index 31f9828..9298c79 100644
+--- a/package-7.xml
++++ b/package-7.xml
+@@ -370,13 +370,13 @@ https://mdref.m6w6.name/http</description>
+    <package>
+     <name>raphf</name>
+     <channel>pecl.php.net</channel>
+-    <min>2.0.0dev</min>
++    <min>2.0.0</min>
+     <providesextension>raphf</providesextension>
+    </package>
+    <package>
+     <name>propro</name>
+     <channel>pecl.php.net</channel>
+-    <min>2.0.0dev</min>
++    <min>2.0.0</min>
+     <providesextension>propro</providesextension>
+    </package>
+   </required>

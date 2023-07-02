@@ -1,0 +1,47 @@
+Source: php-pecl-http
+Section: web
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ulises Vitulli <dererk@debian.org>,
+           Facundo Guerrero <guerremdq@gmail.com>,
+           Ondřej Surý <ondrej@debian.org>
+Build-Depends: chrpath,
+               debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               libcurl4-openssl-dev,
+               libevent-dev,
+               libidn2-dev,
+               libpcre3-dev,
+               php-all-dev,
+               php-propro (>= 2.0.0),
+               php-raphf (>= 2.0.0),
+               zlib1g-dev
+Standards-Version: 3.9.8
+Homepage: http://pecl.php.net/package/pecl_http
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-pecl-http.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-pecl-http
+
+Package: php-http
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: php-pecl-http,
+          ${pecl:Provides},
+          ${php:Provides}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: ${pecl:Suggests}
+Description: PECL HTTP module for PHP Extended HTTP Support
+ This HTTP extension aims to provide a convenient and powerful set of
+ functionality for one of PHPs major applications.
+ .
+ It eases handling of HTTP urls, headers and messages, provides means
+ for negotiation of a client&apos;s preferred content type, language
+ and charset, as well as a convenient way to send any arbitrary data
+ with caching and resuming capabilities.
+ .
+ It provides powerful request functionality with support for parallel
+ requests.

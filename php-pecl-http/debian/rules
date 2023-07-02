@@ -1,0 +1,4 @@
+#!/usr/bin/make -f
+PECL_NAME_OVERRIDE=http
+export REPORT_EXIT_STATUS:=0
+include /usr/share/dh-php/pkg-pecl.mk
