@@ -1,0 +1,23 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Sun, 11 Oct 2020 20:30:36 +0200
+Subject: Add workaround to compile with PHP 8.0
+
+---
+ propro-2.1.0/src/php_propro_api.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/propro-2.1.0/src/php_propro_api.c b/propro-2.1.0/src/php_propro_api.c
+index 631f707..d36a6be 100644
+--- a/propro-2.1.0/src/php_propro_api.c
++++ b/propro-2.1.0/src/php_propro_api.c
+@@ -679,8 +679,10 @@ static PHP_MINIT_FUNCTION(propro)
+ 	php_property_proxy_object_handlers.free_obj = destroy_obj;
+ 	php_property_proxy_object_handlers.get_gc = get_gc;
+ 	php_property_proxy_object_handlers.get_debug_info = get_debug_info;
++#if PHP_VERSION_ID < 80000
+ 	php_property_proxy_object_handlers.set = set_obj;
+ 	php_property_proxy_object_handlers.get = get_obj;
++#endif
+ 	php_property_proxy_object_handlers.cast_object = cast_obj;
+ 	php_property_proxy_object_handlers.read_dimension = read_dimension;
+ 	php_property_proxy_object_handlers.write_dimension = write_dimension;

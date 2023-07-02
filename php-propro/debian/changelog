@@ -1,0 +1,117 @@
+php-propro (2.1.0+1.0.2+nophp8-2+0~20201204.9+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 07 Dec 2020 11:39:45 +0100
+
+php-propro (2.1.0+1.0.2+nophp8-2+0~20201204.9+debian9~1.gbp138ca6) unstable; urgency=medium
+
+  ** SNAPSHOT build @138ca6f1a169021060ea96922d9a39ce3e525600 **
+
+  * Fix the PHP 8.0 workaround patch
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 04 Dec 2020 14:39:41 +0100
+
+php-propro (2.1.0+1.0.2+nophp8-2) unstable; urgency=medium
+
+  * Limit the version to 7.0-7.99 in the package-7.xml
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 21:25:54 +0200
+
+php-propro (2.1.0+1.0.2+nophp8-1) unstable; urgency=medium
+
+  * New upstream version 2.1.0+1.0.2+nophp8
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 20:38:16 +0200
+
+php-propro (2.1.0+1.0.2-5) unstable; urgency=medium
+
+  * Add rough workaround to compile with PHP 8.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 20:31:00 +0200
+
+php-propro (2.1.0+1.0.2-4) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:47:50 +0200
+
+php-propro (2.1.0+1.0.2-3) unstable; urgency=medium
+
+  * No change rebuild for Debian buster
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 28 Aug 2019 09:21:15 +0200
+
+php-propro (2.1.0+1.0.2-2) unstable; urgency=medium
+
+  * Bump the dependency on dh-php to >= 0.33
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 10:24:26 +0000
+
+php-propro (2.1.0+1.0.2-1) unstable; urgency=medium
+
+  * Update Vcs-* to salsa.d.o
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899647)
+  * New upstream version 2.1.0+1.0.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 13:03:06 +0000
+
+php-propro (2.0.1+1.0.2-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.1+1.0.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Aug 2016 12:39:52 +0200
+
+php-propro (2.0.0+1.0.2-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:21:21 +0200
+
+php-propro (2.0.0+1.0.2-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.0.0+1.0.2
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 17:03:38 +0200
+
+php-propro (2.0.0-1) unstable; urgency=medium
+
+  * Move the package under Debian PHP PECL Maintainers umbrella
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 06 Apr 2016 19:52:35 +0200
+
+php-propro (2.0.0-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * PHP PECL Team upload
+  * Update packaging for PHP 7.0 based on Nish's work in Ubuntu
+   + Kill php-propro-dev (we don't need one-file packages)
+   + Properly use dh_php to enable the package (Closes: #782577)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 05 Apr 2016 12:12:25 +0200
+
+php-propro (2.0.0-0ubuntu1) xenial; urgency=medium
+
+  * New upstream release.  LP: #1564566.
+
+ -- Nishanth Aravamudan <nish.aravamudan@canonical.com>  Thu, 31 Mar 2016 11:57:07 -0700
+
+php-propro (1.0.0-1build1) vivid; urgency=medium
+
+  * No change rebuild against PHP 5.6 (phpapi-20131226).
+
+ -- Robie Basak <robie.basak@ubuntu.com>  Tue, 27 Jan 2015 15:58:01 +0000
+
+php-propro (1.0.0-1) unstable; urgency=low
+
+  * Initial Release (Closes: #737237).
+  * This dupload has been sponsored by OLX Inc.
+
+ -- Facundo Guerrero <guerremdq@gmail.com>  Wed, 29 Jan 2014 21:41:58 -0300
