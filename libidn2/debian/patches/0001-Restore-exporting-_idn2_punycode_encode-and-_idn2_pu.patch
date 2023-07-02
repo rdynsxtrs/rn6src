@@ -1,0 +1,56 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@debian.org>
+Date: Wed, 11 Sep 2019 08:56:48 +0200
+Subject: Restore exporting _idn2_punycode_encode and _idn2_punycode_decode
+ without SONAME change
+
+---
+ lib/Makefile.am | 2 +-
+ lib/idn2.map    | 4 ++++
+ lib/punycode.h  | 4 ++--
+ 3 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/lib/Makefile.am b/lib/Makefile.am
+index 25193c6..dcda345 100644
+--- a/lib/Makefile.am
++++ b/lib/Makefile.am
+@@ -101,5 +101,5 @@ $(NFCQC):
+ if HAVE_LD_VERSION_SCRIPT
+ libidn2_la_LDFLAGS += -Wl,--version-script=$(srcdir)/idn2.map
+ else
+-libidn2_la_LDFLAGS += -export-symbols-regex '^idn2_.*'
++libidn2_la_LDFLAGS += -export-symbols-regex '^idn2_.*|_idn2_punycode_..code'
+ endif
+diff --git a/lib/idn2.map b/lib/idn2.map
+index a5a2787..ea55e8d 100644
+--- a/lib/idn2.map
++++ b/lib/idn2.map
+@@ -42,6 +42,10 @@ IDN2_0.0.0 {
+     idn2_strerror;
+     idn2_strerror_name;
+ 
++    # Internal self-test use only.
++    _idn2_punycode_encode;
++    _idn2_punycode_decode;
++
+   local:
+     *;
+ };
+diff --git a/lib/punycode.h b/lib/punycode.h
+index 1abae3e..7921513 100644
+--- a/lib/punycode.h
++++ b/lib/punycode.h
+@@ -32,12 +32,12 @@
+ #include <stddef.h>
+ #include <stdint.h>
+ 
+-int
++extern _IDN2_API int
+ _idn2_punycode_encode (size_t input_length,
+ 		       const uint32_t input[],
+ 		       size_t * output_length, char output[]);
+ 
+-int
++extern _IDN2_API int
+ _idn2_punycode_decode (size_t input_length,
+ 		       const char input[],
+ 		       size_t * output_length,
