@@ -1,0 +1,31 @@
+Source: php-psr
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               php-all-dev,
+               po-debconf
+Standards-Version: 3.9.8
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-psr.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-psr
+Homepage: http://pecl.php.net/package/psr
+
+Package: php-psr
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: PSR interfaces for PHP
+ This PHP extension provides the interfaces from the PSR standards as
+ established by the PHP-FIG group.
+ .
+ See http://www.php-fig.org/psr/ for more information on PSR standards.

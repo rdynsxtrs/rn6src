@@ -1,0 +1,46 @@
+php-psr (1.0.0-3+0~20201204.5+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 07 Dec 2020 01:07:13 +0100
+
+php-psr (1.0.0-3+0~20201204.5+debian9~1.gbpa833ba) unstable; urgency=medium
+
+  ** SNAPSHOT build @a833baab53d43841cba5ba112900e6a3cfb2b398 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 04 Dec 2020 14:39:49 +0100
+
+php-psr (1.0.0-3) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:39:21 +0200
+
+php-psr (1.0.0-2) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Build with dh-php >= 1.0
+  * Add patches for PHP 8.0 support (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 22:16:10 +0200
+
+php-psr (1.0.0-1) unstable; urgency=medium
+
+  * New upstream version 1.0.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Mar 2020 08:37:26 +0100
+
+php-psr (0.7.0-2) unstable; urgency=medium
+
+  * Remove max version from package.xml
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 20 Jan 2020 17:30:30 +0100
+
+php-psr (0.7.0-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 29 Oct 2019 10:51:38 +0100
