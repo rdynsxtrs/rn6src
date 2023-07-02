@@ -1,0 +1,14 @@
+Tests: cli
+Depends: php5.6-cli, wget
+
+Tests: cgi
+Depends: apache2, php5.6-cgi, wget
+Restrictions: needs-root
+
+Tests: mod-php
+Depends: apache2, libapache2-mod-php5.6, wget
+Restrictions: needs-root
+
+Tests: fpm
+Depends: apache2, php5.6-fpm, wget
+Restrictions: needs-root

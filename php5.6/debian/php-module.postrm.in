@@ -1,0 +1,56 @@
+#!/bin/sh
+
+set -e
+
+#EXTRA#
+
+if [ "$1" = "remove" ]; then
+    if [ -e /usr/lib/php/php-maintscript-helper ] ; then
+	. /usr/lib/php/php-maintscript-helper
+
+	for dsoname in @extensions@; do
+	    php_invoke dismod @PHP_VERSION@ ALL ${dsoname}
+	done
+    fi
+fi
+
+if [ "$1" = "purge" ]; then
+    inidir=/etc/php/@PHP_VERSION@/mods-available
+
+    for dsoname in @extensions@; do
+	inifile=${dsoname}.ini
+
+	for ext in '~' '%' .bak .ucf-new .ucf-old .ucf-dist;  do
+	    rm -f ${inidir}/${inifile}${ext}
+	done
+	rm -f ${inidir}/${inifile}
+	if which ucf >/dev/null; then
+	    ucf --purge ${inidir}/${inifile}
+	fi
+	if which ucfr >/dev/null; then
+	    ucfr --purge @package@ ${inidir}/${inifile}
+	fi
+
+	# Final cleanup of possible leftover symlinks
+	find /etc/php/ -type l | \
+	    while read symlink; do
+		if [ "$(readlink $symlink)" = "${inidir}/$inifile" ]; then
+		    rm -f "${symlink}"
+		fi
+	    done
+    done
+
+    for dir in \
+	/etc/php/@PHP_VERSION@/mods-available \
+	/etc/php/@PHP_VERSION@ \
+	/etc/php;
+    do
+	if [ -d $dir ]; then
+	    rmdir --ignore-fail-on-non-empty $dir
+	fi
+    done
+fi
+
+#DEBHELPER#
+
+exit 0

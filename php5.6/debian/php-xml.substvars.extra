@@ -1,0 +1,2 @@
+php-xml:Breaks=php@PHP_VERSION@-xsl (<< 5.6.18+dfsg-5~)
+php-xml:Replaces=php@PHP_VERSION@-xsl (<< 5.6.18+dfsg-5~)
