@@ -1,0 +1,8 @@
+Tests: smoketest-2
+Depends: python-pytest
+
+Tests: smoketest-3
+Depends: python3-pytest, python3-all
+
+Tests: smoketest-pypy
+Depends: pypy-pytest

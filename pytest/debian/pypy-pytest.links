@@ -1,0 +1,2 @@
+usr/bin/pytest-pypy usr/bin/py.test-pypy
+# usr/share/man/man1/pytest-pypy.1 usr/share/man/man1/py.test-pypy.1

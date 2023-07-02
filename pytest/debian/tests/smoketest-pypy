@@ -1,0 +1,14 @@
+#!/bin/sh
+
+cat > "$ADTTMP"/smoketest.py <<EOF
+def foo():
+    return 'yes'
+
+def test_foo():
+    assert foo() == 'yes'
+
+EOF
+
+cd "$ADTTMP"
+
+TMPDIR="$ADTTMP" pypy -m pytest smoketest.py

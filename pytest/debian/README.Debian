@@ -1,0 +1,9 @@
+Running test suites with pytest during package build
+----------------------------------------------------
+
+Since version 3.0.0 of pytest dropped the versioned entry points py.test-X.Y,
+the recommended way to execute test suites using pytest is by running
+
+  pythonX.Y -m pytest ...
+
+instead.

@@ -1,0 +1,2 @@
+debian/*.1
+pytest.egg-info/*

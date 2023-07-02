@@ -1,0 +1,7 @@
+pytest (3.0.0-1) experimental; urgency=medium
+
+  pytest dropped all versioned py.test-X.Y entrypoints. If you need to run a
+  test suite with a specific Python version, please use `pythonX.Y -m pytest`
+  instead.
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Sun, 21 Aug 2016 19:24:52 +0200

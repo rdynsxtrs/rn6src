@@ -1,0 +1,35 @@
+From 3c64bc322679543f5563b60dd8a0d5385bf665b2 Mon Sep 17 00:00:00 2001
+From: Simon Chopin <chopin.simon@gmail.com>
+Date: Thu, 8 Oct 2015 11:04:33 -0700
+Subject: Remove Google Analytics and Google+ javascript.
+
+It is not relevant for an offline and private installation.
+Forwarded: not-needed
+Last-Update: 2012-04-09
+Patch-Name: remove_google_js
+---
+ doc/en/_templates/layout.html | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+diff --git a/doc/en/_templates/layout.html b/doc/en/_templates/layout.html
+index 2fc8e2a..3e30439 100644
+--- a/doc/en/_templates/layout.html
++++ b/doc/en/_templates/layout.html
+@@ -4,17 +4,4 @@
+ {% endblock %}
+ {% block footer %}
+ {{ super() }}
+-<script type="text/javascript">
+-
+-  var _gaq = _gaq || [];
+-  _gaq.push(['_setAccount', 'UA-7597274-13']);
+-  _gaq.push(['_trackPageview']);
+-
+-  (function() {
+-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+-  })();
+-
+-</script>
+ {% endblock %}

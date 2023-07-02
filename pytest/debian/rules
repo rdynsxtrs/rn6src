@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+export PYBUILD_NAME=pytest
+
+%:
+	# dh $@ --with python2,python3,pypy,sphinxdoc --buildsystem=pybuild
+	dh $@ --with python2,python3,pypy --buildsystem=pybuild
+
+override_dh_auto_build:
+	dh_auto_build
+	# PYTHONPATH=$(CURDIR) $(MAKE) -C doc/en man
+	# mkdir -p debian/tmp
+	# sed 's/PYTEST/PYTEST-3/g' doc/en/_build/man/pytest.1 > debian/pytest-3.1
+	# sed 's/PYTEST/PYTEST-PYPY/g' doc/en/_build/man/pytest.1 > debian/pytest-pypy.1
+
+# 2015-12-16 barry@debian.org: Because pytest does not clean up after itself,
+# use a custom temporary directory (which is easier to clean up manually,
+# e.g. in an sbuild).
+override_dh_auto_test:
+	mkdir -p debian/tmp/test-working-directory
+	dh_auto_test -- \
+		--system=custom \
+		--test-args="cd debian/tmp/test-working-directory && {interpreter} -m pytest --lsof -rfsxX --ignore={dir}/testing/freeze --ignore={dir}/testing/test_entry_points.py --ignore={dir}/testing/test_pdb.py --ignore={dir}/testing/test_terminal.py --ignore={dir}/testing/test_unittest.py --ignore={dir}/testing/test_recwarn.py --ignore={dir}/testing/test_nose.py --ignore={dir}/testing/python/collect.py --ignore={dir}/testing/python/integration.py {dir}/testing"
+
+override_dh_auto_install:
+	dh_auto_install
+	rm debian/python-pytest/usr/bin/py.test
+	rm debian/python3-pytest/usr/bin/py.test
+	rm debian/pypy-pytest/usr/bin/py.test
+	mv debian/python3-pytest/usr/bin/pytest \
+		debian/python3-pytest/usr/bin/pytest-3
+	mv debian/pypy-pytest/usr/bin/pytest \
+		debian/pypy-pytest/usr/bin/pytest-pypy
+
+override_dh_auto_clean:
+	rm -rf doc/en/_build
+	dh_auto_clean
