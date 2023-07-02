@@ -1,0 +1,36 @@
+Description: <short summary of the patch>
+ TODO: Put a short summary on the line above and replace this paragraph
+ with a longer explanation of this change. Complete the meta-information
+ with other relevant fields (see below for details). To make it easier, the
+ information below has been extracted from the changelog. Adjust it or drop
+ it.
+ .
+ openssh (1:8.4p1-2~bpo10+1+rnx1) unstable; urgency=medium
+ .
+   * Backported to ReadyNAS OS 6
+Author: ReadyNAS Xtras <xtras@rnxtras.com>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- openssh-8.4p1.orig/regress/misc/sk-dummy/Makefile
++++ openssh-8.4p1/regress/misc/sk-dummy/Makefile
+@@ -60,7 +60,7 @@ DPADD+= ${LIBCRYPTO}
+ .endif
+ 
+ $(PROG): $(OBJS)
+-	$(CC) $(LDFLAGS) -shared -o $@ $(OBJS) $(LDADD)
++	$(CC) $(LDFLAGS) -shared -nostartfiles -o $@ $(OBJS) $(LDADD)
+ 
+ .include <bsd.prog.mk>
+ 

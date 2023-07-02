@@ -1,0 +1,68 @@
+From a73fcc8bab768900ca16d3121303941511b28d45 Mon Sep 17 00:00:00 2001
+From: Colin Watson <cjwatson@debian.org>
+Date: Thu, 30 Aug 2018 00:58:56 +0100
+Subject: Work around conch interoperability failure
+
+Twisted Conch fails to read private keys in the new format
+(https://twistedmatrix.com/trac/ticket/9515).  Work around this until it
+can be fixed in Twisted.
+
+Forwarded: not-needed
+Last-Update: 2019-10-09
+
+Patch-Name: conch-old-privkey-format.patch
+---
+ regress/Makefile         |  2 +-
+ regress/conch-ciphers.sh |  2 +-
+ regress/test-exec.sh     | 12 ++++++++++++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/regress/Makefile b/regress/Makefile
+index 8b4ed9de3..f50d189bb 100644
+--- a/regress/Makefile
++++ b/regress/Makefile
+@@ -122,7 +122,7 @@ CLEANFILES=	*.core actual agent-key.* authorized_keys_${USERNAME} \
+ 		rsa_ssh2_crnl.prv scp-ssh-wrapper.exe \
+ 		scp-ssh-wrapper.scp setuid-allowed sftp-server.log \
+ 		sftp-server.sh sftp.log ssh-log-wrapper.sh ssh.log \
+-		ssh-rsa_oldfmt \
++		ssh-rsa_oldfmt ssh-rsa_oldfmt.pub \
+ 		ssh_config ssh_config.* ssh_proxy ssh_proxy_bak \
+ 		ssh_proxy_envpass sshd.log sshd_config sshd_config_minimal \
+ 		sshd_config.* sshd_proxy sshd_proxy.* sshd_proxy_bak \
+diff --git a/regress/conch-ciphers.sh b/regress/conch-ciphers.sh
+index 6678813a2..6ff5da20b 100644
+--- a/regress/conch-ciphers.sh
++++ b/regress/conch-ciphers.sh
+@@ -16,7 +16,7 @@ for c in aes256-ctr aes256-cbc aes192-ctr aes192-cbc aes128-ctr aes128-cbc \
+ 	rm -f ${COPY}
+ 	# XXX the 2nd "cat" seems to be needed because of buggy FD handling
+ 	# in conch
+-	${CONCH} --identity $OBJ/ssh-rsa --port $PORT --user $USER -e none \
++	${CONCH} --identity $OBJ/ssh-rsa_oldfmt --port $PORT --user $USER -e none \
+ 	    --known-hosts $OBJ/known_hosts --notty --noagent --nox11 -n \
+ 	    127.0.0.1 "cat ${DATA}" 2>/dev/null | cat > ${COPY}
+ 	if [ $? -ne 0 ]; then
+diff --git a/regress/test-exec.sh b/regress/test-exec.sh
+index 5dc975d07..d8491b2be 100644
+--- a/regress/test-exec.sh
++++ b/regress/test-exec.sh
+@@ -587,6 +587,18 @@ REGRESS_INTEROP_CONCH=no
+ if test -x "$CONCH" ; then
+ 	REGRESS_INTEROP_CONCH=yes
+ fi
++case "$SCRIPT" in
++*conch*)	;;
++*)		REGRESS_INTEROP_CONCH=no
++esac
++
++if test "$REGRESS_INTEROP_CONCH" = "yes" ; then
++	# Convert rsa key to old format to work around
++	# https://twistedmatrix.com/trac/ticket/9515
++	cp $OBJ/ssh-rsa $OBJ/ssh-rsa_oldfmt
++	cp $OBJ/ssh-rsa.pub $OBJ/ssh-rsa_oldfmt.pub
++	${SSHKEYGEN} -p -N '' -m PEM -f $OBJ/ssh-rsa_oldfmt >/dev/null
++fi
+ 
+ # If PuTTY is present and we are running a PuTTY test, prepare keys and
+ # configuration
