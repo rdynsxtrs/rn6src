@@ -1,0 +1,118 @@
+php-phalcon4 (4.0.6-1+0~20200717.5+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 19:10:22 +0100
+
+php-phalcon4 (4.0.6-1+0~20200717.5+debian9~1.gbp1d3528) unstable; urgency=medium
+
+  ** SNAPSHOT build @1d3528a56bb1a5eca04a0373c4fd53586f626227 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 17 Jul 2020 11:10:31 +0200
+
+php-phalcon4 (4.0.6-1) unstable; urgency=medium
+
+  * New upstream version 4.0.6
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 18 May 2020 10:13:49 +0200
+
+php-phalcon4 (4.0.4-1) unstable; urgency=medium
+
+  * Bump standards to 4.4.1
+  * New upstream version 4.0.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Mar 2020 09:12:11 +0100
+
+php-phalcon4 (4.0.2-1) unstable; urgency=medium
+
+  * Bump the package from Phalcon 3 to Phalcon 4
+  * New upstream version 4.0.2
+  * Add psr dependency, add description
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Jan 2020 13:27:26 +0100
+
+php-phalcon (3.4.5-1) unstable; urgency=medium
+
+  * Anchor the upstream version to 3.x for now (d/watch)
+  * New upstream version 3.4.5
+  * Don't build phalcon for PHP 7.4 - not supported yet
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Dec 2019 10:05:58 +0100
+
+php-phalcon (3.4.4-1) unstable; urgency=medium
+
+  * New upstream version 3.4.4
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 08 Aug 2019 08:53:49 +0200
+
+php-phalcon (3.4.3-1) unstable; urgency=medium
+
+  * New upstream version 3.4.3
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 18 Mar 2019 12:07:36 +0000
+
+php-phalcon (3.4.2-1) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+  * New upstream version 3.4.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 04 Jan 2019 08:32:27 +0000
+
+php-phalcon (3.4.1-1) unstable; urgency=medium
+
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+  * Update Vcs-* links to salsa.d.o
+  * New upstream version 3.4.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 13:03:24 +0000
+
+php-phalcon (3.3.2-1) unstable; urgency=medium
+
+  * New upstream version 3.3.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 08 Apr 2018 06:12:53 +0000
+
+php-phalcon (3.2.4-1) unstable; urgency=medium
+
+  * New upstream version 3.2.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 01 Dec 2017 16:25:48 +0000
+
+php-phalcon (3.2.2-1) unstable; urgency=medium
+
+  * New upstream version 3.2.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 08 Sep 2017 07:04:02 +0200
+
+php-phalcon (3.2.0-1) unstable; urgency=medium
+
+  * New upstream version 3.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 06 Jul 2017 15:00:26 +0200
+
+php-phalcon (3.1.2-1) unstable; urgency=medium
+
+  * New upstream version 3.1.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 07 Apr 2017 11:45:37 +0200
+
+php-phalcon (3.1.1-1) unstable; urgency=medium
+
+  * New upstream version 3.1.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 30 Mar 2017 12:09:19 +0200
+
+php-phalcon (3.0.4-1) unstable; urgency=medium
+
+  * New upstream version 3.0.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 06 Mar 2017 13:43:57 +0100
+
+php-phalcon (3.0.3-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 11 Feb 2017 22:29:36 +0100

@@ -1,0 +1,30 @@
+Source: php-phalcon4
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 0.15~),
+               php-all-dev
+Standards-Version: 4.4.1
+Homepage: https://phalconphp.com/
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-phalcon4.git
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-phalcon4
+
+Package: php-phalcon4
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ucf,
+	 php-psr,
+         ${misc:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Provides: ${php:Provides}, php-phalcon
+Breaks: php-phalcon (<< 3.4.5-2)
+Replaces: php-phalcon (<< 3.4.5-2)
+Description: full-stack PHP framework delivered as a C-extension
+ Phalcon is an open source full stack framework for PHP, written as a
+ C-extension. Phalcon is optimized for high performance. Its unique architecture
+ allows the framework to always be memory resident, offering its functionality
+ whenever it’s needed, without expensive file stats and file reads that
+ traditional PHP frameworks employ.

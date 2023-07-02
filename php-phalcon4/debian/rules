@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+PECL_NAME_OVERRIDE := phalcon4
+include /usr/share/dh-php/pkg-pecl.mk
+
+export DEB_CPPFLAGS_MAINT_APPEND = -DPHALCON_RELEASE
+export DEB_CFLAGS_MAINT_APPEND = -Wall
+
+DIR_TARGETS = $(addprefix build-,$(DH_PHP_VERSIONS))
+
+PECL_SOURCE=$(wildcard $(CURDIR)/build/php$(firstword $(subst ., ,$1))/$(DEB_HOST_ARCH_BITS)bits/*)
+
+$(foreach ver,$(DH_PHP_VERSIONS),$(eval PECL_SOURCE_$(ver) := $(call PECL_SOURCE,$(ver))))
+$(foreach ver,$(DH_PHP_VERSIONS),$(mkdir build-$(ver)))
+
+override_dh_testdir: $(DIR_TARGETS)
+	dh_testdir
+
+build-%:
+	mkdir -p build-$(*)
