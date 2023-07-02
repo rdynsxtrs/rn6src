@@ -1,0 +1,10 @@
+#!/bin/sh -e
+
+###
+# Rebuild kernel module map
+###
+depmod -a
+
+#DEBHELPER#
+
+exit 0

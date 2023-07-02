@@ -1,0 +1,5 @@
+# Automatically added by dh_installmodules/12.1.1~rnx1
+if [ -e /boot/System.map-4.4.190.x86_64.1 ]; then
+	depmod -a -F /boot/System.map-4.4.190.x86_64.1 4.4.190.x86_64.1 || true
+fi
+# End automatically added section

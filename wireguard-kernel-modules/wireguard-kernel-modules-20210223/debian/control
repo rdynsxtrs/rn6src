@@ -1,0 +1,15 @@
+Source: wireguard-kernel-modules
+Section: kernel
+Priority: extra
+Maintainer: ReadyNAS Xtras <xtras@readynasxtras.com>
+Build-Depends: debhelper (>= 7.0.50)
+Standards-Version: 3.7.3
+
+Package: wireguard-kernel-modules
+Architecture: any
+Depends: linux-image-extra,
+	${shlibs:Depends}
+Homepage: https://rnxtras.com
+Description: Wireguard Kernel Modules
+ Wireguard Kernel Modules add the wireguard kernel modules
+ to the ReadyNAS OS.
