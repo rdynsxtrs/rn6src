@@ -1,0 +1,2 @@
+version=3
+opts=pgpsigurlmangle=s/$/.asc/ http://reproducible.alioth.debian.org/releases/strip-nondeterminism/strip-nondeterminism-(.+).tar.bz2

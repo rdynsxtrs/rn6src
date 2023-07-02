@@ -1,0 +1,2 @@
+Test-Command: mkdir -p "${ADTTMP}" && cp -rv t/ bin/ "${ADTTMP}" && cd "${ADTTMP}" && for X in t/*.t; do perl -MExtUtils::Command::MM -MTest::Harness ${X} || return ${?}; done
+Restrictions: allow-stderr

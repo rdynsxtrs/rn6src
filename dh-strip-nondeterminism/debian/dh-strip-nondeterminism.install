@@ -1,0 +1,2 @@
+usr/bin/dh_strip_nondeterminism
+usr/share/man/man*/dh_strip_nondeterminism.*

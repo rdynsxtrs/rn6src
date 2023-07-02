@@ -1,0 +1,446 @@
+strip-nondeterminism (0.034-1~bpo8+1.rnx2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * rebuilt for dev-repo
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 05 Dec 2020 20:04:48 +0100
+
+strip-nondeterminism (0.034-1~bpo8+1) jessie-backports; urgency=medium
+
+  * Rebuild for jessie-backports.
+
+ -- Mattia Rizzolo <mattia@debian.org>  Mon, 29 May 2017 10:59:51 +0200
+
+strip-nondeterminism (0.034-1) unstable; urgency=medium
+
+  [ Chris Lamb ]
+  * Only print log messages by default if the file was actually modified
+    rather than if we merely identified a file (see 0.033-1). This was not
+    only noisy in-of itself and somewhat misleading, it moreover defeated the
+    point of adding these log messages in the first place - ie. identifying
+    normalizers we can start to remove from strip-nondeterminism.
+    (Closes: #863033)
+
+  [ Bernhard M. Wiedemann ]
+  * zip: make sure we have permissions on extracted file
+  * Add function prototypes.
+
+ -- Chris Lamb <lamby@debian.org>  Sat, 20 May 2017 15:19:52 +0200
+
+strip-nondeterminism (0.033-2) unstable; urgency=medium
+
+  * Correct temmporary -> temporary typo in package long description. Thanks
+    to Niels Thykier (nthykier).
+
+ -- Chris Lamb <lamby@debian.org>  Mon, 08 May 2017 11:52:36 +0200
+
+strip-nondeterminism (0.033-1) unstable; urgency=medium
+
+  [ Chris Lamb ]
+  * Move from verbose_print to nonquiet_print so we print when normalising a
+    file. This is so we can start to target the removal of
+    strip-nondeterminism itself. (Closes: #862031)
+  * Update package long descriptions to clarify that this tool is a temporary
+    workaround. (Closes: #862029)
+  * Include the filename when testing failure fixtures.
+
+  [ Bernhard M. Wiedemann ]
+  * Only call get_normalizer_by_name once
+  * Make get_normalizer_by_name O(1)
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 07 May 2017 19:32:19 +0200
+
+strip-nondeterminism (0.032-1) unstable; urgency=medium
+
+  * Add support for testing files we should reject.
+  * Fix a possible endless loop while stripping ar files due to trusting the
+    file's file size data. Thanks to Tobias Stoeckmann (tobias@stoeckmann.org)
+    for the report, patch and testcase. (Closes: #857975)
+
+ -- Chris Lamb <lamby@debian.org>  Fri, 17 Mar 2017 09:25:53 +0100
+
+strip-nondeterminism (0.031-1) unstable; urgency=medium
+
+  * Don't test for stat(2) blksize and blocks; they are filesystem-specific and
+    we are already checking the pre- and post-processing contents anyway.
+    (Closes: #854937)
+
+ -- Chris Lamb <lamby@debian.org>  Mon, 13 Feb 2017 17:41:27 +1300
+
+strip-nondeterminism (0.030-1) unstable; urgency=medium
+
+  * Print log entry when fixing a file. (Closes: #777239)
+  * Run our entire testsuite in autopkgtests; `perl -MExtUtils::Command::MM
+    -MTest::Harness` was ignoring all but the first argument. (Closes: #852517)
+  * Use error() from Dh_Lib.pm over manual die().
+  * Add watch file with cryptographic signature verification.
+  * Add documentation regarding uploading a signed tarball.
+  * Add myself to AUTHORS and debian/copyright.
+
+ -- Chris Lamb <lamby@debian.org>  Thu, 09 Feb 2017 22:11:16 +1300
+
+strip-nondeterminism (0.029-2) unstable; urgency=medium
+
+  [ Chris Lamb ]
+  * debian/tests/control: Also copy our binaries as they are used in the tests.
+    Closes: #849391
+
+ -- Mattia Rizzolo <mattia@debian.org>  Tue, 27 Dec 2016 13:54:57 +0100
+
+strip-nondeterminism (0.029-1) unstable; urgency=medium
+
+  [ Chris Lamb ]
+  * t/binaries.t:
+    - Don't make tests rely on Debian::Debhelper::Dh_Lib for non-Debian
+      distributions.
+    - Smoke test strip-nondeterminism(1) and dh_strip_nondeterminism(1) to
+      prevent regressions like a3c16cd08.
+  * Makefile.PL: Change "NAME" argument to a Perl package name.
+  * .pertidyrc: Inherit/copy from lintian's version but using tabs over spaces.
+  * Run perltidy across codebase.
+
+  [ Reiner Herrmann ]
+  * zip: normalize NTFS FIleTimes. (Closes: #845203)
+
+  [ Anders Kaseorg ]
+  * libfile-stripnondeterminism-perl: Treat .par files as Zip archives.
+    (Closes: #846895)
+
+ -- Chris Lamb <lamby@debian.org>  Thu, 22 Dec 2016 10:55:20 +0000
+
+strip-nondeterminism (0.028-1) unstable; urgency=medium
+
+  * bin/strip-nondeterminism: Add missing semicolon.
+
+ -- Chris Lamb <lamby@debian.org>  Mon, 12 Sep 2016 09:06:01 +0100
+
+strip-nondeterminism (0.027-1) unstable; urgency=medium
+
+  * Add a File::StripNondeterminism::init method to avoid tzset DRY violation.
+    - Also set timezone in tests. (Closes: #837382)
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 11 Sep 2016 23:10:35 +0100
+
+strip-nondeterminism (0.026-1) unstable; urgency=medium
+
+  * handlers/jar.pm: Reintroduce subroutine prototype on _jar_filename_cmp to
+    fix ordering regression in .jar files.
+  * Add a testcase for jar file ordering and normalisation.
+  * bin/strip-nondeterminism: die if file does not exist (Closes: #800159)
+  * debian/rules:
+    - No need for -make hack as we'll have Makefile during package build.
+      (Closes: #836732)
+    - Update clean target to avoid FTBFS twice in a row.
+  * Add Homepage field.
+  * t/fixtures.t:
+    - Add a lookup table for descriptions of stat(1) indices.
+    - Don't test whether inode number has changed.
+    - Check that output matches expected before comparing attributes to make it
+      less confusing on failure.
+    - Re-add top-level "plan" call dropped in 0.024-1.
+    - Add comment why we use a per-fixture temporary directory.
+    - Re-order @fixtures setup for global->specific ordering.
+
+ -- Chris Lamb <lamby@debian.org>  Fri, 09 Sep 2016 11:02:04 +0100
+
+strip-nondeterminism (0.025-1) unstable; urgency=medium
+
+  * Drop all calls to unlink_on_destroy now that we copy the file. (Closes: #836670)
+    - Extend testsuite to ensure no extra files are leftover again.
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 04 Sep 2016 17:43:00 +0100
+
+strip-nondeterminism (0.024-1) unstable; urgency=medium
+
+  [ Chris Lamb ]
+  * Print test coverage report.
+  * jar.pm: Drop unnecessary subroutine prototypes.
+  * {ar,zip}.pm: Explicitly use oct(..) for integers with leading zeroes.
+  * {jar,png,zip}: Ensure subroutines end with return statement.
+  * zip.pm:
+    - Use block form of grep over expression form.
+    - zip.pm: Don't mix high and low-precedence booleans.
+
+  [ AYANOKOUZI, Ryuunosuke ]
+  * Preserve file attribute information of target file. (Closes: #836075)
+
+ -- Chris Lamb <lamby@debian.org>  Sat, 03 Sep 2016 20:06:37 +0100
+
+strip-nondeterminism (0.023-2) unstable; urgency=medium
+
+  * Allow stderr in autopkgtest.
+
+ -- Mattia Rizzolo <mattia@debian.org>  Tue, 23 Aug 2016 14:40:49 +0000
+
+strip-nondeterminism (0.023-1) unstable; urgency=medium
+
+  * Support Android .apk files with the JAR normalizer.
+  * handlers/png.pm: Drop unused Archive::Zip import
+  * Remove hyphen from non-determinism and non-deterministic.
+  * javaproperties.pm: Match more styles of .properties and loosen filename matching.
+  * Improve tests:
+    - Make fixture runner generic to all normalizer types.
+    - Replace (single) pearregistry test with a fixture.
+    - Set a canonical time for fixture tests.
+    - Add gzip testcase fixture.
+    - Replace t/javadoc.t with fixture
+    - Replace t/ar.t with a fixture.
+    - t/javaproperties: move pom.properties and version.properties tests to fixtures
+    - t/fixtures.t: move to using subtests
+    - t/fixtures.t: Explicitly test that we can find a normalizer
+    - t/fixtures.t: Don't run normalizer if we didn't find one.
+
+ -- Chris Lamb <lamby@debian.org>  Mon, 22 Aug 2016 23:36:15 +0100
+
+strip-nondeterminism (0.022-1) unstable; urgency=medium
+
+  * handlers/png: Keep IEND detection. This was a regression from 0.020-1.
+    Thanks to James Cowgill (jcowgill). (Closes: #832306)
+    - Add regression testcase for IEND/PNG issue from #802057.
+  * handlers/png: Wrap $type in single quotes in warnings at the very least.
+  * handlers/png: Warn if file contains garbage after IEND header.
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 24 Jul 2016 15:33:29 +0100
+
+strip-nondeterminism (0.021-1) unstable; urgency=medium
+
+  * Fix PNG handling caused by double-read(2). (Closes: #832306)
+  * Unlink tempfile in the correct scope.
+  * Standardise on $modified over $changed.
+  * handlers/ar.pm: Normalise whitespace
+  * handlers/png.pm: Ensure $modified is always defined.
+  * Add test fixtures for PNG handler.
+  * Add a PNG test that strips a teXT chunk
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 24 Jul 2016 12:57:12 +0100
+
+strip-nondeterminism (0.020-1) unstable; urgency=medium
+
+  [ Mattia Rizzolo ]
+  * Run the upstream testsuite in an autopkgtest
+
+  [ Chris Lamb ]
+  * .zhfst files are also ZIP files
+  * Improve readability in PNG handler by not including IEND detection in "else"
+  * Don't trust the value of $len in PNG handler. (Closes: #831443)
+  * Include CRC when reading potential PNG blocks
+  * Rewrite PNG handler to support bailing out on invalid header lengths
+  * Correct the max number of bytes we read when copying PNG chunk data
+  * Release 0.020
+
+ -- Chris Lamb <lamby@debian.org>  Sat, 23 Jul 2016 19:41:59 +0100
+
+strip-nondeterminism (0.019-1) unstable; urgency=medium
+
+  * New upstream release:
+    - Recursively normalize JAR files embedded within JAR files
+      (Closes: #823917)
+    - Add framework for "clamping" the timestamp
+    - Add timestamp clamping support to gzip handler
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Thu, 09 Jun 2016 21:17:19 -0700
+
+strip-nondeterminism (0.018-2) unstable; urgency=medium
+
+  [ Helmut Grohne ]
+  * Mark dh-strip-nondeterminism and strip-nondeterminism Multi-Arch: foreign
+    (Closes: #826700)
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Tue, 07 Jun 2016 21:37:25 -0700
+
+strip-nondeterminism (0.018-1) unstable; urgency=medium
+
+  * New upstream release:
+    - Fix support for epub files.  (Holger Levsen)
+
+  [ Mattia Rizzolo ]
+  * Add myself to uploaders.
+  * Run wrap-and-sort -ast.
+
+ -- Mattia Rizzolo <mattia@debian.org>  Mon, 30 May 2016 19:05:46 +0000
+
+strip-nondeterminism (0.017-1) unstable; urgency=medium
+
+  * New upstream version:
+    - Add support for epub files. (Holger Levsen)
+    - Treat *.htb as Zip files. (Sascha Steinbiss)
+
+  [ Holger Levsen ]
+  * Bump standards version to 3.9.8, no changes needed.
+
+  [ Andrew Ayer ]
+  * debian/rules: explicitly remove Makefile before dh_auto_clean
+
+ -- Holger Levsen <holger@debian.org>  Sat, 28 May 2016 16:10:27 +0200
+
+strip-nondeterminism (0.016-1) unstable; urgency=medium
+
+  [ Reiner Herrmann ]
+  * Team upload.
+  * New upstream release.
+  * Normalize POT-Creation-Date in Gettext GMO files
+
+  [ Holger Levsen ]
+  * bump standards version to 3.9.7, no changes needed.
+  * debian/control: use /git/ instead /cgit/ in Vcs-Browser
+  * debian/control: move packages to correct sections (Closes: #802842, #802843)
+
+  [ Ben Finney ]
+  * Update descriptions to better reflect broader reach. (Closes: #802841)
+
+ -- Reiner Herrmann <reiner@reiner-h.de>  Sat, 27 Feb 2016 20:03:13 +0100
+
+strip-nondeterminism (0.015-1) unstable; urgency=medium
+
+  * New upstream release:
+    - jar: ignore signed JAR files (Closes: #807876, #807669)
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Wed, 27 Jan 2016 12:20:26 -0800
+
+strip-nondeterminism (0.014-1) unstable; urgency=medium
+
+  * New upstream release:
+    - Disable stripping Mono binaries as it is too aggressive re.  StrongName,
+      preventing package installs in a systemwide location (Closes: #804600)
+  * Add myself to Uploaders.
+
+ -- Chris Lamb <lamby@debian.org>  Tue, 10 Nov 2015 00:08:28 +0000
+
+strip-nondeterminism (0.013-1) unstable; urgency=medium
+
+  * New upstream release.
+    - png: gracefully handle nonconformant PNG files with trailing
+      garbage (Closes: #802057)
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Sat, 17 Oct 2015 19:45:44 -0700
+
+strip-nondeterminism (0.012-1) unstable; urgency=medium
+
+  * New upstream release.
+    - zip: preserve file permissions. (Closes: #798384)
+    - dh_strip_nondeterminism: work around lack of get_source_date_epoch
+      in old debhelper. (Closes: #799732)
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Tue, 22 Sep 2015 07:01:25 -0700
+
+strip-nondeterminism (0.011-1) unstable; urgency=medium
+
+  * New upstream release.
+    - dh_strip_nondeterminism: use get_source_date_epoch() to get
+      canonical time.
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Sat, 29 Aug 2015 12:26:20 -0700
+
+strip-nondeterminism (0.010-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Use same regex to detect javaproperties files in jars as in files
+  * Add missing dependency on libtimedate-perl.  Thanks to Stéphane
+    Glondu (Closes: #796366)
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Fri, 21 Aug 2015 13:25:50 -0700
+
+strip-nondeterminism (0.009-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Strip javadoc locale - browsers will do detection better.
+    - Include name of file that caused error in error messages
+    - zip: catch errors when reading archive, ignore zip64 files
+      (Closes: #791574)
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Fri, 17 Jul 2015 09:45:14 -0700
+
+strip-nondeterminism (0.008-1) unstable; urgency=medium
+
+  * New upstream release.
+    - gzip: don't set a canonical timestamp if file didn't already have
+      a timestamp (Closes: #785742)
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Tue, 02 Jun 2015 10:26:17 -0700
+
+strip-nondeterminism (0.007-1) unstable; urgency=medium
+
+  [ Reiner Herrmann ]
+  * Improve detection of pom.properties files
+
+  [ Holger Levsen ]
+  * Add myself to uploaders.
+
+ -- Holger Levsen <holger@debian.org>  Sun, 24 May 2015 13:09:58 +0200
+
+strip-nondeterminism (0.006-1) unstable; urgency=low
+
+  * New upstream release.
+    - Strip timestamp from Java version.properties files
+    - two more javaproperties signatures
+    - set timezone to UTC before normalizing to get reproducible timestamps
+    - ar handler: preserve execute bit when normalizing permissions
+    - Add test case for ar handler
+    - Improve detection of timestamps in pom.properties files
+    - Add a PNG handler (Closes: #777679)
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Sun, 22 Mar 2015 11:15:49 -0700
+
+strip-nondeterminism (0.005-2) unstable; urgency=low
+
+  * Team upload.
+  * Add missing Build-Depend-Indep for Archive::Zip.
+  * Bump Standards-Version, no changes required.
+  * Switch maintainer to the reproducible-builds list.
+
+ -- Jérémy Bobbio <lunar@debian.org>  Fri, 13 Feb 2015 20:27:38 +0100
+
+strip-nondeterminism (0.005-1) unstable; urgency=low
+
+  * New upstream release.
+    - Revert "Replace generated times in files generated by docbook-to-man."
+    - zip: preserve execute bit when normalizing permissions
+    - jar: normalize pom.properties files inside JARs
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Fri, 06 Feb 2015 09:52:12 -0800
+
+strip-nondeterminism (0.004-1) unstable; urgency=low
+
+  * New upstream release.
+    - Fix how ar handler deals with padding.
+    - Treat .war and .hpi files as JAR files. (Closes: #765301)
+    - Strip non-deterministic fields from MANIFEST.MF files inside JARs.
+      (Closes: #765302)
+    - Strip generation time from pom.properties.
+    - Rewrite the first timestamp in a PE (.exe) file.
+    - dh_strip_nondeterminism: replace timestamps with most recent
+      debian/changelog date (Closes: #765299)
+    - Normalize extended timestamp extra field in Zip archives.
+      Thanks to Reiner Herrmann.
+    - Normalize Unix permissions in Zip archives. (Closes: #765304)
+    - Add support for pk3 and dz files. (Closes: #765305)
+    - zip handler: also normalize local extra fields.
+    - Ar files: ignore contents of padding bytes. (Closes: #775561)
+    - Add support for Python Wheel packages (renamed Zip files)
+      (Closes: #775594)
+    - Use Zip handler also for .xpi files.
+    - Strip _lastmodified times from PEAR registry files. (Closes: #776138)
+    - Replace generated times in files generated by docbook-to-man.
+      (Closes: #776140)
+    - javadoc: normalize the <META NAME="date"> header.
+      Thanks to Peter De Wachter. (Closes: #775870)
+    - Work around bug in Archive::Zip that causes infinite loop.
+      (Closes: #765298)
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Thu, 05 Feb 2015 13:45:17 -0800
+
+strip-nondeterminism (0.003-1) unstable; urgency=low
+
+  * New upstream release.
+    - Fix detection of jar files as such.
+    - Remove FIXME comment from ar handler.
+  * Remove "unusual spacing" from debian/control.
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Sat, 27 Sep 2014 08:59:24 -0700
+
+strip-nondeterminism (0.002-1) unstable; urgency=low
+
+  * Initial release. (Closes: #760803)
+
+ -- Andrew Ayer <agwa@andrewayer.name>  Thu, 18 Sep 2014 21:19:02 -0700
+
