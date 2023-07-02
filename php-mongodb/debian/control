@@ -1,0 +1,37 @@
+Source: php-mongodb
+Section: php
+Priority: optional
+Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
+Uploaders: Ondřej Surý <ondrej@debian.org>
+Build-Conflicts: libbson-dev,
+                 libmongoc-dev,
+                 libmongoc-priv-dev
+Build-Depends: debhelper (>= 9~),
+               dh-php (>= 2.0~),
+               libpcre3-dev,
+               libsasl2-dev,
+               php-all-dev,
+               pkg-config
+Standards-Version: 3.9.8
+Homepage: https://pecl.php.net/package/mongodb
+Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-mongodb
+Vcs-Git: https://salsa.debian.org/php-team/pecl/php-mongodb.git
+
+Package: php-mongodb
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ucf,
+         ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: MongoDB driver for PHP
+ The purpose of this driver is to provide exceptionally thin glue
+ between MongoDB and PHP, implementing only fundemental and
+ performance-critical components necessary to build a fully-functional
+ MongoDB driver.

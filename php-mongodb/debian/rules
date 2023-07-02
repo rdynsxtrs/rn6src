@@ -1,0 +1,4 @@
+#!/usr/bin/make -f
+export REPORT_EXIT_STATUS:=0
+include /usr/share/dh-php/pkg-pecl.mk
+DEB_CFLAGS_MAINT_APPEND += -DMONGOC_NO_AUTOMATIC_GLOBALS

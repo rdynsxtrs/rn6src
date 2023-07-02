@@ -1,0 +1,4 @@
+# Override invalid PHP license problem for PHP extensions coming from PECL.PHP.NET
+php-mongodb source: license-problem-php-license *
+# Somehow lintian still can't detect public-domain license
+php-mongodb source: missing-license-paragraph-in-dep5-copyright public-domain *
