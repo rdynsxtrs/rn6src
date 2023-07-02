@@ -1,0 +1,2 @@
+usr/lib/apache2/modules/libphp7.4.so /usr/lib/apache2/modules/
+usr/lib/php/7.4/sapi/apache2

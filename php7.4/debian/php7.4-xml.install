@@ -1,0 +1,12 @@
+usr/lib/php/*/dom.so
+usr/share/php7.4-xml/xml/dom.ini
+usr/lib/php/*/simplexml.so
+usr/share/php7.4-xml/xml/simplexml.ini
+usr/lib/php/*/xml.so
+usr/share/php7.4-xml/xml/xml.ini
+usr/lib/php/*/xmlreader.so
+usr/share/php7.4-xml/xml/xmlreader.ini
+usr/lib/php/*/xmlwriter.so
+usr/share/php7.4-xml/xml/xmlwriter.ini
+usr/lib/php/*/xsl.so
+usr/share/php7.4-xml/xml/xsl.ini

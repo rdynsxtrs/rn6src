@@ -1,0 +1,1 @@
+php-common:Breaks=php7.0-curl (<< 7.0.33-1~), php7.2-sodium (<< 7.2.12~), gforge-common (<< 6)

@@ -1,0 +1,4 @@
+usr/lib/php/*/sqlite3.so
+usr/share/php7.4-sqlite3/sqlite3/sqlite3.ini
+usr/lib/php/*/pdo_sqlite.so
+usr/share/php7.4-sqlite3/sqlite3/pdo_sqlite.ini

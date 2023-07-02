@@ -1,0 +1,4 @@
+usr/lib/php/*/pgsql.so
+usr/share/php7.4-pgsql/pgsql/pgsql.ini
+usr/lib/php/*/pdo_pgsql.so
+usr/share/php7.4-pgsql/pgsql/pdo_pgsql.ini

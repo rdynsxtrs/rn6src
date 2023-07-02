@@ -1,0 +1,4 @@
+usr/bin/php-cgi7.4
+usr/share/man/man1/php-cgi7.4.1
+usr/lib/cgi-bin/php7.4
+usr/lib/php/7.4/sapi/cgi

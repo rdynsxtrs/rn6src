@@ -1,0 +1,38 @@
+#!/bin/sh
+set -e
+
+# Author: Robie Basak <robie.basak@ubuntu.com>
+
+
+# /etc/apache2/mods-available/php7.4.{conf,load} should exist.
+
+if [ ! -f /etc/apache2/mods-available/php7.4.conf ]; then
+    echo "/etc/apache2/mods-available/php7.4.conf not found" >&2
+    exit 1
+fi
+
+if [ ! -f /etc/apache2/mods-available/php7.4.load ]; then
+    echo "/etc/apache2/mods-available/php7.4.load not found" >&2
+    exit 1
+fi
+
+
+cat > /var/www/html/hello.php <<EOT
+<?php echo "Hello, world!\n"; ?>
+EOT
+
+# Make sure that any CGI mechanism is disabled, since we want to test mod_php
+# mode here.
+a2dismod actions 2>/dev/null || true
+a2dismod cgi 2>/dev/null || true
+a2disconf php7.4-cgi 2>/dev/null || true
+
+# Make sure that fpm configuration is disabled for the same reasons we disabled
+# CGI mechanisms
+a2dismod proxy_fcgi 2>/dev/null || true
+a2disconf php7.4-fpm 2>/dev/null || true
+
+a2enmod php7.4 2>/dev/null || true
+service apache2 restart 2>/dev/null
+result=`wget -O- http://localhost/hello.php 2>/dev/null`
+test "$result" = "Hello, world!"
