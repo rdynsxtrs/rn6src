@@ -1,0 +1,5 @@
+sparc-skip-tcp_oob.diff
+#iovec_rw_fix.patch
+disable_ipv6_test.patch
+path_max_zero_st_size
+skip-multicast-test

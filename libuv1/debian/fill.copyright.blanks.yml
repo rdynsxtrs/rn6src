@@ -1,0 +1,13 @@
+---
+LICENSE:
+  override-license: Expat
+  skip: false
+README.md:
+  override-license: CC-BY-4.0
+  skip: false
+include/uv/android-ifaddrs.h:
+  override-license: BSD-1-clause
+  skip: false
+include/uv/stdint-msvc2008.h:
+  override-license: BSD-3-clause
+  skip: false

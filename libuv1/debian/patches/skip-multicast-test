@@ -1,0 +1,35 @@
+Description: Skip multicast test
+ Skip muliticast test to avoid this error on all build daemons:
+ .
+ ok 346 - udp_multicast_interface6
+ not ok 347 - udp_multicast_join
+ # timeout
+ # Output from process `udp_multicast_join`: (no output)
+ not ok 348 - udp_multicast_join6
+ # timeout
+ # Output from process `udp_multicast_join6`: (no output)
+ ok 349 - udp_multicast_ttl
+Forwarded: not-needed
+Author: dod
+--- a/test/test-udp-multicast-join.c
++++ b/test/test-udp-multicast-join.c
+@@ -141,6 +141,8 @@
+   int r;
+   struct sockaddr_in addr;
+ 
++  RETURN_SKIP("muliticast does not work on Debian build deamons");
++
+   ASSERT(0 == uv_ip4_addr("0.0.0.0", TEST_PORT, &addr));
+ 
+   r = uv_udp_init(uv_default_loop(), &server);
+--- a/test/test-udp-multicast-join6.c
++++ b/test/test-udp-multicast-join6.c
+@@ -170,6 +170,8 @@
+   int r;
+   struct sockaddr_in6 addr;
+ 
++  RETURN_SKIP("muliticast does not work on Debian build deamons");
++
+   if (!can_ipv6_external())
+     RETURN_SKIP("No external IPv6 interface available");
+ 

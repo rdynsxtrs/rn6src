@@ -1,0 +1,15 @@
+Author: Jérémy Lal <kapouer@melix.org>
+Last-Update: 2017-10-12
+Forwarded: not-needed
+Description: export RES_OPTIONS = attempts:0 makes this test fail
+--- a/test/test-getnameinfo.c
++++ b/test/test-getnameinfo.c
+@@ -84,6 +84,8 @@
+ TEST_IMPL(getnameinfo_basic_ip6) {
+   int r;
+ 
++  RETURN_SKIP("DNS request disabled in ipv6 test");
++
+   r = uv_ip6_addr(address_ip6, port, &addr6);
+   ASSERT(r == 0);
+ 

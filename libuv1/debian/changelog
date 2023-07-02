@@ -1,0 +1,582 @@
+libuv1 (1.34.2-1~bpo9+1+rnx.1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 30 May 2021 20:41:54 +0200
+
+libuv1 (1.34.2-1~bpo9+1) stretch-backports; urgency=medium
+
+  * Rebuild for stretch-backports.
+
+ -- Andreas Tille <tille@debian.org>  Tue, 17 Mar 2020 17:40:09 +0100
+
+libuv1 (1.34.2-1) unstable; urgency=medium
+
+  * new upstream version
+  * add override license instructions for "cme udpate"
+  * update copyright file with cme
+  * refreshed patches
+  * update symbols
+  * control: declare compliance with policy 4.5.0
+
+ -- Dominique Dumont <dod@debian.org>  Fri, 07 Feb 2020 14:55:42 +0100
+
+libuv1 (1.33.1-3) unstable; urgency=medium
+
+  * make autopkgtests cross-test-friendly.
+    Thanks to Steve Langasek for the heads-up and the patch (Closes: #950294)
+  * no longer install libuv.la file
+
+ -- Dominique Dumont <dod@debian.org>  Fri, 31 Jan 2020 15:46:39 +0100
+
+libuv1 (1.33.1-2) unstable; urgency=medium
+
+  * add patch to disable multicast testsuite which break
+    Debian builds
+
+ -- Dominique Dumont <dod@debian.org>  Thu, 31 Oct 2019 17:49:00 +0100
+
+libuv1 (1.33.1-1) unstable; urgency=medium
+
+  * new upstream version
+  * refreshed copyright with cme
+  * refreshed patches
+  * regenerated symbol file
+  * fix symbol regeneration instructions in README.source
+  * use new style of debhelper dependency
+  * control: comply with policy 4.4.1
+  * install libuv.la file in libuv1-dev package
+
+ -- Dominique Dumont <dod@debian.org>  Thu, 31 Oct 2019 14:01:26 +0100
+
+libuv1 (1.30.1-1) unstable; urgency=medium
+
+  * new upstream version
+  * update symbols file
+  * ignore jpg files when scanning copyright
+  * updated copyright with cme
+  * refreshed patches
+  * control: declare compliance with policy 4.4.0
+  * control: add libuv1-dev dependency on freebsd-glue [kfreebsd-any].
+    Thanks to Sebastian Reichel for the hint (Closes: 921424)
+
+ -- Dominique Dumont <dod@debian.org>  Fri, 26 Jul 2019 11:03:37 +0200
+
+libuv1 (1.24.1-1) unstable; urgency=medium
+
+  * new upstream version
+  * update README.source instructions
+  * refreshed copyright with cme
+  * refreshed patches
+  * update symbols file
+  * add Build-Depends-Package in symbols file
+  * update compat to 12
+  * control: declare compliance with policy 4.3.0
+  * control: remove build-dev on dh-autoreconf
+
+ -- Dominique Dumont <dod@debian.org>  Mon, 21 Jan 2019 08:33:25 +0100
+
+libuv1 (1.24.0-1) unstable; urgency=medium
+
+  * new upstream version
+  * fix git describe instruction in README.source
+  * refreshed copyright (cme update dpkg)
+  * removed configure.ac.diff, path_man and hurd-port patches
+    (applied upstream)
+  * refreshed path_max_zero_st_size patch
+  * mark internal symbols (uv__*) as optional in symbols file
+
+ -- Dominique Dumont <dod@debian.org>  Fri, 30 Nov 2018 15:58:40 +0100
+
+libuv1 (1.23.2-2) unstable; urgency=medium
+
+  * Fix path_max_zero_st_size to follow renaming of variable upstream.
+    Thanks to Adam Conrad for the patch (Closes: #913779)
+
+ -- Dominique Dumont <dod@debian.org>  Sun, 18 Nov 2018 17:32:35 +0100
+
+libuv1 (1.23.2-1) unstable; urgency=medium
+
+  [ Ondřej Nový ]
+    * d/changelog: Remove trailing whitespaces
+
+  [ Dominique Dumont ]
+  * new upstream version
+  * copyright: rm one file (cme update dpkg)
+  * README.source: fix version extraction from git
+  * refreshed patches
+
+ -- Dominique Dumont <dod@debian.org>  Tue, 23 Oct 2018 14:58:34 +0200
+
+libuv1 (1.23.1-1) unstable; urgency=medium
+
+  * new upstream release:
+    The following symbols were removed: uv__epoll_create1
+    uv__epoll_create uv__epoll_ctl uv__epoll_pwait uv__epoll_wait
+    uv__utimesat.
+    No breakage is expected as these symbols are internal.
+  * update README.source
+  * refreshed patch path_max_zero_st_size
+  * removed patch mips-epoll_pwait
+  * remove some internal symbols from libuv1.symbols
+
+ -- Dominique Dumont <dod@debian.org>  Fri, 05 Oct 2018 12:32:24 +0200
+
+libuv1 (1.23.0-2) unstable; urgency=medium
+
+  * gbp.conf: set update-tag for all tools
+  * add patch to fix zero buffer size of readlink()
+    Thanks to Mauricio Faria de Oliveira <mfo@canonical.com> (LP: 1792647)
+    (Closes: 909011)
+
+ -- Dominique Dumont <dod@debian.org>  Tue, 18 Sep 2018 14:18:27 +0200
+
+libuv1 (1.23.0-1) unstable; urgency=medium
+
+  * new upstream version
+  * control: declare compliance with policy 4.2.1
+  * copyright: updated with cme
+  * refreshed patch
+  * updated symbols file
+
+ -- Dominique Dumont <dod@debian.org>  Fri, 07 Sep 2018 10:47:22 +0200
+
+libuv1 (1.22.0-3) unstable; urgency=medium
+
+  * allow warning while compiing autopkg tests files
+  * control: add BD on freebsd-glue for freebsd-any arch
+    Thanks to Svante Signell for the patch (Closes: 904503)
+  * fix hurd-port patch.
+    Thanks to Svante Signell for the fix (Closes: 904476)
+
+ -- Dominique Dumont <dod@debian.org>  Mon, 30 Jul 2018 12:23:23 +0200
+
+libuv1 (1.22.0-2) unstable; urgency=medium
+
+  * update hurd-port patch.
+    Thanks to Svante Signell (Closes: #904476)
+  * update symbols file for hurd.
+  * patch configure.ac for kfreebsd.
+    Thanks to Svante Signell (Closes: 904503)
+  * update symbols file for kfreebsd.
+
+ -- Dominique Dumont <dod@debian.org>  Wed, 25 Jul 2018 13:36:46 +0200
+
+libuv1 (1.22.0-1) unstable; urgency=medium
+
+  * new upstream version
+    * contains upstream fix for #902941
+  * tests/control: add dependency on g++
+  * update copyright file with cme
+  * refresh hurd-port patch
+  * remove patch for #902941 (applied upstream)
+  * control: Declare compliance with policy 4.1.5
+  * update symbols file
+
+ -- Dominique Dumont <dod@debian.org>  Fri, 20 Jul 2018 17:18:26 +0200
+
+libuv1 (1.21.0-2) unstable; urgency=medium
+
+  * tests/control: add dep on libc-dev
+  * patch wrong enum order.
+    Thanks to Felipe Sateler for the analysis (Closes: 902941)
+
+ -- Dominique Dumont <dod@debian.org>  Fri, 06 Jul 2018 13:57:44 +0200
+
+libuv1 (1.21.0-1) unstable; urgency=medium
+
+  * new upstream version
+  * refreshed © info with cme dpkg-copyright update
+  * refreshed hurd-port.diff
+  * refreshed symbols file
+  * improve README.source
+
+ -- Dominique Dumont <dod@debian.org>  Mon, 02 Jul 2018 14:11:47 +0200
+
+libuv1 (1.20.3-2) unstable; urgency=medium
+
+  * add patch to fix hurd packages.
+    Thanks to Samuel Thibault <sthibault@debian.org> (Closes: #881882)
+  * test/control: add gcc build-dep
+  * control: Build-dep on netbase.
+    Thanks to Adam Borowski <kilobyte@angband.pl> (Closes: 899078)
+
+ -- Dominique Dumont <dod@debian.org>  Sat, 02 Jun 2018 10:58:29 +0200
+
+libuv1 (1.20.3-1) unstable; urgency=medium
+
+  * new upstream version
+  * copyright: fix utf-8 entry with cme update
+  * patch to fix PATH_MAX on hurd.
+  * update symbols table for hurd.
+    Thanks to Samuel Thibault for the patches (Closes: #897061)
+
+ -- Dominique Dumont <dod@debian.org>  Sun, 27 May 2018 15:22:29 +0200
+
+libuv1 (1.20.2-1) experimental; urgency=medium
+
+  * new upstream version
+  * control:
+    * update Vcs-Browser and Vcs-Git
+    * drop versioned dep on dh-exec
+    * declare compliance with policy 4.1.4
+    * set dod@debian.org as Maintainer
+  * copyright:
+    * use https URL for Format (cme)
+    * add  debian/fill.copyright.blanks.yml
+    * refreshed copyright with cme
+  * update symbols file
+  * add README.source
+  * removed patch fix_udp_multicast_test (applied upstream)
+  * fix typo in patch description
+  * rules: enable hardening
+  * add testsuite instructions
+
+ -- Dominique Dumont <dod@debian.org>  Sat, 05 May 2018 14:46:39 +0200
+
+libuv1 (1.18.0-3~bpo9+1) stretch-backports; urgency=medium
+
+  * Rebuild for stretch-backports.
+
+ -- Pirate Praveen <praveen@debian.org>  Wed, 02 May 2018 11:46:14 +0530
+
+libuv1 (1.18.0-3) unstable; urgency=medium
+
+  * Team upload.
+  * release to unstable
+
+ -- Dominique Dumont <dod@debian.org>  Mon, 01 Jan 2018 16:23:16 +0100
+
+libuv1 (1.18.0-2) experimental; urgency=medium
+
+  * Add patch to fix sometimes failing multicast tests
+
+ -- Jérémy Lal <kapouer@melix.org>  Fri, 29 Dec 2017 12:30:19 +0100
+
+libuv1 (1.18.0-1) experimental; urgency=medium
+
+  * Team upload.
+  * New upstream release (Closes: #884384)
+  * update libuv1.symbols for 1.18.0
+  * control: declare compliance with policy 4.1.2
+
+ -- Dominique Dumont <dod@debian.org>  Fri, 22 Dec 2017 16:47:54 +0100
+
+libuv1 (1.11.0-2) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Jérémy Lal <kapouer@melix.org>  Sun, 05 Nov 2017 21:32:13 +0100
+
+libuv1 (1.11.0-1) experimental; urgency=medium
+
+  * Team upload.
+  * New upstream release
+  * Drop kfreebsd patch, applied upstream
+  * Upgrade upstream tarball signing key
+  * Fix watch file
+  * Remove pthread-fixes.h from debian/copyright
+  * Add pthread-barrier.c in debian/copyright, ISC license
+  * Update libuv1.symbols
+  * Disable DNS requests during tests (Closes: #830192)
+    This requires disable_ipv6_test.patch
+  * Migrate dh_strip to automatic dbgsym
+
+ -- Jérémy Lal <kapouer@melix.org>  Mon, 16 Oct 2017 11:42:27 +0200
+
+libuv1 (1.9.1-3) unstable; urgency=medium
+
+  * Team upload.
+  * Make libuv1-dev libkvm-dev on kfreebsd-any.  (Closes: #834563)
+  * Bump Standards-Version to 3.9.8, no changes needed.
+  * Add patch from upstream to don't fail the build if /dev/pty is not present.
+
+ -- Mattia Rizzolo <mattia@debian.org>  Sun, 23 Oct 2016 13:36:45 +0000
+
+libuv1 (1.9.1-2) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Mattia Rizzolo ]
+  * Fix Vcs-Git
+
+  [ Dominique Dumont ]
+  * fix patch to avoid bogus signal blockers on arm64 (Closes: #841354)
+    Many thanks to Tobias Leich (FROGGS) and Perl6/Moar team for
+    the help fixing this bug
+
+ -- Dominique Dumont <dod@debian.org>  Fri, 21 Oct 2016 13:06:07 +0200
+
+libuv1 (1.9.1-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 29 May 2016 19:29:08 +0200
+
+libuv1 (1.9.0-1) unstable; urgency=medium
+
+  * New upstream release
+    + New symbols introduced
+  * Bump Standards-Version
+  * Move Vcs-* headers to HTTPS endpoints
+
+ -- Luca Bruno <lucab@debian.org>  Thu, 07 Apr 2016 23:55:20 +0200
+
+libuv1 (1.8.0-1) unstable; urgency=medium
+
+  * New upstream release
+    + New symbols introduced
+  * Dropped iovec patch, merged upstream
+
+ -- Luca Bruno <lucab@debian.org>  Mon, 14 Dec 2015 23:29:09 +0100
+
+libuv1 (1.7.5-1) unstable; urgency=medium
+
+  * New upstream release
+  * Updated test patch for iovec testsuite failures
+
+ -- Luca Bruno <lucab@debian.org>  Wed, 23 Sep 2015 00:31:22 +0200
+
+libuv1 (1.7.4-2) unstable; urgency=medium
+
+  * Initial porting to kFreeBSD (Closes: #799446)
+
+ -- Luca Bruno <lucab@debian.org>  Sat, 19 Sep 2015 20:56:54 +0200
+
+libuv1 (1.7.4-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Luca Bruno <lucab@debian.org>  Mon, 14 Sep 2015 17:52:09 +0200
+
+libuv1 (1.7.3-1) unstable; urgency=medium
+
+  * New upstream release
+    + Bugfix for a regression in threadpool work scheduling
+
+ -- Luca Bruno <lucab@debian.org>  Fri, 28 Aug 2015 10:48:40 +0200
+
+libuv1 (1.7.2-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Luca Bruno <lucab@debian.org>  Tue, 25 Aug 2015 19:32:15 +0200
+
+libuv1 (1.7.1-1) unstable; urgency=medium
+
+  * New upstream release
+    + test patch for iovec test failures
+  * symbols: fixes for non-linux ports
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 23 Aug 2015 13:43:59 +0200
+
+libuv1 (1.7.0-1) unstable; urgency=medium
+
+  * New upstream release
+    + upstream tarballs are now signed
+    + skip some tests when network is unreachable
+  * shlibs: add symbols file
+
+ -- Luca Bruno <lucab@debian.org>  Thu, 06 Aug 2015 22:50:41 +0200
+
+libuv1 (1.6.1-3) unstable; urgency=medium
+
+  * testsuite: attempt at fixing test runner on mips/mipsel
+
+ -- Luca Bruno <lucab@debian.org>  Tue, 07 Jul 2015 17:38:16 +0200
+
+libuv1 (1.6.1-2) unstable; urgency=high
+
+  * Fix mips/mipsel FTBFS due to incorrect epoll_pwait call
+    (Closes: #787751)
+  * control: fix git repo location
+
+ -- Luca Bruno <lucab@debian.org>  Mon, 15 Jun 2015 20:49:02 +0200
+
+libuv1 (1.6.1-1) unstable; urgency=medium
+
+  * New upstream release
+    + Memory allocator is now customizable
+    + Many bugfixes
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 07 Jun 2015 18:54:03 +0200
+
+libuv1 (1.4.2-1) unstable; urgency=medium
+
+  * New upstream stable branch (Closes: #758310)
+    + source/soname bump to libuv1
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 12 Apr 2015 16:33:22 +0200
+
+libuv (0.10.28-6) unstable; urgency=high
+
+  * Backported: call setgroups before calling setuid/setgid
+    (Closes: #779173 - CVE-2015-0278)
+
+ -- Luca Bruno <lucab@debian.org>  Wed, 25 Feb 2015 10:50:58 +0100
+
+libuv (0.10.28-5) unstable; urgency=medium
+
+  * Too early for versioned provides, reverted
+    (Closes: #762291, #762300)
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 21 Sep 2014 14:49:26 +0200
+
+libuv (0.10.28-4) unstable; urgency=medium
+
+  * control: provide versioned virtual package
+  * Fix arm64 failures due to missing epoll_wait()
+
+ -- Luca Bruno <lucab@debian.org>  Sat, 20 Sep 2014 11:49:39 +0200
+
+libuv (0.10.28-3) unstable; urgency=medium
+
+  * Rename -dev package, prepare for multiple versions
+  * Add a libuv0.10-dev binary package
+
+ -- Luca Bruno <lucab@debian.org>  Tue, 26 Aug 2014 20:34:31 +0200
+
+libuv (0.10.28-2) unstable; urgency=medium
+
+  * Testsuite is fragile on kfreebsd, ignore transient failures there
+    (Closes: #754756)
+
+ -- Luca Bruno <lucab@debian.org>  Tue, 19 Aug 2014 22:57:23 +0200
+
+libuv (0.10.28-1) unstable; urgency=medium
+
+  * New upstream release
+   + Drop patches applied upstream
+
+ -- Luca Bruno <lucab@debian.org>  Sat, 16 Aug 2014 21:21:55 +0200
+
+libuv (0.10.27-2) unstable; urgency=medium
+
+  * Fix "spawn_closed_process_io" test failure
+    (Closes: #750301)
+
+ -- Luca Bruno <lucab@debian.org>  Tue, 10 Jun 2014 19:59:51 +0200
+
+libuv (0.10.27-1) unstable; urgency=medium
+
+  * Bump Standards-Version
+  * New upstream release
+    + Refreshed quilt patches
+
+ -- Luca Bruno <lucab@debian.org>  Sat, 10 May 2014 18:56:41 +0200
+
+libuv (0.10.25-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 02 Mar 2014 16:38:59 +0100
+
+libuv (0.10.24-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 02 Mar 2014 13:36:07 +0100
+
+libuv (0.10.23-1) unstable; urgency=medium
+
+  * New upstream release
+    + Drop stat parsing patch, merged upstream
+
+ -- Luca Bruno <lucab@debian.org>  Sat, 01 Mar 2014 18:07:52 +0100
+
+libuv (0.10.22-2) unstable; urgency=medium
+
+  * Relax /proc/stat parsing assumptions, prevent FTBFS on sparc
+
+ -- Luca Bruno <lucab@debian.org>  Mon, 20 Jan 2014 10:40:59 +0100
+
+libuv (0.10.22-1) unstable; urgency=medium
+
+  * New upstream version
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 19 Jan 2014 15:20:49 +0100
+
+libuv (0.10.21-1) unstable; urgency=medium
+
+  * New upstream version
+    + Drop SO_REUSEPORT patch, merged upstream
+
+ -- Luca Bruno <lucab@debian.org>  Mon, 23 Dec 2013 22:58:01 +0100
+
+libuv (0.10.19-2) unstable; urgency=low
+
+  * Upstream backport: fix up SO_REUSEPORT commit
+
+ -- Luca Bruno <lucab@debian.org>  Mon, 25 Nov 2013 21:59:02 +0100
+
+libuv (0.10.19-1) unstable; urgency=low
+
+  * New upstream stable version
+    + Drop SO_REUSEPORT patch, merged upstream
+
+ -- Luca Bruno <lucab@debian.org>  Sun, 24 Nov 2013 17:06:49 +0100
+
+libuv (0.10.18-1) unstable; urgency=low
+
+  * New upstream stable version
+
+ -- Luca Bruno <lucab@debian.org>  Thu, 24 Oct 2013 19:40:55 +0200
+
+libuv (0.10.17-1) unstable; urgency=low
+
+  * Initial upload to unstable
+  * Add proper fields for multiarch support
+
+ -- Luca Bruno <lucab@debian.org>  Tue, 08 Oct 2013 16:15:50 +0200
+
+libuv (0.10.17-0~exp2) experimental; urgency=low
+
+  * Mark tty test as skipped
+  * Relax timing assumptions of timer_again test
+
+ -- Luca Bruno <lucab@debian.org>  Sat, 28 Sep 2013 15:47:41 +0200
+
+libuv (0.10.17-0~exp1) experimental; urgency=low
+
+  * New upstream release
+  * Update watch file to only track stable tags
+  * Relax timing assumptions of loop_stop test
+
+ -- Luca Bruno <lucab@debian.org>  Sat, 28 Sep 2013 09:00:29 +0200
+
+libuv (0.10.16-0~exp1) experimental; urgency=low
+
+  * New upstream version 0.10.16
+    + Refreshed all local patches
+
+ -- Luca Bruno <lucab@debian.org>  Fri, 27 Sep 2013 16:18:12 +0200
+
+libuv (0.10.8-0~exp4) experimental; urgency=low
+
+  * Add pkg-config support file for libuv
+  * Initial port to kfreebsd-any
+    + Add libkvm-dev build-dep for kfreebsd
+    + A couple of tests are sometime failing
+
+ -- Luca Bruno <lucab@debian.org>  Wed, 18 Sep 2013 10:49:27 +0200
+
+libuv (0.10.8-0~exp3) experimental; urgency=low
+
+  * Fix test suite errors (Closes: #722283)
+    + Adjust test runner invocation for missing TTY on buildd
+    + Backport patch: fix setsockopt(SO_REUSEPORT) error handling
+
+ -- Luca Bruno <lucab@debian.org>  Tue, 10 Sep 2013 19:26:24 +0200
+
+libuv (0.10.8-0~exp2) unstable; urgency=low
+
+  * Use canonical URL in Vcs-Git tag
+  * Enable built-time tests
+
+ -- Luca Bruno <lucab@debian.org>  Fri, 06 Sep 2013 23:17:04 +0200
+
+libuv (0.10.8-0~exp1) experimental; urgency=low
+
+  * Initial upload (Closes: #709480)
+
+ -- Luca Bruno <lucab@debian.org>  Sat, 25 May 2013 21:11:26 +0200

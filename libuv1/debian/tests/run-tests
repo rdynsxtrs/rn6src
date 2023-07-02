@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+echo "creating makefile for tests"
+./gyp_uv.py -f make
+
+if [ -n "${DEB_HOST_GNU_TYPE:-}" ]; then
+    CROSS_COMPILE=${DEB_HOST_GNU_TYPE}-
+else
+    CROSS_COMPILE=
+fi
+
+echo "creating test binaries"
+make -C out CC=${CROSS_COMPILE}gcc LINK=${CROSS_COMPILE}gcc
+
+echo "Runing tests"
+./out/Debug/run-tests
+
+echo "tests are done"

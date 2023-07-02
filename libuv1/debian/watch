@@ -1,0 +1,3 @@
+version=3
+opts=pgpsigurlmangle=s/$/.sign/ \
+ https://dist.libuv.org/dist/v(\d+\.\d+\.\d+)/libuv-v(\d+\.\d+\.\d+)\.tar\.gz

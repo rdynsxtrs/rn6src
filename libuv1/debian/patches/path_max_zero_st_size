@@ -1,0 +1,94 @@
+Description: fix undefined path_max for st_size zero
+ The downstream 'path_max' patch in Debian sets the buffer size
+ for readlink() to the 'st_size' value obtained with lstat().
+ .
+ However, it might be zero for some symlinks in /proc on Linux
+ (notably /proc/self) leading to readlink() failing with EINVAL.
+ .
+     $ strace -e lstat stat /proc/self 2>&1 \
+         | grep -e lstat -e File: -e Size:
+     lstat("/proc/self", {st_mode=S_IFLNK|0777, st_size=0, ...}) = 0
+       File: /proc/self -> 30875
+       Size: 0             Blocks: 0          IO Block: 1024   symbolic link
+ .
+ This causes readlink (tool) to files like /dev/stdin to fail,
+ which may link to /proc/self/fd/0 on containers or elsewhere.
+ .
+ Test-case:
+ .
+     ubuntu@cosmic:~/node$
+     $ strace -E LD_LIBRARY_PATH=/usr/local/lib/ -f -e lstat,readlink \
+       node test/parallel/test-fs-realpath-pipe.js
+ .
+ With path_max:
+ .
+     [pid 17785] lstat("/dev", {st_mode=S_IFDIR|0755, st_size=480, ...}) = 0
+     [pid 17786] lstat("/dev/stdin", {st_mode=S_IFLNK|0777, st_size=15, ...}) = 0
+     [pid 17788] lstat("/dev/stdin", {st_mode=S_IFLNK|0777, st_size=15, ...}) = 0
+     [pid 17788] readlink("/dev/stdin", "/proc/self/fd/0", 15) = 15
+ .
+     [pid 17785] lstat("/proc", {st_mode=S_IFDIR|0555, st_size=0, ...}) = 0
+     [pid 17786] lstat("/proc/self", {st_mode=S_IFLNK|0777, st_size=0, ...}) = 0
+     [pid 17788] lstat("/proc/self", {st_mode=S_IFLNK|0777, st_size=0, ...}) = 0
+     [pid 17788] readlink("/proc/self", 0x7f2a6c000b40, 0) = -1 EINVAL (Invalid argument)
+ .
+ Without path_max:
+ .
+     [pid 18114] lstat("/dev", {st_mode=S_IFDIR|0755, st_size=480, ...}) = 0
+     [pid 18114] lstat("/dev/stdin", {st_mode=S_IFLNK|0777, st_size=15, ...}) = 0
+     [pid 18114] readlink("/dev/stdin", "/proc/self/fd/0", 4096) = 15
+ .
+     [pid 18114] lstat("/proc", {st_mode=S_IFDIR|0555, st_size=0, ...}) = 0
+     [pid 18114] lstat("/proc/self", {st_mode=S_IFLNK|0777, st_size=0, ...}) = 0
+     [pid 18114] readlink("/proc/self", "18114", 4096) = 5
+ .
+     [pid 18114] lstat("/proc/18114", {st_mode=S_IFDIR|0555, st_size=0, ...}) = 0
+     [pid 18114] lstat("/proc/18114/fd", {st_mode=S_IFDIR|0500, st_size=0, ...}) = 0
+     [pid 18114] lstat("/proc/18114/fd/0", {st_mode=S_IFLNK|0700, st_size=64, ...}) = 0
+     [pid 18114] readlink("/proc/18114/fd/0", "socket:[199607]", 4096) = 15
+ .
+ With this patch on top of path_max:
+ .
+     [pid 18433] lstat("/dev", {st_mode=S_IFDIR|0755, st_size=480, ...}) = 0
+     [pid 18433] lstat("/dev/stdin", {st_mode=S_IFLNK|0777, st_size=15, ...}) = 0
+     [pid 18433] lstat("/dev/stdin", {st_mode=S_IFLNK|0777, st_size=15, ...}) = 0
+     [pid 18433] readlink("/dev/stdin", "/proc/self/fd/0", 15) = 15
+ .
+     [pid 18433] lstat("/proc", {st_mode=S_IFDIR|0555, st_size=0, ...}) = 0
+     [pid 18433] lstat("/proc/self", {st_mode=S_IFLNK|0777, st_size=0, ...}) = 0
+     [pid 18433] lstat("/proc/self", {st_mode=S_IFLNK|0777, st_size=0, ...}) = 0
+     [pid 18433] readlink("/proc/self", "18433", 256) = 5
+ .
+     [pid 18433] lstat("/proc/18433", {st_mode=S_IFDIR|0555, st_size=0, ...}) = 0
+     [pid 18433] lstat("/proc/18433/fd", {st_mode=S_IFDIR|0500, st_size=0, ...}) = 0
+     [pid 18433] lstat("/proc/18433/fd/0", {st_mode=S_IFLNK|0700, st_size=64, ...}) = 0
+     [pid 18433] lstat("/proc/18433/fd/0", {st_mode=S_IFLNK|0700, st_size=64, ...}) = 0
+     [pid 18433] readlink("/proc/18433/fd/0", "socket:[191351]", 64) = 15
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/1792647
+Bug-Debian: https://bugs.debian.org/909011
+From: Mauricio Faria de Oliveira <mfo@canonical.com>
+Reviewed-by: dod
+---
+ src/unix/fs.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+--- a/src/unix/fs.c
++++ b/src/unix/fs.c
+@@ -690,6 +690,17 @@
+     maxlen = uv__fs_pathmax_size(req->path);
+ #endif
+ 
++  /* Some symlinks in /proc report st_size == 0 */
++  if (maxlen == 0) {
++#if defined(_POSIX_PATH_MAX)
++    maxlen = _POSIX_PATH_MAX;
++#elif defined(PATH_MAX)
++    maxlen = PATH_MAX;
++#else
++    maxlen = 4096; /* fallback */
++#endif
++  }
++
+   buf = uv__malloc(maxlen);
+ 
+   if (buf == NULL) {
