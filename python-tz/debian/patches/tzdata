@@ -1,0 +1,71 @@
+Description: Use system zone information from the tzdata package
+Author: Kurt Roeckx <kurt@roeckx.be>
+Author: Hilko Bengen <bengen@debian.org>
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=416202
+Forwarded: not-needed
+Last-Update: 2016-11-24
+
+Index: python-tz/pytz/__init__.py
+===================================================================
+--- python-tz.orig/pytz/__init__.py
++++ python-tz/pytz/__init__.py
+@@ -77,23 +77,12 @@ def open_resource(name):
+     Uses the pkg_resources module if available and no standard file
+     found at the calculated location.
+     """
++    # Patched in Debian, use the system zoneinfo from the tzdata package
+     name_parts = name.lstrip('/').split('/')
+     for part in name_parts:
+         if part == os.path.pardir or os.path.sep in part:
+             raise ValueError('Bad path segment: %r' % part)
+-    filename = os.path.join(os.path.dirname(__file__),
+-                            'zoneinfo', *name_parts)
+-    if not os.path.exists(filename):
+-        # http://bugs.launchpad.net/bugs/383171 - we avoid using this
+-        # unless absolutely necessary to help when a broken version of
+-        # pkg_resources is installed.
+-        try:
+-            from pkg_resources import resource_stream
+-        except ImportError:
+-            resource_stream = None
+-
+-        if resource_stream is not None:
+-            return resource_stream(__name__, 'zoneinfo/' + name)
++    filename = os.path.join('/usr/share/zoneinfo', *name_parts)
+     return open(filename, 'rb')
+ 
+ 
+Index: python-tz/pytz/tzfile.py
+===================================================================
+--- python-tz.orig/pytz/tzfile.py
++++ python-tz/pytz/tzfile.py
+@@ -127,7 +127,8 @@ def build_tzinfo(zone, fp):
+ if __name__ == '__main__':
+     import os.path
+     from pprint import pprint
+-    base = os.path.join(os.path.dirname(__file__), 'zoneinfo')
++    # Patched in Debian, use the system zoninfo from the tzdata package
++    base = '/usr/share/zoneinfo'
+     tz = build_tzinfo('Australia/Melbourne',
+                       open(os.path.join(base,'Australia','Melbourne'), 'rb'))
+     tz = build_tzinfo('US/Eastern',
+Index: python-tz/setup.py
+===================================================================
+--- python-tz.orig/setup.py
++++ python-tz/setup.py
+@@ -13,15 +13,8 @@ me = 'Stuart Bishop'
+ memail = 'stuart@stuartbishop.net'
+ packages = ['pytz']
+ resources = ['zone.tab', 'locales/pytz.pot']
+-for dirpath, dirnames, filenames in os.walk(os.path.join('pytz', 'zoneinfo')):
+-    # remove the 'pytz' part of the path
+-    basepath = dirpath.split(os.path.sep, 1)[1]
+-    resources.extend([os.path.join(basepath, filename)
+-                     for filename in filenames])
+ package_data = {'pytz': resources}
+ 
+-assert len(resources) > 10, 'zoneinfo files not found!'
+-
+ setup (
+     name='pytz',
+     version=pytz.VERSION,

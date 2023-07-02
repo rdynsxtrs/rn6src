@@ -1,0 +1,289 @@
+python-tz (2016.7-0.3+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Wed, 19 Jan 2022 01:19:52 +0100
+
+python-tz (2016.7-0.3) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Apply patch from upstream to assume tzdata/2017a abbreviations for
+    timezones. Thanks to Graham Inggs for forwarding this to the BTS.
+    (Closes: #858133)
+    - Build-depend on tzdata 2017a, since the tests will now fail in the
+      opposite way with older tzdata
+
+ -- Simon McVittie <smcv@debian.org>  Sun, 02 Apr 2017 17:20:24 +0100
+
+python-tz (2016.7-0.2) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * Simplify build, enable tests, loosely following Arnaud Fontaine's
+    suggestions
+
+ -- Hilko Bengen <bengen@debian.org>  Fri, 25 Nov 2016 12:05:08 +0100
+
+python-tz (2016.7-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * New upstream version 2016.7 (Closes: #824374)
+  * Add tzdata build-dependency (Closes: #839460)
+  * Re-enable, rebase zoneinfo patch
+  * Modernize package (Closes: #674083)
+    * Bump Standards-Version
+    * Bump Debhelper version, simplify debian/rules
+
+ -- Hilko Bengen <bengen@debian.org>  Wed, 23 Nov 2016 23:55:03 +0100
+
+python-tz (2015.7+dfsg-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload. (Closes: #792192)
+  * New upstream release. (Closes: #799720)
+  * Run unit tests in each stage of the build.
+
+ -- Neil Williams <codehelp@debian.org>  Sat, 20 Feb 2016 10:05:06 +0000
+
+python-tz (2012c+dfsg-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Repack without zoneinfo files. (Closes: #714346)
+    + Add pytz/zoneinfo to Files-Excluded in d/copyright.
+    + Add dversionmangle to d/watch.
+    + Patch setup.py to not install zoneinfo files.
+    + Remove removal of zoneinfo files from d/rules.
+
+ -- Helmut Grohne <helmut@subdivi.de>  Wed, 12 Nov 2014 22:19:38 +0100
+
+python-tz (2012c-1) unstable; urgency=low
+
+  * Team upload.
+  * New upstream release.
+    + Update upstream copyright years.
+  * debian/docs:
+    + Drop PKG-INFO as the useful content is the same as README.txt.
+    + Drop CHANGES.txt as dh_installchangelogs already takes care of it.
+  * debian/control: bump Standards-Version to 3.9.3.
+    + debian/copyright: Update Format URL as DEP5 has been accepted.
+  * Remove debian/clean in favor of ignoring egg-info directory in
+    debian/source/options to avoid diff of files in this directory.
+  * debian/patch/tzdata: add patch information (merge from Ubuntu package).
+
+ -- Arnaud Fontaine <arnau@debian.org>  Wed, 06 Jun 2012 11:10:31 +0900
+
+python-tz (2011h-1) unstable; urgency=low
+
+  * Team upload.
+
+  [ Arnaud Fontaine ]
+  * debian/watch:
+    - fix URL.
+  * debian/patches/tzdata:
+    - update following new upstream release.
+    - Add missing patch for tzfile.py. Thanks to Matt Giuca (Closes: #579704)
+  * Add Python3 support. Thanks to Stefano Rivera (Closes: #641506)
+  * Add debian/clean to get rid of egg-info/* to prevent FTBFS if
+    built twice.
+
+  [ Gediminas Paulauskas ]
+  * Switch to dh_python2 (Closes: #617041):
+  * Switch to source format 3.0 (quilt)
+  * debian/control:
+    - build-depend on python-all (not -dev)
+    - remove Build-Depends on python-central, python-van.pydeb and quilt
+    - add Vcs-Browser
+  * debian/patches/tzdata: also remove import of pkg_resources (Closes: #599047)
+  * debian/copyright: rewrite in dep5 format.
+
+ -- Arnaud Fontaine <arnau@debian.org>  Fri, 21 Oct 2011 14:53:37 +0900
+
+python-tz (2011h-0.1) unstable; urgency=low
+
+  * Non-maintainer upload
+  * New upstream release (Closes: #616650)
+
+ -- Yaroslav Halchenko <debian@onerussian.com>  Tue, 13 Sep 2011 20:04:04 -0400
+
+python-tz (2010b-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Wed, 27 Jan 2010 18:33:59 +0100
+
+python-tz (2009u-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Wed, 06 Jan 2010 15:17:35 +0100
+
+python-tz (2009p-1) unstable; urgency=low
+
+  [ Brian Sutherland ]
+  * Apply modified patch from Kumar Appaiah to use Use
+    /usr/share/python/python.mk to allow building on python2.6.
+    (Closes: #547857)
+
+  [ Fabio Tranchitella ]
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Sun, 08 Nov 2009 10:00:03 +0100
+
+python-tz (2009n-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Mon, 12 Oct 2009 06:46:27 +0000
+
+python-tz (2009l-1) unstable; urgency=low
+
+  * New upstream release.
+  * Standards-Version: 3.8.3, no changed required.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Fri, 28 Aug 2009 11:26:15 +0200
+
+python-tz (2009g-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: Standards-Version: 3.8.1, no changes needed.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Thu, 04 Jun 2009 13:27:25 +0200
+
+python-tz (2009d-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Fri, 27 Mar 2009 14:24:43 +0100
+
+python-tz (2009a-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: set priority to optional. (Closes: #510028)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Fri, 27 Feb 2009 18:49:49 +0100
+
+python-tz (2008i-1) unstable; urgency=low
+
+  * New uptsream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Tue, 18 Nov 2008 21:12:44 +0100
+
+python-tz (2008h-1) unstable; urgency=low
+
+  * New upstream version.
+    - Fixes lookup errors with unknown timezones (error setting US/Pacific-New
+      timezone. LP: #244681).
+  * debian/copyright: Update copyright year and download location.
+  * debian/control: Update homepage.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 27 Oct 2008 07:29:54 +0000
+
+python-tz (2008c-2) unstable; urgency=low
+
+  * Do not use setuptools to build the package (the setup falls back to
+    distutils).
+  * Set version to 2008c. Closes: #489979.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 09 Jul 2008 10:21:45 +0200
+
+python-tz (2008c-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Tue, 08 Jul 2008 09:12:42 +0200
+
+python-tz (2008b-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Fabio Tranchitella <kobold@debian.org>  Wed, 23 Apr 2008 10:01:59 +0200
+
+python-tz (2008a-2) unstable; urgency=low
+
+  * debian/control: really fix dependencies on python, thanks dato.
+    (Closes: #450740)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Tue, 15 Apr 2008 08:40:51 +0200
+
+python-tz (2008a-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/watch: updated. (Closes: #450014)
+  * debian/control: fixed dependencies on python. (Closes: #450740)
+
+ -- Fabio Tranchitella <kobold@debian.org>  Wed, 19 Mar 2008 09:11:43 +0100
+
+python-tz (2007d-1) unstable; urgency=low
+
+  * New upstream release (Closes: 415458)
+  * Revert patch ignoring arch files, it's not necessary any and conflicted
+    with upstream.
+  * Patch upstream to use /usr/share/zoneinfo and remove the included version,
+    also depend on tzdata package. (Closes: 416202)
+  * Write and install a testrunner that can run the pytz tests in
+    /usr/lib/python-tz/test-pytxX.Y which tests pythonX.Y.
+  * Build depends on python-central > 0.5, debhelper > 5.0.38
+  * Remove workaround for python-central/debhelper breakage.
+
+ -- Brian Sutherland <jinty@web.de>  Wed,  9 May 2007 12:01:36 +0200
+
+python-tz (2006p-0.2) unstable; urgency=low
+
+  * Fix watch file to look at the python cheeseshop.
+
+ -- Brian Sutherland <brian@vanguardistas.net>  Sun,  6 May 2007 23:30:49 +0200
+
+python-tz (2006p-0.1) unstable; urgency=low
+
+  * NMU.
+  * New upstream version, matching the version of the tzdata package.
+
+ -- Matthias Klose <doko@debian.org>  Sun,  7 Jan 2007 11:42:00 +0100
+
+python-tz (2006g-1) unstable; urgency=low
+
+  * New upstream version.
+  * Update to new python policy using python-central (Closes: #373361)
+
+ -- Brian Sutherland <jinty@web.de>  Wed, 14 Jun 2006 17:54:32 +0200
+
+python-tz (2005r-1) unstable; urgency=low
+
+  * New upstream version.
+  * Update watchfile to use qa.debian.org's re-director.
+  * Bump standards version to 3.6.2.
+
+ -- Brian Sutherland <jinty@web.de>  Sun,  1 Jan 2006 20:29:56 +0100
+
+python-tz (2005m-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Brian Sutherland <jinty@web.de>  Thu, 15 Sep 2005 14:45:50 +0200
+
+python-tz (2005k-1) unstable; urgency=low
+
+  * New upsteam version.
+  * Debian specific patch removing extraneous she-bangs removed as it was
+    accepted upstream.
+
+ -- Brian Sutherland <jinty@web.de>  Mon,  5 Sep 2005 00:34:10 +0200
+
+python-tz (2005i-2) unstable; urgency=low
+
+  * Build python2.4 library so that the zope3-lib can depend on it, see
+    #317742.
+  * Replaces zope3-lib.
+  * Patch setup.py to ignore .arch-ids directories.
+
+ -- Brian Sutherland <jinty@web.de>  Fri, 29 Jul 2005 00:01:54 +0200
+
+python-tz (2005i-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Brian Sutherland <jinty@web.de>  Tue, 31 May 2005 18:02:23 +0200
+
+python-tz (2005a-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Brian Sutherland <jinty@web.de>  Tue,  8 Feb 2005 02:14:33 +0100

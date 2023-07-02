@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME=tz
+
+%:
+	dh $@ --with=python2,python3 --buildsystem=pybuild
+
+override_dh_auto_test:
+	dh_auto_test -- --before-test="\
+		cp $(CURDIR)/README.txt {build_dir}; \
+		cp -r $(CURDIR)/pytz/tests {build_dir}/pytz/" \
+		--after-test="rm -rf {build_dir}/README.txt {build_dir}/pytz/tests"
