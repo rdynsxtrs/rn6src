@@ -1,0 +1,1 @@
+rm_conffile /etc/init/php@PHP_VERSION@-fpm.conf 7.2.28-3~ php@PHP_VERSION@-fpm
