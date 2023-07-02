@@ -1,0 +1,430 @@
+php-redis (5.3.7+4.3.0-2+0~20221210.45+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 09 Jan 2023 11:12:10 +0100
+
+php-redis (5.3.7+4.3.0-2+0~20221210.45+debian10~1.gbp99917f) unstable; urgency=medium
+
+  ** SNAPSHOT build @99917f462adbafb14fe16b74ab8b4a97576981ee **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Sat, 10 Dec 2022 21:02:24 +0100
+
+php-redis (5.3.7+4.3.0-2) unstable; urgency=medium
+
+  * Regenerate d/control for PHP 8.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 09 Dec 2022 14:05:11 +0100
+
+php-redis (5.3.7+4.3.0-1) unstable; urgency=medium
+
+  * New upstream version 5.3.7+4.3.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 30 Mar 2022 16:42:41 +0200
+
+php-redis (5.3.6+4.3.0-1) unstable; urgency=medium
+
+  * New upstream version 5.3.6+4.3.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 31 Jan 2022 16:37:36 +0100
+
+php-redis (5.3.5+4.3.0-5) unstable; urgency=medium
+
+  * Fix the d/control for PHP 8.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 03 Jan 2022 15:01:33 +0100
+
+php-redis (5.3.5+4.3.0-4) unstable; urgency=medium
+
+  * Regenerate d/control for PHP 8.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 01 Jan 2022 13:09:57 +0100
+
+php-redis (5.3.5+4.3.0-2) unstable; urgency=medium
+
+  * Regenerate d/control for PHP 8.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 31 Dec 2021 09:38:51 +0100
+
+php-redis (5.3.5+4.3.0-1) unstable; urgency=medium
+
+  * New upstream version 5.3.5+4.3.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 31 Dec 2021 09:37:44 +0100
+
+php-redis (5.3.4+4.3.0-6) unstable; urgency=medium
+
+  * Recompile for PHP 7.4 until the transition is complete
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 26 Nov 2021 11:26:26 +0100
+
+php-redis (5.3.4+4.3.0-5) unstable; urgency=medium
+
+  * Update the packaging to dh-php >= 4~
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 10 Nov 2021 12:01:05 +0100
+
+php-redis (5.3.4+4.3.0-4) unstable; urgency=medium
+
+  * Revert "Don't enable compression support on Debian Jessie and Ubuntu
+    Xenial backports"
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 08 Sep 2021 18:54:39 +0200
+
+php-redis (5.3.4+4.3.0-3) unstable; urgency=medium
+
+  * Don't enable compression support on Debian Jessie and Ubuntu Xenial
+    backports
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 07 Sep 2021 19:57:46 +0200
+
+php-redis (5.3.4+4.3.0-2) unstable; urgency=medium
+
+  * Enable compression support for php-redis [GH #1585]
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Aug 2021 12:12:12 +0200
+
+php-redis (5.3.4+4.3.0-1) unstable; urgency=medium
+
+  * New upstream version 5.3.4+4.3.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Mar 2021 13:01:23 +0200
+
+php-redis (5.3.2+4.3.0-7) unstable; urgency=medium
+
+  * Bump B-D to dh-php >= 3.1~
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 18:07:56 +0100
+
+php-redis (5.3.2+4.3.0-6) unstable; urgency=medium
+
+  * Revert arch:all change, as it breaks shlibs:Depends
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 13:21:46 +0100
+
+php-redis (5.3.2+4.3.0-5) unstable; urgency=medium
+
+  * Change B-D from php-igbinary to php-igbinary-all-dev
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 12:40:58 +0100
+
+php-redis (5.3.2+4.3.0-4) unstable; urgency=medium
+
+  * The main dummy package is arch:all
+  * Bump dh-php Build-Depends to >= 3.0~
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 07:51:21 +0100
+
+php-redis (5.3.2+4.3.0-3) unstable; urgency=medium
+
+  * Sync the changelog with Debian bullseye
+  * Update d/gbp.conf for debian/main branch
+  * Update standards version to 4.5.1 (no change)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Feb 2021 12:11:03 +0100
+
+php-redis (5.3.2+4.3.0-2) unstable; urgency=medium
+
+  * Update d/watch to use https://pecl.php.net
+  * Lower the dh-php dependency to Debian sid version
+  * Update d/gbp.conf for Debian bullseye
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 14 Feb 2021 16:41:07 +0100
+
+php-redis (5.3.2+4.3.0-1) unstable; urgency=medium
+
+  * New upstream version 5.3.2+4.3.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 05 Nov 2020 10:35:31 +0100
+
+php-redis (5.3.2~rc1+4.3.0-2) unstable; urgency=medium
+
+  * Add igbinary as optional dependency to package*.xml
+  * Update for dh-php >= 2.0 support
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:31:07 +0200
+
+php-redis (5.3.2~rc1+4.3.0-1) unstable; urgency=medium
+
+  * Build with dh-php >= 1.0
+  * New upstream version 5.3.2~rc1+4.3.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 22:26:14 +0200
+
+php-redis (5.3.1+4.3.0-1) unstable; urgency=medium
+
+  * Remove cyb from Uploaders (Closes: #960555)
+  * Finish conversion to debhelper compat level 10
+  * New upstream version 5.3.1+4.3.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 08 Jul 2020 09:50:58 +0200
+
+php-redis (5.3.0+4.3.0-2) unstable; urgency=medium
+
+  * Update php-redis to pre-release branch of 5.3.1 to fix the serious
+    crash
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 07 Jul 2020 08:53:45 +0200
+
+php-redis (5.3.0+4.3.0-1) unstable; urgency=medium
+
+  * New upstream version 5.3.0+4.3.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 03 Jul 2020 09:49:59 +0200
+
+php-redis (5.2.1+4.3.0-1) unstable; urgency=medium
+
+  * New upstream version 5.2.1+4.3.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 21 Mar 2020 11:27:18 +0100
+
+php-redis (5.2.0+4.3.0-1) unstable; urgency=medium
+
+  * New upstream version 5.2.0+4.3.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Mar 2020 09:07:04 +0100
+
+php-redis (5.1.1+4.3.0-1) unstable; urgency=medium
+
+  * New upstream version 5.1.1+4.3.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 19 Dec 2019 12:29:36 +0100
+
+php-redis (5.0.2+4.3.0-2) unstable; urgency=medium
+
+  * Add upstream patch to fix ->keys('*') segmentation fault [GH #1217]
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 09 Aug 2019 15:01:58 +0200
+
+php-redis (5.0.2+4.3.0-1) unstable; urgency=medium
+
+  * New upstream version 5.0.2+4.3.0
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 08 Aug 2019 08:57:24 +0200
+
+php-redis (4.3.0-1) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+  * New upstream version 4.3.0
+
+ -- Ondřej Surý <ondrej@sury.org>  Thu, 06 Jun 2019 10:00:11 +0200
+
+php-redis (4.2.0-1) unstable; urgency=medium
+
+  * New upstream version 4.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 14 Dec 2018 08:24:32 +0000
+
+php-redis (4.2.0~rc2-1) unstable; urgency=medium
+
+  * New upstream version 4.2.0~rc2
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 03 Nov 2018 18:18:01 +0000
+
+php-redis (4.1.1-2) unstable; urgency=medium
+
+  * Bump the required dh-php version to >= 0.33~
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 11:36:08 +0000
+
+php-redis (4.1.1-1) unstable; urgency=medium
+
+  * New upstream version 4.1.1
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899800)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 13:14:48 +0000
+
+php-redis (4.0.0-1) unstable; urgency=medium
+
+  * New upstream version 4.0.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 08 Apr 2018 06:24:06 +0000
+
+php-redis (3.1.6-1) unstable; urgency=medium
+
+  * Update the Vcs-* to salsa.d.o
+  * New upstream version 3.1.6
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 04 Jan 2018 15:13:14 +0000
+
+php-redis (3.1.4-1) unstable; urgency=medium
+
+  * New upstream version 3.1.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Sep 2017 20:19:46 +0200
+
+php-redis (3.1.4~rc1.really.3.1.2-1) unstable; urgency=medium
+
+  * New upstream version 3.1.4~rc1.really.3.1.2
+  * This is downgrade to 3.1.2 again.
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 12 Sep 2017 08:15:43 +0200
+
+php-redis (3.1.4~rc1-1) unstable; urgency=medium
+
+  * New upstream version 3.1.4~rc1
+    + With a fixed https://github.com/phpredis/phpredis/issues/1211
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 07 Sep 2017 20:15:23 +0200
+
+php-redis (3.1.2-1) unstable; urgency=medium
+
+  * New upstream version 3.1.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 29 Mar 2017 23:18:43 +0200
+
+php-redis (3.1.1-1) unstable; urgency=medium
+
+  * New upstream version 3.1.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 01 Feb 2017 09:57:39 +0100
+
+php-redis (3.1.1~rc2-1) unstable; urgency=medium
+
+  * New upstream version 3.1.1~rc2
+  * Remove already applied upstream patches
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 01 Feb 2017 09:57:36 +0100
+
+php-redis (3.1.1~rc1-2) unstable; urgency=medium
+
+  * Apply upstream patch to fix segfaults in redis extension
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 03 Jan 2017 20:47:54 +0100
+
+php-redis (3.1.1~rc1-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.1.1~rc1
+  * Remove all unneeded patches
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 29 Dec 2016 10:49:22 +0100
+
+php-redis (3.1.0-2) unstable; urgency=medium
+
+  * Add upstream patch to restore 3.0.0 session behaviour for PHP 7.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 24 Dec 2016 15:41:47 +0100
+
+php-redis (3.1.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.1.0
+  * Rebase patches on top of redis 3.1.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 21 Dec 2016 14:21:10 +0100
+
+php-redis (3.0.0+2.2.8-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.0.0+2.2.8
+  * Strip <max> PHP version from redis 3.0.0 package.xml
+    to allow PHP 7.1 builds
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Dec 2016 11:05:36 +0100
+
+php-redis (2.2.7-394-g892f928+2.2.7-4) unstable; urgency=medium
+
+  * Move php-igbinary to Depends (Closes: #826407)
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 06 Jun 2016 11:48:21 +0200
+
+php-redis (2.2.7-394-g892f928+2.2.7-3) unstable; urgency=medium
+
+  * Enable igbinary support again
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 03 Jun 2016 15:34:49 +0200
+
+php-redis (2.2.7-394-g892f928+2.2.7-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:19:26 +0200
+
+php-redis (2.2.7-394-g892f928+2.2.7-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.2.7-394-g892f928+2.2.7
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 16:22:16 +0200
+
+php-redis (2.2.7-389-g2887ad1+2.2.7-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.2.7-389-g2887ad1+2.2.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 06 Mar 2016 21:00:52 +0100
+
+php-redis (2.2.7-355-g799e0bc+2.2.7-4) unstable; urgency=medium
+
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 29 Feb 2016 22:29:38 +0100
+
+php-redis (2.2.7-355-g799e0bc+2.2.7-3) unstable; urgency=medium
+
+  * Enable igbinary serializer in the redis extension build
+  * Format d/copyright using wrap-and-sort -a
+  * Add php-igbinary to Recommends instead of Depends since it's not
+    needed unless you use igbinary serializer
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 18 Feb 2016 14:31:29 +0100
+
+php-redis (2.2.7-355-g799e0bc+2.2.7-2) unstable; urgency=medium
+
+  * Re-upload with lintian override for PHP license
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 15 Jan 2016 14:52:58 +0100
+
+php-redis (2.2.7-355-g799e0bc+2.2.7-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.2.7-355-g799e0bc+2.2.7
+  * Dual source build for PHP 5.6 and PHP 7.0
+  * Override wrong license-problem-php-license lintian check for packages
+    from PECL
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 17 Dec 2015 15:11:15 +0100
+
+php-redis (2.2.7-355-g799e0bc-1) unstable; urgency=medium
+
+  * Don't import ugly upstream debian/ directory  
+  * Imported Upstream version 2.2.7-355-g799e0bc to fix building with
+    PHP 7.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 09 Dec 2015 14:00:35 +0100
+
+php-redis (2.2.7-2) unstable; urgency=medium
+
+  * Convert package to PHP 7.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 09 Dec 2015 13:52:48 +0100
+
+php-redis (2.2.7-1) unstable; urgency=medium
+
+  * New upstream version 2.2.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 02 May 2015 13:29:53 +0200
+
+php-redis (2.2.5-1) unstable; urgency=low
+
+  * Team upload.
+  * Imported Upstream version 2.2.5
+  * d/changelog: fixed too long line
+  * d/control:
+    - bumped up standards version to 3.9.5 (no changes need)
+    - added phppear:Debian-Depends in Depends
+
+ -- Jonas Genannt <jonas.genannt@capi2name.de>  Tue, 25 Mar 2014 12:28:52 +0100
+
+php-redis (2.2.4-1) unstable; urgency=low
+
+  * Initial Release (Closes: #703452).
+  * Move under PHP PECL team umbrella
+  * Add Cyril Bouthors <cyb@debian.org> to Uploaders
+  * Add myself into Uploaders
+  * Don't use ${phppear:Debian-Depends} to not pull strict php5 dependency, use
+    ${php:Depends} instead
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 21 Oct 2013 10:19:51 +0200

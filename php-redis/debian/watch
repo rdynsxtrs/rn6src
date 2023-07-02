@@ -1,0 +1,3 @@
+version=3
+https://pecl.php.net/package/redis \
+  /get/redis-([\d\.]*).tgz  debian  uupdate
