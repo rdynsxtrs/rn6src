@@ -1,0 +1,58 @@
+Source: python-iso8601
+Section: python
+Priority: extra
+Maintainer: Debian Python Modules Team <python-modules-team@lists.alioth.debian.org>
+Uploaders: Benjamin Mako Hill <mako@debian.org>,
+           Barry Warsaw <barry@debian.org>
+Build-Depends: debhelper (>= 9),
+               dh-python,
+               pypy,
+               pypy-setuptools,
+               python-all,
+               python-pytest,
+               python-setuptools,
+               python3-all,
+               python3-pytest,
+               python3-setuptools
+Standards-Version: 3.9.6
+X-Python-Version: >= 2.6
+X-Python3-Version: >= 3.2
+Homepage: https://pypi.python.org/pypi/iso8601
+Vcs-Git: git://anonscm.debian.org/python-modules/packages/python-iso8601.git
+Vcs-Browser: http://anonscm.debian.org/cgit/python-modules/packages/python-iso8601.git
+
+Package: python-iso8601
+Architecture: all
+Depends: ${misc:Depends}, ${python:Depends}
+Provides: ${python:Provides}
+Description: Python module to parse ISO 8601 dates - Python 2.x
+ Many file formats and standards use the ISO 8601 date format
+ (e.g. 2007-01-14T20:34:22+00:00) to store dates in a neutral,
+ unambiguous manner. This simple Python module parses the most common
+ forms encountered and returns Python datetime objects.
+ .
+ This package provides the Python 2.x module.
+
+Package: python3-iso8601
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}
+Provides: ${python3:Provides}
+Description: Python module to parse ISO 8601 dates - Python 3.x
+ Many file formats and standards use the ISO 8601 date format
+ (e.g. 2007-01-14T20:34:22+00:00) to store dates in a neutral,
+ unambiguous manner. This simple Python module parses the most common
+ forms encountered and returns Python datetime objects.
+ .
+ This package provides the Python 3.x module.
+
+Package: pypy-iso8601
+Architecture: all
+Depends: ${misc:Depends}, ${pypy:Depends}
+Provides: ${pypy:Provides}
+Description: Python module to parse ISO 8601 dates - PyPy
+ Many file formats and standards use the ISO 8601 date format
+ (e.g. 2007-01-14T20:34:22+00:00) to store dates in a neutral,
+ unambiguous manner. This simple Python module parses the most common
+ forms encountered and returns Python datetime objects.
+ .
+ This package provides the PyPy module.

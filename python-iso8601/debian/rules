@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+
+PYTHONS:=$(shell pyversions -vr)
+PYTHON3S:=$(shell py3versions -vr)
+
+%:
+	dh $@ --buildsystem=python_distutils --with python2,python3,pypy
+
+override_dh_auto_install:
+	set -e && for pyvers in $(PYTHONS); do \
+		python$$pyvers setup.py install --install-layout=deb \
+			--root $(CURDIR)/debian/python-iso8601; \
+	done
+	set -e && for pyvers in $(PYTHON3S); do \
+		python$$pyvers setup.py install --install-layout=deb \
+			--root $(CURDIR)/debian/python3-iso8601; \
+	done
+	set -e && pypy setup.py install --install-layout=deb \
+			--root $(CURDIR)/debian/pypy-iso8601
+
+override_dh_clean:
+	dh_clean -O--buildsystem=python_distutils
+	rm -rf build
+
+override_dh_auto_test:
+ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+	py.test --verbose iso8601
+	py.test-3 --verbose iso8601
+	# no py.test for pypy yet, so we can't run the tests for pypy
+endif

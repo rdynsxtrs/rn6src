@@ -1,0 +1,11 @@
+# see git-dpm(1) from git-dpm package
+31acbbc79edc6240b0c48b009994c517c87ff54d
+31acbbc79edc6240b0c48b009994c517c87ff54d
+f7278b93132c94895db96c10da282a51fe43bca7
+f7278b93132c94895db96c10da282a51fe43bca7
+python-iso8601_0.1.11.orig.tar.gz
+d7af90c7f01c8b62a9d8c0bf26badf2a903ccf70
+8725
+debianTag="debian/%e%v"
+patchedTag="patched/%e%v"
+upstreamTag="upstream/%e%u"

@@ -1,0 +1,28 @@
+#!/usr/bin/python
+
+import sys
+import iso8601
+
+from datetime import datetime, timedelta, tzinfo
+
+ZERO = timedelta(0)
+
+
+class UTC(tzinfo):
+    """UTC"""
+
+    def utcoffset(self, dt):
+        return ZERO
+
+    def tzname(self, dt):
+        return "UTC"
+
+    def dst(self, dt):
+        return ZERO
+
+
+status = (iso8601.parse_date("2007-01-25T12:00:00Z") ==
+          datetime(2007, 1, 25, 12, 0, tzinfo=UTC()))
+
+# Remember, exit status 0 (i.e. false) means success.
+sys.exit(not status)
