@@ -1,0 +1,5 @@
+0001-fix-php-8.0-build.patch
+0002-generate-arginfo-from-stub-for-PHP-7-and-8.patch
+0003-add-new-file-to-pecl-archive.patch
+0004-cleanup-HAVE_SPL-removed-in-8-as-always-there.patch
+0005-Add-missing-igbinary-and-msgpack-dependencies-to-pac.patch

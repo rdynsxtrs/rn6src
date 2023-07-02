@@ -1,0 +1,29 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Sun, 11 Oct 2020 14:08:22 +0200
+Subject: Add missing igbinary and msgpack dependencies to package-5.xml
+
+---
+ package-5.xml | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/package-5.xml b/package-5.xml
+index 9e6ac87..6ca42cb 100644
+--- a/package-5.xml
++++ b/package-5.xml
+@@ -142,6 +142,16 @@
+     <min>1.4.0b1</min>
+    </pearinstaller>
+   </required>
++  <optional>
++   <extension>
++    <name>igbinary</name>
++    <min>2.0</min>
++   </extension>
++   <extension>
++    <name>msgpack</name>
++    <min>2.0</min>
++   </extension>
++  </optional>
+  </dependencies>
+  <providesextension>memcached</providesextension>
+  <extsrcrelease>

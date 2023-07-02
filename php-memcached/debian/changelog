@@ -1,0 +1,408 @@
+php-memcached (3.1.5+2.2.0-4+0~20201211.26+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 16:52:32 +0100
+
+php-memcached (3.1.5+2.2.0-4+0~20201211.26+debian9~1.gbp9ca7c6) unstable; urgency=medium
+
+  ** SNAPSHOT build @9ca7c6a40f72d5cde0b844eab93afab9341a8ff8 **
+
+  * UNRELEASED
+
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 11 Dec 2020 10:54:27 +0100
+
+php-memcached (3.1.5+2.2.0-4) unstable; urgency=medium
+
+  * Update for dh-php >= 2.0 support
+  * Add missing igbinary and msgpack dependencies to package-5.xml
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 11 Oct 2020 14:08:34 +0200
+
+php-memcached (3.1.5+2.2.0-3) unstable; urgency=medium
+
+  * Build with dh-php >= 1.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 22:06:40 +0200
+
+php-memcached (3.1.5+2.2.0-2) unstable; urgency=medium
+
+  * Finish conversion to debhelper compat level 10
+  * Add PHP 8.0 patches (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 10 Oct 2020 21:56:27 +0200
+
+php-memcached (3.1.5+2.2.0-1) unstable; urgency=medium
+
+  * New upstream version 3.1.5+2.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 02 Mar 2020 09:02:54 +0100
+
+php-memcached (3.1.4+2.2.0-1) unstable; urgency=medium
+
+  * New upstream version 3.1.4+2.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Nov 2019 08:03:03 +0100
+
+php-memcached (3.1.3+2.2.0-2) unstable; urgency=medium
+
+  * No-change version bump for buster.
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 14 Aug 2019 07:20:34 +0200
+
+php-memcached (3.1.3+2.2.0-1) unstable; urgency=medium
+
+  * Add Pre-Depends on php-common >= 0.69~
+  * New upstream version 3.1.3+2.2.0
+  * Remove all patches merged upstream
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 04 Jan 2019 09:55:11 +0000
+
+php-memcached (3.0.4+2.2.0-4) unstable; urgency=medium
+
+  * Bump the dependency on dh-php to >= 0.33
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Oct 2018 10:16:52 +0000
+
+php-memcached (3.0.4+2.2.0-3) unstable; urgency=medium
+
+  * Add PHP 7.3 compatibility patches (Courtesy of Remi Collet)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 15:07:12 +0000
+
+php-memcached (3.0.4+2.2.0-2) unstable; urgency=medium
+
+  * Update maintainer email to team+php-pecl@tracker.debian.org
+    (Closes: #899982)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 19 Aug 2018 12:42:40 +0000
+
+php-memcached (3.0.4+2.2.0-1) unstable; urgency=medium
+
+  * New upstream version 3.0.4+2.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 04 Dec 2017 12:16:45 +0000
+
+php-memcached (3.0.3+2.2.0-1) unstable; urgency=medium
+
+  * New upstream version 3.0.3+2.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 20 Feb 2017 11:58:33 +0100
+
+php-memcached (3.0.1+2.2.0-1) unstable; urgency=medium
+
+  * New upstream version 3.0.1+2.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 12 Feb 2017 08:07:52 +0100
+
+php-memcached (3.0.0a1-79-ge1932dc+2.2.0-1) unstable; urgency=medium
+
+  * New upstream version 3.0.0a1-79-ge1932dc+2.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 24 Jan 2017 12:52:40 +0100
+
+php-memcached (3.0.0a1-64-gc032fba+2.2.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.0.0a1-64-gc032fba+2.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 05 Dec 2016 12:14:59 +0100
+
+php-memcached (3.0.0a1-61-g583ecd6+2.2.0++-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.0.0a1-61-g583ecd6+2.2.0++
+  * Build also for PHP 7.1 with msgpack fixed
+  * Add zlib1g-dev to Build-Depends (Closes: #843077)
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 06 Nov 2016 21:33:07 +0100
+
+php-memcached (3.0.0a1-61-g583ecd6+2.2.0+-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.0.0a1-61-g583ecd6+2.2.0+
+  * Build only for PHP 5.5, 5.6 and 7.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 26 Sep 2016 13:26:48 +0200
+
+php-memcached (3.0.0a1-61-g583ecd6+2.2.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.0.0a1-61-g583ecd6+2.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 23 Sep 2016 09:55:28 +0200
+
+php-memcached (3.0.0a1-57-g4fa2111+2.2.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.0.0a1-57-g4fa2111+2.2.0
+  * php-json should be installed everywhere, so just drop the dependency
+    here
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 26 Jul 2016 13:19:58 +0200
+
+php-memcached (3.0.0a1-13-g6ee96ca+2.2.0-4) unstable; urgency=medium
+
+  * Fix minor typos in package description
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 13 May 2016 09:49:28 +0200
+
+php-memcached (3.0.0a1-13-g6ee96ca+2.2.0-3) unstable; urgency=medium
+
+  * Use PECL_CONFIGURE_MAINT_APPEND from dh_php >= 0.17~ to enable
+    serialization backend again
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 19:47:01 +0200
+
+php-memcached (3.0.0a1-13-g6ee96ca+2.2.0-2) unstable; urgency=medium
+
+  * Move the default makefile snippet to dh-php and use a simple d/rules
+    with dh-php >= 0.12~
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 29 Apr 2016 11:18:03 +0200
+
+php-memcached (3.0.0a1-13-g6ee96ca+2.2.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.0.0a1-13-g6ee96ca+2.2.0
+  * Improve d/rules so it can be used with both single or multiple PECL
+    upstream versions, controlled by looking for package-MAJOR.MINOR.xml,
+    package-MAJOR.xml and package.xml in this order
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 28 Apr 2016 15:47:39 +0200
+
+php-memcached (3.0.0a1-10-gffd1c64+2.2.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 3.0.0a1-10-gffd1c64+2.2.0
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 23 Mar 2016 09:43:23 +0100
+
+php-memcached (2.2.0-95-g6ace07d+2.2.0-2) unstable; urgency=high
+
+  * We need to bump the version to be compatible with php-common breaks
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 01 Mar 2016 20:54:44 +0100
+
+php-memcached (2.2.0-95-g6ace07d+2.2.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.2.0-95-g6ace07d+2.2.0
+  * Remove Sergey from Uploaders per his request and thanks for all his
+    work for all these years
+  * Force rebuild with dh_php >= 0.7
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 26 Feb 2016 19:36:31 +0100
+
+php-memcached (2.2.0-51-ge573a6e+2.2.0-5) unstable; urgency=medium
+
+  * Add php-msgpack and php-igbinary as hard dependency to prevent loading
+    errors
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 24 Feb 2016 13:28:57 +0100
+
+php-memcached (2.2.0-51-ge573a6e+2.2.0-4) unstable; urgency=medium
+
+  * We need to pull php-all-dev as it contains the correct B-D for json
+  * Change memcached priority to 25 to allow msgpack to be loaded before
+    memcached
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 23 Feb 2016 14:20:36 +0100
+
+php-memcached (2.2.0-51-ge573a6e+2.2.0-3) unstable; urgency=medium
+
+  * Enable igbinary serializer
+  * Enable json serializer
+  * Enable msgpack serializer
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 18 Feb 2016 16:30:00 +0100
+
+php-memcached (2.2.0-51-ge573a6e+2.2.0-2) unstable; urgency=medium
+
+  * Re-upload with lintian override for PHP license
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 15 Jan 2016 14:54:35 +0100
+
+php-memcached (2.2.0-51-ge573a6e+2.2.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 2.2.0-51-ge573a6e+2.2.0
+  * Enable multiversion build in php-memcached
+  * Override wrong license-problem-php-license lintian check for packages
+    from PECL
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 31 Dec 2015 07:53:00 +0100
+
+php-memcached (2.2.0-51-ge573a6e-1) unstable; urgency=medium
+
+  * Depend on libmemcached >= 1.0.18 to pull a version with SASL support
+  * Imported Upstream version 2.2.0-51-ge573a6e
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 29 Dec 2015 13:42:13 +0100
+
+php-memcached (2.2.0+php7-48-gad6a16e-1) unstable; urgency=medium
+
+  * Modify to support PHP 7.0 build without pkg-php-tools
+  * Imported Upstream version 2.2.0+php7-48-gad6a16e
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 10 Dec 2015 07:56:38 +0100
+
+php-memcached (2.2.0-2) unstable; urgency=medium
+
+  * Bump up Standards-Version (to 3.9.6)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Sat, 25 Oct 2014 18:00:17 +0400
+
+php-memcached (2.2.0-1) unstable; urgency=low
+
+  * Imported Upstream version 2.2.0
+  * Remove applied patches
+  * Add pkg-config deps
+  * Drop unused lintian override
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Fri, 18 Apr 2014 14:25:02 +0400
+
+php-memcached (2.1.0-6) unstable; urgency=low
+
+  * Move the package under the PHP PECL team umbrella
+  * Bump up Standards-Version (to 3.9.5)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Wed, 08 Jan 2014 12:56:51 +0400
+
+php-memcached (2.1.0-5) unstable; urgency=low
+
+  * Correct changelog
+  * Fix lintian error: vcs-field-not-canonical
+  * Add --with php5 to fix lintian W: missing-pkg-php-tools-addon
+  * Add dh-php5 deps
+  * Add Breaks: header to debian/control
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Thu, 07 Nov 2013 17:03:00 +0400
+
+php-memcached (2.1.0-4) unstable; urgency=low
+
+  * Use pkg-php-tools to build package
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Sun, 06 Oct 2013 16:56:20 +0400
+
+php-memcached (2.1.0-3) unstable; urgency=low
+
+  * Update 00_fix_symbols.patch from upstream commit
+  * Drop DMUA, fix lintian warning
+  * Bump up Standards-Version (to 3.9.4)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Wed, 19 Dec 2012 12:43:04 +0400
+
+php-memcached (2.1.0-2) unstable; urgency=low
+
+  * Update libmemcached build-deps for 2.1.0
+  * Fix unresolvable symbols for libmemcached < 1.0.10 (Closes: #684949,
+    thanks to Gleb Golubitsky)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Wed, 15 Aug 2012 12:39:54 +0400
+
+php-memcached (2.1.0-1) unstable; urgency=low
+
+  * Imported Upstream version 2.1.0
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Fri, 10 Aug 2012 15:40:04 +0400
+
+php-memcached (2.0.1-6) unstable; urgency=low
+
+  * Add override for hardening-no-fortify-functions
+  * Add VCS-* fields
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Fri, 15 Jun 2012 17:33:29 +0400
+
+php-memcached (2.0.1-5) unstable; urgency=low
+
+  * Fix lintian warning (build-depends-on-1-revision)
+  * Change dh compat to 9, enable hardening support
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Fri, 01 Jun 2012 16:50:14 +0400
+
+php-memcached (2.0.1-4) unstable; urgency=low
+
+  * Use php5{en,dis}mod for conffile handling (Closes: #667777)
+  * Install README.markdown
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Sat, 07 Apr 2012 23:24:04 +0400
+
+php-memcached (2.0.1-3) unstable; urgency=low
+
+  * Revert change of defaults for memcached.ini, introduced in 2.0.1-2 for
+    bug #665906.  Uncomment extension in preinst file (Closes: #665906)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Fri, 30 Mar 2012 15:16:53 +0400
+
+php-memcached (2.0.1-2) unstable; urgency=low
+
+  * Restore dependence on ucf (be gone after wheezy)
+  * Cleanup ucf's stuff in preinst for install|upgrade targets.
+  * Revert memcached.ini defaults from squeeze version (Closes:
+    #665906).
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Wed, 28 Mar 2012 19:47:05 +0400
+
+php-memcached (2.0.1-1) unstable; urgency=low
+
+  * Reformat debian/copyright according to accepted DEP5 spec
+  * Bump up Standards-Version to 3.9.3 (no changes)
+  * Imported Upstream version 2.0.1
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Mon, 05 Mar 2012 14:36:14 +0400
+
+php-memcached (2.0.0b2-1) unstable; urgency=low
+
+  [ Sergey B Kirpichev ]
+  * New upstream release
+  * Exclude beta-releases from debian/watch
+  * Added "DM-Upload-Allowed: yes" control field
+  * Use debhelper, not cdbs and drop ucf dependence. This also fix
+    lintian warning debian-rules-uses-deprecated-makefile (tarball.mk).
+  * Fix typo in debian/control
+  * Add comment for the default memcached.ini (as before 1.0.2-3)
+  * Purge ucf's stuff about /etc/php5/conf.d/memcached.ini on upgrade in
+    preinst.
+
+  [ Lior Kaplan ]
+  * cherry-picked 473c63e7e from upstream for PHP 5.4 support (Closes: #656480)
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Fri, 20 Jan 2012 12:12:17 +0200
+
+php-memcached (1.0.2-2) unstable; urgency=low
+
+  * New maintainer (Closes: #620030)
+  * Fix short description to be different with php5-memcache (Closes:
+    #611684, #611683)
+  * Use DEP5 debian/copyright format
+  * Bump up Standards-Version to 3.9.2
+
+ -- Sergey B Kirpichev <skirpichev@gmail.com>  Thu, 29 Sep 2011 19:05:09 +0400
+
+php-memcached (1.0.2-1) unstable; urgency=low
+
+  * New upstream release
+    - Fix build for libmemcached-0.39.
+  * Update to debsrc3.0
+
+ -- Ivan Borzenkov <ivan1986@list.ru>  Tue, 04 May 2010 21:06:47 +0400
+
+php-memcached (1.0.1-1) unstable; urgency=low
+
+  * New Upstream Release
+    - Fix build for libmemcached-0.38. (Closes: #571343)
+
+ -- Ivan Borzenkov <ivan1986@list.ru>  Wed, 17 Mar 2010 22:47:09 +0300
+
+php-memcached (1.0.0-3) unstable; urgency=low
+
+  * rebuild for php 5.3.1
+  * Bump Standards-Version to 3.8.4, no change needed
+
+ -- Ivan Borzenkov <ivan1986@list.ru>  Wed, 10 Feb 2010 19:45:06 +0300
+
+php-memcached (1.0.0-2) unstable; urgency=low
+
+  * rebuild whis libmemcached4
+  * Bump Standards-Version to 3.8.3, no change needed
+
+ -- Ivan Borzenkov <ivan1986@list.ru>  Sun, 24 Jan 2010 12:11:52 +0300
+
+php-memcached (1.0.0-1) unstable; urgency=low
+
+  * Initial release (closes: #537475).
+
+ -- Ivan Borzenkov <ivan1986@list.ru>  Sat, 18 Jul 2009 21:38:17 +0400

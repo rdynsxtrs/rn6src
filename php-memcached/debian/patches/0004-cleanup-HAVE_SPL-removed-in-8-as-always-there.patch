@@ -1,0 +1,61 @@
+From: Remi Collet <remi@remirepo.net>
+Date: Thu, 8 Oct 2020 13:45:49 +0200
+Subject: cleanup HAVE_SPL, removed in 8 as always there
+
+---
+ memcached-3.1.5/php_memcached.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
+
+diff --git a/memcached-3.1.5/php_memcached.c b/memcached-3.1.5/php_memcached.c
+index 147cb4a..8d9040e 100644
+--- a/memcached-3.1.5/php_memcached.c
++++ b/memcached-3.1.5/php_memcached.c
+@@ -55,6 +55,8 @@
+ # include "ext/msgpack/php_msgpack.h"
+ #endif
+ 
++# include "ext/spl/spl_exceptions.h"
++
+ static int le_memc;
+ 
+ static int php_memc_list_entry(void) {
+@@ -251,10 +253,6 @@ static zend_class_entry *memcached_ce = NULL;
+ static zend_class_entry *memcached_exception_ce = NULL;
+ static zend_object_handlers memcached_object_handlers;
+ 
+-#ifdef HAVE_SPL
+-static zend_class_entry *spl_ce_RuntimeException = NULL;
+-#endif
+-
+ ZEND_DECLARE_MODULE_GLOBALS(php_memcached)
+ 
+ #ifdef COMPILE_DL_MEMCACHED
+@@ -3764,7 +3762,6 @@ zend_class_entry *php_memc_get_exception(void)
+ PHP_MEMCACHED_API
+ zend_class_entry *php_memc_get_exception_base(int root)
+ {
+-#ifdef HAVE_SPL
+ 	if (!root) {
+ 		if (!spl_ce_RuntimeException) {
+ 			zend_class_entry *pce;
+@@ -3781,7 +3778,7 @@ zend_class_entry *php_memc_get_exception_base(int root)
+ 			return spl_ce_RuntimeException;
+ 		}
+ 	}
+-#endif
++
+ 	return zend_exception_get_default();
+ }
+ 
+@@ -3877,10 +3874,8 @@ static const zend_module_dep memcached_deps[] = {
+ #ifdef HAVE_MEMCACHED_MSGPACK
+ 	ZEND_MOD_REQUIRED("msgpack")
+ #endif
+-#ifdef HAVE_SPL
+ 	ZEND_MOD_REQUIRED("spl")
+-#endif
+-	{NULL, NULL, NULL}
++	ZEND_MOD_END
+ };
+ #endif
+ 

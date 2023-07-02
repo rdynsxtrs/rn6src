@@ -1,0 +1,12 @@
+php-memcached (2.2.0-51-ge573a6e+2.2.0-3) unstable; urgency=medium
+
+  * PHP memcached extension is now compiled with igbinary, json and
+    msgpack serializer support.  The memcached.serializer option in
+    memcached.ini is set to 'php' to retain backwards compatibility.
+
+    Change the memcached.serializer option to 'igbinary', 'json' or
+    'msgpack' to use the different memcached serializer.  You will have to
+    install php-igbinary package for igbinary serializer support and
+    php-msgpack package for msgpack serializer support.
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 18 Feb 2016 15:56:17 +0100

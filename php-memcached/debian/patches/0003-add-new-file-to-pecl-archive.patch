@@ -1,0 +1,35 @@
+From: Remi Collet <remi@remirepo.net>
+Date: Thu, 8 Oct 2020 12:37:20 +0200
+Subject: add new file to pecl archive
+
+---
+ package.xml | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/package.xml b/package.xml
+index 0250f8f..6ad3e74 100644
+--- a/package.xml
++++ b/package.xml
+@@ -106,10 +106,13 @@ Fixes
+    <file md5sum="7b54663feade6501bc58445be3b8cb2a" name="tests/types_php_multi.phpt" role="test" />
+    <file md5sum="6a2e339eb05e264131a3e4d7302eb7d2" name="tests/undefined_set.phpt" role="test" />
+    <file md5sum="69c0f3ff4ea7ae70706485ef40a0bbdf" name="tests/vbucket.phpt" role="test" />
++   <file md5sum="3e1e2916b2e20f7c8a71c101ecb9f336" name="tests/vbucket_error_7.phpt" role="test" />
++   <file md5sum="45a942be4b684743586daaae06d8aca1" name="tests/vbucket_error_8.phpt" role="test" />
+    <file md5sum="9536d55e450f33a0d0884f41f11efb44" name="tests/user-flags.phpt" role="test" />
+    <file md5sum="16b0c1f09268752607253cb498dbc207" name="tests/gh_93.phpt" role="test" />
+    <file md5sum="148ba8b00686de02433ae93442219ca2" name="tests/add.phpt" role="test" />
+    <file md5sum="07fc0c686704b631f7a025c7599f5eaf" name="tests/bad_construct.phpt" role="test" />
++   <file md5sum="497285b188fa99ca03b38c14f733a69f" name="tests/bad_construct_8.phpt" role="test" />
+    <file md5sum="81de6221c6cae1f5e96cf1cf2e4f23c2" name="tests/append.phpt" role="test" />
+    <file md5sum="1812f8862214b7958bcdf63e2a451fda" name="tests/prepend.phpt" role="test" />
+    <file md5sum="560425b0e9ff2e5adde5db088448dd86" name="tests/replace.phpt" role="test" />
+@@ -151,6 +154,8 @@ Fixes
+    <file md5sum="e18b506cb4a6b8a2279ad0003382fb0d" name="config.w32" role="src" />
+    <file md5sum="cdad1c266f557a24519c37cc6cdf08b8" name="php_memcached.c" role="src" />
+    <file md5sum="64783b6980106890d4117fa0f6805d94" name="php_memcached.h" role="src" />
++   <file md5sum="e23683a606046733f46da01a123231a5" name="php_memcached_arginfo.h" role="src"/>
++   <file md5sum="ecb9bbef4f41195acdb32c5fe24aadf4" name="php_memcached_legacy_arginfo.h" role="src" />
+    <file md5sum="510f8904f2324652ebe51689517ef2c6" name="php_memcached_private.h" role="src" />
+    <file md5sum="d8aa00f985227c75c696f595a312aa5c" name="php_memcached_session.c" role="src" />
+    <file md5sum="3c47c0ddad806318e44c4a0307179532" name="php_memcached_session.h" role="src" />

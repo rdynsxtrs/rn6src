@@ -1,0 +1,7 @@
+#!/usr/bin/make -f
+include /usr/share/dh-php/pkg-pecl.mk
+
+PECL_CONFIGURE_MAINT_APPEND = \
+	--enable-memcached-igbinary \
+	--enable-memcached-json \
+	--enable-memcached-msgpack

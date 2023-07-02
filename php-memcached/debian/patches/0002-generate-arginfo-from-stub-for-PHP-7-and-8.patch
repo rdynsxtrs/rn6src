@@ -1,0 +1,1648 @@
+From: Remi Collet <remi@remirepo.net>
+Date: Thu, 8 Oct 2020 11:58:43 +0200
+Subject: generate arginfo from stub for PHP 7 and 8
+
+---
+ memcached-3.1.5/php_memcached.c                | 404 +-----------------------
+ memcached-3.1.5/php_memcached.stub.php         |  94 ++++++
+ memcached-3.1.5/php_memcached_arginfo.h        | 411 +++++++++++++++++++++++++
+ memcached-3.1.5/php_memcached_legacy_arginfo.h | 407 ++++++++++++++++++++++++
+ memcached-3.1.5/tests/bad_construct.phpt       |   5 +-
+ memcached-3.1.5/tests/bad_construct_8.phpt     |  34 ++
+ memcached-3.1.5/tests/expire.phpt              |   1 +
+ memcached-3.1.5/tests/undefined_set.phpt       |  10 +-
+ memcached-3.1.5/tests/vbucket.phpt             |  20 --
+ memcached-3.1.5/tests/vbucket_error_7.phpt     |  40 +++
+ memcached-3.1.5/tests/vbucket_error_8.phpt     |  41 +++
+ 11 files changed, 1044 insertions(+), 423 deletions(-)
+ create mode 100644 memcached-3.1.5/php_memcached.stub.php
+ create mode 100644 memcached-3.1.5/php_memcached_arginfo.h
+ create mode 100644 memcached-3.1.5/php_memcached_legacy_arginfo.h
+ create mode 100644 memcached-3.1.5/tests/bad_construct_8.phpt
+ create mode 100644 memcached-3.1.5/tests/vbucket_error_7.phpt
+ create mode 100644 memcached-3.1.5/tests/vbucket_error_8.phpt
+
+diff --git a/memcached-3.1.5/php_memcached.c b/memcached-3.1.5/php_memcached.c
+index 5063695..147cb4a 100644
+--- a/memcached-3.1.5/php_memcached.c
++++ b/memcached-3.1.5/php_memcached.c
+@@ -1853,7 +1853,7 @@ static void php_memc_setMulti_impl(INTERNAL_FUNCTION_PARAMETERS, zend_bool by_ke
+ {
+ 	zval *entries;
+ 	zend_string *server_key = NULL;
+-	zend_long expiration = 0, ignored;
++	zend_long expiration = 0;
+ 	zval *value;
+ 	zend_string *skey;
+ 	zend_ulong num_key;
+@@ -1867,7 +1867,6 @@ static void php_memc_setMulti_impl(INTERNAL_FUNCTION_PARAMETERS, zend_bool by_ke
+ 		        Z_PARAM_ARRAY(entries)
+ 		        Z_PARAM_OPTIONAL
+ 		        Z_PARAM_LONG(expiration)
+-		        Z_PARAM_LONG(ignored)
+ 		ZEND_PARSE_PARAMETERS_END();
+ 	} else {
+ 		/* "a|ll" */
+@@ -1875,7 +1874,6 @@ static void php_memc_setMulti_impl(INTERNAL_FUNCTION_PARAMETERS, zend_bool by_ke
+ 		        Z_PARAM_ARRAY(entries)
+ 		        Z_PARAM_OPTIONAL
+ 		        Z_PARAM_LONG(expiration)
+-		        Z_PARAM_LONG(ignored)
+ 		ZEND_PARSE_PARAMETERS_END();
+ 	}
+ 
+@@ -2071,7 +2069,6 @@ static void php_memc_cas_impl(INTERNAL_FUNCTION_PARAMETERS, zend_bool by_key)
+ 	zend_string *server_key = NULL;
+ 	zval *value;
+ 	zend_long expiration = 0;
+-	zend_long ignored;
+ 	zend_string *payload;
+ 	uint32_t flags = 0;
+ 	memcached_return status;
+@@ -2086,7 +2083,6 @@ static void php_memc_cas_impl(INTERNAL_FUNCTION_PARAMETERS, zend_bool by_key)
+ 		        Z_PARAM_ZVAL(value)
+ 		        Z_PARAM_OPTIONAL
+ 		        Z_PARAM_LONG(expiration)
+-		        Z_PARAM_LONG(ignored)
+ 		ZEND_PARSE_PARAMETERS_END();
+ 	} else {
+ 		/* "zSz|ll" */
+@@ -2096,7 +2092,6 @@ static void php_memc_cas_impl(INTERNAL_FUNCTION_PARAMETERS, zend_bool by_key)
+ 		        Z_PARAM_ZVAL(value)
+ 		        Z_PARAM_OPTIONAL
+ 		        Z_PARAM_LONG(expiration)
+-		        Z_PARAM_LONG(ignored)
+ 		ZEND_PARSE_PARAMETERS_END();
+ 	}
+ 
+@@ -3862,395 +3857,10 @@ PHP_METHOD(MemcachedServer, on)
+ 
+ #endif
+ 
+-/* {{{ methods arginfo */
+-ZEND_BEGIN_ARG_INFO_EX(arginfo___construct, 0, 0, 0)
+-	ZEND_ARG_INFO(0, persistent_id)
+-	ZEND_ARG_INFO(0, callback)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_getResultCode, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_getResultMessage, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_get, 0, 0, 1)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, cache_cb)
+-	ZEND_ARG_INFO(0, get_flags)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_getByKey, 0, 0, 2)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, cache_cb)
+-	ZEND_ARG_INFO(0, get_flags)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_getMulti, 0, 0, 1)
+-	ZEND_ARG_ARRAY_INFO(0, keys, 0)
+-	ZEND_ARG_INFO(0, get_flags)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_getMultiByKey, 0, 0, 2)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_ARRAY_INFO(0, keys, 0)
+-	ZEND_ARG_INFO(0, get_flags)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_getDelayed, 0, 0, 1)
+-	ZEND_ARG_ARRAY_INFO(0, keys, 0)
+-	ZEND_ARG_INFO(0, with_cas)
+-	ZEND_ARG_INFO(0, value_cb)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_getDelayedByKey, 0, 0, 2)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_ARRAY_INFO(0, keys, 0)
+-	ZEND_ARG_INFO(0, with_cas)
+-	ZEND_ARG_INFO(0, value_cb)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_fetch, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_fetchAll, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_set, 0, 0, 2)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_setByKey, 0, 0, 3)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_touch, 0, 0, 2)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_touchByKey, 0, 0, 3)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_setMulti, 0, 0, 1)
+-	ZEND_ARG_ARRAY_INFO(0, items, 0)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_setMultiByKey, 0, 0, 2)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_ARRAY_INFO(0, items, 0)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_add, 0, 0, 2)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_addByKey, 0, 0, 3)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_replace, 0, 0, 2)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_replaceByKey, 0, 0, 3)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_append, 0, 0, 2)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_appendByKey, 0, 0, 3)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_prepend, 0, 0, 2)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_prependByKey, 0, 0, 3)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_cas, 0, 0, 3)
+-	ZEND_ARG_INFO(0, cas_token)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_casByKey, 0, 0, 4)
+-	ZEND_ARG_INFO(0, cas_token)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, value)
+-	ZEND_ARG_INFO(0, expiration)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_delete, 0, 0, 1)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, time)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_deleteMulti, 0, 0, 1)
+-	ZEND_ARG_INFO(0, keys)
+-	ZEND_ARG_INFO(0, time)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_deleteByKey, 0, 0, 2)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, time)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_deleteMultiByKey, 0, 0, 2)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, keys)
+-	ZEND_ARG_INFO(0, time)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_increment, 0, 0, 1)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, offset)
+-	ZEND_ARG_INFO(0, initial_value)
+-	ZEND_ARG_INFO(0, expiry)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_decrement, 0, 0, 1)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, offset)
+-	ZEND_ARG_INFO(0, initial_value)
+-	ZEND_ARG_INFO(0, expiry)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_incrementByKey, 0, 0, 2)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, offset)
+-	ZEND_ARG_INFO(0, initial_value)
+-	ZEND_ARG_INFO(0, expiry)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_decrementByKey, 0, 0, 2)
+-	ZEND_ARG_INFO(0, server_key)
+-	ZEND_ARG_INFO(0, key)
+-	ZEND_ARG_INFO(0, offset)
+-	ZEND_ARG_INFO(0, initial_value)
+-	ZEND_ARG_INFO(0, expiry)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_flush, 0, 0, 0)
+-	ZEND_ARG_INFO(0, delay)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_addServer, 0, 0, 2)
+-	ZEND_ARG_INFO(0, host)
+-	ZEND_ARG_INFO(0, port)
+-	ZEND_ARG_INFO(0, weight)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO_EX(arginfo_getStats, 0, 0, 0)
+-	ZEND_ARG_INFO(0, type)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_addServers, 0)
+-	ZEND_ARG_ARRAY_INFO(0, servers, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_getServerList, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_resetServerList, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_quit, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_flushBuffers, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_getServerByKey, 0)
+-	ZEND_ARG_INFO(0, server_key)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_getLastErrorMessage, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_getLastErrorCode, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_getLastErrorErrno, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_getLastDisconnectedServer, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_getOption, 0)
+-	ZEND_ARG_INFO(0, option)
+-ZEND_END_ARG_INFO()
+-
+-#ifdef HAVE_MEMCACHED_SASL
+-ZEND_BEGIN_ARG_INFO(arginfo_setSaslAuthData, 0)
+-	ZEND_ARG_INFO(0, username)
+-	ZEND_ARG_INFO(0, password)
+-ZEND_END_ARG_INFO()
+-#endif
+-
+-#ifdef HAVE_MEMCACHED_SET_ENCODING_KEY
+-ZEND_BEGIN_ARG_INFO(arginfo_setEncodingKey, 0)
+-	ZEND_ARG_INFO(0, key)
+-ZEND_END_ARG_INFO()
+-#endif
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_setOption, 0)
+-	ZEND_ARG_INFO(0, option)
+-	ZEND_ARG_INFO(0, value)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_setOptions, 0)
+-	ZEND_ARG_INFO(0, options)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_setBucket, 3)
+-	ZEND_ARG_INFO(0, host_map)
+-	ZEND_ARG_INFO(0, forward_map)
+-	ZEND_ARG_INFO(0, replicas)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_getVersion, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_isPersistent, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_isPristine, 0)
+-ZEND_END_ARG_INFO()
+-
+-ZEND_BEGIN_ARG_INFO(arginfo_getAllKeys, 0)
+-ZEND_END_ARG_INFO()
+-/* }}} */
+-
+-/* {{{ memcached_class_methods */
+-#define MEMC_ME(name, args) PHP_ME(Memcached, name, args, ZEND_ACC_PUBLIC)
+-static zend_function_entry memcached_class_methods[] = {
+-	MEMC_ME(__construct,        arginfo___construct)
+-
+-	MEMC_ME(getResultCode,      arginfo_getResultCode)
+-	MEMC_ME(getResultMessage,   arginfo_getResultMessage)
+-
+-	MEMC_ME(get,                arginfo_get)
+-	MEMC_ME(getByKey,           arginfo_getByKey)
+-	MEMC_ME(getMulti,           arginfo_getMulti)
+-	MEMC_ME(getMultiByKey,      arginfo_getMultiByKey)
+-	MEMC_ME(getDelayed,         arginfo_getDelayed)
+-	MEMC_ME(getDelayedByKey,    arginfo_getDelayedByKey)
+-	MEMC_ME(fetch,              arginfo_fetch)
+-	MEMC_ME(fetchAll,           arginfo_fetchAll)
+-
+-	MEMC_ME(set,                arginfo_set)
+-	MEMC_ME(setByKey,           arginfo_setByKey)
+-
+-	MEMC_ME(touch,              arginfo_touch)
+-	MEMC_ME(touchByKey,         arginfo_touchByKey)
+-
+-	MEMC_ME(setMulti,           arginfo_setMulti)
+-	MEMC_ME(setMultiByKey,      arginfo_setMultiByKey)
+-
+-	MEMC_ME(cas,                arginfo_cas)
+-	MEMC_ME(casByKey,           arginfo_casByKey)
+-	MEMC_ME(add,                arginfo_add)
+-	MEMC_ME(addByKey,           arginfo_addByKey)
+-	MEMC_ME(append,             arginfo_append)
+-	MEMC_ME(appendByKey,        arginfo_appendByKey)
+-	MEMC_ME(prepend,            arginfo_prepend)
+-	MEMC_ME(prependByKey,       arginfo_prependByKey)
+-	MEMC_ME(replace,            arginfo_replace)
+-	MEMC_ME(replaceByKey,       arginfo_replaceByKey)
+-	MEMC_ME(delete,             arginfo_delete)
+-	MEMC_ME(deleteMulti,        arginfo_deleteMulti)
+-	MEMC_ME(deleteByKey,        arginfo_deleteByKey)
+-	MEMC_ME(deleteMultiByKey,   arginfo_deleteMultiByKey)
+-
+-	MEMC_ME(increment,          arginfo_increment)
+-	MEMC_ME(decrement,          arginfo_decrement)
+-	MEMC_ME(incrementByKey,     arginfo_incrementByKey)
+-	MEMC_ME(decrementByKey,     arginfo_decrementByKey)
+-
+-	MEMC_ME(addServer,          arginfo_addServer)
+-	MEMC_ME(addServers,         arginfo_addServers)
+-	MEMC_ME(getServerList,      arginfo_getServerList)
+-	MEMC_ME(getServerByKey,     arginfo_getServerByKey)
+-	MEMC_ME(resetServerList,    arginfo_resetServerList)
+-	MEMC_ME(quit,               arginfo_quit)
+-	MEMC_ME(flushBuffers,       arginfo_flushBuffers)
+-
+-	MEMC_ME(getLastErrorMessage,		arginfo_getLastErrorMessage)
+-	MEMC_ME(getLastErrorCode,		arginfo_getLastErrorCode)
+-	MEMC_ME(getLastErrorErrno,		arginfo_getLastErrorErrno)
+-	MEMC_ME(getLastDisconnectedServer,	arginfo_getLastDisconnectedServer)
+-
+-	MEMC_ME(getStats,           arginfo_getStats)
+-	MEMC_ME(getVersion,         arginfo_getVersion)
+-	MEMC_ME(getAllKeys,         arginfo_getAllKeys)
+-
+-	MEMC_ME(flush,              arginfo_flush)
+-
+-	MEMC_ME(getOption,          arginfo_getOption)
+-	MEMC_ME(setOption,          arginfo_setOption)
+-	MEMC_ME(setOptions,         arginfo_setOptions)
+-	MEMC_ME(setBucket,          arginfo_setBucket)
+-#ifdef HAVE_MEMCACHED_SASL
+-	MEMC_ME(setSaslAuthData,    arginfo_setSaslAuthData)
+-#endif
+-#ifdef HAVE_MEMCACHED_SET_ENCODING_KEY
+-	MEMC_ME(setEncodingKey,     arginfo_setEncodingKey)
+-#endif
+-	MEMC_ME(isPersistent,       arginfo_isPersistent)
+-	MEMC_ME(isPristine,         arginfo_isPristine)
+-	{ NULL, NULL, NULL }
+-};
+-#undef MEMC_ME
+-/* }}} */
+-
+-#ifdef HAVE_MEMCACHED_PROTOCOL
+-/* {{{ */
+-#define MEMC_SE_ME(name, args) PHP_ME(MemcachedServer, name, args, ZEND_ACC_PUBLIC)
+-static
+-zend_function_entry memcached_server_class_methods[] = {
+-	MEMC_SE_ME(run, NULL)
+-	MEMC_SE_ME(on, NULL)
+-	{ NULL, NULL, NULL }
+-};
+-#undef MEMC_SE_ME
+-/* }}} */
++#if PHP_VERSION_ID < 80000
++#include "php_memcached_legacy_arginfo.h"
++#else
++#include "php_memcached_arginfo.h"
+ #endif
+ 
+ /* {{{ memcached_module_entry
+@@ -4592,7 +4202,7 @@ PHP_MINIT_FUNCTION(memcached)
+ 
+ 	le_memc = zend_register_list_destructors_ex(NULL, php_memc_dtor, "Memcached persistent connection", module_number);
+ 
+-	INIT_CLASS_ENTRY(ce, "Memcached", memcached_class_methods);
++	INIT_CLASS_ENTRY(ce, "Memcached", class_Memcached_methods);
+ 	memcached_ce = zend_register_internal_class(&ce);
+ 	memcached_ce->create_object = php_memc_object_new;
+ 
+@@ -4602,7 +4212,7 @@ PHP_MINIT_FUNCTION(memcached)
+ 	memcached_server_object_handlers.clone_obj = NULL;
+ 	memcached_server_object_handlers.free_obj = php_memc_server_free_storage;
+ 
+-	INIT_CLASS_ENTRY(ce, "MemcachedServer", memcached_server_class_methods);
++	INIT_CLASS_ENTRY(ce, "MemcachedServer", class_MemcachedServer_methods);
+ 	memcached_server_ce = zend_register_internal_class(&ce);
+ 	memcached_server_ce->create_object = php_memc_server_new;
+ #endif
+diff --git a/memcached-3.1.5/php_memcached.stub.php b/memcached-3.1.5/php_memcached.stub.php
+new file mode 100644
+index 0000000..4ba6d5b
+--- /dev/null
++++ b/memcached-3.1.5/php_memcached.stub.php
+@@ -0,0 +1,94 @@
++<?php
++
++/**
++ * @generate-function-entries
++ * @generate-legacy-arginfo
++ */
++
++
++class Memcached {
++
++	public function __construct(string $persistent_id=NULL, callable $callback=NULL, string $connection_str=NULL) {}
++
++	public function getResultCode(): int {}
++	public function getResultMessage(): string {}
++
++	public function get(string $key, callable $cache_cb=NULL, int $get_flags=0): mixed {}
++	public function getByKey(string $server_key, string $key, callable $cache_cb=NULL, int $get_flags=0): mixed {}
++	public function getMulti(array $keys, int $get_flags=0): false|array {}
++	public function getMultiByKey(string $server_key, array $keys, int $get_flags=0): false|array {}
++	public function getDelayed(array $keys, bool $with_cas=0, callable $value_cb=NULL): bool {}
++	public function getDelayedByKey(string $server_key, array $keys, bool $with_cas=0, callable $value_cb=NULL): bool {}
++	public function fetch(): false|array {}
++	public function fetchAll(): false|array {}
++
++	public function set(string $key, mixed $value, int $expiration=0): bool {}
++	public function setByKey(string $server_key, string $key, mixed $value, int $expiration=0): bool {}
++
++	public function touch(string $key, int $expiration=0): bool {}
++	public function touchByKey(string $server_key, string $key, int $expiration=0): bool {}
++
++	public function setMulti(array $items, int $expiration=0): bool {}
++	public function setMultiByKey(string $server_key, array $items, int $expiration=0): bool {}
++
++	public function cas(string $cas_token, string $key, mixed $value, int $expiration=0): bool {}
++	public function casByKey(string $cas_token, string $server_key, string $key, mixed $value, int $expiration=0): bool {}
++	public function add(string $key, mixed $value, int $expiration=0): bool {}
++	public function addByKey(string $server_key, string $key, mixed $value, int $expiration=0): bool {}
++	public function append(string $key, string $value): bool {}
++	public function appendByKey(string $server_key, string $key, string $value): bool {}
++	public function prepend(string $key, string $value): bool {}
++	public function prependByKey(string $server_key, string $key, string $value): bool {}
++	public function replace(string $key, mixed $value, int $expiration=0): bool {}
++	public function replaceByKey(string $server_key, string $key, mixed $value, int $expiration=0): bool {}
++	public function delete(string $key, int $time=0): bool {}
++	public function deleteMulti(array $keys, int $time=0): bool {}
++	public function deleteByKey(string $server_key, string $key, int $time=0): bool {}
++	public function deleteMultiByKey(string $server_key, array $keys, int $time=0): bool {}
++
++	public function increment(string $key, int $offset=1, int $initial_value=0, int $expiry=0): false|int {}
++	public function decrement(string $key, int $offset=1, int $initial_value=0, int $expiry=0): false|int {}
++	public function incrementByKey(string $server_key, string $key, int $offset=1, int $initial_value=0, int $expiry=0): false|int {}
++	public function decrementByKey(string $server_key, string $key, int $offset=1, int $initial_value=0, int $expiry=0): false|int {}
++
++	public function addServer(string $host, int $port, int $weight=0): bool {}
++	public function addServers(array $servers): bool {}
++	public function getServerList(): array {}
++	public function getServerByKey(string $server_key): false|array {}
++	public function resetServerList(): bool {}
++	public function quit(): bool {}
++	public function flushBuffers(): bool {}
++
++	public function getLastErrorMessage(): string {}
++	public function getLastErrorCode(): int {}
++	public function getLastErrorErrno(): int {}
++	public function getLastDisconnectedServer(): false|array {}
++
++	public function getStats(string $type=NULL): false|array {}
++	public function getVersion(): false|array {}
++	public function getAllKeys(): false|array {}
++
++	public function flush(int $delay=0): bool {}
++
++	public function getOption(int $option): mixed {}
++	public function setOption(int $option, mixed $value): bool {}
++	public function setOptions(array $options): bool {}
++	public function setBucket(array $host_map, array $forward_map, int $replicas): bool {}
++#ifdef HAVE_MEMCACHED_SASL
++	public function setSaslAuthData(string $username, string $password): bool {}
++#endif
++
++#ifdef HAVE_MEMCACHED_SET_ENCODING_KEY
++	public function setEncodingKey(string $key): bool {}
++#endif
++	public function isPersistent(): bool {}
++	public function isPristine(): bool {}
++}
++
++#ifdef HAVE_MEMCACHED_PROTOCOL
++class MemcachedServer {
++
++	public function run(string $address): bool {}
++	public function on(int $event, callable $callback): bool {}
++}
++#endif
+diff --git a/memcached-3.1.5/php_memcached_arginfo.h b/memcached-3.1.5/php_memcached_arginfo.h
+new file mode 100644
+index 0000000..6729dd3
+--- /dev/null
++++ b/memcached-3.1.5/php_memcached_arginfo.h
+@@ -0,0 +1,411 @@
++/* This is a generated file, edit the .stub.php file instead.
++ * Stub hash: a33d23c6659922e98d3704879eb4bc820e1819df */
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached___construct, 0, 0, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, persistent_id, IS_STRING, 0, "NULL")
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, callback, IS_CALLABLE, 0, "NULL")
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, connection_str, IS_STRING, 0, "NULL")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_getResultCode, 0, 0, IS_LONG, 0)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_getResultMessage, 0, 0, IS_STRING, 0)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_get, 0, 1, IS_MIXED, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, cache_cb, IS_CALLABLE, 0, "NULL")
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, get_flags, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_getByKey, 0, 2, IS_MIXED, 0)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, cache_cb, IS_CALLABLE, 0, "NULL")
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, get_flags, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_Memcached_getMulti, 0, 1, MAY_BE_FALSE|MAY_BE_ARRAY)
++	ZEND_ARG_TYPE_INFO(0, keys, IS_ARRAY, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, get_flags, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_Memcached_getMultiByKey, 0, 2, MAY_BE_FALSE|MAY_BE_ARRAY)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, keys, IS_ARRAY, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, get_flags, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_getDelayed, 0, 1, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, keys, IS_ARRAY, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, with_cas, _IS_BOOL, 0, "0")
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, value_cb, IS_CALLABLE, 0, "NULL")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_getDelayedByKey, 0, 2, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, keys, IS_ARRAY, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, with_cas, _IS_BOOL, 0, "0")
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, value_cb, IS_CALLABLE, 0, "NULL")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_Memcached_fetch, 0, 0, MAY_BE_FALSE|MAY_BE_ARRAY)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_fetchAll arginfo_class_Memcached_fetch
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_set, 0, 2, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, expiration, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_setByKey, 0, 3, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, expiration, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_touch, 0, 1, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, expiration, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_touchByKey, 0, 2, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, expiration, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_setMulti, 0, 1, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, items, IS_ARRAY, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, expiration, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_setMultiByKey, 0, 2, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, items, IS_ARRAY, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, expiration, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_cas, 0, 3, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, cas_token, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, expiration, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_casByKey, 0, 4, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, cas_token, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, expiration, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_add arginfo_class_Memcached_set
++
++#define arginfo_class_Memcached_addByKey arginfo_class_Memcached_setByKey
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_append, 0, 2, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, value, IS_STRING, 0)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_appendByKey, 0, 3, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, value, IS_STRING, 0)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_prepend arginfo_class_Memcached_append
++
++#define arginfo_class_Memcached_prependByKey arginfo_class_Memcached_appendByKey
++
++#define arginfo_class_Memcached_replace arginfo_class_Memcached_set
++
++#define arginfo_class_Memcached_replaceByKey arginfo_class_Memcached_setByKey
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_delete, 0, 1, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, time, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_deleteMulti, 0, 1, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, keys, IS_ARRAY, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, time, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_deleteByKey, 0, 2, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, time, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_deleteMultiByKey, 0, 2, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, keys, IS_ARRAY, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, time, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_Memcached_increment, 0, 1, MAY_BE_FALSE|MAY_BE_LONG)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, offset, IS_LONG, 0, "1")
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, initial_value, IS_LONG, 0, "0")
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, expiry, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_decrement arginfo_class_Memcached_increment
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_Memcached_incrementByKey, 0, 2, MAY_BE_FALSE|MAY_BE_LONG)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, offset, IS_LONG, 0, "1")
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, initial_value, IS_LONG, 0, "0")
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, expiry, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_decrementByKey arginfo_class_Memcached_incrementByKey
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_addServer, 0, 2, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, host, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, port, IS_LONG, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, weight, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_addServers, 0, 1, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, servers, IS_ARRAY, 0)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_getServerList, 0, 0, IS_ARRAY, 0)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_Memcached_getServerByKey, 0, 1, MAY_BE_FALSE|MAY_BE_ARRAY)
++	ZEND_ARG_TYPE_INFO(0, server_key, IS_STRING, 0)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_resetServerList, 0, 0, _IS_BOOL, 0)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_quit arginfo_class_Memcached_resetServerList
++
++#define arginfo_class_Memcached_flushBuffers arginfo_class_Memcached_resetServerList
++
++#define arginfo_class_Memcached_getLastErrorMessage arginfo_class_Memcached_getResultMessage
++
++#define arginfo_class_Memcached_getLastErrorCode arginfo_class_Memcached_getResultCode
++
++#define arginfo_class_Memcached_getLastErrorErrno arginfo_class_Memcached_getResultCode
++
++#define arginfo_class_Memcached_getLastDisconnectedServer arginfo_class_Memcached_fetch
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_class_Memcached_getStats, 0, 0, MAY_BE_FALSE|MAY_BE_ARRAY)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, type, IS_STRING, 0, "NULL")
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_getVersion arginfo_class_Memcached_fetch
++
++#define arginfo_class_Memcached_getAllKeys arginfo_class_Memcached_fetch
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_flush, 0, 0, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, delay, IS_LONG, 0, "0")
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_getOption, 0, 1, IS_MIXED, 0)
++	ZEND_ARG_TYPE_INFO(0, option, IS_LONG, 0)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_setOption, 0, 2, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, option, IS_LONG, 0)
++	ZEND_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_setOptions, 0, 1, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, options, IS_ARRAY, 0)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_setBucket, 0, 3, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, host_map, IS_ARRAY, 0)
++	ZEND_ARG_TYPE_INFO(0, forward_map, IS_ARRAY, 0)
++	ZEND_ARG_TYPE_INFO(0, replicas, IS_LONG, 0)
++ZEND_END_ARG_INFO()
++
++#if defined(HAVE_MEMCACHED_SASL)
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_setSaslAuthData, 0, 2, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, username, IS_STRING, 0)
++	ZEND_ARG_TYPE_INFO(0, password, IS_STRING, 0)
++ZEND_END_ARG_INFO()
++#endif
++
++#if defined(HAVE_MEMCACHED_SET_ENCODING_KEY)
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_Memcached_setEncodingKey, 0, 1, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, key, IS_STRING, 0)
++ZEND_END_ARG_INFO()
++#endif
++
++#define arginfo_class_Memcached_isPersistent arginfo_class_Memcached_resetServerList
++
++#define arginfo_class_Memcached_isPristine arginfo_class_Memcached_resetServerList
++
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_MemcachedServer_run, 0, 1, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, address, IS_STRING, 0)
++ZEND_END_ARG_INFO()
++#endif
++
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_MemcachedServer_on, 0, 2, _IS_BOOL, 0)
++	ZEND_ARG_TYPE_INFO(0, event, IS_LONG, 0)
++	ZEND_ARG_TYPE_INFO(0, callback, IS_CALLABLE, 0)
++ZEND_END_ARG_INFO()
++#endif
++
++
++ZEND_METHOD(Memcached, __construct);
++ZEND_METHOD(Memcached, getResultCode);
++ZEND_METHOD(Memcached, getResultMessage);
++ZEND_METHOD(Memcached, get);
++ZEND_METHOD(Memcached, getByKey);
++ZEND_METHOD(Memcached, getMulti);
++ZEND_METHOD(Memcached, getMultiByKey);
++ZEND_METHOD(Memcached, getDelayed);
++ZEND_METHOD(Memcached, getDelayedByKey);
++ZEND_METHOD(Memcached, fetch);
++ZEND_METHOD(Memcached, fetchAll);
++ZEND_METHOD(Memcached, set);
++ZEND_METHOD(Memcached, setByKey);
++ZEND_METHOD(Memcached, touch);
++ZEND_METHOD(Memcached, touchByKey);
++ZEND_METHOD(Memcached, setMulti);
++ZEND_METHOD(Memcached, setMultiByKey);
++ZEND_METHOD(Memcached, cas);
++ZEND_METHOD(Memcached, casByKey);
++ZEND_METHOD(Memcached, add);
++ZEND_METHOD(Memcached, addByKey);
++ZEND_METHOD(Memcached, append);
++ZEND_METHOD(Memcached, appendByKey);
++ZEND_METHOD(Memcached, prepend);
++ZEND_METHOD(Memcached, prependByKey);
++ZEND_METHOD(Memcached, replace);
++ZEND_METHOD(Memcached, replaceByKey);
++ZEND_METHOD(Memcached, delete);
++ZEND_METHOD(Memcached, deleteMulti);
++ZEND_METHOD(Memcached, deleteByKey);
++ZEND_METHOD(Memcached, deleteMultiByKey);
++ZEND_METHOD(Memcached, increment);
++ZEND_METHOD(Memcached, decrement);
++ZEND_METHOD(Memcached, incrementByKey);
++ZEND_METHOD(Memcached, decrementByKey);
++ZEND_METHOD(Memcached, addServer);
++ZEND_METHOD(Memcached, addServers);
++ZEND_METHOD(Memcached, getServerList);
++ZEND_METHOD(Memcached, getServerByKey);
++ZEND_METHOD(Memcached, resetServerList);
++ZEND_METHOD(Memcached, quit);
++ZEND_METHOD(Memcached, flushBuffers);
++ZEND_METHOD(Memcached, getLastErrorMessage);
++ZEND_METHOD(Memcached, getLastErrorCode);
++ZEND_METHOD(Memcached, getLastErrorErrno);
++ZEND_METHOD(Memcached, getLastDisconnectedServer);
++ZEND_METHOD(Memcached, getStats);
++ZEND_METHOD(Memcached, getVersion);
++ZEND_METHOD(Memcached, getAllKeys);
++ZEND_METHOD(Memcached, flush);
++ZEND_METHOD(Memcached, getOption);
++ZEND_METHOD(Memcached, setOption);
++ZEND_METHOD(Memcached, setOptions);
++ZEND_METHOD(Memcached, setBucket);
++#if defined(HAVE_MEMCACHED_SASL)
++ZEND_METHOD(Memcached, setSaslAuthData);
++#endif
++#if defined(HAVE_MEMCACHED_SET_ENCODING_KEY)
++ZEND_METHOD(Memcached, setEncodingKey);
++#endif
++ZEND_METHOD(Memcached, isPersistent);
++ZEND_METHOD(Memcached, isPristine);
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++ZEND_METHOD(MemcachedServer, run);
++#endif
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++ZEND_METHOD(MemcachedServer, on);
++#endif
++
++
++static const zend_function_entry class_Memcached_methods[] = {
++	ZEND_ME(Memcached, __construct, arginfo_class_Memcached___construct, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getResultCode, arginfo_class_Memcached_getResultCode, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getResultMessage, arginfo_class_Memcached_getResultMessage, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, get, arginfo_class_Memcached_get, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getByKey, arginfo_class_Memcached_getByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getMulti, arginfo_class_Memcached_getMulti, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getMultiByKey, arginfo_class_Memcached_getMultiByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getDelayed, arginfo_class_Memcached_getDelayed, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getDelayedByKey, arginfo_class_Memcached_getDelayedByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, fetch, arginfo_class_Memcached_fetch, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, fetchAll, arginfo_class_Memcached_fetchAll, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, set, arginfo_class_Memcached_set, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setByKey, arginfo_class_Memcached_setByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, touch, arginfo_class_Memcached_touch, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, touchByKey, arginfo_class_Memcached_touchByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setMulti, arginfo_class_Memcached_setMulti, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setMultiByKey, arginfo_class_Memcached_setMultiByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, cas, arginfo_class_Memcached_cas, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, casByKey, arginfo_class_Memcached_casByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, add, arginfo_class_Memcached_add, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, addByKey, arginfo_class_Memcached_addByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, append, arginfo_class_Memcached_append, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, appendByKey, arginfo_class_Memcached_appendByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, prepend, arginfo_class_Memcached_prepend, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, prependByKey, arginfo_class_Memcached_prependByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, replace, arginfo_class_Memcached_replace, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, replaceByKey, arginfo_class_Memcached_replaceByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, delete, arginfo_class_Memcached_delete, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, deleteMulti, arginfo_class_Memcached_deleteMulti, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, deleteByKey, arginfo_class_Memcached_deleteByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, deleteMultiByKey, arginfo_class_Memcached_deleteMultiByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, increment, arginfo_class_Memcached_increment, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, decrement, arginfo_class_Memcached_decrement, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, incrementByKey, arginfo_class_Memcached_incrementByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, decrementByKey, arginfo_class_Memcached_decrementByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, addServer, arginfo_class_Memcached_addServer, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, addServers, arginfo_class_Memcached_addServers, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getServerList, arginfo_class_Memcached_getServerList, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getServerByKey, arginfo_class_Memcached_getServerByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, resetServerList, arginfo_class_Memcached_resetServerList, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, quit, arginfo_class_Memcached_quit, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, flushBuffers, arginfo_class_Memcached_flushBuffers, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getLastErrorMessage, arginfo_class_Memcached_getLastErrorMessage, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getLastErrorCode, arginfo_class_Memcached_getLastErrorCode, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getLastErrorErrno, arginfo_class_Memcached_getLastErrorErrno, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getLastDisconnectedServer, arginfo_class_Memcached_getLastDisconnectedServer, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getStats, arginfo_class_Memcached_getStats, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getVersion, arginfo_class_Memcached_getVersion, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getAllKeys, arginfo_class_Memcached_getAllKeys, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, flush, arginfo_class_Memcached_flush, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getOption, arginfo_class_Memcached_getOption, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setOption, arginfo_class_Memcached_setOption, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setOptions, arginfo_class_Memcached_setOptions, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setBucket, arginfo_class_Memcached_setBucket, ZEND_ACC_PUBLIC)
++#if defined(HAVE_MEMCACHED_SASL)
++	ZEND_ME(Memcached, setSaslAuthData, arginfo_class_Memcached_setSaslAuthData, ZEND_ACC_PUBLIC)
++#endif
++#if defined(HAVE_MEMCACHED_SET_ENCODING_KEY)
++	ZEND_ME(Memcached, setEncodingKey, arginfo_class_Memcached_setEncodingKey, ZEND_ACC_PUBLIC)
++#endif
++	ZEND_ME(Memcached, isPersistent, arginfo_class_Memcached_isPersistent, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, isPristine, arginfo_class_Memcached_isPristine, ZEND_ACC_PUBLIC)
++	ZEND_FE_END
++};
++
++
++static const zend_function_entry class_MemcachedServer_methods[] = {
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++	ZEND_ME(MemcachedServer, run, arginfo_class_MemcachedServer_run, ZEND_ACC_PUBLIC)
++#endif
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++	ZEND_ME(MemcachedServer, on, arginfo_class_MemcachedServer_on, ZEND_ACC_PUBLIC)
++#endif
++	ZEND_FE_END
++};
+diff --git a/memcached-3.1.5/php_memcached_legacy_arginfo.h b/memcached-3.1.5/php_memcached_legacy_arginfo.h
+new file mode 100644
+index 0000000..6f21d2a
+--- /dev/null
++++ b/memcached-3.1.5/php_memcached_legacy_arginfo.h
+@@ -0,0 +1,407 @@
++/* This is a generated file, edit the .stub.php file instead.
++ * Stub hash: a33d23c6659922e98d3704879eb4bc820e1819df */
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached___construct, 0, 0, 0)
++	ZEND_ARG_INFO(0, persistent_id)
++	ZEND_ARG_INFO(0, callback)
++	ZEND_ARG_INFO(0, connection_str)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_getResultCode, 0, 0, 0)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_getResultMessage arginfo_class_Memcached_getResultCode
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_get, 0, 0, 1)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, cache_cb)
++	ZEND_ARG_INFO(0, get_flags)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_getByKey, 0, 0, 2)
++	ZEND_ARG_INFO(0, server_key)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, cache_cb)
++	ZEND_ARG_INFO(0, get_flags)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_getMulti, 0, 0, 1)
++	ZEND_ARG_INFO(0, keys)
++	ZEND_ARG_INFO(0, get_flags)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_getMultiByKey, 0, 0, 2)
++	ZEND_ARG_INFO(0, server_key)
++	ZEND_ARG_INFO(0, keys)
++	ZEND_ARG_INFO(0, get_flags)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_getDelayed, 0, 0, 1)
++	ZEND_ARG_INFO(0, keys)
++	ZEND_ARG_INFO(0, with_cas)
++	ZEND_ARG_INFO(0, value_cb)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_getDelayedByKey, 0, 0, 2)
++	ZEND_ARG_INFO(0, server_key)
++	ZEND_ARG_INFO(0, keys)
++	ZEND_ARG_INFO(0, with_cas)
++	ZEND_ARG_INFO(0, value_cb)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_fetch arginfo_class_Memcached_getResultCode
++
++#define arginfo_class_Memcached_fetchAll arginfo_class_Memcached_getResultCode
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_set, 0, 0, 2)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, value)
++	ZEND_ARG_INFO(0, expiration)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_setByKey, 0, 0, 3)
++	ZEND_ARG_INFO(0, server_key)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, value)
++	ZEND_ARG_INFO(0, expiration)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_touch, 0, 0, 1)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, expiration)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_touchByKey, 0, 0, 2)
++	ZEND_ARG_INFO(0, server_key)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, expiration)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_setMulti, 0, 0, 1)
++	ZEND_ARG_INFO(0, items)
++	ZEND_ARG_INFO(0, expiration)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_setMultiByKey, 0, 0, 2)
++	ZEND_ARG_INFO(0, server_key)
++	ZEND_ARG_INFO(0, items)
++	ZEND_ARG_INFO(0, expiration)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_cas, 0, 0, 3)
++	ZEND_ARG_INFO(0, cas_token)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, value)
++	ZEND_ARG_INFO(0, expiration)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_casByKey, 0, 0, 4)
++	ZEND_ARG_INFO(0, cas_token)
++	ZEND_ARG_INFO(0, server_key)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, value)
++	ZEND_ARG_INFO(0, expiration)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_add arginfo_class_Memcached_set
++
++#define arginfo_class_Memcached_addByKey arginfo_class_Memcached_setByKey
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_append, 0, 0, 2)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, value)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_appendByKey, 0, 0, 3)
++	ZEND_ARG_INFO(0, server_key)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, value)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_prepend arginfo_class_Memcached_append
++
++#define arginfo_class_Memcached_prependByKey arginfo_class_Memcached_appendByKey
++
++#define arginfo_class_Memcached_replace arginfo_class_Memcached_set
++
++#define arginfo_class_Memcached_replaceByKey arginfo_class_Memcached_setByKey
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_delete, 0, 0, 1)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, time)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_deleteMulti, 0, 0, 1)
++	ZEND_ARG_INFO(0, keys)
++	ZEND_ARG_INFO(0, time)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_deleteByKey, 0, 0, 2)
++	ZEND_ARG_INFO(0, server_key)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, time)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_deleteMultiByKey, 0, 0, 2)
++	ZEND_ARG_INFO(0, server_key)
++	ZEND_ARG_INFO(0, keys)
++	ZEND_ARG_INFO(0, time)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_increment, 0, 0, 1)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, offset)
++	ZEND_ARG_INFO(0, initial_value)
++	ZEND_ARG_INFO(0, expiry)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_decrement arginfo_class_Memcached_increment
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_incrementByKey, 0, 0, 2)
++	ZEND_ARG_INFO(0, server_key)
++	ZEND_ARG_INFO(0, key)
++	ZEND_ARG_INFO(0, offset)
++	ZEND_ARG_INFO(0, initial_value)
++	ZEND_ARG_INFO(0, expiry)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_decrementByKey arginfo_class_Memcached_incrementByKey
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_addServer, 0, 0, 2)
++	ZEND_ARG_INFO(0, host)
++	ZEND_ARG_INFO(0, port)
++	ZEND_ARG_INFO(0, weight)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_addServers, 0, 0, 1)
++	ZEND_ARG_INFO(0, servers)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_getServerList arginfo_class_Memcached_getResultCode
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_getServerByKey, 0, 0, 1)
++	ZEND_ARG_INFO(0, server_key)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_resetServerList arginfo_class_Memcached_getResultCode
++
++#define arginfo_class_Memcached_quit arginfo_class_Memcached_getResultCode
++
++#define arginfo_class_Memcached_flushBuffers arginfo_class_Memcached_getResultCode
++
++#define arginfo_class_Memcached_getLastErrorMessage arginfo_class_Memcached_getResultCode
++
++#define arginfo_class_Memcached_getLastErrorCode arginfo_class_Memcached_getResultCode
++
++#define arginfo_class_Memcached_getLastErrorErrno arginfo_class_Memcached_getResultCode
++
++#define arginfo_class_Memcached_getLastDisconnectedServer arginfo_class_Memcached_getResultCode
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_getStats, 0, 0, 0)
++	ZEND_ARG_INFO(0, type)
++ZEND_END_ARG_INFO()
++
++#define arginfo_class_Memcached_getVersion arginfo_class_Memcached_getResultCode
++
++#define arginfo_class_Memcached_getAllKeys arginfo_class_Memcached_getResultCode
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_flush, 0, 0, 0)
++	ZEND_ARG_INFO(0, delay)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_getOption, 0, 0, 1)
++	ZEND_ARG_INFO(0, option)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_setOption, 0, 0, 2)
++	ZEND_ARG_INFO(0, option)
++	ZEND_ARG_INFO(0, value)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_setOptions, 0, 0, 1)
++	ZEND_ARG_INFO(0, options)
++ZEND_END_ARG_INFO()
++
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_setBucket, 0, 0, 3)
++	ZEND_ARG_INFO(0, host_map)
++	ZEND_ARG_INFO(0, forward_map)
++	ZEND_ARG_INFO(0, replicas)
++ZEND_END_ARG_INFO()
++
++#if defined(HAVE_MEMCACHED_SASL)
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_setSaslAuthData, 0, 0, 2)
++	ZEND_ARG_INFO(0, username)
++	ZEND_ARG_INFO(0, password)
++ZEND_END_ARG_INFO()
++#endif
++
++#if defined(HAVE_MEMCACHED_SET_ENCODING_KEY)
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Memcached_setEncodingKey, 0, 0, 1)
++	ZEND_ARG_INFO(0, key)
++ZEND_END_ARG_INFO()
++#endif
++
++#define arginfo_class_Memcached_isPersistent arginfo_class_Memcached_getResultCode
++
++#define arginfo_class_Memcached_isPristine arginfo_class_Memcached_getResultCode
++
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_MemcachedServer_run, 0, 0, 1)
++	ZEND_ARG_INFO(0, address)
++ZEND_END_ARG_INFO()
++#endif
++
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++ZEND_BEGIN_ARG_INFO_EX(arginfo_class_MemcachedServer_on, 0, 0, 2)
++	ZEND_ARG_INFO(0, event)
++	ZEND_ARG_INFO(0, callback)
++ZEND_END_ARG_INFO()
++#endif
++
++
++ZEND_METHOD(Memcached, __construct);
++ZEND_METHOD(Memcached, getResultCode);
++ZEND_METHOD(Memcached, getResultMessage);
++ZEND_METHOD(Memcached, get);
++ZEND_METHOD(Memcached, getByKey);
++ZEND_METHOD(Memcached, getMulti);
++ZEND_METHOD(Memcached, getMultiByKey);
++ZEND_METHOD(Memcached, getDelayed);
++ZEND_METHOD(Memcached, getDelayedByKey);
++ZEND_METHOD(Memcached, fetch);
++ZEND_METHOD(Memcached, fetchAll);
++ZEND_METHOD(Memcached, set);
++ZEND_METHOD(Memcached, setByKey);
++ZEND_METHOD(Memcached, touch);
++ZEND_METHOD(Memcached, touchByKey);
++ZEND_METHOD(Memcached, setMulti);
++ZEND_METHOD(Memcached, setMultiByKey);
++ZEND_METHOD(Memcached, cas);
++ZEND_METHOD(Memcached, casByKey);
++ZEND_METHOD(Memcached, add);
++ZEND_METHOD(Memcached, addByKey);
++ZEND_METHOD(Memcached, append);
++ZEND_METHOD(Memcached, appendByKey);
++ZEND_METHOD(Memcached, prepend);
++ZEND_METHOD(Memcached, prependByKey);
++ZEND_METHOD(Memcached, replace);
++ZEND_METHOD(Memcached, replaceByKey);
++ZEND_METHOD(Memcached, delete);
++ZEND_METHOD(Memcached, deleteMulti);
++ZEND_METHOD(Memcached, deleteByKey);
++ZEND_METHOD(Memcached, deleteMultiByKey);
++ZEND_METHOD(Memcached, increment);
++ZEND_METHOD(Memcached, decrement);
++ZEND_METHOD(Memcached, incrementByKey);
++ZEND_METHOD(Memcached, decrementByKey);
++ZEND_METHOD(Memcached, addServer);
++ZEND_METHOD(Memcached, addServers);
++ZEND_METHOD(Memcached, getServerList);
++ZEND_METHOD(Memcached, getServerByKey);
++ZEND_METHOD(Memcached, resetServerList);
++ZEND_METHOD(Memcached, quit);
++ZEND_METHOD(Memcached, flushBuffers);
++ZEND_METHOD(Memcached, getLastErrorMessage);
++ZEND_METHOD(Memcached, getLastErrorCode);
++ZEND_METHOD(Memcached, getLastErrorErrno);
++ZEND_METHOD(Memcached, getLastDisconnectedServer);
++ZEND_METHOD(Memcached, getStats);
++ZEND_METHOD(Memcached, getVersion);
++ZEND_METHOD(Memcached, getAllKeys);
++ZEND_METHOD(Memcached, flush);
++ZEND_METHOD(Memcached, getOption);
++ZEND_METHOD(Memcached, setOption);
++ZEND_METHOD(Memcached, setOptions);
++ZEND_METHOD(Memcached, setBucket);
++#if defined(HAVE_MEMCACHED_SASL)
++ZEND_METHOD(Memcached, setSaslAuthData);
++#endif
++#if defined(HAVE_MEMCACHED_SET_ENCODING_KEY)
++ZEND_METHOD(Memcached, setEncodingKey);
++#endif
++ZEND_METHOD(Memcached, isPersistent);
++ZEND_METHOD(Memcached, isPristine);
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++ZEND_METHOD(MemcachedServer, run);
++#endif
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++ZEND_METHOD(MemcachedServer, on);
++#endif
++
++
++static const zend_function_entry class_Memcached_methods[] = {
++	ZEND_ME(Memcached, __construct, arginfo_class_Memcached___construct, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getResultCode, arginfo_class_Memcached_getResultCode, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getResultMessage, arginfo_class_Memcached_getResultMessage, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, get, arginfo_class_Memcached_get, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getByKey, arginfo_class_Memcached_getByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getMulti, arginfo_class_Memcached_getMulti, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getMultiByKey, arginfo_class_Memcached_getMultiByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getDelayed, arginfo_class_Memcached_getDelayed, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getDelayedByKey, arginfo_class_Memcached_getDelayedByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, fetch, arginfo_class_Memcached_fetch, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, fetchAll, arginfo_class_Memcached_fetchAll, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, set, arginfo_class_Memcached_set, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setByKey, arginfo_class_Memcached_setByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, touch, arginfo_class_Memcached_touch, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, touchByKey, arginfo_class_Memcached_touchByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setMulti, arginfo_class_Memcached_setMulti, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setMultiByKey, arginfo_class_Memcached_setMultiByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, cas, arginfo_class_Memcached_cas, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, casByKey, arginfo_class_Memcached_casByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, add, arginfo_class_Memcached_add, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, addByKey, arginfo_class_Memcached_addByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, append, arginfo_class_Memcached_append, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, appendByKey, arginfo_class_Memcached_appendByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, prepend, arginfo_class_Memcached_prepend, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, prependByKey, arginfo_class_Memcached_prependByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, replace, arginfo_class_Memcached_replace, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, replaceByKey, arginfo_class_Memcached_replaceByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, delete, arginfo_class_Memcached_delete, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, deleteMulti, arginfo_class_Memcached_deleteMulti, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, deleteByKey, arginfo_class_Memcached_deleteByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, deleteMultiByKey, arginfo_class_Memcached_deleteMultiByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, increment, arginfo_class_Memcached_increment, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, decrement, arginfo_class_Memcached_decrement, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, incrementByKey, arginfo_class_Memcached_incrementByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, decrementByKey, arginfo_class_Memcached_decrementByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, addServer, arginfo_class_Memcached_addServer, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, addServers, arginfo_class_Memcached_addServers, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getServerList, arginfo_class_Memcached_getServerList, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getServerByKey, arginfo_class_Memcached_getServerByKey, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, resetServerList, arginfo_class_Memcached_resetServerList, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, quit, arginfo_class_Memcached_quit, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, flushBuffers, arginfo_class_Memcached_flushBuffers, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getLastErrorMessage, arginfo_class_Memcached_getLastErrorMessage, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getLastErrorCode, arginfo_class_Memcached_getLastErrorCode, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getLastErrorErrno, arginfo_class_Memcached_getLastErrorErrno, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getLastDisconnectedServer, arginfo_class_Memcached_getLastDisconnectedServer, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getStats, arginfo_class_Memcached_getStats, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getVersion, arginfo_class_Memcached_getVersion, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getAllKeys, arginfo_class_Memcached_getAllKeys, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, flush, arginfo_class_Memcached_flush, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, getOption, arginfo_class_Memcached_getOption, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setOption, arginfo_class_Memcached_setOption, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setOptions, arginfo_class_Memcached_setOptions, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, setBucket, arginfo_class_Memcached_setBucket, ZEND_ACC_PUBLIC)
++#if defined(HAVE_MEMCACHED_SASL)
++	ZEND_ME(Memcached, setSaslAuthData, arginfo_class_Memcached_setSaslAuthData, ZEND_ACC_PUBLIC)
++#endif
++#if defined(HAVE_MEMCACHED_SET_ENCODING_KEY)
++	ZEND_ME(Memcached, setEncodingKey, arginfo_class_Memcached_setEncodingKey, ZEND_ACC_PUBLIC)
++#endif
++	ZEND_ME(Memcached, isPersistent, arginfo_class_Memcached_isPersistent, ZEND_ACC_PUBLIC)
++	ZEND_ME(Memcached, isPristine, arginfo_class_Memcached_isPristine, ZEND_ACC_PUBLIC)
++	ZEND_FE_END
++};
++
++
++static const zend_function_entry class_MemcachedServer_methods[] = {
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++	ZEND_ME(MemcachedServer, run, arginfo_class_MemcachedServer_run, ZEND_ACC_PUBLIC)
++#endif
++#if defined(HAVE_MEMCACHED_PROTOCOL)
++	ZEND_ME(MemcachedServer, on, arginfo_class_MemcachedServer_on, ZEND_ACC_PUBLIC)
++#endif
++	ZEND_FE_END
++};
+diff --git a/memcached-3.1.5/tests/bad_construct.phpt b/memcached-3.1.5/tests/bad_construct.phpt
+index 0b740e0..0c27879 100644
+--- a/memcached-3.1.5/tests/bad_construct.phpt
++++ b/memcached-3.1.5/tests/bad_construct.phpt
+@@ -1,7 +1,10 @@
+ --TEST--
+ Memcached construct with bad arguments
+ --SKIPIF--
+-<?php include "skipif.inc";?>
++<?php
++include "skipif.inc";
++if (PHP_VERSION_ID >= 80000) die("skip PHP 7 only");
++?>
+ --FILE--
+ <?php 
+ 
+diff --git a/memcached-3.1.5/tests/bad_construct_8.phpt b/memcached-3.1.5/tests/bad_construct_8.phpt
+new file mode 100644
+index 0000000..81daa5a
+--- /dev/null
++++ b/memcached-3.1.5/tests/bad_construct_8.phpt
+@@ -0,0 +1,34 @@
++--TEST--
++Memcached construct with bad arguments
++--SKIPIF--
++<?php
++include "skipif.inc";
++if (PHP_VERSION_ID < 80000) die("skip PHP 8 only");
++?>
++--FILE--
++<?php 
++
++try {
++	$m = new Memcached((object)array());
++} catch (TypeError $e) {
++	echo $e->getMessage() . PHP_EOL;
++}
++
++class extended extends Memcached {
++	public function __construct () {
++	}
++}
++
++error_reporting(E_ALL);
++$extended = new extended ();
++var_dump ($extended->setOption (Memcached::OPT_BINARY_PROTOCOL, true));
++
++echo "OK" . PHP_EOL;
++
++--EXPECTF--
++Memcached::__construct(): Argument #1 ($persistent_id) must be of type ?string, stdClass given
++
++Warning: Memcached::setOption(): Memcached constructor was not called in %s
++NULL
++OK
++
+diff --git a/memcached-3.1.5/tests/expire.phpt b/memcached-3.1.5/tests/expire.phpt
+index eac0240..4fb49c5 100644
+--- a/memcached-3.1.5/tests/expire.phpt
++++ b/memcached-3.1.5/tests/expire.phpt
+@@ -7,6 +7,7 @@ https://code.google.com/p/memcached/issues/detail?id=275
+ $min_version = "1.4.8";
+ include dirname(__FILE__) . "/skipif.inc";
+ if (!method_exists("memcached", "touch")) die ("skip memcached::touch is not available");
++if (getenv("SKIP_SLOW_TESTS")) die('skip slow test');
+ ?>
+ --FILE--
+ <?php
+diff --git a/memcached-3.1.5/tests/undefined_set.phpt b/memcached-3.1.5/tests/undefined_set.phpt
+index 2e8b1c1..caeda19 100644
+--- a/memcached-3.1.5/tests/undefined_set.phpt
++++ b/memcached-3.1.5/tests/undefined_set.phpt
+@@ -24,16 +24,16 @@ $rv = $m->set($key, $value, $no_time);
+ var_dump($rv);
+ ?>
+ --EXPECTF--
+-Notice: Undefined variable: no_key in %s
++%s: Undefined variable%sno_key in %s
+ bool(false)
+ 
+-Notice: Undefined variable: no_value in %s
++%s: Undefined variable%sno_value in %s
+ bool(true)
+ 
+-Notice: Undefined variable: no_key in %s
++%s: Undefined variable%sno_key in %s
+ 
+-Notice: Undefined variable: no_value in %s
++%s: Undefined variable%sno_value in %s
+ bool(false)
+ 
+-Notice: Undefined variable: no_time in %s
++%s: Undefined variable%sno_time in %s
+ bool(true)
+diff --git a/memcached-3.1.5/tests/vbucket.phpt b/memcached-3.1.5/tests/vbucket.phpt
+index f17eb94..a691680 100644
+--- a/memcached-3.1.5/tests/vbucket.phpt
++++ b/memcached-3.1.5/tests/vbucket.phpt
+@@ -18,14 +18,6 @@ var_dump ($m->setBucket (array (1,2,2), array (1,2,2), 2));
+ 
+ var_dump ($m->setBucket (array ('a', 'b', 'c'), null, 2));
+ 
+-var_dump ($m->setBucket (array (), null, 2));
+-
+-var_dump ($m->setBucket (array (), array (), -1));
+-
+-var_dump ($m->setBucket (null, array (), -1));
+-
+-var_dump ($m->setBucket (array (-1), array (-1), 1));
+-
+ echo "OK\n";
+ 
+ ?>
+@@ -33,16 +25,4 @@ echo "OK\n";
+ bool(true)
+ bool(true)
+ bool(true)
+-
+-Warning: Memcached::setBucket(): server map cannot be empty in %s on line %d
+-bool(false)
+-
+-Warning: Memcached::setBucket(): server map cannot be empty in %s on line %d
+-bool(false)
+-
+-Warning: Memcached::setBucket() expects parameter 1 to be array, null given in %s on line %d
+-NULL
+-
+-Warning: Memcached::setBucket(): the map must contain positive integers in %s on line %d
+-bool(false)
+ OK
+diff --git a/memcached-3.1.5/tests/vbucket_error_7.phpt b/memcached-3.1.5/tests/vbucket_error_7.phpt
+new file mode 100644
+index 0000000..286534a
+--- /dev/null
++++ b/memcached-3.1.5/tests/vbucket_error_7.phpt
+@@ -0,0 +1,40 @@
++--TEST--
++Memcached virtual buckets
++--SKIPIF--
++<?php
++include dirname(__FILE__) . "/skipif.inc";
++if (!defined("Memcached::DISTRIBUTION_VIRTUAL_BUCKET")) die ("skip DISTRIBUTION_VIRTUAL_BUCKET not defined");
++if (PHP_VERSION_ID >= 80000) die("skip PHP 7 only");
++?>
++--FILE--
++<?php
++include dirname (__FILE__) . '/config.inc';
++$m = memc_get_instance (array (
++							Memcached::OPT_DISTRIBUTION => Memcached::DISTRIBUTION_VIRTUAL_BUCKET
++						));
++
++var_dump ($m->setBucket (array (), null, 2));
++
++var_dump ($m->setBucket (array (), array (), -1));
++
++var_dump ($m->setBucket (null, array (), -1));
++
++var_dump ($m->setBucket (array (-1), array (-1), 1));
++
++echo "OK\n";
++
++?>
++--EXPECTF--
++
++Warning: Memcached::setBucket(): server map cannot be empty in %s on line %d
++bool(false)
++
++Warning: Memcached::setBucket(): server map cannot be empty in %s on line %d
++bool(false)
++
++Warning: Memcached::setBucket() expects parameter 1 to be array, null given in %s on line %d
++NULL
++
++Warning: Memcached::setBucket(): the map must contain positive integers in %s on line %d
++bool(false)
++OK
+diff --git a/memcached-3.1.5/tests/vbucket_error_8.phpt b/memcached-3.1.5/tests/vbucket_error_8.phpt
+new file mode 100644
+index 0000000..c8af231
+--- /dev/null
++++ b/memcached-3.1.5/tests/vbucket_error_8.phpt
+@@ -0,0 +1,41 @@
++--TEST--
++Memcached virtual buckets
++--SKIPIF--
++<?php
++include dirname(__FILE__) . "/skipif.inc";
++if (!defined("Memcached::DISTRIBUTION_VIRTUAL_BUCKET")) die ("skip DISTRIBUTION_VIRTUAL_BUCKET not defined");
++if (PHP_VERSION_ID < 80000) die("skip PHP 8 only");
++?>
++--FILE--
++<?php
++include dirname (__FILE__) . '/config.inc';
++$m = memc_get_instance (array (
++							Memcached::OPT_DISTRIBUTION => Memcached::DISTRIBUTION_VIRTUAL_BUCKET
++						));
++
++var_dump ($m->setBucket (array (), null, 2));
++
++var_dump ($m->setBucket (array (), array (), -1));
++
++try {
++	var_dump ($m->setBucket (null, array (), -1));
++} catch (TypeError $e) {
++	echo $e->getMessage() . PHP_EOL;
++}
++
++var_dump ($m->setBucket (array (-1), array (-1), 1));
++
++echo "OK\n";
++
++?>
++--EXPECTF--
++Warning: Memcached::setBucket(): server map cannot be empty in %s on line %d
++bool(false)
++
++Warning: Memcached::setBucket(): server map cannot be empty in %s on line %d
++bool(false)
++Memcached::setBucket(): Argument #1 ($host_map) must be of type array, null given
++
++Warning: Memcached::setBucket(): the map must contain positive integers in %s on line %d
++bool(false)
++OK

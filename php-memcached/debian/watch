@@ -1,0 +1,2 @@
+version=3
+http://pecl.php.net/package/memcached /get/memcached-([\d.]+)\.tgz
