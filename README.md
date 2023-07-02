@@ -1,7 +1,7 @@
 # rnx4src-x86
 
-This repository contains the source code of updates packages for the old
-ReadyNAS systems running RAIDiator 4.x (ideally 4.2.31).
+This repository contains the source code of updates packages for ReadyNAS 
+systems running ReadyNAS OS 6.10.x.
 
 ## Directory structure
 
