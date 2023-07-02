@@ -1,0 +1,24 @@
+mdocml (1.13.3-2~bpo8+1+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 05 Dec 2020 18:58:40 +0100
+
+mdocml (1.13.3-2~bpo8+1) jessie-backports; urgency=medium
+
+  * Rebuild for jessie-backports. (Closes: #850816)
+
+ -- Michael Stapelberg <stapelberg@debian.org>  Wed, 11 Jan 2017 09:37:07 +0100
+
+mdocml (1.13.3-2) unstable; urgency=medium
+
+  * define PATH_MAX if not present, so hurd-i386 works, closes: #829624
+
+ -- Bdale Garbee <bdale@gag.com>  Wed, 06 Jul 2016 20:50:01 +0200
+
+mdocml (1.13.3-1) unstable; urgency=medium
+
+  * Initial release (Closes: #829018)
+
+ -- Bdale Garbee <bdale@gag.com>  Sat, 02 Jul 2016 21:09:13 +0200
