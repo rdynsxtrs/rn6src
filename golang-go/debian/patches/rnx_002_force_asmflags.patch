@@ -1,0 +1,10 @@
+--- golang-1.15-1.15.3.orig/src/cmd/dist/build.go
++++ golang-1.15-1.15.3/src/cmd/dist/build.go
+@@ -1502,6 +1502,7 @@
+ func appendCompilerFlags(args []string) []string {
+ 	if gogcflags != "" {
+ 		args = append(args, "-gcflags=all="+gogcflags)
++		args = append(args, "-asmflags=all="+gogcflags)
+ 	}
+ 	if goldflags != "" {
+ 		args = append(args, "-ldflags=all="+goldflags)

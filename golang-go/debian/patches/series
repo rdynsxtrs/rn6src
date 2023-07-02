@@ -1,0 +1,8 @@
+0001-Disable-test-for-UserHomeDir.patch
+0002-Fix-Lintian-warnings-about-wrong-interpreter-path.patch
+# 0003-cmd-go-cmd-cgo-pass-mfp32-and-mhard-soft-float-to-MI.patch
+# 0004-cmd-dist-fix-build-failure-of-misc-cgo-test-on-arm64.patch
+# rnx_001_bring_back_oldlink.patch
+rnx_002_force_asmflags.patch
+# rnx_003_set_go111module_on_build.patch
+rnx_001_bring_back_R_ARM_V4BX.patch
