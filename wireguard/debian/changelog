@@ -1,3 +1,9 @@
+wireguard (1.0.20230804-1+rnx1) unstable; urgency=medium
+
+  * new upstream release
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 03 Aug 2024 17:12:58 +0200
+
 wireguard (1.0.20210424-1+rnx.1) unstable; urgency=medium
 
   * New upstream release
