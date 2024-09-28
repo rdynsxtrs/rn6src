@@ -1,4 +1,4 @@
-# rnx4src-x86
+# rn6src
 
 This repository contains the source code of updates packages for ReadyNAS 
 systems running ReadyNAS OS 6.10.x.

@@ -14,6 +14,7 @@ Build-Depends: libz-dev, gettext,
  libmailtools-perl,
  cvs, cvsps, libdbd-sqlite3-perl,
  unzip, libio-pty-perl,
+ debhelper,
  dh-exec (>= 0.7),
  dh-apache2,
  dpkg-dev (>= 1.16.2~)

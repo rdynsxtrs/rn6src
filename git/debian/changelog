@@ -1,8 +1,76 @@
-git (1:2.39.1-1+rnx1) unstable; urgency=medium
+git (1:2.46.2-rnx1) unstable; urgency=medium
 
-  * Backported to REadyNAS OS 6
+  * New upsteeam release 2.46.2
 
- -- ReadyNAS Xtras <xtras@rnxtras.com>  Fri, 20 Jan 2023 15:31:30 +0100
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 28 Sep 2024 11:46:01 +0200
+
+git (1:2.45.1-rnx1) unstable; urgency=medium
+
+  * Backported to RaadyNAS OS 6 
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 27 May 2024 11:12:43 +0200
+
+git (1:2.45.1-1) unstable; urgency=medium
+
+  * new upstream release (see RelNotes/2.44.0.txt, RelNotes/2.45.0.txt).
+  * new upstream point release (see RelNotes/2.45.1.txt; addresses
+    CVE-2024-32002, CVE-2024-32004, CVE-2024-32020, CVE-2024-32021 and
+    CVE-2024-32465; closes: #1071160).
+  * debian/patches/0001..0007: new from upstream: followups intended
+    for v2.45.2 to avoid regressions from the fixes included in
+    v2.45.1 (thx Johannes Schindelin).
+
+ -- Jonathan Nieder <jrnieder@gmail.com>  Mon, 20 May 2024 03:36:58 +0000
+
+git (1:2.43.0-1) unstable; urgency=low
+
+  * new upstream release (see RelNotes/2.43.0.txt).
+
+ -- Jonathan Nieder <jrnieder@gmail.com>  Sun, 26 Nov 2023 17:32:42 -0800
+
+git (1:2.42.0-1) unstable; urgency=low
+
+  * new upstream release (see RelNotes/2.41.0.txt, RelNotes/2.42.0.txt).
+
+ -- Jonathan Nieder <jrnieder@gmail.com>  Wed, 27 Sep 2023 09:55:42 -0700
+
+git (1:2.40.1-1) unstable; urgency=medium
+
+  * new upstream point release (see RelNotes/2.40.1.txt; addresses
+    CVE-2023-25652, CVE-2023-25815 CVE-2023-29007).
+
+ -- Jonathan Nieder <jrnieder@gmail.com>  Tue, 25 Apr 2023 10:16:34 -0700
+
+git (1:2.40.0-1) unstable; urgency=low
+
+  * new upstream release (see RelNotes/2.40.0.txt).
+  * debian/git-doc.doc-base.{git-index-format,git-pack-format,git-protocol}:
+    remove from documentation index, as the main git(1) reference
+    manual is the main entry point to find these.
+
+ -- Jonathan Nieder <jrnieder@gmail.com>  Mon, 20 Mar 2023 16:50:00 -0700
+
+git (1:2.39.2-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload (only changes to git-doc).
+  * Correct paths in git-doc doc-base control files (Closes: #1023255)
+
+ -- Matthew Vernon <matthew@debian.org>  Tue, 28 Feb 2023 09:25:32 +0000
+
+git (1:2.39.2-1) unstable; urgency=medium
+
+  * new upstream point release (see RelNotes/2.39.2.txt).  Addresses
+    CVE-2023-22490 and CVE-2023-23946.
+
+ -- Jonathan Nieder <jrnieder@gmail.com>  Wed, 15 Feb 2023 17:08:12 -0800
+
+git (1:2.39.1-0.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * New upstream stable release (Closes: #1029114)
+    Fixes CVE-2022-23521 and CVE-2022-41903.
+
+ -- Aron Xu <aron@debian.org>  Thu, 26 Jan 2023 13:43:04 +0800
 
 git (1:2.39.0-1) unstable; urgency=low
 
