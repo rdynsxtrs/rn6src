@@ -1,0 +1,87 @@
+Description: Remove the badge in the readme to avoid lintian complaining about
+ privacy-breach-generic
+Author: Joseph Herlant <herlantj@gmail.com>
+Forwarded: not-needed
+Last-Update: 2018-05-05
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/README.adoc
++++ b/README.adoc
+@@ -101,9 +101,7 @@
+ We want to recognize our generous sponsors, without whose support Asciidoctor would not be possible.
+ Thank you sponsors for your dedication to improving the state of technical documentation!
+ 
+-image:https://www.okta.com/sites/all/themes/Okta/images/blog/Logos/Okta_Logo_BrightBlue_Medium.png[Okta,280,link=https://developer.okta.com/signup?utm_source=asciidoctor&utm_medium=logo&utm_campaign=sponsor,title="Add User Auth to Your Apps in Minutes with Okta"]
+ &nbsp; &nbsp; &nbsp;
+-image:https://secure.gravatar.com/avatar/823717a797dbd78ceff7b26aa397f383.png?size=200[OpenDevise,100,link=https://opendevise.com,title="Let the Creators of Asciidoctor and Antora Help You to Accelerate Your Docs"]
+ 
+ Major funding for Asciidoctor is provided by our *Change Makers*, https://developer.okta.com/signup?utm_source=asciidoctor&utm_medium=text-link&utm_campaign=sponsor[Okta] and https://opendevise.com[OpenDevise], and our *Strategy Sponsors*, https://www.khronos.org/[Khronos Group] and Linda Roberts.
+ Additional funding is provided by our https://asciidoctor.org/supporters[Community Backers].
+@@ -438,7 +436,6 @@
+ But we can't do it without your feedback!
+ We encourage you to ask questions and discuss any aspects of the project on the discussion list, on Twitter or in the chat room.
+ 
+-Chat (Gitter):: image:https://badges.gitter.im/Join%20In.svg[Gitter, link=https://gitter.im/asciidoctor/asciidoctor]
+ Discussion list (Nabble):: {uri-discuss}
+ Twitter:: https://twitter.com/search?f=tweets&q=%23asciidoctor[#asciidoctor] hashtag or https://twitter.com/asciidoctor[@asciidoctor] mention
+ 
+--- a/README-fr.adoc
++++ b/README-fr.adoc
+@@ -95,9 +95,7 @@
+ Nous souhaitons exprimer toute notre reconnaissance à nos généreux sponsors, sans qui Asciidoctor ne pourrait pas exister.
+ Merci à vous pour votre engagement dans l'amélioration de la documentation technique !
+ 
+-image:https://www.okta.com/sites/all/themes/Okta/images/blog/Logos/Okta_Logo_BrightBlue_Medium.png[Okta,280,link=https://developer.okta.com/signup?utm_source=asciidoctor&utm_medium=logo&utm_campaign=sponsor,title="Add User Auth to Your Apps in Minutes with Okta"]
+ &nbsp; &nbsp; &nbsp;
+-image:https://secure.gravatar.com/avatar/823717a797dbd78ceff7b26aa397f383.png?size=200[OpenDevise,100,link=https://opendevise.com,title="Let the Creators of Asciidoctor and Antora Help You to Accelerate Your Docs"]
+ 
+ Asciidoctor est financé majoritairement par nos *Change Makers*, https://developer.okta.com/signup?utm_source=asciidoctor&utm_medium=text-link&utm_campaign=sponsor[Okta] et https://opendevise.com[OpenDevise], ainsi que par nos *Strategy Sponsors*, https://www.khronos.org/[Khronos Group] et Linda Roberts.
+ Un apport financier supplémentaire est assuré par https://asciidoctor.org/supporters[la communauté].
+@@ -407,7 +405,6 @@
+ Mais nous ne pouvons pas le faire sans vos avis !
+ Nous vous encourageons à poser vos questions et à discuter de n'importe quels aspects du projet sur la liste de discussion, Twitter ou dans le salon de discussion.
+ 
+-Chat (Gitter):: image:https://badges.gitter.im/Join%20In.svg[Gitter, link=https://gitter.im/asciidoctor/asciidoctor]
+ Forum (Nabble):: {uri-discuss}
+ Twitter:: hashtag https://twitter.com/search?f=tweets&q=%23asciidoctor[#asciidoctor] ou la mention https://twitter.com/asciidoctor[@asciidoctor]
+ ////
+--- a/README-jp.adoc
++++ b/README-jp.adoc
+@@ -379,7 +379,6 @@
+ 
+ Discussion list (Nabble):: {uri-discuss}
+ Twitter:: #asciidoctor hashtag or @asciidoctor mention
+-Chat (Gitter):: image:https://badges.gitter.im/Join%20In.svg[Gitter, link=https://gitter.im/asciidoctor/asciidoctor]
+ 
+ ifdef::env-github[]
+ 以下のプロジェクトサイトに、Asciidoctorに関するさらに詳しい情報やドキュメントがあります。
+--- a/README-zh_CN.adoc
++++ b/README-zh_CN.adoc
+@@ -395,7 +395,6 @@
+ 
+ 讨论组 (Nabble):: {uri-discuss}
+ Twitter:: https://twitter.com/search?f=tweets&q=%23asciidoctor[#asciidoctor] 来加入话题 或 https://twitter.com/asciidoctor[@asciidoctor] at并提醒我们
+-聊天 (Gitter):: image:https://badges.gitter.im/Join%20In.svg[Gitter, link=https://gitter.im/asciidoctor/asciidoctor]
+ 
+ ifdef::env-github[]
+ Further information and documentation about Asciidoctor can be found on the project's website.
+--- a/README-de.adoc
++++ b/README-de.adoc
+@@ -98,9 +98,7 @@
+ Wir möchten unseren großzügigen Sponsoren danken, ohne deren Unterstützung Asciidoctor nicht möglich wäre.
+ Vielen Dank an die Sponsoren für ihr Engagement zur Verbesserung der technischen Dokumentation!
+ 
+-image:https://www.okta.com/sites/all/themes/Okta/images/blog/Logos/Okta_Logo_BrightBlue_Medium.png[Okta,280,link=https://developer.okta.com/signup?utm_source=asciidoctor&utm_medium=logo&utm_campaign=sponsor,title="Add User Auth to Your Apps in Minutes with Okta"]
+ &nbsp; &nbsp; &nbsp;
+-image:https://secure.gravatar.com/avatar/823717a797dbd78ceff7b26aa397f383.png?size=200[OpenDevise,100,link=https://opendevise.com,title="Let the Creators of Asciidoctor and Antora Help You to Accelerate Your Docs"]
+ 
+ Unsere Change Makers, https://developer.okta.com/signup?utm_source=asciidoctor&utm_medium=text-link&utm_campaign=sponsor[Okta] und https://opendevise.com[OpenDevise], sowie unsere Strategiesponsoren https://www.khronos.org/[Khronos Group] und Linda Roberts finanzieren Asciidoctor maßgeblich.
+ Zusätzliche Mittel werden von unseren https://asciidoctor.org/supporters[Community Backers] zur Verfügung gestellt.
+@@ -441,7 +439,6 @@
+ Aber wir können es nicht ohne ihr Feedback machen!
+ Wir ermutigen Sie, Fragen zu stellen und alle Aspekte des Projekts auf der Diskussionsliste, auf Twitter oder im Chatroom zu diskutieren.
+ 
+-Chat (Gitter):: image:https://badges.gitter.im/Join%20In.svg[Gitter, link=https://gitter.im/asciidoctor/asciidoctor]
+ Discussionsliste (Nabble):: {uri-discuss}
+ Twitter:: https://twitter.com/search?f=tweets&q=%23asciidoctor[#asciidoctor] hashtag or https://twitter.com/asciidoctor[@asciidoctor] mention
+ 

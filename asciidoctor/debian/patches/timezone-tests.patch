@@ -1,0 +1,50 @@
+Description: Fixing the timezone-related tests failing in an autopkgtest environment
+Author: Joseph Herlant<aerostitch@debian.org>
+Forwarded: https://github.com/asciidoctor/asciidoctor/pull/2969
+Last-Update: 2018-11-22
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/test/invoker_test.rb
++++ b/test/invoker_test.rb
+@@ -670,6 +670,8 @@
+     input_path = fixture_path 'doctime-localtime.adoc'
+     cmd = %(#{ruby} #{executable} -d inline -o - -s #{input_path})
+     old_tz = ENV['TZ']
++    # If this env variable is not unset, the timezone will always be the one set there
++    old_source_date_epoch = ENV.delete 'SOURCE_DATE_EPOCH'
+     begin
+       ENV['TZ'] = 'UTC'
+       result = Open3.popen3(cmd) {|_, out| out.read }
+@@ -682,6 +684,11 @@
+       else
+         ENV.delete 'TZ'
+       end
++      if old_source_date_epoch
++          ENV['SOURCE_DATE_EPOCH'] = old_source_date_epoch
++      else
++          ENV.delete 'SOURCE_DATE_EPOCH'
++      end
+     end
+   end
+ 
+@@ -691,6 +698,8 @@
+     input_path = fixture_path 'doctime-localtime.adoc'
+     cmd = %(#{ruby} #{executable} -d inline -o - -s #{input_path})
+     old_tz = ENV['TZ']
++    # If this env variable is not unset, the timezone will always be the one set there
++    old_source_date_epoch = ENV.delete 'SOURCE_DATE_EPOCH'
+     begin
+       ENV['TZ'] = 'EST+5'
+       result = Open3.popen3(cmd) {|_, out| out.read }
+@@ -703,6 +712,11 @@
+       else
+         ENV.delete 'TZ'
+       end
++      if old_source_date_epoch
++          ENV['SOURCE_DATE_EPOCH'] = old_source_date_epoch
++      else
++          ENV.delete 'SOURCE_DATE_EPOCH'
++      end
+     end
+   end
+ 

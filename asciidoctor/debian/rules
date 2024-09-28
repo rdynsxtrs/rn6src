@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+
+export GEM2DEB_TEST_RUNNER = --check-dependencies
+export ASCIIDOCTOR_MANPAGE_PATH = $(CURDIR)/man/asciidoctor.1
+export ASCIIDOCTOR_LIB_DIR = $(CURDIR)/debian/ruby-asciidoctor/usr/lib/ruby/vendor_ruby
+
+%:
+	dh $@ --buildsystem=ruby --with ruby
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf doc
+
+override_dh_auto_build:
+	dh_auto_build
+	# build documentation
+	rdoc --main=README.adoc lib
+	rm -f doc/js/*.js.gz
+
+override_dh_auto_install:
+	# needed since we split the packages
+	install -d debian/ruby-asciidoctor/usr/share/ruby-asciidoctor
+	cp -r data/* debian/ruby-asciidoctor/usr/share/ruby-asciidoctor
+	dh_auto_install
+	# remove asciidoctor-safe
+	rm -f debian/ruby-asciidoctor/usr/bin/asciidoctor-safe
+	# remove bundled jquery.js
+	rm -f debian/asciidoctor-doc/usr/share/doc/asciidoctor-doc/html/js/jquery.js
+	mkdir -p debian/asciidoctor/usr/bin
+	mv debian/ruby-asciidoctor/usr/bin/* debian/asciidoctor/usr/bin/
+	rmdir debian/ruby-asciidoctor/usr/bin
+
+override_dh_installchangelogs:
+	dh_installchangelogs -O--buildsystem=ruby CHANGELOG.adoc
+
+override_dh_installdocs:
+	bin/asciidoctor -a webfonts! -a icons! -a image-uri-screenshot! README*.adoc
+	dh_installdocs

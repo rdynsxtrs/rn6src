@@ -1,0 +1,17 @@
+Description: Skip test that depends on chmod
+ This fixes running tests under autopkgtest
+Author: Guillaume Grossetie <ggrossetie@gmail.com>
+Origin: vendor
+Forwarded: no
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/test/reader_test.rb
++++ b/test/reader_test.rb
+@@ -738,6 +738,7 @@
+       end
+ 
+       test 'unreadable file referenced by include directive is replaced by warning' do
++        skip 'file is readable in Debian build'
+         include_file = File.join DIRNAME, 'fixtures', 'chapter-a.adoc'
+         FileUtils.chmod 0000, include_file
+         input = <<-EOS
