@@ -1,0 +1,4 @@
+861338605659e28004064f011ae95ca4  lib/modules/4.4.190.x86_64.1/updates/dkms/wireguard.ko
+824be945eac0a8ed83ffde2b44cd9432  lib/modules/4.4.218.x86_64.1/updates/dkms/wireguard.ko
+db531d8ac7e64fc8f483d95920586a1f  usr/share/doc/wireguard-kernel-modules/changelog.gz
+fe6cfdeaee9450ab46f8a73ea3a3dbbe  usr/share/doc/wireguard-kernel-modules/copyright

@@ -1,3 +1,15 @@
+wireguard-kernel-modules (20220627+rnx1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 03 Aug 2024 17:03:15 +0200
+
+wireguard-kernel-modules (20210424+rnx.2) unstable; urgency=medium
+
+  * Add module for firmware 6.10.5
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 30 May 2021 17:56:33 +0200
+
 wireguard-kernel-modules (20210424+rnx.1) unstable; urgency=medium
 
   * New upstream release 1.0.20210424
