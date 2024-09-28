@@ -1,3 +1,9 @@
+php7.4 (7.4.33-1+0~20240927+rnx.1) unstable; urgency=medium
+
+  * New (and last) upstream release PHP 7.4.33
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Fri, 27 Sep 2024 15:20:46 +0200
+
 php7.4 (7.4.26-1+0~20211120+rnx.1) unstable; urgency=medium
 
   * New upstream release PHP 7.4.26
