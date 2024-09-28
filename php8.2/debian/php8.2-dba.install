@@ -1,2 +1,4 @@
 usr/lib/php/*/dba.so
 usr/share/php8.2-dba/dba/dba.ini
+usr/lib/php/*/dba.so
+usr/share/php8.2-dba/dba/dba.ini

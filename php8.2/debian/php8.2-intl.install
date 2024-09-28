@@ -1,2 +1,4 @@
 usr/lib/php/*/intl.so
 usr/share/php8.2-intl/intl/intl.ini
+usr/lib/php/*/intl.so
+usr/share/php8.2-intl/intl/intl.ini

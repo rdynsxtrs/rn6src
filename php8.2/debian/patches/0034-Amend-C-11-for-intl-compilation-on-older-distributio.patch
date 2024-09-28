@@ -10,10 +10,10 @@ diff --git a/ext/intl/config.m4 b/ext/intl/config.m4
 index b511f00..acfad5d 100644
 --- a/ext/intl/config.m4
 +++ b/ext/intl/config.m4
-@@ -81,7 +81,7 @@
+@@ -90,7 +90,7 @@
+     PHP_CXX_COMPILE_STDCXX(11, mandatory, PHP_INTL_STDCXX)
+   ])
 
-   PHP_REQUIRE_CXX()
-   PHP_CXX_COMPILE_STDCXX(11, mandatory, PHP_INTL_STDCXX)
 -  PHP_INTL_CXX_FLAGS="$INTL_COMMON_FLAGS $PHP_INTL_STDCXX $ICU_CXXFLAGS"
 +  PHP_INTL_CXX_FLAGS="$INTL_COMMON_FLAGS $PHP_INTL_STDCXX $ICU_CXXFLAGS -std=c++11"
    case $host_alias in

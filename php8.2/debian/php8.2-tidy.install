@@ -1,2 +1,4 @@
 usr/lib/php/*/tidy.so
 usr/share/php8.2-tidy/tidy/tidy.ini
+usr/lib/php/*/tidy.so
+usr/share/php8.2-tidy/tidy/tidy.ini

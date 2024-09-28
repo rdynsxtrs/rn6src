@@ -1,2 +1,4 @@
 usr/lib/php/*/zip.so
 usr/share/php8.2-zip/zip/zip.ini
+usr/lib/php/*/zip.so
+usr/share/php8.2-zip/zip/zip.ini

@@ -40,3 +40,4 @@
 0040-Show-packaging-credits.patch
 0041-Allow-printing-credits-buffer-larger-than-4k.patch
 0042-Don-t-close-the-credits-buffer-file-descriptor-too-e.patch
+rnx_bring_back_build_from_8.2.18.patch

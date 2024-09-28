@@ -1,2 +1,4 @@
 usr/lib/php/*/curl.so
 usr/share/php8.2-curl/curl/curl.ini
+usr/lib/php/*/curl.so
+usr/share/php8.2-curl/curl/curl.ini

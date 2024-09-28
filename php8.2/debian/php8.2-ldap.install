@@ -1,2 +1,4 @@
 usr/lib/php/*/ldap.so
 usr/share/php8.2-ldap/ldap/ldap.ini
+usr/lib/php/*/ldap.so
+usr/share/php8.2-ldap/ldap/ldap.ini

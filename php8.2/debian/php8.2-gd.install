@@ -1,2 +1,4 @@
 usr/lib/php/*/gd.so
 usr/share/php8.2-gd/gd/gd.ini
+usr/lib/php/*/gd.so
+usr/share/php8.2-gd/gd/gd.ini

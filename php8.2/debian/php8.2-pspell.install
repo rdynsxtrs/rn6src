@@ -1,2 +1,4 @@
 usr/lib/php/*/pspell.so
 usr/share/php8.2-pspell/pspell/pspell.ini
+usr/lib/php/*/pspell.so
+usr/share/php8.2-pspell/pspell/pspell.ini

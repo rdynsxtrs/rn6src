@@ -1,2 +1,4 @@
 usr/lib/php/*/imap.so
 usr/share/php8.2-imap/imap/imap.ini
+usr/lib/php/*/imap.so
+usr/share/php8.2-imap/imap/imap.ini

@@ -1,2 +1,4 @@
 usr/lib/php/*/enchant.so
 usr/share/php8.2-enchant/enchant/enchant.ini
+usr/lib/php/*/enchant.so
+usr/share/php8.2-enchant/enchant/enchant.ini

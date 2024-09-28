@@ -1,2 +1,4 @@
 usr/lib/php/*/gmp.so
 usr/share/php8.2-gmp/gmp/gmp.ini
+usr/lib/php/*/gmp.so
+usr/share/php8.2-gmp/gmp/gmp.ini

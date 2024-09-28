@@ -1,2 +1,4 @@
 usr/lib/php/*/readline.so
 usr/share/php8.2-readline/readline/readline.ini
+usr/lib/php/*/readline.so
+usr/share/php8.2-readline/readline/readline.ini

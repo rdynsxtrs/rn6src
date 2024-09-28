@@ -1,2 +1,4 @@
 usr/lib/php/*/snmp.so
 usr/share/php8.2-snmp/snmp/snmp.ini
+usr/lib/php/*/snmp.so
+usr/share/php8.2-snmp/snmp/snmp.ini

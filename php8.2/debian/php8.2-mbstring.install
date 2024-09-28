@@ -1,2 +1,4 @@
 usr/lib/php/*/mbstring.so
 usr/share/php8.2-mbstring/mbstring/mbstring.ini
+usr/lib/php/*/mbstring.so
+usr/share/php8.2-mbstring/mbstring/mbstring.ini
