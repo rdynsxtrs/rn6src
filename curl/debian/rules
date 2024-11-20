@@ -14,6 +14,7 @@ CONFIGURE_ARGS = -- --disable-dependency-tracking		\
 	--enable-threaded-resolver --with-lber-lib=lber		\
 	--with-gssapi=/usr					\
 	--includedir=/usr/include/$(DEB_HOST_MULTIARCH)		\
+	--with-nghttp2=/usr					\
 	--with-zsh-functions-dir=/usr/share/zsh/vendor-completions
 
 %:
