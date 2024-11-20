@@ -1,0 +1,101 @@
+From 9fb1035594880ff572940d443de4b40fdff3e365 Mon Sep 17 00:00:00 2001
+From: Tatsuhiro Tsujikawa <tatsuhiro.t@gmail.com>
+Date: Sat, 9 Mar 2024 16:48:10 +0900
+Subject: Add nghttp2_option_set_max_continuations
+
+---
+ doc/Makefile.am                |  1 +
+ lib/includes/nghttp2/nghttp2.h | 11 +++++++++++
+ lib/nghttp2_option.c           |  5 +++++
+ lib/nghttp2_option.h           |  5 +++++
+ lib/nghttp2_session.c          |  4 ++++
+ 5 files changed, 26 insertions(+)
+
+diff --git a/doc/Makefile.am b/doc/Makefile.am
+index 96f449ff..5636a137 100644
+--- a/doc/Makefile.am
++++ b/doc/Makefile.am
+@@ -73,6 +73,7 @@ APIDOCS= \
+ 	nghttp2_option_set_peer_max_concurrent_streams.rst \
+ 	nghttp2_option_set_server_fallback_rfc7540_priorities.rst \
+ 	nghttp2_option_set_user_recv_extension_type.rst \
++	nghttp2_option_set_max_continuations.rst \
+ 	nghttp2_option_set_max_outbound_ack.rst \
+ 	nghttp2_option_set_max_settings.rst \
+ 	nghttp2_option_set_stream_reset_rate_limit.rst \
+diff --git a/lib/includes/nghttp2/nghttp2.h b/lib/includes/nghttp2/nghttp2.h
+index b394bde9..4d3339b5 100644
+--- a/lib/includes/nghttp2/nghttp2.h
++++ b/lib/includes/nghttp2/nghttp2.h
+@@ -2778,6 +2778,17 @@ NGHTTP2_EXTERN void
+ nghttp2_option_set_stream_reset_rate_limit(nghttp2_option *option,
+                                            uint64_t burst, uint64_t rate);
+ 
++/**
++ * @function
++ *
++ * This function sets the maximum number of CONTINUATION frames
++ * following an incoming HEADER frame.  If more than those frames are
++ * received, the remote endpoint is considered to be misbehaving and
++ * session will be closed.  The default value is 8.
++ */
++NGHTTP2_EXTERN void nghttp2_option_set_max_continuations(nghttp2_option *option,
++                                                         size_t val);
++
+ /**
+  * @function
+  *
+diff --git a/lib/nghttp2_option.c b/lib/nghttp2_option.c
+index 43d4e952..53144b9b 100644
+--- a/lib/nghttp2_option.c
++++ b/lib/nghttp2_option.c
+@@ -150,3 +150,8 @@ void nghttp2_option_set_stream_reset_rate_limit(nghttp2_option *option,
+   option->stream_reset_burst = burst;
+   option->stream_reset_rate = rate;
+ }
++
++void nghttp2_option_set_max_continuations(nghttp2_option *option, size_t val) {
++  option->opt_set_mask |= NGHTTP2_OPT_MAX_CONTINUATIONS;
++  option->max_continuations = val;
++}
+diff --git a/lib/nghttp2_option.h b/lib/nghttp2_option.h
+index 2259e184..c89cb97f 100644
+--- a/lib/nghttp2_option.h
++++ b/lib/nghttp2_option.h
+@@ -71,6 +71,7 @@ typedef enum {
+   NGHTTP2_OPT_SERVER_FALLBACK_RFC7540_PRIORITIES = 1 << 13,
+   NGHTTP2_OPT_NO_RFC9113_LEADING_AND_TRAILING_WS_VALIDATION = 1 << 14,
+   NGHTTP2_OPT_STREAM_RESET_RATE_LIMIT = 1 << 15,
++  NGHTTP2_OPT_MAX_CONTINUATIONS = 1 << 16,
+ } nghttp2_option_flag;
+ 
+ /**
+@@ -98,6 +99,10 @@ struct nghttp2_option {
+    * NGHTTP2_OPT_MAX_SETTINGS
+    */
+   size_t max_settings;
++  /**
++   * NGHTTP2_OPT_MAX_CONTINUATIONS
++   */
++  size_t max_continuations;
+   /**
+    * Bitwise OR of nghttp2_option_flag to determine that which fields
+    * are specified.
+diff --git a/lib/nghttp2_session.c b/lib/nghttp2_session.c
+index 47f5150e..92425b15 100644
+--- a/lib/nghttp2_session.c
++++ b/lib/nghttp2_session.c
+@@ -585,6 +585,10 @@ static int session_new(nghttp2_session **session_ptr,
+                            option->stream_reset_burst,
+                            option->stream_reset_rate);
+     }
++
++    if (option->opt_set_mask & NGHTTP2_OPT_MAX_CONTINUATIONS) {
++      (*session_ptr)->max_continuations = option->max_continuations;
++    }
+   }
+ 
+   rv = nghttp2_hd_deflate_init2(&(*session_ptr)->hd_deflater,
+-- 
+2.30.2
+

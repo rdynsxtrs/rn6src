@@ -1,0 +1,4 @@
+usr/bin/deflatehd
+usr/bin/inflatehd
+usr/lib/*/libnghttp2.la
+usr/share/doc/nghttp2/README.rst

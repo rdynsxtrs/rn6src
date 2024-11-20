@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+#DEBHELPER#
+
+if [ -x /etc/init.d/nghttpx ]; then
+  if [ -f /run/nghttpx.pid ] && pidof /usr/sbin/nghttpx >/dev/null; then
+    invoke-rc.d nghttpx upgrade || invoke-rc.d nghttpx restart
+    exit $?
+  else
+    invoke-rc.d nghttpx start || exit $?
+  fi
+fi
+
+exit 0
