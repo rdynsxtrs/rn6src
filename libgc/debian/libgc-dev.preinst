@@ -1,0 +1,10 @@
+#! /bin/sh
+set -e
+
+# Delete symlink that will be replaced by a directory
+docdir="/usr/share/doc/libgc-dev"
+if [ -L $docdir ]; then
+    rm $docdir 2>/dev/null
+fi
+
+#DEBHELPER#

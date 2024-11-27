@@ -1,0 +1,433 @@
+Description: <short summary of the patch>
+ TODO: Put a short summary on the line above and replace this paragraph
+ with a longer explanation of this change. Complete the meta-information
+ with other relevant fields (see below for details). To make it easier, the
+ information below has been extracted from the changelog. Adjust it or drop
+ it.
+ .
+ php8.2 (8.2.19-1+rnx1) unstable; urgency=medium
+ .
+   * New upstream release 8.2.19
+Author: ReadyNAS Xtras <xtras@rnxtras.com>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- a/build/config.guess	2024-11-19 16:14:23.000000000 +0100
++++ b/build/config.guess	2024-05-07 16:19:14.000000000 +0200
+@@ -1,14 +1,14 @@
+ #! /bin/sh
+ # Attempt to guess a canonical system name.
+-#   Copyright 1992-2023 Free Software Foundation, Inc.
++#   Copyright 1992-2021 Free Software Foundation, Inc.
+ 
+ # shellcheck disable=SC2006,SC2268 # see below for rationale
+ 
+-timestamp='2023-06-23'
++timestamp='2021-06-03'
+ 
+ # This file is free software; you can redistribute it and/or modify it
+ # under the terms of the GNU General Public License as published by
+-# the Free Software Foundation, either version 3 of the License, or
++# the Free Software Foundation; either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful, but
+@@ -47,7 +47,7 @@
+ usage="\
+ Usage: $0 [OPTION]
+ 
+-Output the configuration name of the system '$me' is run on.
++Output the configuration name of the system \`$me' is run on.
+ 
+ Options:
+   -h, --help         print this help, then exit
+@@ -60,13 +60,13 @@
+ GNU config.guess ($timestamp)
+ 
+ Originally written by Per Bothner.
+-Copyright 1992-2023 Free Software Foundation, Inc.
++Copyright 1992-2021 Free Software Foundation, Inc.
+ 
+ This is free software; see the source for copying conditions.  There is NO
+ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+ 
+ help="
+-Try '$me --help' for more information."
++Try \`$me --help' for more information."
+ 
+ # Parse command line
+ while test $# -gt 0 ; do
+@@ -102,8 +102,8 @@
+ # temporary files to be created and, as you can see below, it is a
+ # headache to deal with in a portable fashion.
+ 
+-# Historically, 'CC_FOR_BUILD' used to be named 'HOST_CC'. We still
+-# use 'HOST_CC' if defined, but it is deprecated.
++# Historically, `CC_FOR_BUILD' used to be named `HOST_CC'. We still
++# use `HOST_CC' if defined, but it is deprecated.
+ 
+ # Portable tmp directory creation inspired by the Autoconf team.
+ 
+@@ -437,7 +437,7 @@
+ 	# This test works for both compilers.
+ 	if test "$CC_FOR_BUILD" != no_compiler_found; then
+ 	    if (echo '#ifdef __amd64'; echo IS_64BIT_ARCH; echo '#endif') | \
+-		(CCOPTS="" $CC_FOR_BUILD -m64 -E - 2>/dev/null) | \
++		(CCOPTS="" $CC_FOR_BUILD -E - 2>/dev/null) | \
+ 		grep IS_64BIT_ARCH >/dev/null
+ 	    then
+ 		SUN_ARCH=x86_64
+@@ -459,7 +459,7 @@
+ 		UNAME_RELEASE=`uname -v`
+ 		;;
+ 	esac
+-	# Japanese Language versions have a version number like '4.1.3-JL'.
++	# Japanese Language versions have a version number like `4.1.3-JL'.
+ 	SUN_REL=`echo "$UNAME_RELEASE" | sed -e 's/-/_/'`
+ 	GUESS=sparc-sun-sunos$SUN_REL
+ 	;;
+@@ -929,9 +929,6 @@
+     i*:PW*:*)
+ 	GUESS=$UNAME_MACHINE-pc-pw32
+ 	;;
+-    *:SerenityOS:*:*)
+-        GUESS=$UNAME_MACHINE-pc-serenity
+-        ;;
+     *:Interix*:*)
+ 	case $UNAME_MACHINE in
+ 	    x86)
+@@ -966,12 +963,6 @@
+ 	GNU_REL=`echo "$UNAME_RELEASE" | sed -e 's/[-(].*//'`
+ 	GUESS=$UNAME_MACHINE-unknown-$GNU_SYS$GNU_REL-$LIBC
+ 	;;
+-    x86_64:[Mm]anagarm:*:*|i?86:[Mm]anagarm:*:*)
+-	GUESS="$UNAME_MACHINE-pc-managarm-mlibc"
+-	;;
+-    *:[Mm]anagarm:*:*)
+-	GUESS="$UNAME_MACHINE-unknown-managarm-mlibc"
+-	;;
+     *:Minix:*:*)
+ 	GUESS=$UNAME_MACHINE-unknown-minix
+ 	;;
+@@ -1042,7 +1033,7 @@
+     k1om:Linux:*:*)
+ 	GUESS=$UNAME_MACHINE-unknown-linux-$LIBC
+ 	;;
+-    loongarch32:Linux:*:* | loongarch64:Linux:*:*)
++    loongarch32:Linux:*:* | loongarch64:Linux:*:* | loongarchx32:Linux:*:*)
+ 	GUESS=$UNAME_MACHINE-unknown-linux-$LIBC
+ 	;;
+     m32r*:Linux:*:*)
+@@ -1157,27 +1148,16 @@
+ 	;;
+     x86_64:Linux:*:*)
+ 	set_cc_for_build
+-	CPU=$UNAME_MACHINE
+ 	LIBCABI=$LIBC
+ 	if test "$CC_FOR_BUILD" != no_compiler_found; then
+-	    ABI=64
+-	    sed 's/^	    //' << EOF > "$dummy.c"
+-	    #ifdef __i386__
+-	    ABI=x86
+-	    #else
+-	    #ifdef __ILP32__
+-	    ABI=x32
+-	    #endif
+-	    #endif
+-EOF
+-	    cc_set_abi=`$CC_FOR_BUILD -E "$dummy.c" 2>/dev/null | grep '^ABI' | sed 's, ,,g'`
+-	    eval "$cc_set_abi"
+-	    case $ABI in
+-		x86) CPU=i686 ;;
+-		x32) LIBCABI=${LIBC}x32 ;;
+-	    esac
++	    if (echo '#ifdef __ILP32__'; echo IS_X32; echo '#endif') | \
++		(CCOPTS="" $CC_FOR_BUILD -E - 2>/dev/null) | \
++		grep IS_X32 >/dev/null
++	    then
++		LIBCABI=${LIBC}x32
++	    fi
+ 	fi
+-	GUESS=$CPU-pc-linux-$LIBCABI
++	GUESS=$UNAME_MACHINE-pc-linux-$LIBCABI
+ 	;;
+     xtensa*:Linux:*:*)
+ 	GUESS=$UNAME_MACHINE-unknown-linux-$LIBC
+@@ -1197,7 +1177,7 @@
+ 	GUESS=$UNAME_MACHINE-pc-sysv4.2uw$UNAME_VERSION
+ 	;;
+     i*86:OS/2:*:*)
+-	# If we were able to find 'uname', then EMX Unix compatibility
++	# If we were able to find `uname', then EMX Unix compatibility
+ 	# is probably installed.
+ 	GUESS=$UNAME_MACHINE-pc-os2-emx
+ 	;;
+@@ -1338,7 +1318,7 @@
+ 		GUESS=ns32k-sni-sysv
+ 	fi
+ 	;;
+-    PENTIUM:*:4.0*:*)	# Unisys 'ClearPath HMP IX 4000' SVR4/MP effort
++    PENTIUM:*:4.0*:*)	# Unisys `ClearPath HMP IX 4000' SVR4/MP effort
+ 			# says <Richard.M.Bartel@ccMail.Census.GOV>
+ 	GUESS=i586-unisys-sysv4
+ 	;;
+@@ -1384,11 +1364,8 @@
+     BePC:Haiku:*:*)	# Haiku running on Intel PC compatible.
+ 	GUESS=i586-pc-haiku
+ 	;;
+-    ppc:Haiku:*:*)	# Haiku running on Apple PowerPC
+-	GUESS=powerpc-apple-haiku
+-	;;
+-    *:Haiku:*:*)	# Haiku modern gcc (not bound by BeOS compat)
+-	GUESS=$UNAME_MACHINE-unknown-haiku
++    x86_64:Haiku:*:*)
++	GUESS=x86_64-unknown-haiku
+ 	;;
+     SX-4:SUPER-UX:*:*)
+ 	GUESS=sx4-nec-superux$UNAME_RELEASE
+@@ -1545,9 +1522,6 @@
+     i*86:rdos:*:*)
+ 	GUESS=$UNAME_MACHINE-pc-rdos
+ 	;;
+-    i*86:Fiwix:*:*)
+-	GUESS=$UNAME_MACHINE-pc-fiwix
+-	;;
+     *:AROS:*:*)
+ 	GUESS=$UNAME_MACHINE-unknown-aros
+ 	;;
+--- a/build/config.sub	2024-11-19 16:14:23.000000000 +0100
++++ b/build/config.sub	2024-05-07 16:19:14.000000000 +0200
+@@ -1,14 +1,14 @@
+ #! /bin/sh
+ # Configuration validation subroutine script.
+-#   Copyright 1992-2023 Free Software Foundation, Inc.
++#   Copyright 1992-2021 Free Software Foundation, Inc.
+ 
+ # shellcheck disable=SC2006,SC2268 # see below for rationale
+ 
+-timestamp='2023-06-26'
++timestamp='2021-08-14'
+ 
+ # This file is free software; you can redistribute it and/or modify it
+ # under the terms of the GNU General Public License as published by
+-# the Free Software Foundation, either version 3 of the License, or
++# the Free Software Foundation; either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # This program is distributed in the hope that it will be useful, but
+@@ -76,13 +76,13 @@
+ version="\
+ GNU config.sub ($timestamp)
+ 
+-Copyright 1992-2023 Free Software Foundation, Inc.
++Copyright 1992-2021 Free Software Foundation, Inc.
+ 
+ This is free software; see the source for copying conditions.  There is NO
+ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+ 
+ help="
+-Try '$me --help' for more information."
++Try \`$me --help' for more information."
+ 
+ # Parse command line
+ while test $# -gt 0 ; do
+@@ -130,7 +130,7 @@
+ # Separate into logical components for further validation
+ case $1 in
+ 	*-*-*-*-*)
+-		echo "Invalid configuration '$1': more than four components" >&2
++		echo Invalid configuration \`"$1"\': more than four components >&2
+ 		exit 1
+ 		;;
+ 	*-*-*-*)
+@@ -145,8 +145,7 @@
+ 			nto-qnx* | linux-* | uclinux-uclibc* \
+ 			| uclinux-gnu* | kfreebsd*-gnu* | knetbsd*-gnu* | netbsd*-gnu* \
+ 			| netbsd*-eabi* | kopensolaris*-gnu* | cloudabi*-eabi* \
+-			| storm-chaos* | os2-emx* | rtmk-nova* | managarm-* \
+-			| windows-* )
++			| storm-chaos* | os2-emx* | rtmk-nova*)
+ 				basic_machine=$field1
+ 				basic_os=$maybe_os
+ 				;;
+@@ -944,7 +943,7 @@
+ EOF
+ 		IFS=$saved_IFS
+ 		;;
+-	# We use 'pc' rather than 'unknown'
++	# We use `pc' rather than `unknown'
+ 	# because (1) that's what they normally are, and
+ 	# (2) the word "unknown" tends to confuse beginning users.
+ 	i*86 | x86_64)
+@@ -1021,11 +1020,6 @@
+ 		;;
+ 
+ 	# Here we normalize CPU types with a missing or matching vendor
+-	armh-unknown | armh-alt)
+-		cpu=armv7l
+-		vendor=alt
+-		basic_os=${basic_os:-linux-gnueabihf}
+-		;;
+ 	dpx20-unknown | dpx20-bull)
+ 		cpu=rs6000
+ 		vendor=bull
+@@ -1076,7 +1070,7 @@
+ 	pentium-* | p5-* | k5-* | k6-* | nexgen-* | viac3-*)
+ 		cpu=i586
+ 		;;
+-	pentiumpro-* | p6-* | 6x86-* | athlon-* | athlon_*-*)
++	pentiumpro-* | p6-* | 6x86-* | athlon-* | athalon_*-*)
+ 		cpu=i686
+ 		;;
+ 	pentiumii-* | pentium2-* | pentiumiii-* | pentium3-*)
+@@ -1127,7 +1121,7 @@
+ 	xscale-* | xscalee[bl]-*)
+ 		cpu=`echo "$cpu" | sed 's/^xscale/arm/'`
+ 		;;
+-	arm64-* | aarch64le-*)
++	arm64-*)
+ 		cpu=aarch64
+ 		;;
+ 
+@@ -1208,7 +1202,7 @@
+ 			| k1om \
+ 			| le32 | le64 \
+ 			| lm32 \
+-			| loongarch32 | loongarch64 \
++			| loongarch32 | loongarch64 | loongarchx32 \
+ 			| m32c | m32r | m32rle \
+ 			| m5200 | m68000 | m680[012346]0 | m68360 | m683?2 | m68k \
+ 			| m6811 | m68hc11 | m6812 | m68hc12 | m68hcs12x \
+@@ -1286,7 +1280,7 @@
+ 				;;
+ 
+ 			*)
+-				echo "Invalid configuration '$1': machine '$cpu-$vendor' not recognized" 1>&2
++				echo Invalid configuration \`"$1"\': machine \`"$cpu-$vendor"\' not recognized 1>&2
+ 				exit 1
+ 				;;
+ 		esac
+@@ -1310,7 +1304,7 @@
+ if test x$basic_os != x
+ then
+ 
+-# First recognize some ad-hoc cases, or perhaps split kernel-os, or else just
++# First recognize some ad-hoc caes, or perhaps split kernel-os, or else just
+ # set os.
+ case $basic_os in
+ 	gnu/linux*)
+@@ -1342,10 +1336,6 @@
+ 		kernel=linux
+ 		os=`echo "$basic_os" | sed -e 's|linux|gnu|'`
+ 		;;
+-	managarm*)
+-		kernel=managarm
+-		os=`echo "$basic_os" | sed -e 's|managarm|mlibc|'`
+-		;;
+ 	*)
+ 		kernel=
+ 		os=$basic_os
+@@ -1758,8 +1748,7 @@
+ 	     | skyos* | haiku* | rdos* | toppers* | drops* | es* \
+ 	     | onefs* | tirtos* | phoenix* | fuchsia* | redox* | bme* \
+ 	     | midnightbsd* | amdhsa* | unleashed* | emscripten* | wasi* \
+-	     | nsk* | powerunix* | genode* | zvmoe* | qnx* | emx* | zephyr* \
+-	     | fiwix* | mlibc* )
++	     | nsk* | powerunix* | genode* | zvmoe* | qnx* | emx* | zephyr*)
+ 		;;
+ 	# This one is extra strict with allowed versions
+ 	sco3.2v2 | sco3.2v[4-9]* | sco5v6*)
+@@ -1767,11 +1756,8 @@
+ 		;;
+ 	none)
+ 		;;
+-	kernel* | msvc* )
+-		# Restricted further below
+-		;;
+ 	*)
+-		echo "Invalid configuration '$1': OS '$os' not recognized" 1>&2
++		echo Invalid configuration \`"$1"\': OS \`"$os"\' not recognized 1>&2
+ 		exit 1
+ 		;;
+ esac
+@@ -1780,30 +1766,14 @@
+ # (given a valid OS), if there is a kernel.
+ case $kernel-$os in
+ 	linux-gnu* | linux-dietlibc* | linux-android* | linux-newlib* \
+-		   | linux-musl* | linux-relibc* | linux-uclibc* | linux-mlibc* )
++		   | linux-musl* | linux-relibc* | linux-uclibc* )
+ 		;;
+ 	uclinux-uclibc* )
+ 		;;
+-	managarm-mlibc* | managarm-kernel* )
+-		;;
+-	windows*-gnu* | windows*-msvc*)
+-		;;
+-	-dietlibc* | -newlib* | -musl* | -relibc* | -uclibc* | -mlibc* )
++	-dietlibc* | -newlib* | -musl* | -relibc* | -uclibc* )
+ 		# These are just libc implementations, not actual OSes, and thus
+ 		# require a kernel.
+-		echo "Invalid configuration '$1': libc '$os' needs explicit kernel." 1>&2
+-		exit 1
+-		;;
+-	-kernel* )
+-		echo "Invalid configuration '$1': '$os' needs explicit kernel." 1>&2
+-		exit 1
+-		;;
+-	*-kernel* )
+-		echo "Invalid configuration '$1': '$kernel' does not support '$os'." 1>&2
+-		exit 1
+-		;;
+-	*-msvc* )
+-		echo "Invalid configuration '$1': '$os' needs 'windows'." 1>&2
++		echo "Invalid configuration \`$1': libc \`$os' needs explicit kernel." 1>&2
+ 		exit 1
+ 		;;
+ 	kfreebsd*-gnu* | kopensolaris*-gnu*)
+@@ -1820,7 +1790,7 @@
+ 		# Blank kernel with real OS is always fine.
+ 		;;
+ 	*-*)
+-		echo "Invalid configuration '$1': Kernel '$kernel' not known to work with OS '$os'." 1>&2
++		echo "Invalid configuration \`$1': Kernel \`$kernel' not known to work with OS \`$os'." 1>&2
+ 		exit 1
+ 		;;
+ esac
+--- a/build/libtool.m4
++++ b/build/libtool.m4
+@@ -4636,7 +4636,7 @@ for ac_symprfx in "" "_"; do
+ extern "C" {
+ #endif
+ char nm_test_var;
+-void nm_test_func(void){}
++void nm_test_func(){}
+ #ifdef __cplusplus
+ }
+ #endif
+--- a/build/php_cxx_compile_stdcxx.m4
++++ b/build/php_cxx_compile_stdcxx.m4
+@@ -27,11 +27,11 @@ AC_DEFUN([PHP_CXX_COMPILE_STDCXX], [dnl
+         [$1], [14], [ax_cxx_compile_alternatives="14 1y"],
+         [$1], [17], [ax_cxx_compile_alternatives="17 1z"],
+         [$1], [20], [ax_cxx_compile_alternatives="20"],
+-        [m4_fatal([invalid first argument `$1' to PHP_CXX_COMPILE_STDCXX])])[]dnl
++        [m4_fatal([invalid first argument `$1' to PHP_CXX_COMPILE_STDCXX])])dnl
+   m4_if([$2], [], [ax_cxx_compile_cxx$1_required=true],
+         [$2], [mandatory], [ax_cxx_compile_cxx$1_required=true],
+         [$2], [optional], [ax_cxx_compile_cxx$1_required=false],
+-        [m4_fatal([invalid third argument `$2' to PHP_CXX_COMPILE_STDCXX])])[]dnl
++        [m4_fatal([invalid third argument `$2' to PHP_CXX_COMPILE_STDCXX])])dnl
+   AC_LANG_PUSH([C++])dnl
+   ac_success=no
+

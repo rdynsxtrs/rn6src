@@ -1,0 +1,70 @@
+#!/usr/bin/make -f
+
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_BUILD_ARCH ?=$(shell dpkg --print-architecture)
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+LDFLAGS += -pthread
+
+%:
+	dh $@ --with pkgkde_symbolshelper,autoreconf
+
+COMMON_CONFIG = $(CONFIG_OPTS) \
+		--enable-cplusplus \
+		--enable-docs \
+		--disable-dependency-tracking \
+		--with-tags=CXX \
+		--prefix=/usr \
+		--mandir=\$${prefix}/share/man \
+		--sysconfdir=/etc \
+		--localstatedir=/var/lib \
+		--datadir=\$${prefix}/share/doc \
+		--host=$(DEB_HOST_GNU_TYPE) \
+		--build=$(DEB_BUILD_GNU_TYPE) \
+		--libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH) \
+		--with-libatomic-ops=none
+
+# --enable-static also disables building with symbol-visibility
+# attributes, so build the static and dynamic libraries separately to
+# ensure the .so symbols are correctly exported.
+override_dh_auto_configure:
+	[ ! -d libatomic_ops-1.2 ] || mv libatomic_ops-1.2 libatomic_ops-1.2.bak
+	mkdir -p build-dynamic
+	cd build-dynamic; ../configure \
+		$(COMMON_CONFIG) \
+		--enable-shared \
+		--disable-static
+	mkdir -p build-static
+	cd build-static; ../configure \
+		$(COMMON_CONFIG) \
+		--enable-static \
+		--disable-shared
+
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+override_dh_auto_test:
+	cd build-dynamic; $(MAKE) check
+endif
+
+override_dh_auto_build:
+	dh_auto_build -B build-dynamic
+	dh_auto_build -B build-static
+
+override_dh_auto_install:
+	dh_auto_install -B build-dynamic
+	dh_auto_install -B build-static
+
+override_dh_install:
+	install -D doc/gc.man debian/tmp/usr/share/man/man3/gc_malloc.3
+	dh_install
+	rm debian/libgc-dev/usr/share/doc/libgc1/README.environment
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf autom4te.cache build-static build-dynamic
+
+override_dh_installchangelogs:
+	dh_installchangelogs ChangeLog
+
+override_dh_autoreconf:
+	if [ ! -f debian/autoreconf.after ]; then dh_autoreconf; fi

@@ -1,2 +1,3 @@
 #!/usr/bin/make -f
+PHP_DEFAULT_VERSION_OVERRIDE := 7.4
 include /usr/share/dh-php/pkg-pecl.mk

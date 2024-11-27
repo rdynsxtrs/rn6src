@@ -1,0 +1,839 @@
+libgc (1:8.2.2-3+rnx3) UNRELEASED; urgency=medium
+
+  * Remove symbol check
+  * Fix building binary-arch only
+  * Provide libgc1c2
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 25 Nov 2024 11:10:14 +0000
+
+libgc (1:8.2.2-3+rnx1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 25 Nov 2024 09:26:55 +0000
+
+libgc (1:8.2.2-3) unstable; urgency=medium
+
+  * Fix pthread symbol exports for hurd/kfreebsd
+  * Demangle C++ names in symbols file
+
+ -- Ian Wienand <ianw@debian.org>  Tue, 06 Sep 2022 18:30:14 +1000
+
+libgc (1:8.2.2-2) unstable; urgency=medium
+
+  * Remove libatomic_ops as a build-dep;
+    remove matching from build to simplify future
+    porting.
+  * libgccpp.so.1 : add back differing 32-bit C++ symbols
+    (Closes: #1018924)
+
+
+ -- Ian Wienand <ianw@debian.org>  Mon, 05 Sep 2022 21:17:49 +1000
+
+libgc (1:8.2.2-1) unstable; urgency=medium
+
+  * Update watch/control upstream links to https
+  * libgc-dev: remove duplicate doc copy
+  * Remove libatomic_ops handling
+  * Add .gitignore
+  * Build static and dynamic separately
+  * Use common config options for static/dynamic
+  * Update debian/watch to github source
+  * Add ianw@debian.org as uploader
+  * New upstream version 8.2.2
+  * Update watch/control upstream links to https
+  * libgc-dev: remove duplicate doc copy
+  * Remove libatomic_ops handling
+  * Add .gitignore
+  * Build static and dynamic separately
+  * Use common config options for static/dynamic
+  * Update debian/watch to github source
+  * Add ianw@debian.org as uploader
+  * New upstream version 8.2.2
+  * Update symbols file for 8.2.2
+
+ -- Ian Wienand <ianw@debian.org>  Wed, 31 Aug 2022 15:11:15 +1000
+
+libgc (1:8.0.6-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload. ((Closes: #999740)
+  * New upstream version 8.0.6
+  * Update to point to salsa
+  * Update symbols for 8.0.6
+  * Drop enable-threads-on-hurd.diff and issue329.diff
+
+ -- Ian Wienand <ianw@debian.org>  Fri, 26 Nov 2021 09:12:33 +1100
+
+libgc (1:8.0.4-3+alpha.1) unreleased; urgency=medium
+
+  * Update symbols on Alpha (fixing FTBFS).
+
+ -- Michael Cree <mcree@orcon.net.nz>  Fri, 26 Mar 2021 08:19:12 +1300
+
+libgc (1:8.0.4-3) unstable; urgency=medium
+
+  * Fix cross/native difference: explicitly disable usage of
+    -latomic_ops. (Helmut Grohne). Closes: #966820.
+  * Fix misaligned tlfs passed to AO_load on m68k. Closes: #968553, #971548.
+  * Bump standards version.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 06 Dec 2020 12:44:00 +0100
+
+libgc (1:8.0.4-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix symbols files for kfreebsd-*. (Closes: #968385)
+
+ -- Christoph Berg <myon@debian.org>  Tue, 27 Oct 2020 14:32:21 +0100
+
+libgc (1:8.0.4-2) unstable; urgency=medium
+
+  * Fix missing libgc-dev -> libatomic-ops-dev dependency (Helmut Grohne).
+    Closes: #966651.
+
+ -- Matthias Klose <doko@debian.org>  Mon, 03 Aug 2020 18:53:35 +0200
+
+libgc (1:8.0.4-1) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 22 Jul 2020 02:37:12 +0200
+
+libgc (1:8.0.4-1~exp4) experimental; urgency=medium
+
+  * Team upload.
+  * Update symbols file for riscv64.
+
+ -- Matthias Klose <doko@ubuntu.com>  Fri, 17 Apr 2020 10:21:02 +0200
+
+libgc (1:8.0.4-1~exp3) experimental; urgency=medium
+
+  * Team upload.
+  * Update symbols files.
+  * Rename libgc1c2 to libgc1, some missing symbols.
+  * Lower priority to optional.
+  * Bump debhelper to v11.
+
+ -- Matthias Klose <doko@debian.org>  Wed, 08 Apr 2020 12:48:04 +0200
+
+libgc (1:8.0.4-1~exp1) experimental; urgency=medium
+
+  * Team upload.
+  * New upstream version.
+    - Missing symbols: GC_fault_handler_lock, GC_start_debugging,
+      GC_store_debug_info, GC_unix_sbrk_get_mem.
+  * Configure with --enable-static --enable-docs.
+  * Bump standards version.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 05 Apr 2020 12:03:18 +0200
+
+libgc (1:7.6.4-0.4) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix symbols files for KFreeBSD.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 09 Sep 2018 15:25:27 +0200
+
+libgc (1:7.6.4-0.3) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Update symbols files for various architectures.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 09 Sep 2018 13:58:06 +0200
+
+libgc (1:7.6.4-0.2) experimental; urgency=medium
+
+  * Non-maintainer upload.
+  * Update symbols files for various architectures.
+
+ -- Matthias Klose <doko@debian.org>  Sun, 09 Sep 2018 11:25:05 +0200
+
+libgc (1:7.6.4-0.1) experimental; urgency=medium
+
+  * Non-maintainer upload.
+  * New upstream release.
+  * Bump standards and debhelper versions.
+  * Update watch file.
+
+ -- Matthias Klose <doko@debian.org>  Sat, 08 Sep 2018 17:17:59 +0200
+
+libgc (1:7.4.4-1) experimental; urgency=medium
+
+  * New upstream release
+  * Import fixes for CVE-2016-9427 (Integer overflow in GC_MALLOC_ATOMIC)
+    from upstream 7.4 branch (Closes: #844771)
+  * Disable fix-location-of-assembly-files.diff, included upstream
+
+ -- Christoph Egger <christoph@debian.org>  Sun, 20 Nov 2016 13:59:24 +0100
+
+libgc (1:7.4.2-8) unstable; urgency=medium
+
+  * Fix symbols for nios (Closes: #822445), Thanks to Helmut for report
+    + patch!
+
+ -- Christoph Egger <christoph@debian.org>  Tue, 17 May 2016 16:31:02 +0200
+
+libgc (1:7.4.2-7.4) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Import symbols for alpha (Closes: #818356)
+  * Import symbols for powerpcspe (Closes: #818608)
+
+ -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Fri, 18 Mar 2016 17:18:10 +0100
+
+libgc (1:7.4.2-7.3) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * Import symbols for sparc (Closes: #806312)
+
+ -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Thu, 26 Nov 2015 18:16:48 +0100
+
+libgc (1:7.4.2-7.2) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * Add debian/patches/fix-location-of-assembly-files.diff to fix
+    location of assembly files for sparc* and ia64 (Closes: 805679)
+  * Import symbols for sparc64 (Closes: #805680)
+
+ -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Sun, 22 Nov 2015 14:36:00 +0100
+
+libgc (1:7.4.2-7.1) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * Import symbols for sh4 (Closes: #805075)
+
+ -- John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>  Fri, 20 Nov 2015 11:16:44 +0100
+
+libgc (1:7.4.2-7) unstable; urgency=medium
+
+  * Import symbols from mips64el hppa and x32 (Closes: #800905)
+  * Re-Add support for nocheck, thanks to Helmut for the patch, (Closes:
+    #800906)
+
+ -- Christoph Egger <christoph@debian.org>  Mon, 05 Oct 2015 17:02:32 +0200
+
+libgc (1:7.4.2-6) unstable; urgency=medium
+
+  * Remove unused patches
+
+ -- Christoph Egger <christoph@debian.org>  Fri, 02 Oct 2015 09:02:27 +0200
+
+libgc (1:7.4.2-5) experimental; urgency=medium
+
+  * Disable parallel mark on ppc64el
+  * Import symbols for arm64 mips and ppc64el
+
+ -- Christoph Egger <christoph@debian.org>  Thu, 01 Oct 2015 15:59:46 +0200
+
+libgc (1:7.4.2-4) experimental; urgency=medium
+
+  * Drop 03-add-avr32-support.diff, merged upstream
+  * Drop 04-fix-sparc-ftbfs.diff, merged upstream
+  * add enable-parallel-mark-where-supported.diff to keep PARALLEL_MARK
+    enabled on all platforms where it works
+
+ -- Christoph Egger <christoph@debian.org>  Thu, 24 Sep 2015 17:00:00 +0200
+
+libgc (1:7.4.2-3) experimental; urgency=medium
+
+  * Update Homepage (Closes: #747904)
+  * Remove 01-catch-all-linux.patch as it at least breaks arm64
+  * Import hppa mipsel hurd-i386 and ppc64 symbols
+
+ -- Christoph Egger <christoph@debian.org>  Thu, 24 Sep 2015 13:35:55 +0200
+
+libgc (1:7.4.2-2) experimental; urgency=medium
+
+  * update standards version
+  * Update symbols files
+  * add Debian GCC Maintainers as uploades (as discussed with Matthias
+  * use canonical VCS urls
+  * Switch to dh-autoreconf
+
+ -- Christoph Egger <christoph@debian.org>  Fri, 21 Aug 2015 13:42:23 +0200
+
+libgc (1:7.4.2-1) experimental; urgency=medium
+
+  * New upstream version (Closes: #796242)
+    * Fixes sparc64 build (Closes: #578337)
+
+ -- Christoph Egger <christoph@debian.org>  Fri, 21 Aug 2015 11:41:48 +0200
+
+libgc (1:7.4.0-1) experimental; urgency=medium
+
+  * New upstream version
+  * Drops another batch of internal symbols
+
+ -- Christoph Egger <christoph@debian.org>  Mon, 23 Dec 2013 13:30:28 +0100
+
+libgc (1:7.2d-6) unstable; urgency=medium
+
+  * Run full autoreconf during build
+     (Closes: #732349)
+
+ -- Christoph Egger <christoph@debian.org>  Mon, 23 Dec 2013 12:29:01 +0100
+
+libgc (1:7.2d-5) unstable; urgency=low
+
+  * Add Replaces: libgc1c3 for Ubuntu
+  * Import symbol diffs from debian-ports
+
+ -- Christoph Egger <christoph@debian.org>  Wed, 03 Jul 2013 22:14:42 +0200
+
+libgc (1:7.2d-4) unstable; urgency=low
+
+  * Import refined symbols for arm and mips
+
+ -- Christoph Egger <christoph@debian.org>  Tue, 02 Jul 2013 17:35:01 +0200
+
+libgc (1:7.2d-3) unstable; urgency=low
+
+  * Upload to unstable 
+    * 7.2 misses some private symbols which are now properly hidden by
+      libgc and were unused by other software in debian
+  * Generate Symbols file by pkg-kde helper scripts
+
+ -- Christoph Egger <christoph@debian.org>  Mon, 01 Jul 2013 22:48:07 +0200
+
+libgc (1:7.2d-2) experimental; urgency=low
+
+  * Improve symbols file using pkg-kde-tools
+
+ -- Christoph Egger <christoph@debian.org>  Sun, 09 Jun 2013 16:33:34 +0200
+
+libgc (1:7.2d-1) experimental; urgency=low
+
+  * New upstream release (Closes: #673965)
+  * Add build-dependency for pkg-config to allow detection of libatomic_ops
+  * Import patch Christian M. Amsüss to enable multiarch (Closes: #687493)
+
+ -- Christoph Egger <christoph@debian.org>  Sun, 09 Jun 2013 13:26:37 +0200
+
+libgc (1:7.1-9.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * libgc-dev.preinst: handle symlink replaced by a directory on upgrade from
+    Squeeze (Closes: #696073)
+
+ -- David Prévot <taffit@debian.org>  Wed, 26 Dec 2012 19:49:03 -0400
+
+libgc (1:7.1-9) unstable; urgency=medium
+
+  * Import patches to fix CVE-2012-2673 from upstream git (Closes: #677195)
+
+ -- Christoph Egger <christoph@debian.org>  Sun, 08 Jul 2012 18:27:48 +0200
+
+libgc (1:7.1-8) unstable; urgency=low
+
+  * Import patch by Thorsten Glaser
+    * d/p/06-m68k-no-getcontext.diff: new, don’t use getcontext(2)
+      on m68k because it’s not implemented there (Closes: #624833)
+  * Import patch by Aaron M. Ucko
+    * build with GC_THREADS on non-linux platforms as well
+  * remove *.la files (Closes: #621660)
+  * update policy version from 3.9.1 to 3.9.2, no changes
+
+ -- Christoph Egger <christoph@debian.org>  Sun, 29 May 2011 18:55:21 +0200
+
+libgc (1:7.1-7) unstable; urgency=low
+
+  * Add ppc64 symbol file (Closes: #615469)
+  * Add sh4 symbol file (Closes: #614744)
+  * Add armhf symbol file
+  * Add powerpcspe symbol file
+  * Handle sparc64 the same as sparc
+  * Clear non-arch symbol file to support building on not yet captured
+    architectures
+  * add -pthread to fix build with --no-add-needed
+
+ -- Christoph Egger <christoph@debian.org>  Wed, 02 Mar 2011 13:43:18 +0100
+
+libgc (1:7.1-6) unstable; urgency=low
+
+  * include pkg-config file (Closes: #546833)
+  * Include Hurd symbol file (Closes: #611643) thanks to Svante Signell
+    for providing it
+  * add hppa symbol file
+
+ -- Christoph Egger <christoph@debian.org>  Tue, 22 Feb 2011 17:17:54 +0100
+
+libgc (1:7.1-5) unstable; urgency=low
+
+  * Upload to unstable
+
+ -- Christoph Egger <christoph@debian.org>  Sat, 19 Feb 2011 12:19:56 +0100
+
+libgc (1:7.1-4) experimental; urgency=low
+
+  * Adopt package (Closes: #590772)
+    * Adopt debian/control git headers (moved to collab-maint)
+    * Convert to source format 3.0 (quilt)
+  * Build against system libatomic-ops (Closes: #559345)
+    * Now builds on mipsen as well (Closes: #542285)
+    * Include correct arch-specific symbols file for mipsen
+    * Remove atomic-ops specific symbols from symbols file
+    * Drop patch for automic-ops on s390
+  * Fix dependency on debhelper (needs 7.0.50 > 7)
+  * Bump standards version to 3.9.1
+  * Fix symbol files (Closes: #565778)
+
+ -- Christoph Egger <christoph@debian.org>  Sat, 09 Oct 2010 16:08:53 +0200
+
+libgc (1:7.1-3) experimental; urgency=low
+
+  * Add symbols for armel and i386.
+
+ -- Chris Lamb <lamby@debian.org>  Sun, 16 Aug 2009 20:28:41 +0100
+
+libgc (1:7.1-2) experimental; urgency=low
+
+  * Fix FTBFS on sparc by specifying correct machine-dependent code.
+  * Fix FTBFS on s390 by correcting #include directory.
+  * Add avr32 support. Patch by Bradley Smith <brad@brad-smith.co.uk>.
+    (Closes: #528406)
+  * Symbols maintenance:
+    - Add Build-Depends-Package
+    - Add required arch-dependent symbols for sparc, powerpc, s390 and avr32
+  * Add Vcs-{Git,Browser} headers.
+
+ -- Chris Lamb <lamby@debian.org>  Fri, 14 Aug 2009 00:15:45 +0100
+
+libgc (1:7.1-1) experimental; urgency=low
+
+  * New maintainer. (Closes: #541015)
+  * New upstream release. (Closes: #434106, #446068)
+  * Fix debian/watch file. Thanks Jonny <jonny@csc.jp> and Ruben Molina
+    <rmolina@udea.edu.co>. (Closes: #535985)
+  * debian/patches/*
+    - Extract changes from .diff.gz into quilt patch series
+    - Update architecture patches for new upstream; partly applied upstream
+  * Move to debhelper 7.
+  * Add symbols file for libgc1c2.
+  * debian/control:
+    - Bump Standards-Version to 3.8.2.
+    - Add Homepage: field.
+    - Add ${misc:Depends} for all binary packages.
+    - Use ${binary:Version} in libgc-dev => libgcX versioned dependency.
+    - Drop duplicate "Section:" heading in libgc1c2.
+    - Update long description, clarifying ambiguity caused by Debian's choice
+      of configuration. (Closes: #329338)
+  * Remove some cruft from debian/rules.
+  * Install README.environment via dh_installdocs, not dh_install.
+  * Don't install README.cords if we aren't shipping that library
+    (Closes: #422440)
+
+ -- Chris Lamb <lamby@debian.org>  Wed, 12 Aug 2009 02:16:30 +0100
+
+libgc (1:6.8-1.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Apply patch support for GNU/kFreeBSD amd64. (closes: #405669)
+
+ -- Aurelien Jarno <aurel32@debian.org>  Thu, 14 Aug 2008 21:21:44 +0200
+
+libgc (1:6.8-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Enable local malloc on all linux arches. (closes: #431424)
+
+ -- Bastian Blank <waldi@debian.org>  Wed, 18 Jul 2007 20:27:44 +0000
+
+libgc (1:6.8-1) unstable; urgency=low
+
+  * New upstream release (closes: #366864)
+  * Apply patch to fix m68k (closes: #383817)
+
+ -- Ryan Murray <rmurray@debian.org>  Fri, 22 Sep 2006 20:08:09 -0700
+
+libgc (1:6.7-2) unstable; urgency=low
+
+  * Disable --enable-redirect-malloc again (closes: #371886)
+
+ -- Ryan Murray <rmurray@debian.org>  Tue, 13 Jun 2006 17:28:27 -0700
+
+libgc (1:6.7-1) unstable; urgency=low
+
+  * New upstream release (closes: #356246)
+  * Fix typo in description (closes: #341086)
+
+ -- Ryan Murray <rmurray@debian.org>  Sun, 28 May 2006 20:19:58 -0700
+
+libgc (1:6.6-2) unstable; urgency=low
+
+  * Apply libgc-6.6-arm-swp-fix.diff to fix arm build (closes: #343612)
+
+ -- Ryan Murray <rmurray@debian.org>  Fri, 16 Dec 2005 10:53:15 -0800
+
+libgc (1:6.6-1) unstable; urgency=low
+
+  * New upstream release (closes: #335816, #342586)
+  * Run make check from debian/rules
+  * Disable threads for hurd-i386 (closes: #319912)
+
+ -- Ryan Murray <rmurray@debian.org>  Thu, 15 Dec 2005 00:53:36 -0800
+
+libgc (1:6.5-1) unstable; urgency=low
+
+  * New upstream release
+  * Rename libgc1 to libgc1c2 for C++ transition.
+  * Update libgc-dev description (closes: #264124)
+  * Add debian/watch file (currently ignores alpha versions)
+  * Remove obsolete Replaces and Conflicts on libgc-dev
+
+ -- Ryan Murray <rmurray@debian.org>  Sun, 10 Jul 2005 10:51:20 -0700
+
+libgc (1:6.4-1) unstable; urgency=low
+
+  * New upstream release (closes: #292708)
+
+ -- Ryan Murray <rmurray@debian.org>  Thu,  3 Feb 2005 00:50:53 -0800
+
+libgc (1:6.3-1) unstable; urgency=low
+
+  * New upstream release (closes: #253171)
+
+ -- Ryan Murray <rmurray@debian.org>  Fri,  9 Jul 2004 08:38:53 -0700
+
+libgc (1:6.2+6.3alpha4-1) unstable; urgency=low
+
+  * New upstream release
+  * Apply fix to check stack end for prelinked binaries (closes: #233233)
+
+ -- Ryan Murray <rmurray@debian.org>  Sat, 28 Feb 2004 01:09:04 -0800
+
+libgc (1:6.2+6.3alpha2-1) unstable; urgency=low
+
+  * New upstream release
+  * Link libgccpp against libgc (closes: #215966)
+
+ -- Ryan Murray <rmurray@debian.org>  Sat, 18 Oct 2003 03:34:33 -0700
+
+libgc (1:6.2+6.3alpha1-1) unstable; urgency=low
+
+  * New upstream release (closes: #197031)
+  * Switch to using upstream's autoconf (and therefore upstream's sonames, so
+    rename packages to match the sonames)  (closes: #178869)
+  * Relibtoolize.
+
+ -- Ryan Murray <rmurray@debian.org>  Mon, 11 Aug 2003 15:57:57 -0700
+
+libgc (1:6.1-2) unstable; urgency=low
+
+  * Change GLIBC_MINOR check for mips to look for version 2.2 or better.
+    glibc has had __libc_stack_end since at least then, and possibly sometime
+    in 2.1.x
+
+ -- Ryan Murray <rmurray@debian.org>  Fri, 17 Jan 2003 14:17:22 -0800
+
+libgc (1:6.1-1) unstable; urgency=low
+
+  * New upstream release
+  * g++-3.2 transition
+
+ -- Ryan Murray <rmurray@debian.org>  Fri, 17 Jan 2003 04:41:04 -0800
+
+libgc (1:6.0+6.1alpha4-3) unstable; urgency=low
+
+  * Fix ia64 build.
+
+ -- Ryan Murray <rmurray@debian.org>  Mon, 25 Mar 2002 20:27:15 -0800
+
+libgc (1:6.0+6.1alpha4-2) unstable; urgency=low
+
+  * Add -lstdc++ to link line for now
+
+ -- Ryan Murray <rmurray@debian.org>  Tue, 19 Mar 2002 01:08:01 -0800
+
+libgc (1:6.0+6.1alpha4-1) unstable; urgency=low
+
+  * New upstream release (closes: #96661)
+  * build with OPERATOR_NEW_ARRY (closes: #127608)
+  * link libgc with g++ for now
+  * remove duplicate manpage (closes: #137511)
+
+ -- Ryan Murray <rmurray@debian.org>  Mon, 18 Mar 2002 22:13:32 -0800
+
+libgc (1:6.0-3) unstable; urgency=low
+
+  * Fix builds on mips, mipsel, and powerpc
+  * Disable threading on arm until someone has time to fix it.
+
+ -- Ryan Murray <rmurray@debian.org>  Fri, 25 Jan 2002 08:36:00 -0800
+
+libgc (1:6.0-2) unstable; urgency=low
+
+  * New Maintainer (closes: #129586)
+  * Enable threading on Linux, disable on hurd
+    (closes: #129525, #110157)
+  * Add patch already in upstream alphas to fix leak_detector for calloc and
+    realloc.  The strdup support will come when I upgrade to a 6.1 version
+    (closes: #118455)
+  * Add upstream changelog, fix typo in manpage (closes: #115374)
+
+ -- Ryan Murray <rmurray@debian.org>  Sat, 19 Jan 2002 02:31:58 -0800
+
+libgc (1:6.0-1) unstable; urgency=medium (closes several serious and important bugs)
+
+  * Adopted NMU fixes by Rick Younie and Ryan Murray
+    (closes: #84608, #87184, #89970, #102652, #103078)
+  * New upstream release, updates support for SPARC (closes: #89211)
+
+ -- Mike Goldman <whig@debian.org>  Sun, 19 Aug 2001 07:30:19 -0400
+
+libgc (1:5.3-2.2) unstable; urgency=low
+
+  * NMU
+  * Fix build on m68k (closes: #89970, 103078)
+
+ -- Rick Younie <younie@debian.org>  Wed,  1 Aug 2001 12:12:33 -0700
+
+libgc (1:5.3-2.1) unstable; urgency=low
+
+  * Fix build on mips(el) (closes: #102652, 84608)
+  * Fix build on alpha (closes: #87184)
+
+ -- Ryan Murray <rmurray@debian.org>  Mon,  2 Jul 2001 08:32:17 -0700
+
+libgc (1:5.3-2) unstable; urgency=low
+
+  * Fixed dependency on libgc5 to same version (closes: #87339).
+
+ -- Mike Goldman <whig@debian.org>  Sat, 24 Feb 2001 12:22:07 -0500
+
+libgc (1:5.3-1) unstable; urgency=medium
+
+  * Updated to latest version of released upstream 5.x version
+    (closes: #83041, #65044),
+  * Tuned for larger heap sizes (-DLARGE_CONFIG) (closes: #62400).
+
+ -- Mike Goldman <whig@debian.org>  Thu, 22 Feb 2001 12:34:45 -0500
+
+libgc (1:5.0.alpha4-8) frozen unstable; urgency=medium
+
+  * Applied patch by Philip Blundell <Philip.Blundell@pobox.com>
+    to provide Linux ARM support (closes: #58950)
+
+ -- Mike Goldman <whig@debian.org>  Fri, 25 Feb 2000 03:38:48 -0500
+
+libgc (1:5.0.alpha4-7) frozen unstable; urgency=low
+
+  * Include "../gcconfig.h" in cordprnt.c for correct PPC compilation
+    (patch supplied by susumu-o@debian.or.jp) -- Closes: #57360
+  * Uploaded to frozen and unstable (closes: #57147, #57293)
+
+ -- Mike Goldman <whig@by.net>  Tue,  8 Feb 2000 15:58:24 -0500
+
+libgc (1:5.0.alpha4-6) frozen; urgency=low
+
+  * Replaced C++-style comments from gc_priv.h with C comments --
+    required for standards-conforming C programs (closes: #55577)
+  * debian/rules now copies include/private files automatically
+
+ -- Mike Goldman <whig@by.net>  Fri,  4 Feb 2000 03:56:44 -0500
+
+libgc (1:5.0.alpha4-5) unstable; urgency=low
+
+  * Fixed misapplied patch from Daniel Jacobowitz.
+
+ -- Mike Goldman <whig@by.net>  Fri, 31 Dec 1999 12:23:26 -0500
+
+libgc (1:5.0.alpha4-4) unstable; urgency=low
+
+  * Added -DPIC flag to DEBIAN_PIC.
+  * Updated standards version.
+
+ -- Mike Goldman <whig@by.net>  Thu, 30 Dec 1999 09:34:25 -0500
+
+libgc (1:5.0.alpha4-3) unstable; urgency=low
+
+  * Copied gcconfig.h to include/private (closes #53599)
+  * Added DEBIAN_PIC flag to pass -fPIC to mach_dep.o (closes #53600)
+
+ -- Mike Goldman <whig@by.net>  Thu, 30 Dec 1999 08:36:31 -0500
+
+libgc (1:5.0.alpha4-2) unstable; urgency=low
+
+  * Incorporated fix from Daniel Jacobowitz for building on powerpc
+    (closes: #53112)
+
+ -- Mike Goldman <whig@by.net>  Sun, 26 Dec 1999 02:57:32 -0500
+
+libgc (1:5.0.alpha4-1) unstable; urgency=low
+
+  * New upstream release.
+  * Incorporated fix from Dave Love for building on sparc (closes: #51208)
+
+ -- Mike Goldman <whig@by.net>  Sun, 12 Dec 1999 04:47:28 -0500
+
+libgc (1:5.0.alpha3-7) unstable; urgency=low
+
+  * Once and for all ensuring that this will build on powerpc,
+    CORD_vsprintf on that platform may well not work, however.
+    Closes: #46092
+
+ -- Mike Goldman <whig@by.net>  Sat, 30 Oct 1999 09:00:32 -0400
+
+libgc (1:5.0.alpha3-6) unstable; urgency=low
+
+  * Manual implementation of /usr/doc -> /usr/share/doc policy
+    removed, defers to debhelper now.
+
+ -- Mike Goldman <whig@by.net>  Sat,  9 Oct 1999 18:07:40 -0400
+
+libgc (1:5.0.alpha3-5) unstable; urgency=low
+
+  * Another pass at fixing va_list copy on POWERPC.
+
+ -- Mike Goldman <whig@by.net>  Fri,  8 Oct 1999 12:40:21 -0400
+
+libgc (1:5.0.alpha3-4) unstable; urgency=low
+
+  * Restrict invalid initializer bugfix to POWERPC, breaks other platforms.
+    Closes: Bug#45559 (again)
+
+ -- Mike Goldman <whig@by.net>  Thu,  7 Oct 1999 06:43:27 -0400
+
+libgc (1:5.0.alpha3-3) unstable; urgency=low
+
+  * Fixed invalid initializer bug copying va_list in cord/cordprnt.c.
+    Closes: Bug#45559
+
+ -- Mike Goldman <whig@by.net>  Tue, 21 Sep 1999 13:53:53 -0400
+
+libgc (1:5.0.alpha3-2) unstable; urgency=low
+
+  * Moved libgc5 to section libs.
+
+ -- Mike Goldman <whig@by.net>  Sat, 18 Sep 1999 22:52:45 -0400
+
+libgc (1:5.0.alpha3-1) unstable; urgency=low
+
+  * New upstream (testing) release.
+  * Complies with Debian Technical Committee on /usr/share/doc.
+
+ -- Mike Goldman <whig@by.net>  Sat, 18 Sep 1999 21:52:43 -0400
+
+libgc (1:5.0.alpha2-2) unstable; urgency=low
+
+  * Some documentation was being copied to the wrong place.
+
+ -- Mike Goldman <whig@by.net>  Tue, 31 Aug 1999 06:14:53 -0400
+
+libgc (1:5.0.alpha2-1) unstable; urgency=low
+
+  * New upstream (testing) release.
+  * Unlike 4.14, this should work on Linux Alpha.
+
+ -- Mike Goldman <whig@by.net>  Tue, 31 Aug 1999 05:02:44 -0400
+
+libgc (1:4.14-3) unstable; urgency=low
+
+  * Symlinks were written to /usr/include/gc.h. Fixed.
+
+ -- Mike Goldman <whig@by.net>  Thu, 29 Jul 1999 13:11:04 -0400
+
+libgc (1:4.14-2) unstable; urgency=low
+
+  * Incorporated NMU updates by Adam DiCarlo (thanks!) (Closes Bug#41222)
+  * libgc4-dev conflicts with bigloo less than 2.0e-1, since that package
+    had a libgc.so symlink in it (Closes Bug#39427)
+  * the bigloo maintainer and the w3m maintainer's experience seems to
+    support the notion that threading even on i386 is not a good idea.  It
+    might be desired later to have a threaded version of libgc provided
+    somehow as well, but AFAI(Adam)CT, threading is causing problems and
+    isn't necessary for any software using libgc
+  * must disable threads on non-i386 architectures because gc_priv.h only
+    has an implementation for GC_test_and_set in i386 assembly
+    (closes important Bug#39285)
+  * adapt patch for powerpc GC_test_and_set (closes Bug#41063), allowing
+    powerpc to use LINUX_THREADS
+  * compile with the '-DDONT_ADD_BYTE_AT_END' switch, claimed to be needed
+    by bigloo
+
+ -- Mike Goldman <whig@by.net>  Thu, 29 Jul 1999 02:07:53 -0400
+
+libgc (1:4.14-1) unstable; urgency=low
+
+  * New upstream release (Closes Bug#38715)
+  * Replace hard links with symbolic links (Closes Bug#41062)
+
+ -- Mike Goldman <whig@by.net>  Wed, 28 Jul 1999 15:20:47 -0400
+
+libgc (1:4.13-2) unstable; urgency=low
+
+  * Changed upstream URL
+
+ -- Mike Goldman <whig@by.net>  Thu, 18 Mar 1999 04:27:11 -0500
+
+libgc (1:4.13-1) unstable; urgency=low
+
+  * New upstream release
+  * Eliminated LinuxThreads check for internal library symbol, which caused
+    glibc2.1 incompatibility
+  * Closes bug #34609
+
+ -- Mike Goldman <whig@by.net>  Thu, 18 Mar 1999 03:34:50 -0500
+
+libgc (1:4.12.4.13alpha3-3) unstable; urgency=low
+
+  * Replaces libgc4 packages with new debhelper-ized version.
+  * Incorporates non-maintainer patch by Hartmut Koptein
+    <koptein@et-inf.fho-emden.de> for powerpc
+  * Warns on non-i386 of no GC_test_and_set()
+  * Closes bug #31937
+
+ -- Mike Goldman <whig@by.net>  Tue,  9 Feb 1999 09:14:37 -0500
+
+libgc4 (4.12-4.13alpha3-2) unstable; urgency=low
+
+  * Incorporated non-maintainer fix by Paul Slootman <paul@debian.org>:
+    On Alpha, preprocess the asm source explicitly, apparently 'as' does
+    not invoke the preprocessor.
+
+ -- Mike Goldman <whig@by.net>  Mon, 28 Dec 1998 04:38:37 -0500
+
+libgc4 (4.12-4.13alpha3-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Mike Goldman <whig@by.net>  Sat, 12 Dec 1998 02:44:53 -0500
+
+libgc4 (4.12-4.13alpha2-4) unstable; urgency=low
+
+  * Fixed several serious lintian errors.
+
+ -- Mike Goldman <whig@by.net>  Fri, 11 Dec 1998 09:08:02 -0500
+
+libgc4 (4.12-4.13alpha2-3) unstable; urgency=low
+
+  * Split into libgc4, libgc4-dev
+
+ -- Mike Goldman <whig@by.net>  Thu, 10 Dec 1998 08:42:34 -0500
+
+libgc4 (4.12-4.13alpha2-2) unstable; urgency=low
+
+  * Needed to link with -lpthreads.
+
+ -- Mike Goldman <whig@by.net>  Mon,  7 Dec 1998 15:22:10 -0500
+
+libgc4 (4.12-4.13alpha2-1) unstable; urgency=low
+
+  * New upstream maintainer release.
+  * Now supports LinuxThreads.  Please read README.linux first.
+
+ -- Mike Goldman <whig@by.net>  Sun,  6 Dec 1998 05:44:51 -0500
+
+libgc4 (4.12-4.13alpha1-2) unstable; urgency=low
+
+  * Manpage links in *wrong* place (fixed).
+
+ -- Rob Browning <rlb@cs.utexas.edu>  Wed,  1 Jul 1998 14:50:22 -0500
+
+libgc4 (4.12-4.13alpha1-1) unstable; urgency=low
+
+  * Initial release.  This will need to be split into -dev, etc later...
+
+ -- Rob Browning <rlb@cs.utexas.edu>  Fri, 26 Jun 1998 23:48:09 -0500
+

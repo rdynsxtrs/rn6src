@@ -17,8 +17,10 @@ on special prerequisites needed to build the package.
 To build a package 
 
 * change to the package's directory
-* unpack the original source archive to someplace **outside** the repository
-* **copy** the `debian` directory into the folder with the unpacked source
+  * if there's a `.dsc` file, run `dpkg-source -x <filename>.dsc`
+  * else
+    * unpack the original source archive to someplace **outside** the repository
+    * **copy** the `debian` directory into the folder with the unpacked source
 * change to the directory with the unpacked source
 * [optional] make your changes to the files in the `debian` directory
 * run `debuild -sa`

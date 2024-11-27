@@ -1,16 +1,83 @@
-php-imagick (3.7.0-3+rnx1) unstable; urgency=medium
+php-imagick (3.7.0-8+0~20241124.45+rnx1) unstable; urgency=medium
 
   * Backported to ReadyNAS OS 6
 
- -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 09 Jan 2023 09:49:03 +0100
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 24 Nov 2024 12:27:07 +0100
 
-php-imagick (3.7.0-3+0~20221209.38+debian10~1.gbp8a8977) unstable; urgency=medium
+php-imagick (3.7.0-8+0~20241122.45+debian11~1.gbp8b7a30) unstable; urgency=medium
 
-  ** SNAPSHOT build @8a89777ede3b1dedca9a7dac2bbc10837a976d6e **
+  ** SNAPSHOT build @8b7a301ac781d958a5544a24c48fa698fa1154d4 **
 
-  * UNRELEASED
+  * Upload to experimental
+  * Upload to experimental
+  * Fix Build-Depend on php-all-dev (>= 2:95~)
+  * Update changelog for 3.7.0-8~exp3 release
+  * Rebuild with PHP 8.4.0RC1
+  * Upload to unstable
+  * Reinstate 3.4.3-3.1 changelog (Closes: #945374)
 
- -- Ondřej Surý <ondrej@sury.org>  Fri, 09 Dec 2022 14:53:40 +0100
+ -- Ondřej Surý <ondrej@sury.org>  Fri, 22 Nov 2024 20:00:22 +0100
+
+php-imagick (3.7.0-8) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 27 Sep 2024 19:46:59 +0200
+
+php-imagick (3.7.0-8~exp4) experimental; urgency=medium
+
+  * Rebuild with PHP 8.4.0RC1
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 27 Sep 2024 16:09:47 +0200
+
+php-imagick (3.7.0-8~exp3) experimental; urgency=medium
+
+  * Fix Build-Depend on php-all-dev (>= 2:95~)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 24 Sep 2024 14:49:37 +0200
+
+php-imagick (3.7.0-8~exp2) experimental; urgency=medium
+
+  * Upload to experimental
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 23 Sep 2024 18:49:38 +0200
+
+php-imagick (3.7.0-8~exp1) experimental; urgency=medium
+
+  * Upload to experimental
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 23 Sep 2024 18:49:35 +0200
+
+php-imagick (3.7.0-8) unstable; urgency=medium
+
+  * Bump Build-Depends to dh-php >= 5.5~
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 22 Sep 2024 08:12:44 +0200
+
+php-imagick (3.7.0-7) unstable; urgency=medium
+
+  * Upload to experimental
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 21 Sep 2024 12:57:24 +0200
+
+php-imagick (3.7.0-6) unstable; urgency=medium
+
+  * Bump default version to PHP 8.4
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 06 Jul 2024 17:33:49 +0200
+
+php-imagick (3.7.0-5) unstable; urgency=medium
+
+  * Bump the debian version to trigger rebuild. (Closes: #1074172)
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 08 Feb 2024 10:01:26 +0100
+
+php-imagick (3.7.0-4) unstable; urgency=medium
+
+  * Install the extra ImageMagick codes for SVG support in autopkgtests
+    (Closes: #1028976)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 24 Jan 2023 16:10:05 +0100
 
 php-imagick (3.7.0-3) unstable; urgency=medium
 
@@ -203,6 +270,13 @@ php-imagick (3.4.4-1) unstable; urgency=medium
   * Rebase patches for php-imagick 3.4.4
 
  -- Ondřej Surý <ondrej@debian.org>  Sun, 23 Feb 2020 16:32:41 +0100
+
+php-imagick (3.4.3-4.1) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * Fix CVE-2019-11037. (Closes: #928420)
+
+ -- Dominik George <natureshadow@debian.org>  Thu, 06 Jun 2019 11:33:10 +0200
 
 php-imagick (3.4.3-4) unstable; urgency=medium
 

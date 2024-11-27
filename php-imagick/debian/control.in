@@ -5,9 +5,9 @@ Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
 Uploaders: Guillaume Delacour <gui@iroqwa.org>,
            Lior Kaplan <kaplan@debian.org>
 Build-Depends: debhelper (>= 10~),
-               dh-php (>= 4~),
+               dh-php (>= 5.5~),
                libmagickwand-6.q16-dev | libmagickwand-dev,
-               php-all-dev
+               php-all-dev (>= 2:95~)
 Standards-Version: 4.5.1
 Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-imagick
 Vcs-Git: https://salsa.debian.org/php-team/pecl/php-imagick.git

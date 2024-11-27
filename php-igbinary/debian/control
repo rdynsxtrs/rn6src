@@ -2,17 +2,60 @@ Source: php-igbinary
 Section: php
 Priority: optional
 Maintainer: Debian PHP PECL Maintainers <team+php-pecl@tracker.debian.org>
-Uploaders: Mathieu Parent <sathieu@debian.org>
-Build-Depends: debhelper (>= 9~),
-               dh-php (>= 2.0~),
+Uploaders: Mathieu Parent <sathieu@debian.org>,
+           Ondřej Surý <ondrej@debian.org>
+Build-Depends: debhelper (>= 10~),
+               dh-php (>= 4~),
                php-all-dev,
-               php-apcu
-Standards-Version: 3.9.8
+               php8.3-apcu, php8.2-apcu, php8.1-apcu, php8.0-apcu, php7.4-apcu, php-apcu-all-dev
+Standards-Version: 4.5.1
 Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-igbinary
 Vcs-Git: https://salsa.debian.org/php-team/pecl/php-igbinary.git
 Homepage: http://pecl.php.net/package/igbinary
 
 Package: php-igbinary
+Architecture: all
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: igbinary PHP serializer
+ Igbinary is a drop in replacement for the standard PHP serializer.
+ Instead of time and space consuming textual representation, igbinary
+ stores PHP data structures in a compact binary form.  Savings are
+ significant when using memcached or similar memory based storages for
+ serialized data.
+ .
+ This is empty package that depends on default PHP version.
+
+Package: php-igbinary-all-dev
+Architecture: all
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: igbinary PHP serializer
+ Igbinary is a drop in replacement for the standard PHP serializer.
+ Instead of time and space consuming textual representation, igbinary
+ stores PHP data structures in a compact binary form.  Savings are
+ significant when using memcached or similar memory based storages for
+ serialized data.
+ .
+ This is empty package that depends on all PHP versions.
+
+Package: php8.3-igbinary
 Architecture: any
 Pre-Depends: php-common (>= 2:69~)
 Depends: ${misc:Depends},
@@ -30,3 +73,80 @@ Description: igbinary PHP serializer
  stores PHP data structures in a compact binary form.  Savings are
  significant when using memcached or similar memory based storages for
  serialized data.
+
+Package: php8.2-igbinary
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: igbinary PHP serializer
+ Igbinary is a drop in replacement for the standard PHP serializer.
+ Instead of time and space consuming textual representation, igbinary
+ stores PHP data structures in a compact binary form.  Savings are
+ significant when using memcached or similar memory based storages for
+ serialized data.
+
+Package: php8.1-igbinary
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: igbinary PHP serializer
+ Igbinary is a drop in replacement for the standard PHP serializer.
+ Instead of time and space consuming textual representation, igbinary
+ stores PHP data structures in a compact binary form.  Savings are
+ significant when using memcached or similar memory based storages for
+ serialized data.
+
+Package: php8.0-igbinary
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: igbinary PHP serializer
+ Igbinary is a drop in replacement for the standard PHP serializer.
+ Instead of time and space consuming textual representation, igbinary
+ stores PHP data structures in a compact binary form.  Savings are
+ significant when using memcached or similar memory based storages for
+ serialized data.
+
+Package: php7.4-igbinary
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Suggests: ${pecl:Suggests}
+Description: igbinary PHP serializer
+ Igbinary is a drop in replacement for the standard PHP serializer.
+ Instead of time and space consuming textual representation, igbinary
+ stores PHP data structures in a compact binary form.  Savings are
+ significant when using memcached or similar memory based storages for
+ serialized data.
+

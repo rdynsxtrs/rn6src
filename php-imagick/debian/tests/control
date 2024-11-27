@@ -1,6 +1,7 @@
 Test-Command: cd imagick-$(xml2 < package.xml  | sed -ne "s,/package/version/release=\(.*\),\1,p")/tests && phpunit --verbose .
 Depends: gsfonts,
          imagemagick-6.q16,
+         libmagickcore-6.q16-6-extra,
          php-cli,
          php-imagick,
          phpunit,

@@ -3,32 +3,14 @@ Date: Sun, 11 Oct 2020 14:30:16 +0200
 Subject: Add igbinary as optional dependency to package*.xml
 
 ---
- package-5.xml | 6 ++++++
- package.xml   | 6 ++++++
- 2 files changed, 12 insertions(+)
+ package.xml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/package-5.xml b/package-5.xml
-index 1fcc4ae..50e9530 100644
---- a/package-5.xml
-+++ b/package-5.xml
-@@ -119,6 +119,12 @@ This is probably the latest release with PHP 5 suport!!!
-     <min>1.4.0b1</min>
-    </pearinstaller>
-   </required>
-+  <optional>
-+   <extension>
-+    <name>igbinary</name>
-+    <min>2.0</min>
-+   </extension>
-+  </optional>
-  </dependencies>
-  <providesextension>redis</providesextension>
-  <extsrcrelease>
 diff --git a/package.xml b/package.xml
-index 92915b5..37c3b72 100644
+index 3a4637d..98456bd 100644
 --- a/package.xml
 +++ b/package.xml
-@@ -126,6 +126,12 @@ phpredis 5.3.7RC1
+@@ -134,6 +134,12 @@ or by inspecting the git commit logs.
      <min>1.4.0b1</min>
     </pearinstaller>
    </required>

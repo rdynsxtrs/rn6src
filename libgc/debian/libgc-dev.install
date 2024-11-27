@@ -1,0 +1,5 @@
+usr/include
+usr/lib/*/libgc*.so
+usr/lib/*/libgc*.a
+usr/lib/*/pkgconfig/bdw-gc.pc
+usr/share/doc/gc/* usr/share/doc/libgc1

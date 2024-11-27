@@ -1,0 +1,52 @@
+Source: libgc
+Maintainer: Christoph Egger <christoph@debian.org>
+Uploaders: Debian GCC Maintainers <debian-gcc@lists.debian.org>, Ian Wienand <ianw@debian.org>
+Section: libs
+Priority: optional
+Build-Depends: debhelper (>= 10),
+ pkg-config,
+ pkg-kde-tools
+Standards-Version: 4.5.1
+Homepage: https://www.hboehm.info/gc/
+Vcs-Git: https://salsa.debian.org/debian/libgc
+
+Package: libgc1
+Architecture: any
+Pre-Depends: ${misc:Pre-Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Conflicts: libgc1c2
+Replaces: libgc1c2
+Provides: libgc1c2
+Multi-Arch: same
+Description: conservative garbage collector for C and C++
+ Boehm-Demers-Weiser's GC is a garbage collecting storage allocator that is
+ intended to be used as a plug-in replacement for C's malloc or C++'s new().
+ .
+ It allows you to allocate memory basically as you normally would without
+ explicitly deallocating memory that is no longer useful. The collector
+ automatically recycles memory when it determines that it can no longer be
+ used.
+ .
+ This version of the collector is thread safe, has C++ support and uses the
+ defaults for everything else. However, it does not work as a drop-in malloc(3)
+ replacement.
+
+Package: libgc-dev
+Architecture: any
+Section: libdevel
+Depends: ${misc:Depends}, libgc1 (= ${binary:Version}), libc-dev
+Multi-Arch: same
+Description: conservative garbage collector for C (development)
+ Boehm-Demers-Weiser's GC is a garbage collecting storage allocator that is
+ intended to be used as a plug-in replacement for C's malloc or C++'s new().
+ .
+ It allows you to allocate memory basically as you normally would without
+ explicitly deallocating memory that is no longer useful. The collector
+ automatically recycles memory when it determines that it can no longer be
+ used.
+ .
+ This version of the collector is thread safe, has C++ support and uses the
+ defaults for everything else. However, it does not work as a drop-in malloc(3)
+ replacement.
+ .
+ This package is required to compile and link programs that use libgc1c2.

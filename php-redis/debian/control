@@ -9,14 +9,14 @@ Build-Depends: debhelper (>= 10~),
                liblz4-dev,
                libzstd-dev,
                php-all-dev,
-               php8.2-igbinary, php-igbinary-all-dev
+               php8.3-igbinary, php8.2-igbinary, php8.1-igbinary, php8.0-igbinary, php7.4-igbinary, php-igbinary-all-dev
 Standards-Version: 4.5.1
 Vcs-Git: https://salsa.debian.org/php-team/pecl/php-redis.git
 Vcs-Browser: https://salsa.debian.org/php-team/pecl/php-redis
 Homepage: https://pecl.php.net/package/redis
 
 Package: php-redis
-Architecture: any
+Architecture: all
 Pre-Depends: php-common (>= 2:69~)
 Depends: ${misc:Depends},
          ${pecl:Depends},
@@ -32,6 +32,8 @@ Description: PHP extension for interfacing with Redis
  This extension allows php applications to communicate with the Redis
  persistent key-value store.  The php-redis module provides an easy
  object oriented interface.
+ .
+ This is empty package that depends on default PHP version.
 
 Package: php-redis-all-dev
 Architecture: all
@@ -50,8 +52,82 @@ Description: PHP extension for interfacing with Redis
  This extension allows php applications to communicate with the Redis
  persistent key-value store.  The php-redis module provides an easy
  object oriented interface.
+ .
+ This is empty package that depends on all PHP versions.
+
+Package: php8.3-redis
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: redis-server,
+          ${pecl:Suggests}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Description: PHP extension for interfacing with Redis
+ This extension allows php applications to communicate with the Redis
+ persistent key-value store.  The php-redis module provides an easy
+ object oriented interface.
 
 Package: php8.2-redis
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: redis-server,
+          ${pecl:Suggests}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Description: PHP extension for interfacing with Redis
+ This extension allows php applications to communicate with the Redis
+ persistent key-value store.  The php-redis module provides an easy
+ object oriented interface.
+
+Package: php8.1-redis
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: redis-server,
+          ${pecl:Suggests}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Description: PHP extension for interfacing with Redis
+ This extension allows php applications to communicate with the Redis
+ persistent key-value store.  The php-redis module provides an easy
+ object oriented interface.
+
+Package: php8.0-redis
+Architecture: any
+Pre-Depends: php-common (>= 2:69~)
+Depends: ${misc:Depends},
+         ${pecl:Depends},
+         ${php:Depends},
+         ${shlibs:Depends}
+Breaks: ${pecl:Breaks}
+Replaces: ${pecl:Replaces}
+Suggests: redis-server,
+          ${pecl:Suggests}
+Provides: ${pecl:Provides},
+          ${php:Provides}
+Description: PHP extension for interfacing with Redis
+ This extension allows php applications to communicate with the Redis
+ persistent key-value store.  The php-redis module provides an easy
+ object oriented interface.
+
+Package: php7.4-redis
 Architecture: any
 Pre-Depends: php-common (>= 2:69~)
 Depends: ${misc:Depends},

@@ -1,0 +1,125 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/architecture.mk
+
+#export DH_VERBOSE=1
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+dpkg_buildflags = DEB_BUILD_MAINT_OPTIONS=$(DEB_BUILD_MAINT_OPTIONS) dpkg-buildflags
+CFLAGS=$(shell $(dpkg_buildflags) --get CFLAGS) $(shell getconf LFS_CFLAGS)
+CPPFLAGS=$(shell $(dpkg_buildflags) --get CPPFLAGS)
+LDFLAGS=$(shell $(dpkg_buildflags) --get LDFLAGS)
+
+ifneq (,$(findstring stage1,$(DEB_BUILD_PROFILES)))
+  DEVS=no
+  bootstrap_dh_flags=-Nw3m-img
+else ifeq ($(DEB_BUILD_ARCH_OS),linux)
+  DEVS=x11,fb+s
+else
+  DEVS=x11
+endif
+
+confargs := --prefix=/usr --sysconfdir=/etc --libexecdir=/usr/lib \
+	--mandir=/usr/share/man \
+	--with-imagelib=imlib2 \
+	--with-migemo="cmigemo -q -d /usr/share/cmigemo/utf-8/migemo-dict" \
+	--with-editor=/usr/bin/sensible-editor \
+	--with-browser=/usr/bin/sensible-browser \
+	--enable-image=$(DEVS)
+
+ifneq ($(DEB_BUILD_GNU_TYPE),$(DEB_HOST_GNU_TYPE))
+confargs += --build=$(DEB_BUILD_GNU_TYPE) --host=$(DEB_HOST_GNU_TYPE)
+export PKG_CONFIG=$(DEB_HOST_GNU_TYPE)-pkg-config
+endif
+
+builddir := .
+
+build-indep:
+
+build-arch: build-stamp
+build-stamp:
+	dh_testdir
+	cd $(builddir) && dh_update_autotools_config
+	cd $(builddir) && LC_ALL=C CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" ./configure $(confargs)
+	cd $(builddir) && LC_ALL=C $(MAKE) OPTS="-g"
+	cd $(builddir)/po && LC_ALL=C $(MAKE) update-gmo
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	if test -f $(builddir)/Makefile; then cd $(builddir) && $(MAKE) distclean; fi
+	rm -f $(builddir)/po/*.gmo
+	rm -f $(builddir)/po/stamp-po
+	rm -f extract-stamp patch-stamp configure-stamp build-stamp install-stamp
+	dh_clean
+
+install: install-stamp
+install-stamp: build-stamp
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs $(bootstrap_dh_flags)
+
+	cd $(builddir) && $(MAKE) install DESTDIR=$(CURDIR)/debian/w3m INSTALL_W3MIMGDISPLAY="install -g video -m 2755"
+	install -m 644 debian/w3mconfig $(CURDIR)/debian/w3m/etc/w3m/config
+	install -m 644 debian/mailcap $(CURDIR)/debian/w3m/etc/w3m/mailcap
+ifeq (,$(findstring stage1,$(DEB_BUILD_PROFILES)))
+	mv -f debian/w3m/usr/lib/w3m/w3mimgdisplay debian/w3m-img/usr/lib/w3m/w3mimgdisplay
+endif
+	touch install-stamp
+
+binary-indep:
+
+binary-arch: install
+	dh_testdir -a
+	dh_testroot -a
+	dh_installdocs -a $(bootstrap_dh_flags)
+	-rm -f debian/w3m/usr/share/doc/w3m/README.cygwin
+	-mv -f debian/w3m/usr/share/doc/w3m/README.img debian/w3m-img/usr/share/doc/w3m-img/README.img
+	cp -a $(builddir)/doc-jp/* debian/w3m/usr/share/doc/w3m/ja/
+	-mv -f debian/w3m/usr/share/doc/w3m/ja/README.img debian/w3m-img/usr/share/doc/w3m-img/README.img.ja
+	-rm -f debian/w3m/usr/share/doc/w3m/ja/w3m.1
+	-rm -f debian/w3m/usr/share/doc/w3m/ja/README.cygwin
+	-rm -rf debian/w3m/usr/share/doc/w3m/ja/CVS
+	cp -a $(builddir)/doc-de/* debian/w3m/usr/share/doc/w3m/de/
+	-rm -f debian/w3m/usr/share/doc/w3m/de/w3m.1
+	dh_installexamples -a $(bootstrap_dh_flags)
+	cp -a $(builddir)/Bonus/* debian/w3m/usr/share/doc/w3m/examples/Bonus/
+	-mv -f debian/w3m/usr/share/doc/w3m/examples/Bonus/README debian/w3m/usr/share/doc/w3m/examples/Bonus/README.ja
+	-rm -rf debian/w3m/usr/share/doc/w3m/examples/Bonus/CVS
+	cd debian/w3m/usr/share/doc/w3m/examples/Bonus && find . -type f -print | \
+	while read f; do \
+		mv -f $$f $$f.tmp; \
+		LC_ALL=C sed -e 's:/usr/local/bin/:/usr/bin/:' \
+			-e 's:/bin/env:/usr/bin/env:' \
+			$$f.tmp > $$f; \
+		rm -f $$f.tmp; \
+	done
+	cd debian/w3m/usr/share/doc/w3m && \
+		mv ja/keymap.* ja/examples; mv ja/menu.* ja/examples
+	dh_link usr/share/doc/w3m/examples/keymap.default usr/share/doc/w3m/keymap.default \
+		usr/share/doc/w3m/examples/keymap.lynx usr/share/doc/w3m/keymap.lynx \
+		usr/share/doc/w3m/ja/examples/keymap.default usr/share/doc/w3m/ja/keymap.default \
+		usr/share/doc/w3m/ja/examples/keymap.lynx usr/share/doc/w3m/ja/keymap.lynx
+	dh_installmenu $(bootstrap_dh_flags)
+	dh_installmime $(bootstrap_dh_flags)
+#	dh_installman $(bootstrap_dh_flags)
+	dh_installchangelogs -a $(bootstrap_dh_flags) $(builddir)/ChangeLog
+	dh_strip -a $(bootstrap_dh_flags)
+	dh_compress -a $(bootstrap_dh_flags) -XREADME.func
+	dh_lintian -a $(bootstrap_dh_flags)
+	dh_fixperms -a $(bootstrap_dh_flags) -Xw3mimgdisplay
+	dh_installdeb -a $(bootstrap_dh_flags)
+	dh_shlibdeps -a $(bootstrap_dh_flags)
+	dh_gencontrol -a $(bootstrap_dh_flags)
+#	dh_makeshlibs -a $(bootstrap_dh_flags)
+	dh_md5sums -a $(bootstrap_dh_flags)
+	dh_builddeb -a $(bootstrap_dh_flags)
+
+source diff:
+	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false
+
+build: build-indep build-arch
+binary: binary-indep binary-arch
+.PHONY: build-indep build-arch build install clean binary-indep binary-arch binary

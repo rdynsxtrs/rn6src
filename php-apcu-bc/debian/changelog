@@ -1,17 +1,105 @@
-php-apcu-bc (1.0.5-4+0~20201210.12+rnx1) unstable; urgency=medium
+php-apcu-bc (1.0.5-19+0~20230618.29+rnx1) unstable; urgency=medium
 
-  * Non-maintainer upload.
   * Backported to ReadyNAS OS 6
 
- -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 21 Dec 2020 18:56:27 +0100
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 24 Nov 2024 12:25:11 +0100
 
-php-apcu-bc (1.0.5-4+0~20201210.12+debian9~1.gbp9ea365) unstable; urgency=medium
+php-apcu-bc (1.0.5-19+0~20230618.29+debian11~1.gbp6ddc4e) unstable; urgency=medium
 
-  ** SNAPSHOT build @9ea3657d4f20ef56f97226aa8599357c6c581f9d **
+  ** SNAPSHOT build @6ddc4ed0c67cb2bd11af9be452b5aa8290f63fc0 **
 
   * UNRELEASED
 
- -- Ondřej Surý <ondrej@sury.org>  Thu, 10 Dec 2020 22:18:05 +0100
+ -- Ondřej Surý <ondrej@sury.org>  Sun, 18 Jun 2023 21:40:44 +0200
+
+php-apcu-bc (1.0.5-19) unstable; urgency=medium
+
+  * No change rebuild.
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 09 Jan 2023 14:13:39 +0100
+
+php-apcu-bc (1.0.5-18) unstable; urgency=medium
+
+  * Fix the d/control for PHP 8.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 09 Jan 2023 14:13:08 +0100
+
+php-apcu-bc (1.0.5-17) unstable; urgency=medium
+
+  * Regenerate d/control for PHP 8.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 01 Jan 2022 13:09:43 +0100
+
+php-apcu-bc (1.0.5-15) unstable; urgency=medium
+
+  * Recompile for PHP 7.4 until the transition is complete
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 26 Nov 2021 11:26:17 +0100
+
+php-apcu-bc (1.0.5-14) unstable; urgency=medium
+
+  * Update the packaging to dh-php >= 4~
+
+ -- Ondřej Surý <ondrej@debian.org>  Wed, 10 Nov 2021 12:00:51 +0100
+
+php-apcu-bc (1.0.5-13) unstable; urgency=medium
+
+  * Change the dependency in package-7.xml from package to extension
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 22 Feb 2021 15:33:58 +0100
+
+php-apcu-bc (1.0.5-12) unstable; urgency=medium
+
+  * Bump B-D to dh-php >= 3.1~
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 18:06:32 +0100
+
+php-apcu-bc (1.0.5-11) unstable; urgency=medium
+
+  * No change version bump
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 17:27:31 +0100
+
+php-apcu-bc (1.0.5-10) unstable; urgency=medium
+
+  * Override the PHP_DEFAULT_VERSION
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 16:51:48 +0100
+
+php-apcu-bc (1.0.5-9) unstable; urgency=medium
+
+  * Revert arch:all change, as it breaks shlibs:Depends
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 13:21:24 +0100
+
+php-apcu-bc (1.0.5-8) unstable; urgency=medium
+
+  * Change the B-D from php-apcu to php-apcu-all-dev
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 12:36:52 +0100
+
+php-apcu-bc (1.0.5-7) unstable; urgency=medium
+
+  * The main dummy package is arch:all
+  * Bump dh-php Build-Depends to >= 3.0~
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 20 Feb 2021 07:50:23 +0100
+
+php-apcu-bc (1.0.5-6) unstable; urgency=medium
+
+  * Sync the changelog with Debian bullseye
+  * Update d/gbp.conf for debian/main branch
+  * Update standards version to 4.5.1 (no change)
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 16 Feb 2021 12:10:38 +0100
+
+php-apcu-bc (1.0.5-5) unstable; urgency=medium
+
+  * Update d/watch to use https://pecl.php.net
+  * Lower the dh-php dependency to Debian sid version
+  * Update d/gbp.conf for Debian bullseye
+
+ -- Ondřej Surý <ondrej@debian.org>  Sun, 14 Feb 2021 16:39:33 +0100
 
 php-apcu-bc (1.0.5-4) unstable; urgency=medium
 

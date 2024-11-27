@@ -1,0 +1,66 @@
+Source: w3m
+Section: web
+Priority: optional
+Maintainer: Tatsuya Kinoshita <tats@debian.org>
+Uploaders: HIGUCHI Daisuke (VDR dai) <dai@debian.org>
+Build-Depends: debhelper (>= 10),
+               gawk | awk,
+               libgc-dev,
+               libgpm-dev [linux-any],
+               libimlib2-dev <!stage1>,
+               libncurses5-dev,
+               libssl-dev,
+               pkg-config,
+               zlib1g-dev
+Homepage: https://tracker.debian.org/pkg/w3m
+Vcs-Browser: https://salsa.debian.org/debian/w3m
+Vcs-Git: https://salsa.debian.org/debian/w3m.git
+Standards-Version: 4.6.2
+Rules-Requires-Root: binary-targets
+
+Package: w3m
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Recommends: ca-certificates
+Provides: www-browser
+Suggests: brotli,
+          bzip2,
+          cmigemo,
+          compface,
+          dict,
+          dict-wn,
+          dictd,
+          firefox | www-browser,
+          libsixel-bin,
+          mailcap,
+          man-db,
+          media-types,
+          sensible-utils,
+          w3m-el,
+          w3m-img,
+          wget | curl,
+          xdg-utils,
+          xsel
+Conflicts: w3m-ssl
+Replaces: w3m-ssl, w3mmee
+Description: WWW browsable pager with excellent tables/frames support
+ w3m is a text-based World Wide Web browser with IPv6 support.
+ It features excellent support for tables and frames. It can be used
+ as a standalone file pager, too.
+ .
+  * You can follow links and/or view images in HTML.
+  * Internet message preview mode, you can browse HTML mail.
+  * You can follow links in plain text if it includes URL forms.
+  * With w3m-img, you can view inline images.
+ .
+ This package provides Debian's w3m, forked from the original version
+ <https://sourceforge.net/projects/w3m/>.
+
+Package: w3m-img
+Architecture: any
+Depends: w3m (= ${binary:Version}), ${misc:Depends}, ${shlibs:Depends}
+Description: inline image extension support utilities for w3m
+ w3m-img provides some utilities to support inline images for w3m
+ on terminal emulator in X Window System environments and Linux
+ framebuffer.

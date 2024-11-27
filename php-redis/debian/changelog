@@ -1,16 +1,48 @@
-php-redis (5.3.7+4.3.0-2+0~20221210.45+rnx1) unstable; urgency=medium
+php-redis (6.0.2-1+0~20241124.56+rnx1) unstable; urgency=medium
 
   * Backported to ReadyNAS OS 6
 
- -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 09 Jan 2023 11:12:10 +0100
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 24 Nov 2024 12:31:43 +0100
 
-php-redis (5.3.7+4.3.0-2+0~20221210.45+debian10~1.gbp99917f) unstable; urgency=medium
+php-redis (6.0.2-1+0~20231128.56+debian11~1.gbp9f3071) unstable; urgency=medium
 
-  ** SNAPSHOT build @99917f462adbafb14fe16b74ab8b4a97576981ee **
+  ** SNAPSHOT build @9f30711ab0ac02a33c88663b91e1ba788ea02b2c **
 
   * UNRELEASED
 
- -- Ondřej Surý <ondrej@sury.org>  Sat, 10 Dec 2022 21:02:24 +0100
+ -- Ondřej Surý <ondrej@sury.org>  Tue, 28 Nov 2023 11:39:43 +0100
+
+php-redis (6.0.2-1) unstable; urgency=medium
+
+  * New upstream version 6.0.2
+
+ -- Ondřej Surý <ondrej@debian.org>  Sat, 25 Nov 2023 15:23:34 +0100
+
+php-redis (6.0.1-1) unstable; urgency=medium
+
+  * New upstream version 6.0.1
+
+ -- Ondřej Surý <ondrej@debian.org>  Fri, 06 Oct 2023 10:55:02 +0200
+
+php-redis (6.0.0-1) unstable; urgency=medium
+
+  * New upstream version 6.0.0
+  * This version supports on PHP 7.2 and higher
+
+ -- Ondřej Surý <ondrej@debian.org>  Tue, 12 Sep 2023 21:19:05 +0200
+
+php-redis (5.3.7++-1) unstable; urgency=medium
+
+  * New upstream version 5.3.7
+  * Finish splitting the source package for PHP 7.x and PHP 8.x
+
+ -- Ondřej Surý <ondrej@debian.org>  Mon, 12 Jun 2023 17:26:03 +0200
+
+php-redis (5.3.7+4.3.0-3) unstable; urgency=medium
+
+  * No-change source-only update
+
+ -- Ondřej Surý <ondrej@debian.org>  Thu, 12 Jan 2023 08:47:28 +0100
 
 php-redis (5.3.7+4.3.0-2) unstable; urgency=medium
 

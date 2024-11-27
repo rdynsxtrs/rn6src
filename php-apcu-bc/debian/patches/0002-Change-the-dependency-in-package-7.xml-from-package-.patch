@@ -1,0 +1,27 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Mon, 22 Feb 2021 15:33:45 +0100
+Subject: Change the dependency in package-7.xml from package to extension
+
+---
+ package-7.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/package-7.xml b/package-7.xml
+index 549a238..d6d2e66 100644
+--- a/package-7.xml
++++ b/package-7.xml
+@@ -58,12 +58,12 @@
+    <pearinstaller>
+     <min>1.10</min>
+    </pearinstaller>
+-   <package>
++   <extension>
+     <name>apcu</name>
+     <channel>pecl.php.net</channel>
+     <min>5.1.2</min>
+     <providesextension>apcu</providesextension>
+-   </package>
++   </extension>
+   </required>
+  </dependencies>
+  <providesextension>apc</providesextension>
