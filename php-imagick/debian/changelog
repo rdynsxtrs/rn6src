@@ -1,3 +1,9 @@
+php-imagick (3.7.0-8+0~20241124.45+rnx2) UNRELEASED; urgency=medium
+
+  * Fix php-all-dev dependency
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Thu, 28 Nov 2024 09:09:28 +0100
+
 php-imagick (3.7.0-8+0~20241124.45+rnx1) unstable; urgency=medium
 
   * Backported to ReadyNAS OS 6
