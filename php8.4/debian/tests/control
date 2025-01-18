@@ -1,0 +1,21 @@
+Tests: cli
+Depends: php8.4-cli,
+         wget
+
+Tests: cgi
+Depends: apache2,
+         php8.4-cgi,
+         wget
+Restrictions: needs-root
+
+Tests: mod-php
+Depends: apache2,
+         libapache2-mod-php8.4,
+          wget
+Restrictions: needs-root
+
+Tests: fpm
+Depends: apache2,
+         php8.4-fpm,
+         wget
+Restrictions: needs-root

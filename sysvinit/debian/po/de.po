@@ -1,0 +1,60 @@
+# Translation of sysvinit to German
+# Copyright (C) 1997-2005 Miquel van Smoorenburg <miquels@cistron.nl>.
+# This file is distributed under the same license as the sysvinit package.
+# Chris Leick <c.leick@vollbio.de>, 2009-2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: sysvinit 2.92~beta-2\n"
+"Report-Msgid-Bugs-To: sysvinit@packages.debian.org\n"
+"POT-Creation-Date: 2018-10-26 08:14+0000\n"
+"PO-Revision-Date: 2018-12-01 10:53+0200\n"
+"Last-Translator: Chris Leick <c.leick@vollbio.de>\n"
+"Language-Team: German <debian-l10n-german@lists.debian.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid "Update getty pathnames and add hurd-console?"
+msgstr "Getty-Pfadnamen aktualisieren und Hurd-Konsole hinzufügen?"
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"Your /etc/inittab seems to use /libexec/getty as getty and/or to miss hurd-"
+"console entry. The default inittab has been changed, however your /etc/"
+"inittab has been modified. Note that sysvinit has not been used to boot an "
+"Hurd system for long, so any errors in that file would not have shown up "
+"earlier."
+msgstr ""
+"Ihre /etc/inittab scheint /libexec/getty als Getty zu verwenden und/oder der "
+"Hurd-Konsoleneintrags scheint zu fehlen. Die Standard-Inittab wurde geändert, "
+"allerdings wurde Ihre /etc/inittab verändert. Beachten Sie, dass Sysvinit "
+"seit langem nicht zum Starten eines Hurd-Systems benutzt wurde, daher wären "
+"alle Fehler in dieser Datei nicht früher angezeigt worden."
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"If you allow this change, a backup will be stored in /etc/inittab.dpkg-old."
+msgstr ""
+"Falls Sie diese Änderung erlauben, wird eine Sicherungskopie in "
+"/etc/inittab.dpkg-old gespeichert."
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"If you don't allow this change, an updated inittab will be written to /etc/"
+"inittab.dpkg-new. Please review the changes and update your /etc/inittab "
+"accordingly."
+msgstr ""
+"Falls Sie diese Änderung nicht erlauben, wird eine aktualisierte Inittab nach "
+"/etc/inittab.dpkg-new geschrieben. Bitte überprüfen Sie die Änderungen und "
+"aktualisieren Sie Ihre /etc/inittab entsprechend."

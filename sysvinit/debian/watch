@@ -1,0 +1,4 @@
+version=3
+opts="pgpmode=auto,uversionmangle=s/-beta/~beta/" \
+  https://download.savannah.gnu.org/releases/sysvinit/ \
+  (?:|.*/)sysvinit(?:[_\-]v?|)(\d[^\s/]*)\.(?:tar\.xz|txz|tar\.bz2|tbz2|tar\.gz|tgz)

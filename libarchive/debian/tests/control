@@ -1,0 +1,5 @@
+Tests: minitar
+Depends: build-essential, file, libarchive-dev, pkg-config
+
+Test-Command: adequate libarchive-dev libarchive13 libarchive-tools bsdtar bsdcpio
+Depends: @, adequate

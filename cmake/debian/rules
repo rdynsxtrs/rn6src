@@ -1,5 +1,7 @@
 #!/usr/bin/make -f
 
+include /usr/share/dpkg/pkg-info.mk
+
 export DEB_CXXFLAGS_MAINT_APPEND := $(shell dpkg-buildflags --get CPPFLAGS)
 export DEB_CFLAGS_MAINT_APPEND := $(shell dpkg-buildflags --get CPPFLAGS)
 export DEB_LDFLAGS_MAINT_APPEND := -Wl,--as-needed
@@ -9,8 +11,7 @@ ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
     BOOTSTRAP_PARALLEL = --parallel=$(NUMJOBS)
 endif
 
-LAST_CHANGE = $(shell dpkg-parsechangelog -S Date)
-BUILD_DATE = $(shell LC_ALL=C date -u "+%B %d, %Y" -d "$(LAST_CHANGE)")
+BUILD_DATE = $(shell LC_ALL=C date -u "+%B %d, %Y" -d "@$(SOURCE_DATE_EPOCH)")
 
 
 BUILD_FLAGS_FILE = build-flags.cmake
@@ -43,19 +44,23 @@ verify-build-flags: flag_action := verify_build_flag
 
 override_dh_auto_configure: $(BUILD_FLAGS_FILE)
 	rm -rf Build && mkdir -p Build
-	cd Build && ../bootstrap --prefix=/usr --docdir=/share/doc/cmake --mandir=/share/man \
-	                         --init=../$(BUILD_FLAGS_FILE) --no-system-libs \
+	cd Build && ../bootstrap --prefix=/usr --docdir=/share/doc/cmake-data --mandir=/share/man \
+	                         --init=../$(BUILD_FLAGS_FILE) --system-libs \
 	                         $(BOOTSTRAP_PARALLEL) --verbose
 
+#	                         --sphinx-man --sphinx-html --sphinx-flags="-D today=\"$(BUILD_DATE)\"" \
+
 override_dh_auto_test:
-	HOME="`pwd`/Build" dh_auto_test --buildsystem=cmake -- ARGS="-E CTestTestUpload"
+	# Pass -j1 to "make test" as a workaround, see https://gitlab.kitware.com/cmake/cmake/issues/17165
+	# The tests are still run in parallel as debhelper pass -jX as ARGS to ctest.
+	dh_auto_test --buildsystem=cmake -- -j1 ARGS="-E CTestTestUpload --timeout 5000"
 
 override_dh_auto_clean:
 	dh_auto_clean
 	rm -f $(BUILD_FLAGS_FILE)
 
-override_dh_install:
-	dh_install --list-missing
+override_dh_missing:
+	dh_missing --fail-missing
 
 override_dh_installdocs-arch:
 	# dh_installdocs --link-doc generates binNMU unsafe deps (Bug #747141)
@@ -64,10 +69,14 @@ override_dh_installdocs-arch:
 override_dh_installdocs-indep:
 	dh_installdocs --link-doc=cmake-data
 
+override_dh_sphinxdoc:
+	dh_sphinxdoc -pcmake-doc
+
 override_dh_strip:
 	dh_strip --dbgsym-migration='cmake-dbg (<< 3.5.0-1~)'
 
 %:
-	dh $@ --parallel --builddirectory=Build
+	# dh $@ --with=sphinxdoc --builddirectory=Build
+	dh $@ --builddirectory=Build
 
 .PHONY: override_dh_auto_configure override_dh_auto_clean

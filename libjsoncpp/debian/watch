@@ -1,0 +1,2 @@
+version=3
+https://github.com/open-source-parsers/jsoncpp/releases /open-source-parsers/jsoncpp/archive/(.+)\.tar\.gz

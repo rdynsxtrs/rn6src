@@ -1,0 +1,2 @@
+#!/bin/sh
+exec adequate libnss-wrapper >&2

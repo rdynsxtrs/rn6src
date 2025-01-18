@@ -1,0 +1,20 @@
+From: =?utf-8?q?Timo_R=C3=B6hling?= <roehling@debian.org>
+Date: Mon, 13 Sep 2021 18:05:56 +0200
+Subject: Add PostgreSQL 13 to known versions
+
+---
+ Modules/FindPostgreSQL.cmake | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Modules/FindPostgreSQL.cmake b/Modules/FindPostgreSQL.cmake
+index 1927aa4..46679c3 100644
+--- a/Modules/FindPostgreSQL.cmake
++++ b/Modules/FindPostgreSQL.cmake
+@@ -87,6 +87,7 @@ set(PostgreSQL_ROOT_DIR_MESSAGE "Set the PostgreSQL_ROOT system variable to wher
+ 
+ 
+ set(PostgreSQL_KNOWN_VERSIONS ${PostgreSQL_ADDITIONAL_VERSIONS}
++    "13"
+     "12" "11" "10" "9.6" "9.5" "9.4" "9.3" "9.2" "9.1" "9.0" "8.4" "8.3" "8.2" "8.1" "8.0")
+ 
+ # Define additional search paths for root directories.

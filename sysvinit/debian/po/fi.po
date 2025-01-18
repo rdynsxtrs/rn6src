@@ -1,0 +1,116 @@
+# Copyright (C) 2009
+# This file is distributed under the same license as the sysvinit package.
+#
+# Esko Arajärvi <edu@iki.fi>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: sysvinit@packages.debian.org\n"
+"POT-Creation-Date: 2018-10-26 08:14+0000\n"
+"PO-Revision-Date: 2009-10-21 21:50+0300\n"
+"Last-Translator: Esko Arajärvi <edu@iki.fi>\n"
+"Language-Team: Finnish <debian-l10n-finnish@lists.debian.org>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid "Update getty pathnames and add hurd-console?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"Your /etc/inittab seems to use /libexec/getty as getty and/or to miss hurd-"
+"console entry. The default inittab has been changed, however your /etc/"
+"inittab has been modified. Note that sysvinit has not been used to boot an "
+"Hurd system for long, so any errors in that file would not have shown up "
+"earlier."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"If you allow this change, a backup will be stored in /etc/inittab.dpkg-old."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"If you don't allow this change, an updated inittab will be written to /etc/"
+"inittab.dpkg-new. Please review the changes and update your /etc/inittab "
+"accordingly."
+msgstr ""
+
+#~ msgid "Unable to migrate to dependency-based boot system"
+#~ msgstr ""
+#~ "Riippuvuusperusteiseen käynnistysjärjestelmään siirtyminen ei onnistu"
+
+#, fuzzy
+#~| msgid ""
+#~| "Tests have determined that problems in the boot system exist which "
+#~| "prevent migration to dependency-based boot sequencing:"
+#~ msgid ""
+#~ "Problems in the boot system exist which are preventing migration to "
+#~ "dependency-based boot sequencing:"
+#~ msgstr ""
+#~ "Testien mukaan käynnistysjärjestelmässä on ongelmia, jotka estävät "
+#~ "riippuvuusperusteiseen käynnistysjärjestelmään siirtymisen."
+
+#, fuzzy
+#~| msgid ""
+#~| "To reattempt the migration process after the problems have been fixed, "
+#~| "run \"dpkg-reconfigure sysv-rc\"."
+#~ msgid ""
+#~ "Package installation can not continue until the above problems have been "
+#~ "fixed.  To reattempt the migration process after these problems have been "
+#~ "fixed, run \"dpkg --configure sysv-rc\"."
+#~ msgstr ""
+#~ "Voit yrittää siirtymistä uudelleen vikojen korjauksen jälkeen ajamalla "
+#~ "komennon ”dpkg-reconfigure sysv-rc”."
+
+#~ msgid "Migrate legacy boot sequencing to dependency-based sequencing?"
+#~ msgstr ""
+#~ "Siirrytäänkö vanhasta käynnistysjärjestelmästä riippuvuusperusteiseen "
+#~ "järjestelmään?"
+
+#~ msgid ""
+#~ "The boot system is prepared to migrate to dependency-based sequencing. "
+#~ "This is an irreversible step, but one that is recommended: it allows the "
+#~ "boot process to be optimized for speed and efficiency, and provides a "
+#~ "more resilient framework for development."
+#~ msgstr ""
+#~ "Käynnistysjärjestelmässä voidaan siirtyä riippuvuusperusteiseen "
+#~ "järjestelmään. Tätä muutosta ei voi perua, mutta sitä suositellaan. Se "
+#~ "sallii käynnistysprosessin optimoinnin nopeuden ja tehokkuuden suhteen ja "
+#~ "tarjoaa joustavamman kehyksen kehitystyölle."
+
+#~ msgid ""
+#~ "A full rationale is detailed in /usr/share/doc/sysv-rc/README.Debian. If "
+#~ "you choose not to migrate now, you can do so later by running \"dpkg-"
+#~ "reconfigure sysv-rc\"."
+#~ msgstr ""
+#~ "Tarkempi kuvaus löytyy tiedostosta /usr/share/doc/sysv-rc/README.Debian. "
+#~ "Jos päätät olla siirtymättä nyt, voit tehdä sen myöhemmin ajamalla "
+#~ "komennon ”dpkg-reconfigure sysv-rc”."
+
+#~ msgid ""
+#~ "If the reported problem is a local modification, it needs to be fixed "
+#~ "manually. If it's a bug in the package, it should be reported to the BTS "
+#~ "and fixed in the package. See http://wiki.debian.org/LSBInitScripts/"
+#~ "DependencyBasedBoot for more information about how to fix the problems "
+#~ "preventing migration."
+#~ msgstr ""
+#~ "Jos raportoitu ongelma on paikallinen muutos, se täytyy korjata käsin. "
+#~ "Jos se on vika jossain paketissa, se tulisi raportoida "
+#~ "virheidenhallintajärjestelmään ja korjata paketissa. Verkkosivulta http://"
+#~ "wiki.debian.org/LSBInitScripts/DependencyBasedBoot löytyy lisätietoja "
+#~ "siirtymisen estävien vikojen korjaamisesta."

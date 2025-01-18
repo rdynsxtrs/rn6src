@@ -1,0 +1,9 @@
+Document: cmocka
+Title: cmocka Documentation
+Abstract: This is the reference for developing with the CMocka library.
+ It documents the CMocka C API.
+Section: Programming/C
+
+Format: HTML
+Index: /usr/share/doc/cmocka-doc/html/index.html
+Files: /usr/share/doc/cmocka-doc/html/*

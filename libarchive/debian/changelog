@@ -1,0 +1,820 @@
+libarchive (3.3.3-4+deb10u3+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 12 Jan 2025 17:48:21 +0100
+
+libarchive (3.3.3-4+deb10u3) buster-security; urgency=high
+
+  * Non-maintainer upload by the LTS team.
+  * CVE-2022-36227
+    null pointer dereference due to missing check after calloc
+
+ -- Thorsten Alteholz <debian@alteholz.de>  Sun, 29 Jan 2023 14:03:02 +0100
+
+libarchive (3.3.3-4+deb10u2) buster-security; urgency=high
+
+  * Non-maintainer upload by the LTS Security Team.
+  * CVE-2019-19221: archive_wstring_append_from_mbs in archive_string.c
+    has an out-of-bounds read because of an incorrect mbrtowc or mbtowc
+    call. For example, bsdtar crashes via a crafted archive.
+    (Closes: #945287)
+  * CVE-2021-23177: an improper link resolution flaw while extracting an
+    archive can lead to changing the access control list (ACL) of the
+    target of the link. An attacker may provide a malicious archive to a
+    victim user, who would trigger this flaw when trying to extract the
+    archive. A local attacker may use this flaw to change the ACL of a
+    file on the system and gain more privileges. (Closes: #1001986)
+  * CVE-2021-31566: an improper link resolution flaw can occur while
+    extracting an archive leading to changing modes, times, access control
+    lists, and flags of a file outside of the archive. An attacker may
+    provide a malicious archive to a victim user, who would trigger this
+    flaw when trying to extract the archive. A local attacker may use this
+    flaw to gain more privileges in a system. (Closes: #1001990)
+
+ -- Sylvain Beucler <beuc@debian.org>  Mon, 21 Nov 2022 16:48:59 +0100
+
+libarchive (3.3.3-4+deb10u1) buster-security; urgency=medium
+
+  * Non-maintainer upload by the LTS team.
+  * CVE-2019-18408
+    Fix use after free in case parts of the archive are corrupt but
+    the archive contains several headers.
+
+ -- Thorsten Alteholz <debian@alteholz.de>  Sun, 27 Oct 2019 10:03:02 +0200
+
+libarchive (3.3.3-4) unstable; urgency=medium
+
+  * Add three upstream patches:
+    - CVE-2019-1000019: fix a crash when parsing some 7zip archives
+    - CVE-2019-1000020: require the RockRidge extension for iso9660
+    - zip-nullptr: fix a null pointer deference in ZIP files handling
+
+ -- Peter Pentchev <roam@debian.org>  Wed, 06 Feb 2019 11:01:25 +0200
+
+libarchive (3.3.3-3) unstable; urgency=medium
+
+  [ Andreas Henriksson ]
+  * Build-depend on libext2fs-dev instead of e2fslibs-dev (Closes: #890210)
+  * CI: Use the salsa-ci-team pipeline
+
+  [ Peter Pentchev ]
+  * Declare compliance with Debian Policy 4.3.0 with no changes.
+  * Bump the debhelper compatibility level to 12 with no changes.
+  * Add my copyright notice for debian/*.
+  * Extend Andreas Henriksson's copyright notice all the way to 2019.
+
+ -- Peter Pentchev <roam@debian.org>  Sat, 05 Jan 2019 19:07:02 +0200
+
+libarchive (3.3.3-2) unstable; urgency=medium
+
+  * Add Daniel Axtens's security and reliability patches:
+    - CVE-2018-1000877.patch: Closes: #916964
+    - CVE-2018-1000878.patch: Closes: #916963
+    - CVE-2018-1000879.patch: Closes: #916962
+    - CVE-2018-1000880.patch: Closes: #916960
+    - all merged upstream in https://github.com/libarchive/libarchive/pull/1105
+    Thanks to Salvatore Bonaccorso for filing the Debian bugs!
+
+ -- Peter Pentchev <roam@debian.org>  Fri, 21 Dec 2018 18:01:29 +0200
+
+libarchive (3.3.3-1) unstable; urgency=medium
+
+  [ Peter Pentchev ]
+  * Declare compliance with Debian Policy 4.2.1 with no changes.
+  * Drop the Lintian overrides related to B-D: debhelper-compat -
+    Lintian 2.5.98 no longer emits these warnings and errors.
+  * Build with zstd compression support.
+  * Pass --fail-missing to dh_missing, not to dh_install any more.
+
+  [ Andreas Henriksson ]
+  * New upstream release.
+  * Drop debian/patches/ now part of upstream release:
+    - Avoid-a-read-off-by-one-error-for-UTF16-names-in-RAR.patch
+    - Do-something-sensible-for-empty-strings-to-make-fuzz.patch
+    - Fail-with-negative-lha-compsize-in-lha_read_file_header_1.patch
+    - Reject-LHA-archive-entries-with-negative-size.patch
+    - Reread-the-CAB-header-skipping-the-self-extracting-b.patch
+    - archive_strncat_l-allocate-and-do-not-convert-if-len.patch
+    - iso9660-validate-directory-record-length.patch
+  * Update libarchive13.symbols
+
+ -- Peter Pentchev <roam@debian.org>  Sat, 15 Dec 2018 02:01:01 +0200
+
+libarchive (3.2.2-5) unstable; urgency=medium
+
+  * Acknowledge NMUs; many thanks to Salvatore Bonaccorso!
+  * Use my Debian e-mail address.
+  * Declare compliance with Debian Policy 4.2.0:
+    - add Rules-Requires-Root: no to the source control stanza
+    - install the upstream release notes (NEWS)
+  * Drop the duplicate Priority fields for the binary packages.
+  * Switch to the HTTPS scheme in various upstream and Debian
+    packaging URLs.
+  * Drop some trailing whitespace from old changelog entries.
+  * Bump the debhelper compatibility level to 11 with no changes and
+    use the B-D: debhelper-compat (= 11) mechanism.
+  * Add a trivial autopkgtest running adequate on the binary packages.
+
+ -- Peter Pentchev <roam@debian.org>  Sat, 25 Aug 2018 18:28:10 +0300
+
+libarchive (3.2.2-4.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * iso9660: validate directory record length (CVE-2017-14501)
+    (Closes: #875966)
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Sun, 05 Aug 2018 08:18:10 +0200
+
+libarchive (3.2.2-4.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Reject LHA archive entries with negative size (CVE-2017-14503)
+    (Closes: #875960)
+  * Avoid a read off-by-one error for UTF16 names in RAR archives
+    (CVE-2017-14502)
+    (Closes: #875974)
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Wed, 25 Jul 2018 21:29:42 +0200
+
+libarchive (3.2.2-4) unstable; urgency=medium
+
+  * Team upload.
+  * debian/control: Update Vcs-* fields for move to salsa.debian.org
+  * debian/control: Replace Priority: extra with optional
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 31 May 2018 00:01:28 +0200
+
+libarchive (3.2.2-3.1) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * Reupload 3.2.2-2.1 on top of 3.2.2-3
+  * archive_strncat_l(): allocate and do not convert if length == 0
+    (CVE-2016-10209) (Closes: #859456)
+  * Reread the CAB header skipping the self-extracting binary code
+    (CVE-2016-10349, CVE-2016-10350) (Closes: #861609)
+  * Do something sensible for empty strings to make fuzzers happy
+    (CVE-2017-14166)
+    Fixes heap-based buffer over-read in the atol8 function. (Closes: #874539)
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Thu, 14 Sep 2017 16:02:10 +0200
+
+libarchive (3.2.2-3) unstable; urgency=medium
+
+  * Remove myself from uploaders
+  * Promote Peter to primary maintainer replacing team address
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 14 Sep 2017 11:08:48 +0200
+
+libarchive (3.2.2-2) unstable; urgency=medium
+
+  * Disable tests (Closes: #859455)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Mon, 03 Apr 2017 22:20:05 +0200
+
+libarchive (3.2.2-1) unstable; urgency=medium
+
+  * Shorten long line in previous changelog entry to please lintian.
+  * debian/gbp.conf: add upstream-vcs-tag for import-orig
+  * New upstream release.
+  * Drop patches now part of upstream release.
+  * Stop shipping README for now
+
+ -- Andreas Henriksson <andreas@fatal.se>  Mon, 03 Apr 2017 17:17:02 +0200
+
+libarchive (3.2.1-6) unstable; urgency=medium
+
+  * Add d/p/Fail-with-negative-lha-compsize-in-lha_read_file_header_1.patch
+    - Cherry-pick upstream commit 98dcbbf0bf4854bf987557
+      "Fail with negative lha->compsize in lha_read_file_header_1()"
+      Secunia SA74169, CVE-2017-5601 (Closes: #853278)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Tue, 31 Jan 2017 10:25:56 +0100
+
+libarchive (3.2.1-5) unstable; urgency=medium
+
+  * Cherry-pick upstream commits 7f17c791, eec077f5, e37b620f
+    - Fixes for upstream issues 747, 761, 767 also known as
+      CVE-2016-8689, CVE-2016-8688, CVE-2016-8687
+    (Closes: #840934, #840935, #840936)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Sun, 16 Oct 2016 15:41:59 +0200
+
+libarchive (3.2.1-4) unstable; urgency=medium
+
+  * Bump debhelper compat to 10
+  * Install manpages via debian/*.install
+  * libarchive-dev: ship examples/ directory (Closes: #659650)
+  * Use the "fail-missing" dh_install option
+  * Cherry-pick upstream commits for CVE-2016-5418 (Closes: #837714)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 06 Oct 2016 23:01:41 +0200
+
+libarchive (3.2.1-3) unstable; urgency=medium
+
+  [ Michael Biebl ]
+  * (Re)add debian/libarchive13.symbols (Closes: #838775)
+
+  [ Andreas Henriksson ]
+  * Mark leaked private symbols as optional for now until fixed upstream
+  * Fail to build when symbols file is outdated
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 06 Oct 2016 18:18:41 +0200
+
+libarchive (3.2.1-2) unstable; urgency=medium
+
+  * The "welcome Peter to the team" upload
+
+  [ Peter Pentchev ]
+  * Declare compliancy with Debian Policy 3.9.8 with no changes.
+  * Remove the "XS-Testsuite: autopkgtest" header from the control file:
+    it has not been "XS-" for some time, and it is added by default by
+    dpkg-1.17.11 when debian/tests/control is present.
+  * Use the HTTPS scheme for the Alioth VCS URLs.
+  * Switch to Alioth's cgit in the Vcs-Browser source control field.
+  * Convert the copyright file to the machine-readable format.
+  * Fill in the upstream metadata file.
+  * Enable full build hardening.
+  * Pass --as-needed to the linker to avoid overlinking.
+  * Bump the debhelper build dependency to version 9 to reflect
+    the debhelper compatibility level and drop the now-unused Lintian
+    override.
+  * Fold the bsdtar and bsdcpio packages into the new libarchive-tools
+    binary package and install bsdcat into it, too.  Make bsdtar and
+    bsdcpio transitional dummy packages.
+  * Drop the Breaks and Replaces relations to libarchive1, it's not
+    even in oldstable any more.
+  * Drop the misc:Pre-Depends that were needed for the multi-arch
+    transition; dpkg-dev adds them automatically now.
+  * Fix a typo in README.Debian.
+  * Add an upstream patch to replace the use of SIGRTMAX with something
+    that calculates the exact value of the highest signal actually used;
+    hopefully this fixes the FTBFS on the GNU Hurd.
+  * Drop the outdated and unused SONAME mismatch Lintian override.
+  * Re-enable the use of minitar for extraction, too, in the CI test;
+    keep the untar test for completeness.
+  * Add the Typos patch to fix a couple of typographical errors.
+  * Add the Candidate patch to fix a typographical error in a structure
+    member field and, consequently, update all references to it.
+  * Add the CPPCheck patch to fix some issues reported by cppcheck.
+
+  [ Andreas Henriksson ]
+  * Add Peter Pentchev to Uploaders
+
+ -- Andreas Henriksson <andreas@fatal.se>  Mon, 25 Jul 2016 17:54:13 +0200
+
+libarchive (3.2.1-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Includes fixes for CVE-2015-8934, CVE-2016-4300, CVE-2016-4301,
+      CVE-2016-4302, CVE-2016-4809 and CVE-2016-5844.
+  * Add patch cherry-picked from upstream fixing build with xz-utils < 5.2
+
+ -- Andreas Henriksson <andreas@fatal.se>  Sun, 26 Jun 2016 21:28:27 +0200
+
+libarchive (3.2.0-2) unstable; urgency=medium
+
+  * Add CVE identifiers to previous changelog entry.
+  * Upload to unstable.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Wed, 01 Jun 2016 07:34:12 +0200
+
+libarchive (3.2.0-1) experimental; urgency=medium
+
+  * CVE-2016-1541: heap-based buffer overflow due to improper input
+     validation (Closes: #823893)
+  * New upstream test release (3.1.901a).
+  * Add liblz4-dev build-dependency to enable lz4 support.
+  * Enable new bsdcat utility in separate package
+  * Drop all patches, now included in release.
+  * Add pkg-config build-dependency
+  * Have dh-autoreconf use upstream build/autogen.sh
+  * New upstream release (3.2.0).
+
+ -- Andreas Henriksson <andreas@fatal.se>  Fri, 06 May 2016 10:08:56 +0200
+
+libarchive (3.1.2-11) unstable; urgency=medium
+
+  * Add d/p/Add-ARCHIVE_EXTRACT_SECURE_NOABSOLUTEPATHS-option.patch
+    (Closes: #778266)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 05 Mar 2015 14:54:43 +0100
+
+libarchive (3.1.2-10) unstable; urgency=medium
+
+  * Add d/p/Do-not-overwrite-file-size-if-the-local-file-header-.patch
+    - cherry-picked from upstream git commit e234932de2474c4f99787
+    Thanks to Maximiliano Curia (Closes: #769290)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 20 Nov 2014 21:10:43 +0100
+
+libarchive (3.1.2-9) unstable; urgency=medium
+
+  [ Andreas Henriksson ]
+  * Drop Andres Mejia from Uploaders by request of MIA (Closes: #743538)
+
+  [ Breno Leitao ]
+  * Use dh-autoreconf for the benefit of ppc64el (Closes: #750483)
+
+  [ Andreas Henriksson ]
+  * Bump Standards-Version to 3.9.5
+
+ -- Andreas Henriksson <andreas@fatal.se>  Sun, 17 Aug 2014 10:45:27 +0200
+
+libarchive (3.1.2-8) unstable; urgency=medium
+
+  [ Michael Terry ]
+  * Fix DEP8 minitar test to use application/gzip (Closes: #731962)
+
+  [ Daniel Schepler ]
+  * Implement DEB_BUILD_OPTIONS=nocheck (Closes: #738159)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Wed, 12 Feb 2014 22:53:33 +0100
+
+libarchive (3.1.2-7) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Andres Mejia <amejia@debian.org>  Sat, 25 May 2013 16:07:06 -0400
+
+libarchive (3.1.2-6) experimental; urgency=low
+
+  [ Andreas Henriksson ]
+  * Merge debian-wheezy branch containing package revision 3.0.4-3.
+
+  [ Andres Mejia ]
+  * Remove gbp config overrides.
+  * Remove lrzip build dependency as test cases fail on certain architectures.
+
+ -- Andres Mejia <amejia@debian.org>  Tue, 07 May 2013 21:44:50 -0400
+
+libarchive (3.1.2-5) experimental; urgency=low
+
+  * Update patch to fix LZO test cases to use changes from upstream.
+  * Update homepage field for new homepage URL.
+  * Add upstream changes to fix building libarchive with lrzip support.
+
+ -- Andres Mejia <amejia@debian.org>  Sun, 24 Feb 2013 16:44:32 -0500
+
+libarchive (3.1.2-4) experimental; urgency=low
+
+  * Add mtree filename length fix from upstream.
+  * Add fix for LZO test cases.
+  * Renable LZO support.
+  * Bump Standards-Version to 3.9.4.
+
+ -- Andres Mejia <amejia@debian.org>  Sat, 23 Feb 2013 23:44:26 -0500
+
+libarchive (3.1.2-3) experimental; urgency=low
+
+  * Update gbp.conf to point to branches used for libarchive packaging in
+    experimental.
+  * Disable LZO support, it is broken on some architectures.
+
+ -- Andres Mejia <amejia@debian.org>  Sun, 10 Feb 2013 12:43:35 -0500
+
+libarchive (3.1.2-2) experimental; urgency=low
+
+  * Update patches to use changes applied upstream.
+
+ -- Andres Mejia <amejia@debian.org>  Sat, 09 Feb 2013 15:13:20 -0500
+
+libarchive (3.1.2-1) experimental; urgency=low
+
+  * New upstream release.
+  * Enable LZO support.
+
+ -- Andres Mejia <amejia@debian.org>  Sat, 09 Feb 2013 13:37:34 -0500
+
+libarchive (3.1.1-1) experimental; urgency=low
+
+  * New upstream release.
+
+ -- Andres Mejia <amejia@debian.org>  Wed, 16 Jan 2013 17:06:36 -0500
+
+libarchive (3.1.0-1) experimental; urgency=low
+
+  [ Benjamin Drung ]
+  * Add autopkgtest (LP: #1073390).
+
+  [ Martin Pitt ]
+  * Add examples-offset-type.patch: Fix offset data type in examples.
+
+  [ Andres Mejia ]
+  * New upstream release.
+
+ -- Andres Mejia <amejia@debian.org>  Sun, 13 Jan 2013 22:00:14 -0500
+
+libarchive (3.0.4-3) unstable; urgency=low
+
+  * Add patch that fixes CVE-2013-0211. (Closes: #703957)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Wed, 27 Mar 2013 16:20:36 +0100
+
+libarchive (3.0.4-2) unstable; urgency=low
+
+  * Add debian/patches/gcc-4.7-fixes-from-upstream.patch
+    (Closes: #674368, #672690)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 24 May 2012 14:49:41 +0200
+
+libarchive (3.0.4-1) unstable; urgency=low
+
+  * New upstream release.
+  * Patches removed, applied upstream.
+
+ -- Andres Mejia <amejia@debian.org>  Thu, 29 Mar 2012 09:44:15 -0400
+
+libarchive (3.0.3-7) unstable; urgency=low
+
+  * Allow the dev package to be multi-arch installable.
+  * Set verbosity level to 1 for test programs. This incorporates upstream
+    commit 7cd65cd07cfa2693455d174049b4887434041695. (Closes: #662716)
+  * Fixup package description about ISO support. (Closes: #659651)
+
+ -- Andres Mejia <amejia@debian.org>  Fri, 16 Mar 2012 16:21:21 -0400
+
+libarchive (3.0.3-6) unstable; urgency=low
+
+  * Add patch to fix infinite loop in xps files (Closes: #662603)
+    - Thanks for the patch to Savvas Radevic!
+
+ -- Andreas Henriksson <andreas@fatal.se>  Mon, 05 Mar 2012 16:23:05 +0100
+
+libarchive (3.0.3-5) unstable; urgency=low
+
+  * Detect if locales or locales-all is installed for use with test suite.
+  * Bump Standards-Version to 3.9.3.
+
+ -- Andres Mejia <amejia@debian.org>  Thu, 23 Feb 2012 19:29:24 -0500
+
+libarchive (3.0.3-4) unstable; urgency=low
+
+  * Ensure tests are not run via root. (Closes: #659294)
+
+ -- Andres Mejia <amejia@debian.org>  Tue, 21 Feb 2012 16:01:26 -0500
+
+libarchive (3.0.3-3) unstable; urgency=low
+
+  * Update watch file to use new home for downloads.
+
+ -- Andres Mejia <amejia@debian.org>  Mon, 06 Feb 2012 17:04:34 -0500
+
+libarchive (3.0.3-2) unstable; urgency=low
+
+  * Upload to unstable.
+  * Update homepage to libarchive's new home.
+
+ -- Andres Mejia <amejia@debian.org>  Mon, 06 Feb 2012 16:37:07 -0500
+
+libarchive (3.0.3-1) experimental; urgency=low
+
+  * New upstream release.
+  * Fix for hurd build failure included in new release. (Closes: #653458)
+  * Update copyright file.
+
+ -- Andres Mejia <amejia@debian.org>  Mon, 16 Jan 2012 11:49:46 -0500
+
+libarchive (3.0.2-3) experimental; urgency=low
+
+  * Prepare an upload to experimental.
+
+ -- Andres Mejia <amejia@debian.org>  Sat, 24 Dec 2011 20:39:17 -0500
+
+libarchive (3.0.2-1) unstable; urgency=low
+
+  * Prepare new upstream release.
+  * Update package descriptions, deleting some information that doesn't
+    apply to current build of packages.
+  * Rename shared library package for soname bump.
+  * Remove symbols files. Symbols file needs to be maintained better. Also,
+    numerous symbols were in the file which were meant to stay private
+    (all the __archive_* symbols for example).
+
+ -- Andres Mejia <amejia@debian.org>  Sat, 24 Dec 2011 15:47:39 -0500
+
+libarchive (3.0.1b-1) experimental; urgency=low
+
+  * Package latest testing release.
+  * Update debian/control, noting new 7zip support.
+  * Fix package description for bsdcpio.
+  * Update symbols file for new symbols added in libarchive-3.0.1b.
+
+ -- Andres Mejia <amejia@debian.org>  Fri, 16 Dec 2011 17:28:03 -0500
+
+libarchive (3.0.0a-1) experimental; urgency=low
+
+  * Package testing release of libarchive for experimental.
+  * Better ext2 file attribute/flag support included in new release.
+    (Closes: #615875)
+  * Remove all patches, applied in upstream source.
+  * Add option to unapply patches for dpkg-source v3.
+  * Change package name libarchive1 to libarchive11 to match soname bump.
+  * Rename files used in packaging libarchive11.
+  * Build depend on Nettle library.
+  * Add mention of rar support in package description.
+  * Remove installation of symlink for libarchive library file.
+  * Explicitely build without openssl and with nettle support.
+  * Add proper depends to new libarchive11 package.
+  * Update symbols file for libarchive11.
+  * Ensure bsdtar and bsdcpio are linked to shared library dynamically.
+  * Build en_US.UTF-8 locale at runtime to pass test suite.
+
+ -- Andres Mejia <amejia@debian.org>  Fri, 16 Dec 2011 16:31:37 -0500
+
+libarchive (2.8.5-5) unstable; urgency=medium
+
+  * Backport fixes for fix for CVE-2011-1777 and CVE-2011-1778.
+    (Closes: #651844)
+  * Fix build failure for GNU/Hurd. (Closes: #651995)
+  * Regenerate autoreconf patch.
+
+ -- Andres Mejia <amejia@debian.org>  Wed, 14 Dec 2011 12:18:31 -0500
+
+libarchive (2.8.5-4) unstable; urgency=low
+
+  [ Andres Mejia ]
+  * Improve each packages' long description.
+  * Refresh all patches.
+
+  [ Samuel Thibault ]
+  * Skip libacl1-dev build dependency on hurd (Closes: #645403)
+
+  [ Andreas Henriksson ]
+  * Add 0009-Patch-from-upstream-rev-3751.patch (Closes: #641265)
+    + Thanks to Michael Cree for figuring out the details.
+
+ -- Andres Mejia <amejia@debian.org>  Sun, 11 Dec 2011 21:55:59 -0500
+
+libarchive (2.8.5-3) unstable; urgency=low
+
+  * Fix upgrade breakage because of manpages being moved from libarchive1 to
+    libarchive-dev. (Closes: #641978)
+  * Make short descriptions for packages unique.
+  * Explicitly set config options to be used during builds.
+
+ -- Andres Mejia <amejia@debian.org>  Sun, 18 Sep 2011 10:25:34 -0400
+
+libarchive (2.8.5-2) unstable; urgency=low
+
+  * Add gbp.conf to enable pristine-tar to true by default.
+  * Add myself to uploaders field.
+  * Add default options to fail on any upstream changes during a build.
+  * Bump Standards-Version to 3.9.2.
+  * Remove duplicate "Section" field.
+  * Remove unnecessary use of *.dirs dh files.
+  * Remove unneeded build-deps.
+  * Provide patch that implements changes made after running autoreconf -vif.
+  * Remove generic comments from debian/rules.
+  * Support parallel builds.
+  * Remove commented lines from install file.
+  * Add docs to all packages except the shared library package.
+  * Remove unneeded use of 'debian/tmp' in path for install files.
+  * Provide different mechanism to install symlink for libarchive1 package.
+  * Move all manpages for libarchive1 to libarchive-dev.
+  * Move libarchive-dev control stanza up. This will make libarchive-dev the
+    default package for installing files into, such as the README.Debian.
+  * Convert libarchive into multiarch library package.
+  * Update Vcs-* entries.
+
+ -- Andres Mejia <amejia@debian.org>  Sat, 17 Sep 2011 18:50:11 -0400
+
+libarchive (2.8.5-1) unstable; urgency=low
+
+  * Add 0010-Patch-from-upstream-rev-2811.patch
+  * Drop "update-patch-series" target from debian/rules
+  * Convert package to dh7
+  * Imported Upstream version 2.8.5 (Closes: #640524)
+  * Rebase patch queue and drop patches merged upstream
+    - dropped 0003-Patch-from-upstream-rev-2516.patch
+    - dropped 0010-Patch-from-upstream-rev-2811.patch
+
+ -- Andreas Henriksson <andreas@fatal.se>  Mon, 05 Sep 2011 17:35:36 +0200
+
+libarchive (2.8.4-2) unstable; urgency=low
+
+  * update-patch-series:
+    + replace local patch with upstream commit.
+      (Rebase patches branch to drop commit/patch
+       "0007-Ignore-ENOSYS-error-when-sett...", in favor of upstream
+       revision 2537 added as "0007-Patch-from-upstream-rev-2537.patch")
+    + add 0008-Patch-from-upstream-rev-2888.patch (Closes: #610079)
+    + add 0009-Patch-from-upstream-rev-2940.patch (Closes: #610783)
+
+ -- Andreas Henriksson <andreas@fatal.se>  Tue, 09 Aug 2011 13:39:10 +0200
+
+libarchive (2.8.4-1) unstable; urgency=low
+
+  * Update debian/watch for new code.google.com layout.
+  * update patch series:
+    + added 0003-Patch-from-upstream-rev-2516.patch
+      - Compatibility with WinISO generated iso files (Closes: #587513)
+    + added 0004-Patch-from-upstream-rev-2514.patch
+    + added 0005-Patch-from-upstream-rev-2520.patch
+      - Enable version stripping code in iso9660/joliet (Closes: #587316)
+  * Imported Upstream version 2.8.4
+  * update-patch-series:
+    + added 0006-Patch-from-upstream-rev-2521.patch
+    + added 0007-Ignore-ENOSYS-error-when-sett... (Closes: #588925)
+      - Big thanks to Modestas Vainius for awesome debugging!
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 15 Jul 2010 14:45:06 +0200
+
+libarchive (2.8.3-1) unstable; urgency=low
+
+  * Imported Upstream version 2.8.3
+  * update-patch-series: 0001-Clear-archive_error_number-in-archiv...
+    - gvfs has been fixed since, workaround not needed anymore.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Fri, 23 Apr 2010 13:25:33 +0200
+
+libarchive (2.8.0-2) unstable; urgency=low
+
+  * Clean up libarchive.la file. (Closes: #571468)
+    - Thanks to Sune Vuorela for suggesting this fix.
+  * Update patch series:
+    + added two patches matching revision 1990, 1991 from upstream
+      regarding PATH_MAX hopefully fixing build on Hurd.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Thu, 25 Feb 2010 22:31:13 +0100
+
+libarchive (2.8.0-1) unstable; urgency=low
+
+  * Set myself as maintainer (Closes: #570539).
+    + co-maintainers welcome!
+  * Imported Upstream version 2.8.0 (Closes: #559158)
+  * Drop debian revision in symbols file.
+  * Updated symbols for 2.8
+  * Update rules for new build directory (config.aux -> build/autoconf)
+  * Replace ${Source-Version} with ${source:Version} in control file.
+  * Drop debian/shlibs.local.ex
+  * Bump debhelper compatibility level to 5.
+  * Stop trying to install non-existant usr/share/pkgconfig
+  * Update Vcs fields to point to new collab-maint repository.
+  * Update debian/copyright
+  * Bump Standards-Version to 3.8.4
+  * Add update-patch-series target in debian/rules.
+  * Added patch to fix gvfsd-archive problems:
+    + 0001-Clear-archive_error_number-in-archive_clear_error.patch
+    (from http://bugs.gentoo.org/show_bug.cgi?id=289260#c1 )
+  * Switch to dpkg-source 3.0 (quilt) format
+  * Split Build-Depends on multiple lines.
+  * Add liblzma-dev to Build-Depends for lzma support.
+  * Add Build-Depends on libxml2-dev for xar support.
+  * Explicitly give --without-openssl to configure.
+
+ -- Andreas Henriksson <andreas@fatal.se>  Tue, 23 Feb 2010 20:50:25 +0100
+
+libarchive (2.6.2-2) unstable; urgency=low
+
+  * Orphaning the package; set maintainer to QA group.
+
+ -- John Goerzen <jgoerzen@complete.org>  Fri, 19 Feb 2010 11:23:14 -0600
+
+libarchive (2.6.2-1) unstable; urgency=low
+
+  * New Upstream Version.  Closes: #516577.
+  * Update watch file to new homepage.  Closes: #517398.
+
+ -- John Goerzen <jgoerzen@complete.org>  Thu, 12 Mar 2009 09:32:31 -0500
+
+libarchive (2.6.1-1) unstable; urgency=low
+
+  * New Upstream Version
+  * Update homepage.  Closes: #514835.
+  * Clean up Debian rules.  Patch partially from Bernhard R. Link.
+    Closes: #480495.
+
+ -- John Goerzen <jgoerzen@complete.org>  Thu, 19 Feb 2009 09:28:57 -0600
+
+libarchive (2.4.17-2) unstable; urgency=high
+
+  [ John Goerzen ]
+  * Ignore failures in test suite due to bugs in the testsuite that were
+    turning into FTBFS bugs.  Closes: #474400.
+
+  * Added README.Debian documenting need for largefile suport in
+    sources. Mostly used suggested text found in #479728.  Closes:
+    #479728.
+
+  [ Bernhard R. Link ]
+  * Added symbols file for libarchive.  Closes: #476516.
+
+ -- John Goerzen <jgoerzen@complete.org>  Thu, 05 Jun 2008 15:42:57 -0500
+
+libarchive (2.4.17-1) unstable; urgency=high
+
+  * New Upstream Version
+  * This upstream version corrected several problems with the testsuite.
+    Therefore, we can now run test suite after build.  Closes: #473221.
+  * uudecode is now used as part of the build.  Added build-dep on sharutils.
+    Fixes FTBFS.  Closes: #473266.
+
+ -- John Goerzen <jgoerzen@complete.org>  Thu, 03 Apr 2008 09:25:04 -0500
+
+libarchive (2.4.14-1) unstable; urgency=high
+
+  * New upstream release.  Closes: #465061, #448292.  #465061 is grave bug,
+    so setting urgency high.
+  * Added Vcs-* and Homepage lines to debian/control
+
+ -- John Goerzen <jgoerzen@complete.org>  Sat, 29 Mar 2008 10:14:21 -0500
+
+libarchive (2.4.11-1) unstable; urgency=low
+
+  * New upstream version.
+  * Move bsdtar to section utils.  Closes: #460988.
+  * Added bsdcpio package due to new upstream cpio command.
+
+ -- John Goerzen <jgoerzen@complete.org>  Mon, 21 Jan 2008 10:02:29 -0600
+
+libarchive (2.2.4-1) unstable; urgency=high
+
+  * New upstream version with security fixes.  Closes: #432924.
+    Fixes: CVE-2007-3641, CVE-2007-3644, CVE-2007-3645
+
+ -- John Goerzen <jgoerzen@complete.org>  Fri, 13 Jul 2007 08:14:00 -0500
+
+libarchive (2.2.3-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- John Goerzen <jgoerzen@complete.org>  Wed, 06 Jun 2007 03:36:35 -0500
+
+libarchive (2.0.25-3) unstable; urgency=low
+
+  * SONAME should not be tied to the tarball version string
+  (Closes: #418637) Provide libarchive.so.1 as a backwards-compatible
+  symlink to libarchive.so.2, reverting the package name to libarchive1.
+  Patch from Neil Williams.
+
+ -- John Goerzen <jgoerzen@complete.org>  Mon, 16 Apr 2007 13:50:29 +0100
+
+libarchive (2.0.25-2) unstable; urgency=low
+
+  * Remove build-dep on linux-kernel-headers for compatibility with BSD
+    ports.  Closes: #377480.
+
+ -- John Goerzen <jgoerzen@complete.org>  Tue, 13 Mar 2007 20:03:37 -0500
+
+libarchive (2.0.25-1) unstable; urgency=low
+
+  * New upstream version
+  * Remove unnecessary dep on libarchive1.  Closes: #396756.
+  * Bump standards-version
+  * Rename libarchive1 to libarchive2 to match new soname.
+
+ -- John Goerzen <jgoerzen@complete.org>  Tue, 13 Mar 2007 07:03:53 -0500
+
+libarchive (1.3.1-1) unstable; urgency=high
+
+  * New upstream release.
+  * Applied FreeBSD patch for potential DoS.
+    This is CVS-2006-5680, FreeBSD SA-06:24.
+
+ -- John Goerzen <jgoerzen@complete.org>  Mon, 18 Dec 2006 05:51:08 -0600
+
+libarchive (1.2.53-2) unstable; urgency=low
+
+  * Added build-dep on bison.  Closes: #374200.
+
+ -- John Goerzen <jgoerzen@complete.org>  Sat, 17 Jun 2006 17:24:44 -0500
+
+libarchive (1.2.53-1) unstable; urgency=low
+
+  * New upstream version.
+  * The bsdtar program has been integrated into the libarchive source
+    package upstream.  This package, therefore, now generates the
+    bsdtar binary package.
+
+ -- John Goerzen <jgoerzen@complete.org>  Sat, 17 Jun 2006 10:44:05 -0500
+
+libarchive (1.02.036-2) unstable; urgency=low
+
+  * Added conflict on old libarchive-doc package.
+    This package never existed in testing or stable, so this conflict
+    can be removed before long.
+
+ -- John Goerzen <jgoerzen@complete.org>  Tue, 18 Oct 2005 11:02:06 -0500
+
+libarchive (1.02.036-1) unstable; urgency=low
+
+  * New upstream version, now with support for building as a .so.
+  * Added build-dep on libattr1-dev.
+  * No more libarchive-doc; its files now live in libarchive1.
+  * Thanks to Bernhard R. Link for ideas for this package.
+
+ -- John Goerzen <jgoerzen@complete.org>  Mon, 17 Oct 2005 10:27:30 -0500
+
+libarchive (1.02.034-2) unstable; urgency=low
+
+  * Split off manpages into separate package libarchive-doc.
+    The bsdtar manpages point readers to these.
+
+ -- John Goerzen <jgoerzen@complete.org>  Tue, 11 Oct 2005 05:36:28 -0500
+
+libarchive (1.02.034-1) unstable; urgency=low
+
+  * Initial release Closes: #333222.
+
+ -- John Goerzen <jgoerzen@complete.org>  Mon, 10 Oct 2005 19:24:56 -0500

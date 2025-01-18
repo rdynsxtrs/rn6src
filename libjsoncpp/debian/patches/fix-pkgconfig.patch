@@ -1,0 +1,14 @@
+Description: Fix currently broken pkg-config paths for include-dir
+Author: Peter Spiess-Knafl <dev@spiessknafl.at>
+
+--- a/pkg-config/jsoncpp.pc.in
++++ b/pkg-config/jsoncpp.pc.in
+@@ -1,7 +1,7 @@
+ prefix=@CMAKE_INSTALL_PREFIX@
+ exec_prefix=${prefix}
+ libdir=${exec_prefix}/@LIBRARY_INSTALL_DIR@
+-includedir=${prefix}/@INCLUDE_INSTALL_DIR@
++includedir=@INCLUDE_INSTALL_DIR@
+ 
+ Name: jsoncpp
+ Description: A C++ library for interacting with JSON

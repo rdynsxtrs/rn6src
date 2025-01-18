@@ -1,0 +1,34 @@
+Description: remove SONAME
+ libnss_wrapper is a preloadable library.
+ We do not support directly linking to it, so it doesn't need the SONAME.
+ Let's remove it.
+Author: Jakub Wilk <jwilk@debian.org>
+Last-Update: 2014-06-01
+
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -11,10 +11,7 @@ endif (BSD)
+ set_target_properties(
+   nss_wrapper
+     PROPERTIES
+-      VERSION
+-        ${LIBRARY_VERSION}
+-      SOVERSION
+-        ${LIBRARY_SOVERSION}
++      NO_SONAME ON
+ )
+ 
+ install(
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -19,8 +19,8 @@ set(APPLICATION_VERSION "${APPLICATION_V
+ #     Increment AGE. Set REVISION to 0
+ #   If the source code was changed, but there were no interface changes:
+ #     Increment REVISION.
+-set(LIBRARY_VERSION "0.2.3")
+-set(LIBRARY_SOVERSION "0")
++#set(LIBRARY_VERSION "0.2.3")
++#set(LIBRARY_SOVERSION "0")
+ 
+ # where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/ is checked
+ set(CMAKE_MODULE_PATH

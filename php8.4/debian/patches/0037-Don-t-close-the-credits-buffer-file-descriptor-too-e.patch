@@ -1,0 +1,30 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Tue, 22 Jun 2021 15:48:57 +0200
+Subject: Don't close the credits buffer file descriptor too early
+
+---
+ ext/standard/credits.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/ext/standard/credits.c b/ext/standard/credits.c
+index 8ea0f5b..1103bea 100644
+--- a/ext/standard/credits.c
++++ b/ext/standard/credits.c
+@@ -216,7 +216,6 @@ PHPAPI void php_print_packaging_credits(int flag, int top) /* {{{ */
+ 
+ 			if (fd > 0) {
+ 				bytes = read(fd, buf, sizeof(buf) - 1);
+-				close(fd);
+ 			}
+ 
+ 			if (bytes > 0) {
+@@ -270,6 +269,9 @@ PHPAPI void php_print_packaging_credits(int flag, int top) /* {{{ */
+ 						 "DEB.SURY.ORG <https://deb.sury.org/>.");
+ 				}
+ 			}
++			if (fd > 0) {
++				close(fd);
++			}
+ 			php_info_print_table_end();
+ 			break;
+ 		case DEBIAN:

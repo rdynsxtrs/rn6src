@@ -1,0 +1,20 @@
+sysv-rc: package-installs-into-etc-rc.d etc/rcS.d/README
+sysv-rc: package-installs-into-etc-rc.d etc/rc0.d/README
+sysv-rc: package-installs-into-etc-rc.d etc/rc1.d/README
+sysv-rc: package-installs-into-etc-rc.d etc/rc2.d/README
+sysv-rc: package-installs-into-etc-rc.d etc/rc3.d/README
+sysv-rc: package-installs-into-etc-rc.d etc/rc4.d/README
+sysv-rc: package-installs-into-etc-rc.d etc/rc5.d/README
+sysv-rc: package-installs-into-etc-rc.d etc/rc6.d/README
+sysv-rc: file-in-etc-not-marked-as-conffile /etc/rcS.d/README
+sysv-rc: file-in-etc-not-marked-as-conffile /etc/rc0.d/README
+sysv-rc: file-in-etc-not-marked-as-conffile /etc/rc1.d/README
+sysv-rc: file-in-etc-not-marked-as-conffile /etc/rc2.d/README
+sysv-rc: file-in-etc-not-marked-as-conffile /etc/rc3.d/README
+sysv-rc: file-in-etc-not-marked-as-conffile /etc/rc4.d/README
+sysv-rc: file-in-etc-not-marked-as-conffile /etc/rc5.d/README
+sysv-rc: file-in-etc-not-marked-as-conffile /etc/rc6.d/README
+sysv-rc: file-in-etc-not-marked-as-conffile /etc/init.d/README
+sysv-rc: file-in-etc-not-marked-as-conffile /etc/init.d/rc
+sysv-rc: file-in-etc-not-marked-as-conffile /etc/init.d/rcS
+sysv-rc: no-upstream-changelog

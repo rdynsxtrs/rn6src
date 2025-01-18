@@ -2,6 +2,6 @@ Document: cmake
 Title: Reference of CMake the Cross-Platform Makefile Generator.
 Section: Programming
 
-#Format: HTML
-#Index: /usr/share/doc/cmake-data/html/index.html
-#Files: /usr/share/doc/cmake-data/html/*
+# Format: HTML
+# Index: /usr/share/doc/cmake-data/html/index.html
+# Files: /usr/share/doc/cmake-data/html/*

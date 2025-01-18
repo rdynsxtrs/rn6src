@@ -1,0 +1,184 @@
+Table of Contents:
+----------------------------------------------------------------------
+* Using PHP with threaded webservers (e.g. apache2-mpm-worker)
+* Problems starting Apache HTTP Server with PHP 5
+* Session storage
+* Other caveats
+* PHP and Apache 2 Multiviews (HTTP Content Negotiation)
+* PHP CGI and Apache HTTP Server
+* Configuration layout
+* Timezone data from system timezone database
+* Further documentation, errata, etc
+
+Using PHP with threaded webservers (e.g. apache2-mpm-worker)
+----------------------------------------------------------------------
+
+  After much back-and-forth with upstream (and even building our
+  packages thread-safe for a while), we're currently admitting defeat
+  on that front, and are NOT building any thread-safe versions of PHP
+  for any webservers. Our recommendation is that, if you need to use
+  a threaded webserver, you should use php-fpm and interface to your
+  webserver with FastCGI.
+
+Session storage
+----------------------------------------------------------------------
+
+  Session files are stored in /var/lib/php/sessions. For security
+  purposes, this directory is unreadable to non-root users. This means
+  that PHP running from Apache HTTP Server, for example, will not be
+  able to clean up stale session files. Instead, we have a cron job
+  run every 30 minutes that cleans up stale session files;
+  /etc/cron.d/php. You may need to modify how often this runs, if
+  you've modified session.gc_maxlifetime in your php.ini; otherwise,
+  it may be too lax or overly aggressive in cleaning out stale session
+  files.
+
+  WARNING: If you modify the session handling in any way (e.g. put
+  session files in subdirectories, use different session handler), you
+  always have to check and possibly disable or modify the session
+  cleanup cron job that is located in /etc/cron.d/php.
+
+Other caveats
+----------------------------------------------------------------------
+
+  Configuration directives extension_dir and include_path should be
+  commented out, unless you need special settings for them so PHP will
+  look in compiled-in paths. If you set them, you should also add
+  appropriate PHP install directories there.
+
+PHP and Apache 2 Multiviews (HTTP Content Negotiation)
+----------------------------------------------------------------------
+
+ Apache 2’s mod_negotiation needs files to have a MIME-Type (amongst
+ others) associated with them in order to be considered for HTTP
+ content negotiation.
+
+ Per default, the Debian PHP packages use Apache 2 handlers
+ (SetHandler directive) to enable PHP interpretation, while no
+ MIME-Type is being associated with the common PHP file extensions.
+
+ Thus, by default, the HTTP content negotiation is disabled for PHP
+ file extensions.
+
+ Possible use cases:
+
+ 1) You intend to use HTTP content negotiation in order to tidy up URLs:
+
+    For example, you wanted the file “http://example.org/foo.php”
+    being accessible as “http://example.org/foo”, too.  In that case
+    you really shouldn’t abuse mod_negotiation but use mod_rewrite.
+
+    An example of rewrite-rules, which allow any file ending in “.php”
+    to be accessed without this extension is:
+
+      RewriteCond "%{REQUEST_FILENAME}" !-f
+      RewriteCond "%{REQUEST_FILENAME}" !-d
+      RewriteRule "^(.*)$" "$1.php" [last]
+
+    Depending on your setup you may need to set other flags, too,
+    especially “passthrough” or “qsappend”.
+
+ 2) You really wanted to use HTTP content negotiation on PHP files
+    (be they interpreted or not).
+
+    An example for this might be, when you have the files
+
+      http://example.org/foo.php
+      http://example.org/foo.js
+
+    which both do the same job, but the former is executed as PHP on
+    the server-side, while the later is executed as JavaScript on the
+    client-side.
+
+    If you really want it, just add MIME type definitions for file
+    extensions you need to your Apache 2 configuration.  For example
+    to recognize php and phps extensions you would add:
+
+      AddType application/x-php         php
+      AddType application/x-php-source  phps
+
+    This scenario is really very rarely used (if at all)!
+
+PHP CGI and Apache HTTP Server
+----------------------------------------------------------------------
+
+  In simple cases, what you probably want isn't the php-cgi package
+  at all, but rather the libapache2-mod-php package, which will
+  configure itself on installation and Just Work(tm). However, if you
+  have a need to use the CGI version of PHP with Apache HTTP Server,
+  the following should help get you going, though there are dozens of
+  different ways to do this.
+
+  The current recommended approach is to install the php-fpm package
+  and use FastCGI to interface to your webserver. Run:
+  a2enconf php@PHP_VERSION@-fpm
+  to enable it in Apache 2.x.
+
+  Please note that this process will never be made automatic, as
+  php-cgi is meant to be a webserver-agnostic package that can be
+  used with any httpd, and we don't want it to conflict with the
+  httpd-specific packages such as libapache2-mod-php. If both were
+  installed side-by-side and both were automatically enabled, the
+  results would be a bit confusing, obviously.
+
+  You should also be aware that a server deployed in CGI mode is open
+  to several possible vulnerabilities. See the upstream CGI security
+  page to learn how to defend yourself from such attacks:
+  http://www.php.net/manual/en/security.cgi-bin.php
+
+  To use php-cgi with Apache HTTP Server:
+  1) activate php@PHP_VERSION@_cgi module: run 'a2enconf php@PHP_VERSION@-cgi'
+  2) this will also activate the mod_actions module as a dependency
+  3) comment out the last block of configuration in the
+     /etc/apache2/conf-enabled/php@PHP_VERSION@-cgi.conf file to enable
+     server-wide PHP CGI or add the mentioned configuration block to
+     one or more virtual hosts or directories.
+  4) It's advised to not mix-and-match multiple SAPIs (such as
+     php-cgi along with libapache2-mod-php) in the same apache2
+     configuration as it is likely to create unpredictable results.
+
+Configuration Layout
+----------------------------------------------------------------------
+
+  Each SAPI (apache2/apache2filter/cgi/cli/fpm) has a different
+  central configuration file /etc/php5/@PHP_VERSION@/$SAPI/php.ini.
+
+  Additionally, each SAPI is configured with the compile-time option 
+
+    --with-config-file-scan-dir=/etc/php/@PHP_VERSION@/$SAPI/conf.d
+
+  Any file found in this directory ending in .ini will be treated as a
+  configuration file by the PHP SAPI.
+
+  The rationale behind this method is that each SAPI can thus be
+  identically configured with a minimal amount of conffile handling.
+
+  Note that the usage of the PHP_INI_SCAN_DIR environment variable
+  overrides what is set with --with-config-file-scan-dir and thus the
+  directory /etc/php/@PHP_VERSION@/$SAPI/conf.d will no longer be included.
+
+Timezone data from system timezone database
+----------------------------------------------------------------------
+
+  Debian PHP has been patched to use the system wide timezone database
+  from the tzdata package, making sure any updates there are
+  automatically used by PHP as well.
+
+  Note that this requires that the PHP process has access to
+  /etc/localtime and /usr/share/zoneinfo. For any regular installation
+  this should be the case, but in specific secured environments when
+  reading the timezone database is impossible PHP will give a
+  "Timezone database is corrupt - this should *never* happen!" error.
+ 
+Further documentation, errata, misc.
+----------------------------------------------------------------------
+
+  Errata and other general information about PHP in Debian can be
+  found in the debian wiki at:
+
+    http://wiki.debian.org/PHP
+	
+  If after reading the documentation in this file you still have
+  unanswered questions, that's a good next place to go.
+
+ -- Ondřej Surý <ondrej@debian.org>, Mon,  1 Aug 2016 11:53:53 +0200

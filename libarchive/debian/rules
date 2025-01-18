@@ -1,0 +1,53 @@
+#!/usr/bin/make -f
+
+# Aim for the top, adapt if anything should break on the buildds.
+DEB_BUILD_MAINT_OPTIONS=	hardening=+all
+export DEB_BUILD_MAINT_OPTIONS
+
+DEB_LDFLAGS_MAINT_APPEND=	-Wl,--as-needed
+export DEB_LDFLAGS_MAINT_APPEND
+
+.PHONY: build
+
+%:
+	dh $@
+
+build:
+	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- --without-openssl --with-nettle \
+		--enable-bsdtar=shared --enable-bsdcpio=shared \
+		--enable-bsdcat=shared
+
+override_dh_autoreconf:
+	dh_autoreconf build/autogen.sh
+
+override_dh_makeshlibs:
+	dh_makeshlibs -- -c4
+
+override_dh_install:
+	find debian -name '*.la' -delete
+	dh_install
+
+override_dh_missing:
+	dh_missing --fail-missing
+
+override_dh_auto_test:
+ifneq (,$(filter check,$(DEB_BUILD_OPTIONS)))
+ifneq (,$(shell locale -a | grep en_US.utf8))
+	_VERBOSITY_LEVEL=1 dh_auto_test --parallel
+else
+	mkdir -p tmp-locales
+	localedef -i /usr/share/i18n/locales/en_US -c -f UTF-8 \
+		-A /usr/share/locale/locale.alias tmp-locales/en_US.UTF-8
+	_VERBOSITY_LEVEL=1 LOCPATH=$(CURDIR)/tmp-locales dh_auto_test --parallel
+	rm -rf tmp-locales
+endif
+endif
+
+override_dh_installchangelogs:
+	dh_installchangelogs
+	set -e; for p in $$(dh_listpackages); do \
+		install -m 644 NEWS debian/$$p/usr/share/doc/$$p/; \
+	done

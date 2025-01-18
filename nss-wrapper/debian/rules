@@ -1,0 +1,60 @@
+#!/usr/bin/make -f
+
+cflags = $(shell dpkg-buildflags --get CFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
+ldflags = $(shell dpkg-buildflags --get LDFLAGS)
+
+cmake_options = \
+	-DCMAKE_INSTALL_PREFIX=/usr \
+	-DCMAKE_VERBOSE_MAKEFILE=ON \
+	-DCMAKE_BUILD_TYPE=None \
+	-DCMAKE_C_FLAGS="$(cflags)" \
+	-DCMAKE_SHARED_LINKER_FLAGS="$(ldflags)" \
+	-DCMAKE_EXE_LINKER_FLAGS="$(ldflags)" \
+
+ifeq "$(filter nocheck,$(DEB_BUILD_OPTIONS))" ""
+cmake_options += \
+	-DUNIT_TESTING=1
+endif
+
+parallel = -j$(or $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS))),1)
+
+.PHONY: clean
+clean: debian/control
+	dh_clean
+	rm -rf obj
+
+.PHONY: build build-arch build-indep
+build: build-arch
+build-arch: obj/stamp
+
+obj/stamp: CMakeLists.txt
+	mkdir -p obj
+	cd obj && cmake $(cmake_options) ..
+	$(MAKE) $(parallel) -C obj/
+ifeq "$(filter nocheck,$(DEB_BUILD_OPTIONS))" ""
+	$(MAKE) -C obj/ test ARGS="-V"
+endif
+	a2x --doctype manpage --format manpage doc/nss_wrapper.1.txt
+	touch $(@)
+
+.PHONY: binary binary-arch binary-indep
+binary: binary-arch
+binary-arch: obj/stamp
+	dh_testroot
+	dh_prep
+	$(MAKE) -C obj/ install DESTDIR=../debian/libnss-wrapper/
+	rm -rf debian/*-wrapper/usr/bin/
+	dh_lintian
+	dh_installchangelogs
+	dh_installdocs AUTHORS README TODO
+	dh_buildinfo
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+# vim:ts=4 sw=4 noet

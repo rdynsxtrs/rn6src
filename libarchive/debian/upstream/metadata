@@ -1,0 +1,8 @@
+Name: libarchive
+Bug-Submit: https://github.com/libarchive/libarchive/issues
+Contact: https://groups.google.com/group/libarchive-discuss
+FAQ: https://github.com/libarchive/libarchive/wiki
+Security-Contact: Tim Kientzle <kientzle@FreeBSD.org>
+Repository: https://github.com/libarchive/libarchive.git
+Repository-Browse: https://github.com/libarchive/libarchive
+CPE: cpe:/a:freebsd:libarchive cpe:/a:libarchive:libarchive

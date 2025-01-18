@@ -1,0 +1,5 @@
+Tests: testsuite
+Depends: build-essential,
+         cmake,
+         libjsoncpp-dev,
+         pkg-config

@@ -1,0 +1,2 @@
+compression = gzip
+extend-diff-ignore = "^doc/nss_wrapper[.]1$"

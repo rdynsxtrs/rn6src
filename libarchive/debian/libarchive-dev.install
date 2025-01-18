@@ -1,0 +1,6 @@
+usr/include
+usr/lib/*/lib*.a
+usr/lib/*/lib*.so
+usr/lib/*/pkgconfig/*
+debian/tmp/usr/share/man/man3/*
+debian/tmp/usr/share/man/man5/*

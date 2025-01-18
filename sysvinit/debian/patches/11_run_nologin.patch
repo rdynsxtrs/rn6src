@@ -1,0 +1,37 @@
+Description: Use /run/nologin instead of /etc/nologin
+Author: Roger Leigh <rleigh@debian.org>
+Bug-Debian: http://bugs.debian.org/660862
+
+--- a/man/shutdown.8
++++ b/man/shutdown.8
+@@ -140,7 +140,7 @@
+ number of minutes to wait.  The word \fBnow\fP is an alias for \fB+0\fP.
+ .PP
+ If shutdown is called with a delay, it will create the advisory file
+-.I /etc/nologin
++.I /run/nologin
+ which causes programs such as \fIlogin(1)\fP to not allow new user
+ logins. This file is created five minutes before the shutdown sequence
+ starts. Shutdown removes this file if it is stopped before it
+--- a/src/paths.h
++++ b/src/paths.h
+@@ -28,7 +28,7 @@
+ #define SDALLOW		"/etc/shutdown.allow"	/* Users allowed to shutdown */
+ #define INITTAB		"/etc/inittab"		/* Location of inittab */
+ #define INIT		"/sbin/init"		/* Location of init itself. */
+-#define NOLOGIN		"/etc/nologin"		/* Stop user logging in. */
++#define NOLOGIN		"/run/nologin"		/* Stop user logging in. */
+ #define FASTBOOT	"/fastboot"		/* Enable fast boot. */
+ #define FORCEFSCK	"/forcefsck"		/* Force fsck on boot */
+ #define SDPID		"/var/run/shutdown.pid"	/* PID of shutdown program */
+--- a/src/shutdown.c
++++ b/src/shutdown.c
+@@ -244,7 +244,7 @@
+ }
+ 
+ /*
+- *	Create the /etc/nologin file.
++ *	Create the /run/nologin file.
+  */
+ void donologin(int min)
+ {

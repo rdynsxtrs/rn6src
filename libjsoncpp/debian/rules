@@ -1,0 +1,31 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+%:
+	dh $@ --parallel --buildsystem=cmake
+
+ifneq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+CONFIGURE_FLAGS += -DJSONCPP_WITH_TESTS=Off
+endif
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+			-DBUILD_SHARED_LIBS=ON \
+			-DBUILD_STATIC_LIBS=ON \
+			-DJSONCPP_WITH_CMAKE_PACKAGE=ON \
+			-DLIB_SUFFIX="/$(DEB_TARGET_MULTIARCH)" \
+			-DINCLUDE_INSTALL_DIR=/usr/include/jsoncpp \
+			$(CONFIGURE_FLAGS)
+
+override_dh_auto_build-indep:
+	python doxybuild.py --doxygen=/usr/bin/doxygen
+
+override_dh_makeshlibs:
+	dh_makeshlibs -V "libjsoncpp1 (>= 1.7.4)"
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf dist
+	rm -f devtools/*.pyc
+	rm -f doc/doxyfile
+	rm -f doc/*.db

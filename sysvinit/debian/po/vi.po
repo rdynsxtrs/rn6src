@@ -1,0 +1,116 @@
+# Vietnamese translation for SysVinit.
+# Copyright © 2009 Free Software Foundation, Inc.
+# Clytie Siddall <clytie@riverland.net.au>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: sysvinit 2.87dsf-5\n"
+"Report-Msgid-Bugs-To: sysvinit@packages.debian.org\n"
+"POT-Creation-Date: 2018-10-26 08:14+0000\n"
+"PO-Revision-Date: 2009-10-08 23:34+0930\n"
+"Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
+"Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: LocFactoryEditor 1.8\n"
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid "Update getty pathnames and add hurd-console?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"Your /etc/inittab seems to use /libexec/getty as getty and/or to miss hurd-"
+"console entry. The default inittab has been changed, however your /etc/"
+"inittab has been modified. Note that sysvinit has not been used to boot an "
+"Hurd system for long, so any errors in that file would not have shown up "
+"earlier."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"If you allow this change, a backup will be stored in /etc/inittab.dpkg-old."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"If you don't allow this change, an updated inittab will be written to /etc/"
+"inittab.dpkg-new. Please review the changes and update your /etc/inittab "
+"accordingly."
+msgstr ""
+
+#~ msgid "Unable to migrate to dependency-based boot system"
+#~ msgstr "Không thể nâng cấp lên hệ thống khởi động dựa vào quan hệ phụ thuộc"
+
+#, fuzzy
+#~| msgid ""
+#~| "Tests have determined that problems in the boot system exist which "
+#~| "prevent migration to dependency-based boot sequencing:"
+#~ msgid ""
+#~ "Problems in the boot system exist which are preventing migration to "
+#~ "dependency-based boot sequencing:"
+#~ msgstr ""
+#~ "Gặp vấn đề trong hệ thống khởi động mà ngăn cản nâng cấp lên thứ tự khởi "
+#~ "động dựa vào quan hệ phụ thuộc:"
+
+#, fuzzy
+#~| msgid ""
+#~| "To reattempt the migration process after the problems have been fixed, "
+#~| "run \"dpkg-reconfigure sysv-rc\"."
+#~ msgid ""
+#~ "Package installation can not continue until the above problems have been "
+#~ "fixed.  To reattempt the migration process after these problems have been "
+#~ "fixed, run \"dpkg --configure sysv-rc\"."
+#~ msgstr ""
+#~ "Để thử lại tiến trình nâng cấp sau khi sửa chữa các vấn đề, hãy chạy « "
+#~ "dpkg-reconfigure sysv-rc »."
+
+#~ msgid "Migrate legacy boot sequencing to dependency-based sequencing?"
+#~ msgstr ""
+#~ "Nâng cấp thứ tự khởi động thừa tự lên thứ tự khởi động dựa vào quan hệ "
+#~ "phụ thuộc ?"
+
+#~ msgid ""
+#~ "The boot system is prepared to migrate to dependency-based sequencing. "
+#~ "This is an irreversible step, but one that is recommended: it allows the "
+#~ "boot process to be optimized for speed and efficiency, and provides a "
+#~ "more resilient framework for development."
+#~ msgstr ""
+#~ "Hệ thống khởi động được chuẩn bị nâng cấp lên thứ tự khởi động dựa vào "
+#~ "quan hệ phụ thuộc. Đây là một bước không thể hoàn lại mà vẫn còn khuyến "
+#~ "khích vì nó cho phép tiến trình khởi động được tối ưu hoá theo tốc độ và "
+#~ "hiệu suất, và cung cấp một khuôn khổ phát triển đàn hồi hơn."
+
+#~ msgid ""
+#~ "A full rationale is detailed in /usr/share/doc/sysv-rc/README.Debian. If "
+#~ "you choose not to migrate now, you can do so later by running \"dpkg-"
+#~ "reconfigure sysv-rc\"."
+#~ msgstr ""
+#~ "Lý do hoàn toàn được diễn tả trong tài liệu Đọc Đi « /usr/share/doc/sysv-"
+#~ "rc/README.Debian ». Không muốn nâng cấp ngay bây giờ thì bạn cũng có thể "
+#~ "nâng cấp về sau bằng cách chạy câu lệnh cấu hình lại « dpkg-reconfigure "
+#~ "sysv-rc »."
+
+#~ msgid ""
+#~ "If the reported problem is a local modification, it needs to be fixed "
+#~ "manually. If it's a bug in the package, it should be reported to the BTS "
+#~ "and fixed in the package. See http://wiki.debian.org/LSBInitScripts/"
+#~ "DependencyBasedBoot for more information about how to fix the problems "
+#~ "preventing migration."
+#~ msgstr ""
+#~ "Nếu vấn đề đã thông báo là một sự sửa đổi chỉ cục bộ thì nó cần phải được "
+#~ "sửa chữa bằng tay. Nếu nó là một lỗi trong gói phần mềm thì nó nên được "
+#~ "thông báo cho hệ thống theo dõi lỗi (BTS) để sửa chữa trong gói đó. Xem "
+#~ "trang wiki (http://wiki.debian.org/LSBInitScripts/DependencyBasedBoot) để "
+#~ "tìm thêm thông tin về cách giải quyết vấn đề ngăn cản nâng cấp."

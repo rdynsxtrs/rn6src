@@ -1,9 +1,232 @@
-cmake (3.7.2-1+rnx1) unstable; urgency=medium
+cmake (3.18.4-2+deb11u1+rnx1) unstable; urgency=medium
 
-  * Non-maintainer upload.
   * Backported to ReadyNAS OS 6
 
- -- ReadyNAS Xtras <xtras@rnxtras.com>  Sat, 29 Jan 2022 10:59:54 +0000
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 12 Jan 2025 17:11:33 +0100
+
+cmake (3.18.4-2+deb11u1) bullseye; urgency=medium
+
+  * Team upload.
+  * Add PostgreSQL 13 to known versions (Closes: #990623)
+
+ -- Timo Röhling <roehling@debian.org>  Tue, 14 Sep 2021 00:08:52 +0200
+
+cmake (3.18.4-2) unstable; urgency=medium
+
+  [ Helmut Grohne ]
+  * Drop unused Build-Depends: libbz2-dev and liblzma-dev. (Closes: #981135)
+    Compression support is handled via libarchive.
+
+  [ Felix Geyer ]
+  * Mark cmake-data as Multi-Arch: foreign. (Closes: #973392)
+
+ -- Felix Geyer <fgeyer@debian.org>  Sun, 07 Feb 2021 10:23:34 +0100
+
+cmake (3.18.4-1) unstable; urgency=medium
+
+  [ Tobias Frost ]
+  * B-D on libarchive >=3.3.3 (Closes: #972252)
+
+  [ Kyle Edwards ]
+  * Set --docdir to actual destination
+
+  [ Felix Geyer ]
+  * New upstream release
+  * Cherry-pick commit to build with -D_FILE_OFFSET_BITS=64 on 32bit archs.
+    - Add Compile_with_FILE_OFFSET_BITS_64_on_32-bit_Linux.patch
+    - Closes: #965046
+
+ -- Felix Geyer <fgeyer@debian.org>  Mon, 19 Oct 2020 16:20:14 +0200
+
+cmake (3.18.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop FindPkgConfig_also_handle_isystem.patch, applied upstream.
+
+ -- Felix Geyer <fgeyer@debian.org>  Sun, 30 Aug 2020 14:41:24 +0200
+
+cmake (3.16.3-3) unstable; urgency=medium
+
+  * Handle -isystem from pkg-config correctly. (Closes: #959064)
+    - Cherry-pick upstream patch in FindPkgConfig_also_handle_isystem.patch
+
+ -- Felix Geyer <fgeyer@debian.org>  Sat, 09 May 2020 15:40:54 +0200
+
+cmake (3.16.3-2) unstable; urgency=medium
+
+  * Build-depend on python3-sphinxcontrib.qthelp for sphinx >= 2.0
+    (Closes: #955120)
+
+ -- Felix Geyer <fgeyer@debian.org>  Sun, 19 Apr 2020 18:07:42 +0200
+
+cmake (3.16.3-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #949964)
+
+ -- Felix Geyer <fgeyer@debian.org>  Sun, 02 Feb 2020 14:59:35 +0100
+
+cmake (3.15.4-1) unstable; urgency=medium
+
+  * New upstream release. (Closes: #944090)
+  * Disable FIleAPI json-extra test for now as it doesn't seem critical and
+    fails with libjsoncpp 1.7.4.
+  * Switch to debhelper compat level 12.
+  * Pass --fail-missing to dh_missing.
+
+ -- Felix Geyer <fgeyer@debian.org>  Tue, 12 Nov 2019 20:11:25 +0100
+
+cmake (3.13.4-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Felix Geyer <fgeyer@debian.org>  Sun, 10 Feb 2019 11:33:12 +0100
+
+cmake (3.13.2-1) unstable; urgency=medium
+
+  * New upstream release.
+    - No longer passes implicit include directories to the moc tool,
+      fixing kio FTBFS. (Closes: #915391)
+
+ -- Felix Geyer <fgeyer@debian.org>  Fri, 14 Dec 2018 19:07:46 +0100
+
+cmake (3.13.1-1) unstable; urgency=medium
+
+  [ Jelmer Vernooĳ ]
+  * Use secure copyright file specification URI.
+  * Trim trailing whitespace.
+
+  [ Lisandro Damián Nicanor Pérez Meyer ]
+  * Add Helmut Grohne's script to generate toolchain files based on
+    Ubuntu/Debian's Multi-Arch as debtoolchainfilegen.
+
+  [ Felix Geyer ]
+  * New upstream release.
+    - Adds support for the Boost Stacktrace component. (Closes: #912074)
+  * Drop FindBoost_add_-lpthread_#563479.diff, fixed upstream.
+
+ -- Felix Geyer <fgeyer@debian.org>  Fri, 30 Nov 2018 07:33:06 +0100
+
+cmake (3.13.0~rc2-1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Drop patches that have been applied upstream:
+    - fix-ftbfs-on-kfreebsd.patch
+    - fix_ftbfs_on_kfreebsd2.patch
+    - hurd_so_noexec.patch
+    - GNUInstallDirs-kfreebsd-man.patch
+
+ -- Felix Geyer <fgeyer@debian.org>  Sun, 28 Oct 2018 14:29:04 +0100
+
+cmake (3.12.3-3) unstable; urgency=medium
+
+  * Fix info and man page install directories on kFreeBSD. (Closes: #911700)
+    - Add GNUInstallDirs-kfreebsd-man.patch
+
+ -- Felix Geyer <fgeyer@debian.org>  Sun, 28 Oct 2018 12:05:32 +0100
+
+cmake (3.12.3-2) unstable; urgency=medium
+
+  * Increase timeout of tests from 2000s to 5000s. (Closes: #910513)
+    - Needed for riscv64 qemu-system buildds.
+
+ -- Felix Geyer <fgeyer@debian.org>  Tue, 16 Oct 2018 22:43:42 +0200
+
+cmake (3.12.3-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fixes FTBFS on hurd. (Closes: #900240)
+  * Make shared libraries non-executable on hurd.
+    - Fixes a test suite failure.
+    - Cherry-pick upstream fix in hurd_so_noexec.patch
+
+ -- Felix Geyer <fgeyer@debian.org>  Sun, 07 Oct 2018 16:38:46 +0200
+
+cmake (3.12.1-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Add patch from upstream to fix FTBFS in kfreebsd.  Closes: #905138
+  * Add Build-Dependency on freebsd-glue on kfreebsd-any.
+
+ -- Mattia Rizzolo <mattia@debian.org>  Thu, 27 Sep 2018 17:50:12 +0200
+
+cmake (3.12.1-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fixes FTBFS with recent version of libuv1. (Closes: #905140)
+  * Drop qt_import_dir_variable.diff, not needed anymore.
+
+ -- Felix Geyer <fgeyer@debian.org>  Thu, 09 Aug 2018 21:35:37 +0200
+
+cmake (3.11.2-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Properly handles OpenJDK 10 versioning. (Closes: #897611)
+
+ -- Felix Geyer <fgeyer@debian.org>  Sat, 19 May 2018 13:44:22 +0200
+
+cmake (3.11.1-1) unstable; urgency=medium
+
+  * New upstream release.
+    - Fixes Java 10 detection. (Closes: #895229)
+
+ -- Felix Geyer <fgeyer@debian.org>  Mon, 23 Apr 2018 22:41:25 +0200
+
+cmake (3.10.2-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Disable CTestTestUpload in autopkgtest.
+  * Point Vcs-* control fields to the new repo on salsa.
+  * Switch to debhelper compat level 10.
+  * Make cmake suggest cmake-doc. (Closes: #805901)
+
+ -- Felix Geyer <fgeyer@debian.org>  Sun, 18 Feb 2018 12:49:47 +0100
+
+cmake (3.9.5-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Set Rules-Requires-Root: no
+
+ -- Felix Geyer <fgeyer@debian.org>  Mon, 06 Nov 2017 20:40:15 +0100
+
+cmake (3.9.3-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Increase test timeout to 2000s.
+    - Hopefully this gives slow buildds enough time to run the Qt5Autogen test.
+      (Closes: #876378)
+  * Switch to python3 sphinx.
+  * Remove upgrade maintainer scripts from before stretch.
+
+ -- Felix Geyer <fgeyer@debian.org>  Sun, 24 Sep 2017 12:12:40 +0200
+
+cmake (3.9.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Remove fix-java9-detection.patch, applied upstream.
+
+ -- Felix Geyer <fgeyer@debian.org>  Fri, 11 Aug 2017 12:26:36 +0200
+
+cmake (3.9.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Refresh patches.
+  * Drop ancient Breaks/Replaces/Conflicts.
+  * No longer suggest eclipse and codeblocks. (Closes: #750465)
+  * Add Python and Java to findmodules autopkgtest.
+  * Fix detection of OpenJDK 9 early access builds. (Closes: #868327)
+    - Add fix-java9-detection.patch
+
+ -- Felix Geyer <fgeyer@debian.org>  Tue, 25 Jul 2017 18:14:02 +0200
+
+cmake (3.8.0-1) experimental; urgency=medium
+
+  * New upstream release.
+    - CPackDeb: print warning when "file" tool is missing. (Closes: #847307)
+  * Refresh fix-ftbfs-on-kfreebsd.patch
+  * Drop mips-rld-map-rel.patch, merged upstream.
+  * Add librhash-dev to Build-Depends.
+
+ -- Felix Geyer <fgeyer@debian.org>  Sat, 15 Apr 2017 12:08:12 +0200
 
 cmake (3.7.2-1) unstable; urgency=medium
 
@@ -122,7 +345,7 @@ cmake (3.4.1-2) unstable; urgency=medium
 
 cmake (3.4.1-1) experimental; urgency=medium
 
-  * New upstream release. 
+  * New upstream release.
 
  -- Felix Geyer <fgeyer@debian.org>  Thu, 03 Dec 2015 18:45:35 +0100
 
@@ -349,7 +572,7 @@ cmake (2.8.12.1-1.5) unstable; urgency=medium
 cmake (2.8.12.1-1.4) unstable; urgency=medium
 
   * Non-maintainer upload.
-  * Add support for mips64 mips64el mipsn32 mipsn32el in 
+  * Add support for mips64 mips64el mipsn32 mipsn32el in
     Modules/FindJNI.cmake.
     Add FindJNI.cmake.mips.patch.
     Patch by Yunqiang Su.
@@ -1013,7 +1236,7 @@ cmake (2.8.0~rc3-1) experimental; urgency=low
     - FindJNI.cmake-more-arches.diff - remove, was taken from upstream;
     - FindVTK.cmake-vtk-5.4.diff - remove, was taken from upstream.
   * Update install files.
-  * Call dpkg with --print-architecture rather than obsolete 
+  * Call dpkg with --print-architecture rather than obsolete
     --print-installation-architecture.
   * Fix lintian override cmake-data: extra-license-file.
   * Remove obsolete README.Debian.
@@ -1234,7 +1457,7 @@ cmake (2.6.0-1) experimental; urgency=low
 
 cmake (2.6.0~rc8-1.1) experimental; urgency=low
 
-  * Non-maintainer upload with permission from DadCoder. 
+  * Non-maintainer upload with permission from DadCoder.
     Happy Prague visit.
   * Fix FindQt4.cmake (Closes: #477110)
 
@@ -1326,7 +1549,7 @@ cmake (2.4.5-1) unstable; urgency=low
     Do not depend on optimized libraries for a debug build and visa versa.
     Fix target name matching custom command output conflict.
     Fix FindQt3 so that it does not find qt4
-    Fix FindKDE4 so that it only looks for kde4-config 
+    Fix FindKDE4 so that it only looks for kde4-config
 
  -- A. Maitland Bottoms <bottoms@debian.org>  Mon,  4 Dec 2006 16:29:44 -0500
 

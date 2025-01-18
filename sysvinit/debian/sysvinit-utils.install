@@ -1,0 +1,7 @@
+debian/init-d-script lib/init
+debian/vars.sh lib/init
+sbin/fstab-decode
+sbin/killall5
+usr/share/man/man8/fstab-decode.8
+usr/share/man/man8/killall5.8
+usr/share/man/man8/pidof.8

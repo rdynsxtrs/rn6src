@@ -1,0 +1,126 @@
+cmocka (1.1.3-1+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 12 Jan 2025 15:54:21 +0100
+
+cmocka (1.1.3-1) unstable; urgency=medium
+
+  [ Andreas Schneider ]
+  * Bump version to 1.1.3
+
+  [ David Prévot ]
+  * Use debhelper-compat 11
+  * Drop get-orig-source target
+  * Declare minimum required cmake version (Closes: #908385)
+  * Update copyright
+  * Drop static libraries not built anymore
+
+ -- David Prévot <taffit@debian.org>  Fri, 28 Sep 2018 17:43:00 -1000
+
+cmocka (1.1.2-1) unstable; urgency=medium
+
+  [ Andreas Schneider ]
+  * Bump version to 1.1.2
+
+  [ Sandro Knauß ]
+  * Cleanup changelog
+
+  [ David Prévot ]
+  * Update d/watch to currently signed file
+  * Use priority optional
+  * Move project repository to salsa.d.o
+  * Update Standards-Version to 4.2.1
+  * Use HTTPS URLs
+  * Update copyright
+  * Update documentation building rule
+  * Update symbols file
+
+ -- David Prévot <taffit@debian.org>  Thu, 30 Aug 2018 15:13:09 -1000
+
+cmocka (1.1.1-1) unstable; urgency=medium
+
+  * New upstream version 1.1.1 (Closes: #861266)
+  * watch file:
+    - match newer versions
+    - Enable gpg signature for orig tarballs.
+      (#731725 was solved in meanwhile)
+  * Change my own mailaddress to hefee@debian.org
+  * Updated VCS links to secure protocol
+  * Update symbols for new version on amd64
+  * Update multiarch metadata
+  * Bump Standards-Version:
+    - Change link to changelog format to secure version.
+  * Bump compat level to 10 (No changes needed)
+  * Add hardening=+all to rules.
+  * Update signing key for orig tarballs
+
+ -- Sandro Knauß <hefee@debian.org>  Tue, 04 Jul 2017 12:09:10 +0200
+
+cmocka (1.0.1-3) unstable; urgency=medium
+
+  * Do not run tests when building doc (Closes: #806610)
+  * Update Standards-Version to 3.9.8
+
+ -- David Prévot <taffit@debian.org>  Sun, 28 Aug 2016 16:53:27 -1000
+
+cmocka (1.0.1-2) unstable; urgency=medium
+
+  * Upload to unstable since Jessie has been released
+
+ -- David Prévot <taffit@debian.org>  Fri, 15 May 2015 11:14:35 -0400
+
+cmocka (1.0.1-1) experimental; urgency=medium
+
+  [ Andreas Schneider ]
+  * include: Add macro for assert_ptr_equal().
+  * Bump version to 1.0.1
+
+ -- David Prévot <taffit@debian.org>  Sun, 15 Mar 2015 10:51:14 -0400
+
+cmocka (1.0.0-1) experimental; urgency=medium
+
+  [ Andreas Schneider ]
+  * Add cmockery legacy header.
+  * Bump version to 1.0.0.
+  * Fix building with newer gcc versions (Closes: #777818)
+
+  [ David Prévot ]
+  * Update watch file
+  * Update copyright
+  * Install a cmockery header
+  * Bump standards version to 3.9.6
+  * Upload to experimental to respect the freeze
+
+ -- David Prévot <taffit@debian.org>  Sun, 22 Feb 2015 15:44:49 -0400
+
+cmocka (0.4.1-2) unstable; urgency=medium
+
+  [ Pino Toscano ]
+  * Install configuration files for CMake (Closes: #749923)
+
+ -- David Prévot <taffit@debian.org>  Fri, 30 May 2014 17:43:06 -0400
+
+cmocka (0.4.1-1) unstable; urgency=medium
+
+  [ Andreas Schneider ]
+  * Bump version to 0.4.1.
+
+ -- David Prévot <taffit@debian.org>  Fri, 23 May 2014 10:30:40 -0400
+
+cmocka (0.4.0-1) unstable; urgency=medium
+
+  [ Andreas Schneider ]
+  * Bump version to 0.4.0.
+
+  [ David Prévot ]
+  * Use dh_doxygen to get rid of *.md5 and *.map files
+  * Provide jQuery helper for cmocka-doc
+
+ -- David Prévot <taffit@debian.org>  Sun, 13 Apr 2014 10:43:02 -0400
+
+cmocka (0.3.2-1) unstable; urgency=low
+
+  * Initial release (Closes: #731719)
+
+ -- David Prévot <taffit@debian.org>  Sun, 08 Dec 2013 23:29:02 -0400

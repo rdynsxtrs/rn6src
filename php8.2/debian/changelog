@@ -1,3 +1,9 @@
+php8.2 (8.2.27-1+rnx1) unstable; urgency=medium
+
+  * New upstream release 8.2.27
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 05 Jan 2025 13:59:24 +0100
+
 php8.2 (8.2.26-1+rnx1) unstable; urgency=medium
 
   * New upstream release 8.2.26

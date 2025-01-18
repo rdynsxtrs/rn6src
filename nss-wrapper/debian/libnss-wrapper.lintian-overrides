@@ -1,0 +1,3 @@
+# libnss_wrapper is a preloadable library.
+# We do not support directly linking to it, so it doesn't need the SONAME.
+libnss-wrapper: sharedobject-in-library-directory-missing-soname usr/lib/libnss_wrapper.so

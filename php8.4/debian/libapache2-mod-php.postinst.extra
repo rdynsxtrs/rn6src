@@ -1,0 +1,48 @@
+if [ -e /usr/share/apache2/apache2-maintscript-helper ]; then
+    . /usr/share/apache2/apache2-maintscript-helper
+
+    php_enable() {
+	local a2query_ret=0
+	a2query -m "php@PHP_VERSION@" > /dev/null 2>&1 || a2query_ret=$?
+	if [ "$a2query_ret" -eq 0 ] ; then
+	    apache2_msg "info" "$DPKG_MAINTSCRIPT_PACKAGE: not switching MPM - already enabled"
+	    return 1
+	elif [ "$a2query_ret" -eq 32	 ] ; then
+	    apache2_msg "info" "$DPKG_MAINTSCRIPT_PACKAGE: not switching MPM - disabled by maintainer"
+	    return 1
+	fi
+
+	PHP_MODULE=$(a2query -m | sed -n 's/^\(php[\.0-9]*\) (enabled.*)/\1/p')
+        if [ -n "$PHP_MODULE" -a "$PHP_MODULE" != "php@PHP_VERSION@" ]; then
+	    apache2_msg "err" "$DPKG_MAINTSCRIPT_PACKAGE: $PHP_MODULE module already enabled, not enabling PHP @PHP_VERSION@"
+	    return 1
+	fi
+
+	mpm=$(a2query -M)
+	case "$(a2query -M)" in
+	    prefork|itk) return 0;;
+	    *) if apache2_switch_mpm prefork; then return 0; fi;;
+	esac
+        apache2_msg "err" "$DPKG_MAINTSCRIPT_PACKAGE: Could not switch to prefork MPM, not enabling PHP @PHP_VERSION@"
+	return 1
+    }
+
+else
+    echo "Warning: Could not load Apache 2.4 maintainer script helper."
+
+    php_enable() {
+        return 1;
+    }
+
+fi
+
+# we've registered a trigger to handle extension updates.
+if [ "$1" = "triggered" ] && [ "$2" = "/etc/php/@PHP_VERSION@/apache2/conf.d" ]; then
+    if [ -e /usr/share/apache2/apache2-maintscript-helper ]; then
+	. /usr/share/apache2/apache2-maintscript-helper
+	apache2_reload restart
+    fi
+    exit 0
+elif [ "$1" != "configure" ]; then
+    exit 0
+fi

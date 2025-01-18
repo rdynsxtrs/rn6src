@@ -1,0 +1,126 @@
+# Debconf translations for sysvinit.
+# Copyright (C) 2009 THE sysvinit'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the sysvinit package.
+# Adriano Rafael Gomes <adrianorg@gmail.com>, 2009, 2010, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: sysvinit 2.88dsf-32.1\n"
+"Report-Msgid-Bugs-To: sysvinit@packages.debian.org\n"
+"POT-Creation-Date: 2018-10-26 08:14+0000\n"
+"PO-Revision-Date: 2012-09-05 19:34-0300\n"
+"Last-Translator: Adriano Rafael Gomes <adrianorg@gmail.com>\n"
+"Language-Team: Brazilian Portuguese <debian-l10n-portuguese@lists.debian."
+"org>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid "Update getty pathnames and add hurd-console?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"Your /etc/inittab seems to use /libexec/getty as getty and/or to miss hurd-"
+"console entry. The default inittab has been changed, however your /etc/"
+"inittab has been modified. Note that sysvinit has not been used to boot an "
+"Hurd system for long, so any errors in that file would not have shown up "
+"earlier."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"If you allow this change, a backup will be stored in /etc/inittab.dpkg-old."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../sysvinit-core.templates:1001
+msgid ""
+"If you don't allow this change, an updated inittab will be written to /etc/"
+"inittab.dpkg-new. Please review the changes and update your /etc/inittab "
+"accordingly."
+msgstr ""
+
+#~ msgid "Unable to migrate to dependency-based boot system"
+#~ msgstr ""
+#~ "Incapaz de migrar para o sistema de inicialização baseado em dependência"
+
+#~ msgid ""
+#~ "Problems in the boot system exist which are preventing migration to "
+#~ "dependency-based boot sequencing:"
+#~ msgstr ""
+#~ "Existem problemas no sistema de inicialização que estão impedindo a "
+#~ "migração para a sequência de inicialização baseada em dependência:"
+
+#~ msgid ""
+#~ "If the reported problem is a local modification, it needs to be fixed "
+#~ "manually.  These are typically due to obsolete conffiles being left after "
+#~ "a package has been removed, but not purged.  It is suggested that these "
+#~ "are removed by running:"
+#~ msgstr ""
+#~ "Se o problema relatado é uma modificação local, ele deve ser corrigido "
+#~ "manualmente. Tipicamente, esses problemas são devidos a arquivos de "
+#~ "configuração obsoletos deixados depois de um pacote ter sido removido, "
+#~ "mas não expurgado. É sugerido que esses arquivos sejam removidos "
+#~ "executando:"
+
+#~ msgid "${SUGGESTION}"
+#~ msgstr "${SUGGESTION}"
+
+#~ msgid ""
+#~ "Package installation can not continue until the above problems have been "
+#~ "fixed.  To reattempt the migration process after these problems have been "
+#~ "fixed, run \"dpkg --configure sysv-rc\"."
+#~ msgstr ""
+#~ "A instalação do pacote não pode continuar até que os problemas acima "
+#~ "tenham sido corrigidos. Para tentar novamente o processo de migração "
+#~ "depois desses problemas terem sido corrigidos, execute \"dpkg --configure "
+#~ "sysv-rc\"."
+
+#~ msgid "Migrate legacy boot sequencing to dependency-based sequencing?"
+#~ msgstr ""
+#~ "Migrar a sequência de inicialização legada para a sequência baseada em "
+#~ "dependência?"
+
+#~ msgid ""
+#~ "The boot system is prepared to migrate to dependency-based sequencing. "
+#~ "This is an irreversible step, but one that is recommended: it allows the "
+#~ "boot process to be optimized for speed and efficiency, and provides a "
+#~ "more resilient framework for development."
+#~ msgstr ""
+#~ "O sistema de inicialização está preparado para migrar para a sequência "
+#~ "baseada em dependência. Este é um passo irreversível, mas recomendável: "
+#~ "ele permite que o processo de inicialização seja otimizado para "
+#~ "velocidade e eficiência, e fornece um framework mais flexível para o "
+#~ "desenvolvimento."
+
+#~ msgid ""
+#~ "A full rationale is detailed in /usr/share/doc/sysv-rc/README.Debian. If "
+#~ "you choose not to migrate now, you can do so later by running \"dpkg-"
+#~ "reconfigure sysv-rc\"."
+#~ msgstr ""
+#~ "Um embasamento completo está detalhado em /usr/share/doc/sysv-rc/README."
+#~ "Debian. Se você escolher não migrar agora, você poderá fazê-lo mais tarde "
+#~ "executando \"dpkg-reconfigure sysv-rc\"."
+
+#~ msgid ""
+#~ "If the reported problem is a local modification, it needs to be fixed "
+#~ "manually. If it's a bug in the package, it should be reported to the BTS "
+#~ "and fixed in the package. See http://wiki.debian.org/LSBInitScripts/"
+#~ "DependencyBasedBoot for more information about how to fix the problems "
+#~ "preventing migration."
+#~ msgstr ""
+#~ "Se o problema reportado é uma modificação local, ele precisa ser "
+#~ "corrigido manualmente. Se é um bug no pacote, ele deve ser reportado para "
+#~ "o BTS e corrigido no pacote. Veja http://wiki.debian.org/LSBInitScripts/"
+#~ "DependencyBasedBoot para mais informações sobre como corrigir os "
+#~ "problemas que impedem a migração."

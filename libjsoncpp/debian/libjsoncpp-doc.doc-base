@@ -1,0 +1,12 @@
+Document: libjsoncpp-doc
+Title: libjsoncpp API description
+Author:
+Abstract: Doxygen generated HTML API description for libjsoncpp.
+ libjsoncpp is a C++ library for generating and parsing JSON
+ documents.
+Section: Programming
+
+Format: HTML
+Index: /usr/share/doc/libjsoncpp-doc/index.html
+Files: /usr/share/doc/libjsoncpp-doc/*.html
+

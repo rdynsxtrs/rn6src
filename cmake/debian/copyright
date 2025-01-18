@@ -1,4 +1,4 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: cmake
 Source: http://www.cmake.org/files/v*/
 
@@ -27,22 +27,26 @@ Copyright: 2001-2006 A. Maitland Bottoms <bottoms@debian.org>
   2014 Felix Geyer <fgeyer@debian.org>
 License: BSD-3-clause
 
-Files: Source/cmFortranParserTokens.h
+Files: debian/debtoolchainfilegen
+Copyright: 2018 Helmut Grohne <helmut@subdivi.de>
+License: BSD-2-clause
+
+Files: Source/LexerParser/cmFortranParserTokens.h
 Copyright: 1984, 1989-1990, 2000-2011 Free Software Foundation, Inc.
 License: GPL-3+with_exception
 
-Files: Source/cmFortranParser.cxx
+Files: Source/LexerParser/cmFortranParser.cxx
 Copyright: 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
   2000-2015 Kitware, Inc., Insight Software Consortium
   2000-2006 Erik Edelmann <erik.edelmann@iki.fi>
 License: GPL-3+with_exception
 
-Files: Source/cmDependsJavaParser.cxx
-  Source/cmCommandArgumentParserTokens.h
-  Source/cmExprParserTokens.h
-  Source/cmExprParser.cxx
-  Source/cmCommandArgumentParser.cxx
-  Source/cmDependsJavaParserTokens.h
+Files: Source/LexerParser/cmDependsJavaParser.cxx
+  Source/LexerParser/cmCommandArgumentParserTokens.h
+  Source/LexerParser/cmExprParserTokens.h
+  Source/LexerParser/cmExprParser.cxx
+  Source/LexerParser/cmCommandArgumentParser.cxx
+  Source/LexerParser/cmDependsJavaParserTokens.h
 Copyright: 2000-2009 Kitware, Inc., Insight Software Consortium
   1984, 1989, 1990, 2000-2006 Free Software Foundation, Inc.
 License: GPL-2+with_exception

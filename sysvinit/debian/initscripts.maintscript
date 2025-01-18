@@ -1,0 +1,4 @@
+rm_conffile /etc/init.d/bootlogd 2.88dsf-42 initscripts
+rm_conffile /etc/init.d/stop-bootlogd 2.88dsf-42 initscripts
+rm_conffile /etc/init.d/stop-bootlogd-single 2.88dsf-42 initscripts
+rm_conffile /etc/init.d/motd 2.93-3~ initscripts

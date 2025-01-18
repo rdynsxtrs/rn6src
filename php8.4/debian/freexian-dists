@@ -1,0 +1,4 @@
+DISTS=${DISTS//bionic}
+DISTS=${DISTS//xenial}
+DISTS=${DISTS//jessie}
+DISTS=${DISTS//stretch}

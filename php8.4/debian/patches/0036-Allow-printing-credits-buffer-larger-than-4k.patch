@@ -1,0 +1,44 @@
+From: =?utf-8?b?T25kxZllaiBTdXLDvQ==?= <ondrej@sury.org>
+Date: Sat, 3 Apr 2021 16:12:43 +0200
+Subject: Allow printing credits buffer larger than 4k
+
+---
+ ext/standard/credits.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/ext/standard/credits.c b/ext/standard/credits.c
+index 98dfe93..8ea0f5b 100644
+--- a/ext/standard/credits.c
++++ b/ext/standard/credits.c
+@@ -233,7 +233,14 @@ PHPAPI void php_print_packaging_credits(int flag, int top) /* {{{ */
+ 
+ 				if (bytes > 0) {
+ 					PUTS(" and is made available exclusively for ");
+-					PUTS(buf);
++					do {
++						PUTS(buf);
++
++						bytes = read(fd, buf, sizeof(buf) - 1);
++						if (bytes > 0) {
++							buf[bytes] = '\0';
++						}
++					} while (bytes > 0);
+ 				} else {
+ 					PUTS(". This service is run together with Ondřej Surý, "
+ 						 "that's why a small subset of the PHP LTS packages "
+@@ -248,7 +255,14 @@ PHPAPI void php_print_packaging_credits(int flag, int top) /* {{{ */
+ 					);
+ 				if (bytes > 0) {
+ 					PUTS(" and is made available exclusively for ");
+-					PUTS(buf);
++					do {
++						PUTS(buf);
++
++						bytes = read(fd, buf, sizeof(buf) - 1);
++						if (bytes > 0) {
++							buf[bytes] = '\0';
++						}
++					} while (bytes > 0);
+ 				} else {
+ 					PUTS(". This service is run together with Ondřej Surý, "
+ 						 "that's why a small subset of the PHP LTS packages "

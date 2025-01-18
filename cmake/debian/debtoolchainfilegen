@@ -1,0 +1,61 @@
+#!/bin/sh
+
+#
+# Copyright 2018 Helmut Grohne <helmut@subdivi.de>
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+# 1. Redistributions of source code must retain the above copyright notice,
+# this list of conditions and the following disclaimer.
+#
+# 2. Redistributions in binary form must reproduce the above copyright notice,
+# this list of conditions and the following disclaimer in the documentation
+# and/or other materials provided with the distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+# THE POSSIBILITY OF SUCH DAMAGE.
+#
+# Usage: pass the host architecture as a parameter:
+#
+#  ./debtoolchainfilegen armhf > cmake_toolchain_armhf.cmake
+
+if [ -z "$1" ]
+then
+  echo "Usage: debtoolchainfilegen (arch) > cmake_toolchain_<arch>.cmake"
+  exit 1
+fi
+
+ARCH=$1
+
+DEB_HOST_GNU_TYPE=$(dpkg-architecture -f "-a$1" -qDEB_HOST_GNU_TYPE)
+DEB_HOST_GNU_CPU=$(dpkg-architecture -f "-a$1" -qDEB_HOST_GNU_CPU)
+case "$(dpkg-architecture -f "-a$1" -qDEB_HOST_ARCH_OS)" in
+        linux) system_name=Linux; ;;
+        kfreebsd) system_name=kFreeBSD; ;;
+        hurd) system_name=GNU; ;;
+        *) exit 1; ;;
+esac
+
+cat <<EOF
+# Use it while calling CMake:
+#   mkdir build; cd build
+#   cmake -DCMAKE_TOOLCHAIN_FILE="/path/to/cmake_toolchain_<arch>.cmake" ../
+#
+set(CMAKE_SYSTEM_NAME "$system_name")
+set(CMAKE_SYSTEM_PROCESSOR "$DEB_HOST_GNU_CPU")
+set(CMAKE_C_COMPILER "$DEB_HOST_GNU_TYPE-gcc")
+set(CMAKE_CXX_COMPILER "$DEB_HOST_GNU_TYPE-g++")
+set(PKG_CONFIG_EXECUTABLE "$DEB_HOST_GNU_TYPE-pkg-config")
+set(PKGCONFIG_EXECUTABLE "$DEB_HOST_GNU_TYPE-pkg-config")
+set(QMAKE_EXECUTABLE "$DEB_HOST_GNU_TYPE-qmake")
+EOF

@@ -1,0 +1,66 @@
+Description: use the LIBC_SO and LIBNSL_SO macros to discover SONAMEs
+Author: Pino Toscano <toscano.pino@tiscali.it>
+Bug: https://bugzilla.samba.org/show_bug.cgi?id=10572
+Last-Update: 2014-06-01
+
+--- a/ConfigureChecks.cmake
++++ b/ConfigureChecks.cmake
+@@ -53,6 +53,7 @@ check_include_file(shadow.h HAVE_SHADOW_
+ check_include_file(grp.h HAVE_GRP_H)
+ check_include_file(nss.h HAVE_NSS_H)
+ check_include_file(nss_common.h HAVE_NSS_COMMON_H)
++check_include_file(gnu/lib-names.h HAVE_GNU_LIB_NAMES_H)
+ 
+ # FUNCTIONS
+ check_function_exists(strncpy HAVE_STRNCPY)
+--- a/config.h.cmake
++++ b/config.h.cmake
+@@ -20,6 +20,7 @@
+ #cmakedefine HAVE_GRP_H 1
+ #cmakedefine HAVE_NSS_H 1
+ #cmakedefine HAVE_NSS_COMMON_H 1
++#cmakedefine HAVE_GNU_LIB_NAMES_H 1
+ 
+ /*************************** FUNCTIONS ***************************/
+ 
+--- a/src/nss_wrapper.c
++++ b/src/nss_wrapper.c
+@@ -57,6 +57,10 @@
+ #include <search.h>
+ #include <assert.h>
+ 
++#ifdef HAVE_GNU_LIB_NAMES_H
++#include <gnu/lib-names.h>
++#endif
++
+ /*
+  * Defining _POSIX_PTHREAD_SEMANTICS before including pwd.h and grp.h  gives us
+  * the posix getpwnam_r(), getpwuid_r(), getgrnam_r and getgrgid_r calls on
+@@ -831,6 +835,13 @@ static void *nwrap_load_lib_handle(enum
+ 	case NWRAP_LIBNSL:
+ #ifdef HAVE_LIBNSL
+ 		handle = nwrap_main_global->libc->nsl_handle;
++#ifdef LIBNSL_SO
++		if (handle == NULL) {
++			handle = dlopen(LIBNSL_SO, flags);
++
++			nwrap_main_global->libc->nsl_handle = handle;
++		}
++#endif
+ 		if (handle == NULL) {
+ 			for (i = 10; i >= 0; i--) {
+ 				char soname[256] = {0};
+@@ -868,6 +879,13 @@ static void *nwrap_load_lib_handle(enum
+ 		/* FALL TROUGH */
+ 	case NWRAP_LIBC:
+ 		handle = nwrap_main_global->libc->handle;
++#ifdef LIBC_SO
++		if (handle == NULL) {
++			handle = dlopen(LIBC_SO, flags);
++
++			nwrap_main_global->libc->handle = handle;
++		}
++#endif
+ 		if (handle == NULL) {
+ 			for (i = 10; i >= 0; i--) {
+ 				char soname[256] = {0};

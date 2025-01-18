@@ -1,0 +1,6 @@
+usr/bin/bsdcat
+usr/bin/bsdcpio
+usr/bin/bsdtar
+debian/tmp/usr/share/man/man1/bsdtar.1
+debian/tmp/usr/share/man/man1/bsdcat.1
+debian/tmp/usr/share/man/man1/bsdcpio.1

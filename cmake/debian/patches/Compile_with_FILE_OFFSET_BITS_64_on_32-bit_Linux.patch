@@ -1,0 +1,34 @@
+From 5b10f96793ab6f3a4ef446d67c09ea91b7898584 Mon Sep 17 00:00:00 2001
+From: Marc Chevrier <marc.chevrier@gmail.com>
+Date: Wed, 23 Sep 2020 18:06:35 +0200
+Subject: [PATCH] Linux: Compile with _FILE_OFFSET_BITS=64 on 32-bit Linux
+
+To avoid problems accessing filesystem, use 64-bit file offsets when
+compilation model is 32-bit.  This explicit definition is needed now
+that KWSys does not provide LFS settings in its headers anymore.
+
+Fixes: #20568
+---
+ CompileFlags.cmake | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/CompileFlags.cmake b/CompileFlags.cmake
+index 053259f47c..1c5f1beca9 100644
+--- a/CompileFlags.cmake
++++ b/CompileFlags.cmake
+@@ -53,6 +53,12 @@ if(CMAKE_SYSTEM_PROCESSOR MATCHES "^parisc")
+   endif()
+ endif()
+ 
++# Use 64-bit off_t on 32-bit Linux
++if (CMAKE_SYSTEM_NAME STREQUAL "Linux" AND CMAKE_SIZEOF_VOID_P EQUAL 4)
++  # ensure 64bit offsets are used for filesystem accesses for 32bit compilation
++  add_definitions(-D_FILE_OFFSET_BITS=64)
++endif()
++
+ # Workaround for TOC Overflow on ppc64
+ set(bigTocFlag "")
+ if(CMAKE_SYSTEM_NAME STREQUAL "AIX" AND
+-- 
+GitLab
+

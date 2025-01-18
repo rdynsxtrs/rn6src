@@ -1,0 +1,8 @@
+include:
+  - https://salsa.debian.org/salsa-ci-team/pipeline/raw/master/recipes/debian.yml
+
+variables:
+  RELEASE: 'buster'
+  SALSA_CI_COMPONENTS: 'main contrib non-free'
+  SALSA_CI_DISABLE_REPROTEST: 1
+  SALSA_CI_DISABLE_LINTIAN: 1

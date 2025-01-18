@@ -1,0 +1,65 @@
+Source: libjsoncpp
+Priority: extra
+Maintainer: Peter Spiess-Knafl <dev@spiessknafl.at>
+Uploaders: Cleto Martín <cleto@debian.org>
+Testsuite: autopkgtest
+Build-Depends: cmake, debhelper (>= 9), doxygen, python:any
+Standards-Version: 3.9.8
+Section: libs
+Homepage: https://github.com/open-source-parsers/jsoncpp
+Vcs-Git: https://anonscm.debian.org/git/collab-maint/libjsoncpp.git
+Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/libjsoncpp.git
+
+Package: libjsoncpp1
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: library for reading and writing JSON for C++
+ jsoncpp is an implementation of a JSON reader and writer in C++. JSON
+ (JavaScript Object Notation) is a lightweight data-interchange format
+ that it is easy to parse and redeable for human. It is useful for
+ building config files, network communications protocols, etc.
+ .
+ This library provides following features:
+ .
+ * High-level data structures for collecting data from JSON.
+ * Easy-to-use reader and writer.
+
+Package: libjsoncpp-doc
+Architecture: all
+Depends: ${misc:Depends}
+Suggests: libjsoncpp-dev
+Section: doc
+Replaces: libjsoncpp-dev (<< 0.10.2-1)
+Breaks: libjsoncpp-dev (<< 0.10.2-1)
+Description: API documentation for libjsoncpp-dev
+ This package contains doxygen generated HTML API description of libjsoncpp0.
+ .
+ jsoncpp is an implementation of a JSON reader and writer in C++. JSON
+ (JavaScript Object Notation) is a lightweight data-interchange format
+ that it is easy to parse and redeable for human. It is useful for
+ building config files, network communications protocols, etc.
+ .
+ This library provides following features:
+ .
+ * High-level data structures for collecting data from JSON.
+ * Easy-to-use reader and writer.
+
+Package: libjsoncpp-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libjsoncpp1 (= ${binary:Version}), ${misc:Depends}
+Description: library for reading and writing JSON for C++ (devel files)
+ This package provides all required developer resources like header-files
+ and statically linked version of the library.
+ .
+ jsoncpp is an implementation of a JSON reader and writer in C++. JSON
+ (JavaScript Object Notation) is a lightweight data-interchange format
+ that it is easy to parse and redeable for human. It is useful for
+ building config files, network communications protocols, etc.
+ .
+ This library provides following features:
+ .
+ * High-level data structures for collecting data from JSON.
+ * Easy-to-use reader and writer.

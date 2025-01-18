@@ -1,0 +1,10 @@
+Tests: tests
+Depends: libnss-wrapper,
+ gcc, libc-dev,
+ cmake (>= 2.8.8-3~), make,
+ libcmocka-dev,
+ netbase
+Restrictions: allow-stderr
+
+Tests: adequate
+Depends: libnss-wrapper, adequate

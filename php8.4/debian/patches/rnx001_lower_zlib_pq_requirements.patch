@@ -1,0 +1,20 @@
+--- a/build/php.m4	2024-11-23 13:48:09.000000000 +0100
++++ b/builkd/php.m4	2024-11-23 13:50:24.849516221 +0100
+@@ -1928,7 +1928,7 @@
+ dnl is given.
+ dnl
+ AC_DEFUN([PHP_SETUP_ZLIB], [dnl
+-PKG_CHECK_MODULES([ZLIB], [zlib >= 1.2.11], [dnl
++PKG_CHECK_MODULES([ZLIB], [zlib >= 1.2.8], [dnl
+   PHP_EVAL_INCLINE([$ZLIB_CFLAGS])
+   PHP_EVAL_LIBLINE([$ZLIB_LIBS], [$1])
+   $2], [$3])dnl
+@@ -1948,7 +1948,7 @@
+ dnl Set PostgreSQL installation directory if given from the configure argument.
+ AS_CASE([$4], [yes], [pgsql_dir=""], [pgsql_dir=$4])
+ AS_VAR_IF([pgsql_dir],,
+-  [PKG_CHECK_MODULES([PGSQL], [libpq >= 10.0],
++  [PKG_CHECK_MODULES([PGSQL], [libpq >= 9.0],
+     [found_pgsql=yes],
+     [found_pgsql=no])])
+ 

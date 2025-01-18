@@ -1,0 +1,33 @@
+#!/bin/sh
+set -e
+
+INITSCRIPTS="bootlogd stop-bootlogd-single stop-bootlogd"
+
+for F in $INITSCRIPTS; do
+	if [ -x /etc/init.d/$F ]; then
+		update-rc.d $F defaults >/dev/null || exit $?
+	fi
+done
+
+mkdir -p /etc/systemd/system
+for F in $INITSCRIPTS; do
+	SERVICE="$(basename $F .sh).service"
+	if [ -x /etc/init.d/$F ] && [ ! -e /etc/systemd/system/$SERVICE ]; then
+		ln -s /dev/null /etc/systemd/system/$SERVICE
+	fi
+done
+
+#
+# Create initial log files
+#
+for F in /var/log/boot
+do
+	if [ ! -f "$F" ] && touch "$F" >/dev/null 2>&1
+	then
+		echo "(Nothing has been logged yet. If you're still seeing this message your current init system might not write bootup messages to the system console at all.)" >| "$F"
+		chown root:adm "$F"
+		chmod 640 "$F"
+	fi
+done
+
+#DEBHELPER#

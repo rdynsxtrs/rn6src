@@ -18,15 +18,14 @@ diff --git a/Zend/zend_language_parser.c b/Zend/zend_language_parser.c
 index 050663f..ba027c5 100644
 --- a/Zend/zend_language_parser.c
 +++ b/Zend/zend_language_parser.c
-@@ -82,6 +82,8 @@
+@@ -78,6 +78,7 @@
  #define YYFREE free
  #endif
 
 +#include <string.h>
-+
+
  /* Substitute the type names.  */
  #define YYSTYPE         ZENDSTYPE
- /* Substitute the variable and function names.  */
 diff --git a/configure.ac b/configure.ac
 index 4dca4eb..76af52b 100644
 --- a/configure.ac

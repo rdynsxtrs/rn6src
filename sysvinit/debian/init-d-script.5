@@ -1,0 +1,85 @@
+.\" -*- nroff -*-
+.\" macros
+.de EX \" Begin Example
+.  IP
+.  ft CW
+.  nf
+.  ne \\$1
+..
+.de EE \" End Example
+.  ft P
+.  fi
+.  PP
+..
+.de URL \" URL formatting
+\\$2 \(la\\$1\(ra\\$3
+..
+.TH INIT-D-SCRIPT 5 "2014-02-09" "init-d-script" "File formats"
+.SH NAME
+init-d-script \- interpreter for short and simple init.d scripts.
+.SH DESCRIPTION
+Generic init.d script framework to reduce the redundant code in
+/etc/init.d/.  The goal is to create an init.d script that is Debian
+and LSB compliant.  When the Debian policy conflict with the LSB, the
+Debian policy take preference.  See
+.URL http://refspecs.linuxfoundation.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/iniscrptact.html "The LSB specification"
+for information about init.d scripts in the LSB.
+.P
+This is a simple example on how init-d-script can be used to start and
+stop a daemon with PID file support:
+.P
+.EX
+#!/usr/bin/env /lib/init/init-d-script
+### BEGIN INIT INFO
+# Provides:          atd
+# Required-Start:    $syslog $time $remote_fs
+# Required-Stop:     $syslog $time $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: run at jobs
+# Description:       Debian init script to start the daemon
+#                    running at jobs.
+### END INIT INFO
+DAEMON=/usr/sbin/atd
+.EE
+.P
+In addition to the DAEMON setting, one can specify DESC, NAME,
+PIDFILE (`none' means no PID file), or implement override functions
+do_force_reload_override, do_reload_override, do_restart_override,
+do_start_override, do_start_cmd_override, do_start_prepare,
+do_start_cleanup do_status_override, do_stop_override,
+do_stop_prepare, do_stop_cleanup and do_stop_cmd_override.
+.P
+If the daemon support reloading, implement the do_reload function to
+make the init.d script recognize the reload operation as well as use
+it for the force-reload operation.
+.P
+If DAEMON is 'none', the check to see if the daemon is installed is
+disabled, and replacement functions do_start_cmd_override,
+do_stop_cmd_override and do_status_override functions must be
+implemented.
+.P
+Services supporting reload should define the do_reload function.  If
+the service handle reload using a SIGUSR1 signal, the following alias
+can be used instead of implementing ones own do_reload function:
+.P
+.EX
+alias do_reload=do_reload_sigusr1
+.EE
+.RE
+.SH FILES
+.TP
+.I /lib/init/init-d-script
+Bourne shell interpreter with implementation of init.d actions
+.TP
+.I /etc/init.d/
+Location of init.d scripts.
+.RE
+.SH KNOWN BUGS/LIMITATIONS
+Not yet documented
+.SH AUTHOR
+This manpage was written by Petter Reinholdtsen <pere@debian.org>.
+.SH "SEE ALSO"
+.BR inittab (8),
+.BR service (8),
+.BR update-rc.d (8).

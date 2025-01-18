@@ -1,0 +1,18 @@
+Description: Fix a null pointer dereference bug in zip writer.
+Origin: upstream; https://github.com/libarchive/libarchive/commit/71420844e50bcac2552dc6c781cc5a84c4bc1d96
+Author: Young_X <YangX92@hotmail.com>
+Last-Update: 2019-02-06
+
+
+--- a/libarchive/archive_write_set_format_zip.c
++++ b/libarchive/archive_write_set_format_zip.c
+@@ -1430,6 +1430,9 @@
+ 	type = archive_entry_filetype(entry);
+ 	written_bytes = 0;
+ 
++	if (path == NULL)
++		return (ARCHIVE_FATAL);
++
+ 	ret = __archive_write_output(archive, path, strlen(path));
+ 	if (ret != ARCHIVE_OK)
+ 		return (ARCHIVE_FATAL);

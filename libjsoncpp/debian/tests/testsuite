@@ -1,0 +1,41 @@
+#!/bin/sh
+# Copyright 2016 Ghislain Antony Vaillant <ghisvail@gmail.com>
+#
+# This file is part of the autopkgtest testsuite for the libjsoncpp
+# source package.
+
+set -e
+
+# Presence of $ADTTMP implies that someone will handle cleanup for us, so we
+# can avoid duplicating the effort (signal handling, etc.) here.
+if [ -z "$ADTTMP" ]
+then
+        echo "Required envvar \"$ADTTMP\"is not set" >&2
+        exit 1
+fi
+
+# Copy testsuite source code.
+cp -a ./src/test_lib_json/* "$ADTTMP"
+cd "$ADTTMP"
+
+cat <<EOF > CMakeLists.txt
+cmake_minimum_required(VERSION 2.6.2)
+project(jsoncpp_test)
+
+find_package(jsoncpp REQUIRED)
+# Using pkg-config instead of cmake config-mode because the
+# packaged jsoncppConfig.cmake does not seem to work beyond detection.
+find_package(PkgConfig)
+pkg_check_modules(PC_jsoncpp QUIET jsoncpp)
+include_directories(\${PC_jsoncpp_INCLUDE_DIRS})
+link_libraries(\${PC_jsoncpp_LIBRARIES})
+
+add_executable(jsoncpp_test main.cpp jsontest.cpp jsontest.h)
+
+EOF
+
+# Configure, build and execute.
+mkdir build && cd build
+cmake ..
+make VERBOSE=1 -j$(nproc)
+./jsoncpp_test

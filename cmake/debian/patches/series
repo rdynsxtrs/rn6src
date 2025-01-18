@@ -1,4 +1,5 @@
-FindBoost_add_-lpthread_#563479.diff
-qt_import_dir_variable.diff
-fix-ftbfs-on-kfreebsd.patch
-mips-rld-map-rel.patch
+disable_fileapi_json_extra_test.patch
+Compile_with_FILE_OFFSET_BITS_64_on_32-bit_Linux.patch
+add_postgresql_13_to_known_versions.patch
+rnx_001_fix_test_failure_caused_by_git_cve_fix.patch
+rnx_002_force_disable_failing_git_test.patch

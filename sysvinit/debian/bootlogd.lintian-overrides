@@ -1,0 +1,10 @@
+bootlogd: script-calls-init-script-directly ./etc/init.d/stop-bootlogd:19
+bootlogd: script-calls-init-script-directly ./etc/init.d/stop-bootlogd-single:36
+bootlogd: init.d-script-call-internal-API etc/init.d/bootlogd
+bootlogd: init.d-script-missing-dependency-on-remote_fs etc/init.d/bootlogd: required-start
+
+# Registered in "postrm" scripts, but not recognized by Lintian.
+bootlogd: script-in-etc-init.d-not-registered-via-update-rc.d
+
+bootlogd: init.d-script-missing-dependency-on-local_fs
+bootlogd: init.d-script-depends-on-all-virtual-facility
