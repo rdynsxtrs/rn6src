@@ -12,6 +12,23 @@ as well as the original source archive are stored in the repository.
 Additionally a README.md file in the directory of a package _may_ give hints
 on special prerequisites needed to build the package.
 
+## Installing packages
+
+In case you just want to install some of the packages provided by the code
+here, it is easier to just add the package repository to your ReadyNAS. To
+do so
+- log in to your ReadyNAS using ssh
+- on the cli run
+  ``` bash
+  wget https://repos.rnxtras.com/debian/add_rnx_repo.sh
+  chmod +x add_rnx_repo.sh
+  ./add_rnx_repo.sh
+  ```
+- now you should be able to install packages using
+  ``` bash
+  apt install name_of_package
+  ```
+
 ## Building packages
 
 To build a package 
