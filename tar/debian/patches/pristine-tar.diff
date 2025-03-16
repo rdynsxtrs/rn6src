@@ -1,0 +1,103 @@
+--- a/src/common.h
++++ b/src/common.h
+@@ -971,4 +971,7 @@
+ int group_map_translate (gid_t gid, gid_t *new_gid, char const **new_name);
+ 
+ 
++GLOBAL int debian_longlink_hack;
++GLOBAL int pristine_tar_compat;
++
+ _GL_INLINE_HEADER_END
+--- a/src/create.c
++++ b/src/create.c
+@@ -28,6 +28,9 @@
+ #include "common.h"
+ #include <hash.h>
+ 
++extern int debian_longlink_hack;
++extern int pristine_tar_compat;
++
+ /* Error number to use when an impostor is discovered.
+    Pretend the impostor isn't there.  */
+ enum { IMPOSTOR_ERRNO = ENOENT };
+@@ -535,6 +538,11 @@
+   return header;
+ }
+ 
++#define FILL(field,byte) do {            \
++  memset(field, byte, sizeof(field)-1);  \
++  (field)[sizeof(field)-1] = 0;          \
++} while (0)
++
+ /* Write a GNUTYPE_LONGLINK or GNUTYPE_LONGNAME block.  */
+ static void
+ write_gnu_long_link (struct tar_stat_info *st, const char *p, char type)
+@@ -545,6 +553,11 @@
+   char *tmpname;
+ 
+   header = start_private_header ("././@LongLink", size, 0);
++  if (pristine_tar_compat) {
++	  FILL (header->header.mtime, '0');
++	  FILL (header->header.mode, '0');
++  }
++
+   uid_to_uname (0, &tmpname);
+   UNAME_TO_CHARS (tmpname, header->header.uname);
+   free (tmpname);
+@@ -725,7 +738,7 @@
+       return write_short_name (st);
+     }
+   else if (NAME_FIELD_SIZE - (archive_format == OLDGNU_FORMAT)
+-	   < strlen (st->file_name))
++	   < strlen (st->file_name) + debian_longlink_hack)
+     return write_long_name (st);
+   else
+     return write_short_name (st);
+@@ -1496,7 +1509,7 @@
+ 	  block_ordinal = current_block_ordinal ();
+ 	  assign_string (&st->link_name, link_name);
+ 	  if (NAME_FIELD_SIZE - (archive_format == OLDGNU_FORMAT)
+-	      < strlen (link_name))
++	      < strlen (link_name) + debian_longlink_hack)
+ 	    write_long_link (st);
+ 
+ 	  st->stat.st_size = 0;
+--- a/src/tar.c
++++ b/src/tar.c
+@@ -1204,6 +1204,26 @@
+   return res;
+ }
+ 
++/* Debian specific environment variable used by pristine-tar to enable use of
++ * longlinks for filenames exactly 100 bytes long. */
++void debian_longlink_hack_init (void) {
++ char *s=getenv ("TAR_LONGLINK_100");
++ if (s && strcmp(s, "1") == 0)
++	 debian_longlink_hack=1;
++ else
++	 debian_longlink_hack=0;
++}
++
++/* pristine-tar sets this environment variable to force fields in longlinks
++ * to be zeroed as was the case in tar 1.26. */
++void pristine_tar_compat_init (void) {
++ char *s=getenv ("PRISTINE_TAR_COMPAT");
++ if (s && strcmp(s, "1") == 0)
++	 pristine_tar_compat=1;
++ else
++	 pristine_tar_compat=0;
++}
++
+ 
+ static uintmax_t
+ parse_owner_group (char *arg, uintmax_t field_max, char const **name_option)
+@@ -2682,6 +2702,9 @@
+ 
+   set_quoting_style (0, DEFAULT_QUOTING_STYLE);
+ 
++  debian_longlink_hack_init ();
++  pristine_tar_compat_init ();
++
+   /* Make sure we have first three descriptors available */
+   stdopen ();
+ 
