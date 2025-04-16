@@ -1,0 +1,11 @@
+[format.version]
+major = 0
+minor = 1
+
+[program.trivial]
+executable = "triv"
+
+[program.trivial.commands]
+clean = [["make", "clean"]]
+build = [["make"]]
+test = [["make", "test"]]

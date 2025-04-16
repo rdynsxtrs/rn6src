@@ -1,0 +1,61 @@
+Source: libzstd
+Maintainer: Debian Med Packaging Team <debian-med-packaging@lists.alioth.debian.org>
+Uploaders: Kevin Murray <kdmfoss@gmail.com>,
+           Olivier Sallou <osallou@debian.org>,
+           Alexandre Mestiashvili <mestia@debian.org>
+Section: libs
+Priority: optional
+Build-Depends: d-shlibs,
+               debhelper-compat (= 12),
+               help2man,
+               liblz4-dev,
+               liblzma-dev,
+               zlib1g-dev
+Rules-Requires-Root: binary-targets
+Standards-Version: 4.5.1
+Vcs-Browser: https://salsa.debian.org/med-team/libzstd
+Vcs-Git: https://salsa.debian.org/med-team/libzstd.git
+Homepage: https://github.com/facebook/zstd
+
+Package: libzstd-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+Depends: libzstd1 (= ${binary:Version}),
+         ${misc:Depends}
+Description: fast lossless compression algorithm -- development files
+ Zstd, short for Zstandard, is a fast lossless compression algorithm, targeting
+ real-time compression scenarios at zlib-level compression ratio.
+ .
+ This package contains the headers and static library.
+
+Package: libzstd1
+Architecture: any
+Multi-Arch: same
+Section: libs
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Description: fast lossless compression algorithm
+ Zstd, short for Zstandard, is a fast lossless compression algorithm, targeting
+ real-time compression scenarios at zlib-level compression ratio.
+ .
+ This package contains the shared library.
+
+Package: zstd
+Architecture: any
+Section: utils
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Description: fast lossless compression algorithm -- CLI tool
+ Zstd, short for Zstandard, is a fast lossless compression algorithm, targeting
+ real-time compression scenarios at zlib-level compression ratio.
+ .
+ This package contains the CLI program implementing zstd.
+
+Package: libzstd1-udeb
+Architecture: any
+Section: debian-installer
+Depends: ${misc:Depends},
+         ${shlibs:Depends}
+Package-Type: udeb
+Description: fast lossless compression algorithm library for debian-installer

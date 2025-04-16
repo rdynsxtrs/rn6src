@@ -1,0 +1,104 @@
+[build-system]
+requires = ["setuptools >= 61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "check-build"
+description = "Check whether some example programs can be compiled and built"
+readme = "README.md"
+requires-python = ">= 3.10"
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: DFSG approved",
+  "License :: Freely Distributable",
+  "License :: OSI Approved",
+  "License :: OSI Approved :: BSD License",
+  "Operating System :: POSIX",
+  "Operating System :: Unix",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Topic :: Software Development",
+  "Topic :: Software Development :: Testing",
+  "Topic :: Utilities",
+  "Typing :: Typed",
+]
+dynamic = ["dependencies", "version"]
+
+[[project.authors]]
+name = "Peter Pentchev"
+email = "roam@ringlet.net"
+
+[project.scripts]
+check-build = "check_build.__main__:main"
+
+[project.urls]
+Homepage = "https://gitlab.com/ppentchev/check-build"
+Changes = "https://gitlab.com/ppentchev/check-build/-/blob/main/CHANGELOG.md"
+"Issue Tracker" = "https://gitlab.com/ppentchev/check-build/-/issues"
+"Source Code" = "https://gitlab.com/ppentchev/check-build"
+
+[tool.setuptools]
+zip-safe = true
+package-dir = {"" = "python"}
+packages = ["check_build"]
+
+[tool.setuptools.package-data]
+check_build = ["py.typed"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = "requirements/install.txt"}
+version = {attr = "check_build.defs.VERSION"}
+
+[tool.black]
+target-version = ["py310", "py311"]
+line-length = 100
+
+[tool.mypy]
+strict = true
+python-version = "3.10"
+
+# This is the list of the Pylint 2.16.1 default plugins.
+[tool.pylint]
+load-plugins = [
+  "pylint.extensions.bad_builtin",
+  "pylint.extensions.broad_try_clause",
+  "pylint.extensions.check_elif",
+  "pylint.extensions.code_style",
+  # "pylint.extensions.comparetozero",  # clarity
+  "pylint.extensions.comparison_placement",
+  "pylint.extensions.confusing_elif",
+  "pylint.extensions.consider_refactoring_into_while_condition",
+  "pylint.extensions.consider_ternary_expression",
+  "pylint.extensions.dict_init_mutate",
+  "pylint.extensions.docparams",
+  "pylint.extensions.docstyle",
+  "pylint.extensions.dunder",
+  # "pylint.extensions.empty_comment",  # the copyright notices trigger that one
+  "pylint.extensions.emptystring",
+  "pylint.extensions.eq_without_hash",
+  "pylint.extensions.for_any_all",
+  "pylint.extensions.magic_value",
+  "pylint.extensions.mccabe",
+  "pylint.extensions.no_self_use",
+  "pylint.extensions.overlapping_exceptions",
+  "pylint.extensions.private_import",
+  "pylint.extensions.redefined_loop_name",
+  "pylint.extensions.redefined_variable_type",
+  "pylint.extensions.set_membership",
+  "pylint.extensions.typing",
+  "pylint.extensions.while_used",
+]
+
+[tool.pylint.main]
+disable = [
+  "consider-using-assignment-expr",
+]
+
+[tool.test-stages]
+stages = ["ruff", "@check", "@tests"]

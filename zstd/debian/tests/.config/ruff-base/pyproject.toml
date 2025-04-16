@@ -1,0 +1,33 @@
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+select = []
+ignore = [
+  # We know what "self" is, we hope.
+  "ANN101",
+
+  # We leave most of the formatting to the `black` tool.
+  "COM812",
+
+  # No blank lines before the class docstring, TYVM
+  "D203",
+
+  # The multi-line docstring summary starts on the same line
+  "D213",
+
+  # Too restrictive.
+  "EM",
+
+  # We have different ideas about the ordering of the typing classes.
+  "I",
+
+  # typedload needs this.
+  ## "TCH003",
+
+  # Too restrictive.
+  "TRY003",
+]
+
+[tool.ruff.per-file-ignores]
+# This is a test suite.
+"*/tests/*.py" = ["S101"]

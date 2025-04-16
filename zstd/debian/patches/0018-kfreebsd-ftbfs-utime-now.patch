@@ -1,0 +1,28 @@
+Description: Fix the build on kFreeBSD - no UTIME_NOW.
+Forwarded: no
+Author: Peter Pentchev <roam@ringlet.net>
+Last-Update: 2023-02-13
+
+--- a/programs/util.c
++++ b/programs/util.c
+@@ -28,7 +28,8 @@
+ #  include <io.h>         /* _chmod */
+ #else
+ #  include <unistd.h>     /* chown, stat */
+-#  if PLATFORM_POSIX_VERSION < 200809L || !defined(st_mtime)
++#  if PLATFORM_POSIX_VERSION < 200809L || !defined(st_mtime) || defined(__FreeBSD_kernel__)
++#    include <sys/types.h>
+ #    include <utime.h>    /* utime */
+ #  else
+ #    include <fcntl.h>    /* AT_FDCWD */
+@@ -216,8 +217,9 @@
+      * check because there are some platforms that claim to be POSIX 2008
+      * compliant but which do not have st_mtim...
+      * And then there is alpha, which doesn't define st_mtime, but still has it.
++     * Also, kFreeBSD does not seem to define UTIME_NOW.
+      */
+-#if (PLATFORM_POSIX_VERSION >= 200809L) && (defined(st_mtime) || defined(__alpha__))
++#if (PLATFORM_POSIX_VERSION >= 200809L) && (defined(st_mtime) || defined(__alpha__)) && (!defined(__FreeBSD_kernel__))
+     {
+         /* (atime, mtime) */
+         struct timespec timebuf[2] = { {0, UTIME_NOW} };
