@@ -14,7 +14,7 @@
 0014-lp564920-fix-big-files.patch
 0015-temporary-path-fixes-for-multiarch.patch
 0016-hurd-noptrace.patch
-0017-php-5.3.9-gnusrc.patch
+# 0017-php-5.3.9-gnusrc.patch
 0018-php-5.3.3-macropen.patch
 0019-php-5.2.4-embed.patch
 # 0020-php-fpm-m68k.patch
@@ -41,3 +41,4 @@
 0041-Allow-printing-credits-buffer-larger-than-4k.patch
 0042-Don-t-close-the-credits-buffer-file-descriptor-too-e.patch
 rnx_bring_back_build_from_8.2.18.patch
+rnx_fix_for_older_glibc.patch
