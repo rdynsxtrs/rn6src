@@ -1,0 +1,3 @@
+/usr/lib/llvm-@LLVM_VERSION@/lib/libomp.so usr/lib/@DEB_HOST_MULTIARCH@/libomp5.so
+/usr/lib/llvm-@LLVM_VERSION@/lib/libomp.so usr/lib/@DEB_HOST_MULTIARCH@/libiomp5.so
+

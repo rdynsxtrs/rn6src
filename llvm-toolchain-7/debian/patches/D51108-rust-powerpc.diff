@@ -1,0 +1,65 @@
+Index: llvm-toolchain-7-7~+rc2/lib/Target/PowerPC/PPCISelLowering.cpp
+===================================================================
+--- llvm-toolchain-7-7~+rc2.orig/lib/Target/PowerPC/PPCISelLowering.cpp
++++ llvm-toolchain-7-7~+rc2/lib/Target/PowerPC/PPCISelLowering.cpp
+@@ -3480,9 +3480,14 @@ SDValue PPCTargetLowering::LowerFormalAr
+       // Argument stored in memory.
+       assert(VA.isMemLoc());
+ 
++      // Get the extended size of the argument type in stack
+       unsigned ArgSize = VA.getLocVT().getStoreSize();
+-      int FI = MFI.CreateFixedObject(ArgSize, VA.getLocMemOffset(),
+-                                     isImmutable);
++      // Get the actual size of the argument type
++      unsigned ObjSize = VA.getValVT().getStoreSize();
++      unsigned ArgOffset = VA.getLocMemOffset();
++      // Stack objects in PPC32 are right justified.
++      ArgOffset += ArgSize - ObjSize;
++      int FI = MFI.CreateFixedObject(ArgSize, ArgOffset, isImmutable);
+ 
+       // Create load nodes to retrieve arguments from the stack.
+       SDValue FIN = DAG.getFrameIndex(FI, PtrVT);
+@@ -5437,10 +5442,11 @@ SDValue PPCTargetLowering::LowerCall_32S
+       Arg = PtrOff;
+     }
+ 
+-    if (VA.isRegLoc()) {
+-      if (Arg.getValueType() == MVT::i1)
+-        Arg = DAG.getNode(ISD::ZERO_EXTEND, dl, MVT::i32, Arg);
++    // Ensure callee will get either 0x00000001 or 0x00000000.
++    if (Arg.getValueType() == MVT::i1)
++      Arg = DAG.getNode(ISD::ZERO_EXTEND, dl, MVT::i32, Arg);
+ 
++    if (VA.isRegLoc()) {
+       seenFloatArg |= VA.getLocVT().isFloatingPoint();
+       // Put argument in a physical register.
+       RegsToPass.push_back(std::make_pair(VA.getLocReg(), Arg));
+Index: llvm-toolchain-7-7~+rc2/test/CodeGen/PowerPC/ppc32-i1-stack-arguments-abi-bug.ll
+===================================================================
+--- /dev/null
++++ llvm-toolchain-7-7~+rc2/test/CodeGen/PowerPC/ppc32-i1-stack-arguments-abi-bug.ll
+@@ -0,0 +1,24 @@
++; RUN: llc -verify-machineinstrs < %s -mcpu=ppc32 -mattr=+crbits | FileCheck %s
++target triple = "powerpc-unknown-linux-gnu"
++
++define zeroext i1 @check_callee(
++  i1 zeroext, i1 zeroext, i1 zeroext, i1 zeroext,
++  i1 zeroext, i1 zeroext, i1 zeroext, i1 zeroext,
++  i1 zeroext %s1
++) {
++  call void @check_caller(
++    i1 zeroext true, i1 zeroext true, i1 zeroext true, i1 zeroext true,
++    i1 zeroext true, i1 zeroext true, i1 zeroext true, i1 zeroext true,
++    i1 zeroext %s1)
++  ret i1 true
++}
++
++; CHECK-LABEL: @check_callee
++; CHECK: lbz {{[0-9]+}}, 27(1)
++; CHECK: stw {{[0-9]+}}, 8(1)
++
++declare void @check_caller(
++  i1 zeroext, i1 zeroext, i1 zeroext, i1 zeroext,
++  i1 zeroext, i1 zeroext, i1 zeroext, i1 zeroext,
++  i1 zeroext
++)

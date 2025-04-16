@@ -1,0 +1,18 @@
+The MIPS port aims to support the Loongson 3 family of CPUs in addition
+of the other MIPS CPUs. On the Loongson 3 family the MADD4 instructions
+are fused, while they are not fused on the other MIPS CPUs. In order to
+support both, we have to disabled those instructions.
+
+For that, the patch below basically corresponds to the --with-madd4=no
+used on the GCC side.
+
+--- a/clang/lib/Basic/Targets/Mips.h
++++ b/clang/lib/Basic/Targets/Mips.h
+@@ -306,6 +306,7 @@ public:
+     FloatABI = HardFloat;
+     DspRev = NoDSP;
+     HasFP64 = isFP64Default();
++    DisableMadd4 = true;
+ 
+     for (const auto &Feature : Features) {
+       if (Feature == "+single-float")

@@ -1,0 +1,1 @@
+libc++abi-@LLVM_VERSION@-dev: arch-dependent-file-not-in-arch-specific-directory usr/lib/llvm-@LLVM_VERSION@/lib/libc++abi.a

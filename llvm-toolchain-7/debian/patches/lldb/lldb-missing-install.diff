@@ -1,0 +1,24 @@
+Index: llvm-toolchain-snapshot_6.0~svn319966/lldb/tools/argdumper/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-snapshot_6.0~svn319966.orig/lldb/tools/argdumper/CMakeLists.txt
++++ llvm-toolchain-snapshot_6.0~svn319966/lldb/tools/argdumper/CMakeLists.txt
+@@ -4,3 +4,7 @@ add_lldb_tool(lldb-argdumper INCLUDE_IN_
+   LINK_LIBS
+     lldbUtility
+   )
++
++install(TARGETS lldb-argdumper
++  RUNTIME DESTINATION bin)
++
+Index: llvm-toolchain-snapshot_6.0~svn319966/lldb/tools/lldb-server/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-snapshot_6.0~svn319966.orig/lldb/tools/lldb-server/CMakeLists.txt
++++ llvm-toolchain-snapshot_6.0~svn319966/lldb/tools/lldb-server/CMakeLists.txt
+@@ -55,3 +55,7 @@ add_lldb_tool(lldb-server INCLUDE_IN_FRA
+ )
+ 
+ target_link_libraries(lldb-server PRIVATE ${LLDB_SYSTEM_LIBS})
++
++install(TARGETS lldb-server
++  RUNTIME DESTINATION bin)
++

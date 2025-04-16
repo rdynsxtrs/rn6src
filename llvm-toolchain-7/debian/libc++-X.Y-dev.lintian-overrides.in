@@ -1,0 +1,3 @@
+libc++-@LLVM_VERSION@-dev: arch-dependent-file-not-in-arch-specific-directory usr/lib/llvm-@LLVM_VERSION@/lib/libc++.a
+libc++-@LLVM_VERSION@-dev: arch-dependent-file-not-in-arch-specific-directory usr/lib/llvm-@LLVM_VERSION@/lib/libc++fs.a
+libc++-@LLVM_VERSION@-dev: arch-dependent-file-not-in-arch-specific-directory usr/lib/llvm-@LLVM_VERSION@/lib/libc++experimental.a

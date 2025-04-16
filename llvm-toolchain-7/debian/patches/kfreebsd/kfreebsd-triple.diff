@@ -1,0 +1,23 @@
+Index: llvm-toolchain-7-7.0.1/unittests/ADT/TripleTest.cpp
+===================================================================
+--- llvm-toolchain-7-7.0.1.orig/unittests/ADT/TripleTest.cpp
++++ llvm-toolchain-7-7.0.1/unittests/ADT/TripleTest.cpp
+@@ -99,6 +99,18 @@ TEST(TripleTest, ParsedIDs) {
+   EXPECT_EQ(Triple::Hurd, T.getOS());
+   EXPECT_EQ(Triple::GNU, T.getEnvironment());
+ 
++  T = Triple("i386-pc-kfreebsd-gnu");
++  EXPECT_EQ(Triple::x86, T.getArch());
++  EXPECT_EQ(Triple::PC, T.getVendor());
++  EXPECT_EQ(Triple::kFreeBSD, T.getOS());
++  EXPECT_EQ(Triple::GNU, T.getEnvironment());
++
++  T = Triple("x86_64-pc-kfreebsd-gnu");
++  EXPECT_EQ(Triple::x86_64, T.getArch());
++  EXPECT_EQ(Triple::PC, T.getVendor());
++  EXPECT_EQ(Triple::kFreeBSD, T.getOS());
++  EXPECT_EQ(Triple::GNU, T.getEnvironment());
++
+   T = Triple("x86_64-pc-linux-gnu");
+   EXPECT_EQ(Triple::x86_64, T.getArch());
+   EXPECT_EQ(Triple::PC, T.getVendor());

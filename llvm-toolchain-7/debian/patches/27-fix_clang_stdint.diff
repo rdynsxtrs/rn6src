@@ -1,0 +1,29 @@
+Index: llvm-toolchain-snapshot_5.0~svn301630/clang/lib/Headers/stdint.h
+===================================================================
+--- llvm-toolchain-snapshot_5.0~svn301630.orig/clang/lib/Headers/stdint.h
++++ llvm-toolchain-snapshot_5.0~svn301630/clang/lib/Headers/stdint.h
+@@ -22,8 +22,6 @@
+  *
+ \*===----------------------------------------------------------------------===*/
+ 
+-#ifndef __CLANG_STDINT_H
+-#define __CLANG_STDINT_H
+ 
+ /* If we're hosted, fall back to the system's stdint.h, which might have
+  * additional definitions.
+@@ -72,6 +70,8 @@
+ # endif
+ 
+ #else
++#ifndef __CLANG_STDINT_H
++#define __CLANG_STDINT_H
+ 
+ /* C99 7.18.1.1 Exact-width integer types.
+  * C99 7.18.1.2 Minimum-width integer types.
+@@ -700,5 +700,5 @@ typedef __UINTMAX_TYPE__ uintmax_t;
+ #define  INTMAX_C(v) __int_c(v,  __INTMAX_C_SUFFIX__)
+ #define UINTMAX_C(v) __int_c(v, __UINTMAX_C_SUFFIX__)
+ 
+-#endif /* __STDC_HOSTED__ */
+ #endif /* __CLANG_STDINT_H */
++#endif /* __STDC_HOSTED__ */

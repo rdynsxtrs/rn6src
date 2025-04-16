@@ -1,0 +1,633 @@
+Index: llvm-toolchain-7-7.0.1/clang/lib/Driver/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-7-7.0.1.orig/clang/lib/Driver/CMakeLists.txt
++++ llvm-toolchain-7-7.0.1/clang/lib/Driver/CMakeLists.txt
+@@ -48,6 +48,7 @@ add_clang_library(clangDriver
+   ToolChains/HIP.cpp
+   ToolChains/Hexagon.cpp
+   ToolChains/Hurd.cpp
++  ToolChains/KFreeBSD.cpp
+   ToolChains/Linux.cpp
+   ToolChains/MipsLinux.cpp
+   ToolChains/MinGW.cpp
+Index: llvm-toolchain-7-7.0.1/clang/lib/Driver/Driver.cpp
+===================================================================
+--- llvm-toolchain-7-7.0.1.orig/clang/lib/Driver/Driver.cpp
++++ llvm-toolchain-7-7.0.1/clang/lib/Driver/Driver.cpp
+@@ -27,6 +27,7 @@
+ #include "ToolChains/Haiku.h"
+ #include "ToolChains/Hexagon.h"
+ #include "ToolChains/Hurd.h"
++#include "ToolChains/KFreeBSD.h"
+ #include "ToolChains/Lanai.h"
+ #include "ToolChains/Linux.h"
+ #include "ToolChains/MSVC.h"
+@@ -4320,6 +4321,9 @@ const ToolChain &Driver::getToolChain(co
+     case llvm::Triple::FreeBSD:
+       TC = llvm::make_unique<toolchains::FreeBSD>(*this, Target, Args);
+       break;
++    case llvm::Triple::kFreeBSD:
++      TC = llvm::make_unique<toolchains::kFreeBSD>(*this, Target, Args);
++      break;
+     case llvm::Triple::Minix:
+       TC = llvm::make_unique<toolchains::Minix>(*this, Target, Args);
+       break;
+Index: llvm-toolchain-7-7.0.1/clang/lib/Driver/ToolChains/Clang.cpp
+===================================================================
+--- llvm-toolchain-7-7.0.1.orig/clang/lib/Driver/ToolChains/Clang.cpp
++++ llvm-toolchain-7-7.0.1/clang/lib/Driver/ToolChains/Clang.cpp
+@@ -528,7 +528,7 @@ static bool useFramePointerForTargetByDe
+     return !areOptimizationsEnabled(Args);
+   }
+ 
+-  if (Triple.isOSLinux() || Triple.getOS() == llvm::Triple::CloudABI || Triple.isOSHurd()) {
++  if (Triple.isOSLinux() || Triple.getOS() == llvm::Triple::CloudABI || Triple.isOSHurd() || Triple.isOSkFreeBSD()) {
+     switch (Triple.getArch()) {
+     // Don't use a frame pointer on linux if optimizing for certain targets.
+     case llvm::Triple::mips64:
+Index: llvm-toolchain-7-7.0.1/clang/lib/Driver/ToolChains/Gnu.cpp
+===================================================================
+--- llvm-toolchain-7-7.0.1.orig/clang/lib/Driver/ToolChains/Gnu.cpp
++++ llvm-toolchain-7-7.0.1/clang/lib/Driver/ToolChains/Gnu.cpp
+@@ -234,6 +234,8 @@ static const char *getLDMOption(const ll
+   case llvm::Triple::x86:
+     if (T.isOSIAMCU())
+       return "elf_iamcu";
++    if (T.isOSkFreeBSD())
++      return "elf_i386_fbsd";
+     return "elf_i386";
+   case llvm::Triple::aarch64:
+     return "aarch64linux";
+@@ -277,6 +279,8 @@ static const char *getLDMOption(const ll
+   case llvm::Triple::x86_64:
+     if (T.getEnvironment() == llvm::Triple::GNUX32)
+       return "elf32_x86_64";
++    if (T.isOSkFreeBSD())
++      return "elf_x86_64_fbsd";
+     return "elf_x86_64";
+   default:
+     return nullptr;
+@@ -499,6 +503,18 @@ void tools::gnutools::Linker::ConstructJ
+         CmdArgs.push_back("--wrap=pthread_create");
+ 
+       CmdArgs.push_back("-lc");
++      if (getToolChain().getTriple().isOSkFreeBSD()) {
++	switch (getToolChain().getArch()) {
++	case llvm::Triple::x86_64:
++	  CmdArgs.push_back("-rpath-link=/lib/x86_64-kfreebsd-gnu");
++	  break;
++	case llvm::Triple::x86:
++	  CmdArgs.push_back("-rpath-link=/lib/i386-kfreebsd-gnu");
++	  break;
++	default:
++	  break;
++	}
++      }
+ 
+       // Add IAMCU specific libs, if needed.
+       if (IsIAMCU)
+@@ -1836,7 +1852,8 @@ void Generic_GCC::GCCInstallationDetecto
+       "x86_64-redhat-linux",    "x86_64-suse-linux",
+       "x86_64-manbo-linux-gnu", "x86_64-linux-gnu",
+       "x86_64-slackware-linux", "x86_64-unknown-linux",
+-      "x86_64-amazon-linux"};
++      "x86_64-amazon-linux",    "x86_64-kfreebsd-gnu",
++      "x86_64-pc-kfreebsd-gnu"};
+   static const char *const X32LibDirs[] = {"/libx32", "/lib"};
+   static const char *const X32Triples[] = {
+       "x86_64-linux-gnux32",    "x86_64-unknown-linux-gnux32",
+@@ -1847,8 +1864,9 @@ void Generic_GCC::GCCInstallationDetecto
+       "i386-linux-gnu",       "i386-redhat-linux6E",   "i686-redhat-linux",
+       "i586-redhat-linux",    "i386-redhat-linux",     "i586-suse-linux",
+       "i486-slackware-linux", "i686-montavista-linux", "i586-linux-gnu",
+-      "i386-gnu",             "i486-gnu",              "i586-gnu",
+-      "i686-gnu"};
++      "i686-kfreebsd-gnu",    "i686-pc-kfreebsd-gnu",  "i486-kfreebsd-gnu",
++      "i386-kfreebsd-gnu",    "i386-gnu",              "i486-gnu",
++      "i586-gnu",             "i686-gnu"};
+ 
+   static const char *const MIPSLibDirs[] = {"/lib"};
+   static const char *const MIPSTriples[] = {"mips-linux-gnu", "mips-mti-linux",
+Index: llvm-toolchain-7-7.0.1/clang/lib/Driver/ToolChains/KFreeBSD.cpp
+===================================================================
+--- /dev/null
++++ llvm-toolchain-7-7.0.1/clang/lib/Driver/ToolChains/KFreeBSD.cpp
+@@ -0,0 +1,459 @@
++//===--- KFreeBSD.cpp - kFreeBSD ToolChain Implementations --------*- C++ -*-===//
++//
++//                     The LLVM Compiler Infrastructure
++//
++// This file is distributed under the University of Illinois Open Source
++// License. See LICENSE.TXT for details.
++//
++//===----------------------------------------------------------------------===//
++
++#include "KFreeBSD.h"
++#include "CommonArgs.h"
++#include "clang/Basic/VirtualFileSystem.h"
++#include "clang/Config/config.h"
++#include "clang/Driver/Driver.h"
++#include "clang/Driver/Options.h"
++#include "clang/Driver/SanitizerArgs.h"
++#include "llvm/Option/ArgList.h"
++#include "llvm/ProfileData/InstrProf.h"
++#include "llvm/Support/Path.h"
++
++using namespace clang::driver;
++using namespace clang::driver::toolchains;
++using namespace clang;
++using namespace llvm::opt;
++
++using tools::addPathIfExists;
++
++/// Get our best guess at the multiarch triple for a target.
++///
++/// Debian-based systems are starting to use a multiarch setup where they use
++/// a target-triple directory in the library and header search paths.
++/// Unfortunately, this triple does not align with the vanilla target triple,
++/// so we provide a rough mapping here.
++static std::string getMultiarchTriple(const Driver &D,
++                                      const llvm::Triple &TargetTriple,
++                                      StringRef SysRoot) {
++  // For most architectures, just use whatever we have rather than trying to be
++  // clever.
++  switch (TargetTriple.getArch()) {
++  default:
++    break;
++
++  // We use the existence of '/lib/<triple>' as a directory to detect
++  // some common kfreebsd triples that don't quite match the Clang
++  // triple for both 32-bit and 64-bit targets. Multiarch fixes its
++  // install triples to these regardless of what the actual target
++  // triple is.
++  case llvm::Triple::x86_64:
++    if (D.getVFS().exists(SysRoot + "/lib/x86_64-kfreebsd-gnu"))
++      return "x86_64-kfreebsd-gnu";
++    break;
++  case llvm::Triple::x86:
++    if (D.getVFS().exists(SysRoot + "/lib/i386-kfreebsd-gnu"))
++      return "i386-kfreebsd-gnu";
++    break;
++  }
++
++  return TargetTriple.str();
++}
++
++static StringRef getOSLibDir(const llvm::Triple &Triple, const ArgList &Args) {
++  // It happens that only x86 and PPC use the 'lib32' variant of oslibdir, and
++  // using that variant while targeting other architectures causes problems
++  // because the libraries are laid out in shared system roots that can't cope
++  // with a 'lib32' library search path being considered. So we only enable
++  // them when we know we may need it.
++  //
++  // FIXME: This is a bit of a hack. We should really unify this code for
++  // reasoning about oslibdir spellings with the lib dir spellings in the
++  // GCCInstallationDetector, but that is a more significant refactoring.
++
++  if (Triple.getArch() == llvm::Triple::x86)
++    return "lib";
++
++  if (Triple.getArch() == llvm::Triple::x86_64)
++    return "lib";
++
++  return Triple.isArch32Bit() ? "lib" : "lib64";
++}
++
++static void addMultilibsFilePaths(const Driver &D, const MultilibSet &Multilibs,
++                                  const Multilib &Multilib,
++                                  StringRef InstallPath,
++                                  ToolChain::path_list &Paths) {
++  if (const auto &PathsCallback = Multilibs.filePathsCallback())
++    for (const auto &Path : PathsCallback(Multilib))
++      addPathIfExists(D, InstallPath + Path, Paths);
++}
++
++kFreeBSD::kFreeBSD(const Driver &D, const llvm::Triple &Triple,
++		   const ArgList &Args)
++    : Generic_ELF(D, Triple, Args) {
++  GCCInstallation.init(Triple, Args);
++  Multilibs = GCCInstallation.getMultilibs();
++  std::string SysRoot = computeSysRoot();
++
++  // Cross-compiling binutils and GCC installations (vanilla and openSUSE at
++  // least) put various tools in a triple-prefixed directory off of the parent
++  // of the GCC installation. We use the GCC triple here to ensure that we end
++  // up with tools that support the same amount of cross compiling as the
++  // detected GCC installation. For example, if we find a GCC installation
++  // targeting x86_64, but it is a bi-arch GCC installation, it can also be
++  // used to target i386.
++  // FIXME: This seems unlikely to be Linux-, kFreeBSD- or Hurd-specific.
++  ToolChain::path_list &PPaths = getProgramPaths();
++  PPaths.push_back(Twine(GCCInstallation.getParentLibPath() + "/../" +
++                         GCCInstallation.getTriple().str() + "/bin")
++                       .str());
++
++#ifdef ENABLE_LINKER_BUILD_ID
++  ExtraOpts.push_back("--build-id");
++#endif
++
++  // The selection of paths to try here is designed to match the patterns which
++  // the GCC driver itself uses, as this is part of the GCC-compatible driver.
++  // This was determined by running GCC in a fake filesystem, creating all
++  // possible permutations of these directories, and seeing which ones it added
++  // to the link paths.
++  path_list &Paths = getFilePaths();
++
++  const std::string OSLibDir = getOSLibDir(Triple, Args);
++  const std::string MultiarchTriple = getMultiarchTriple(D, Triple, SysRoot);
++
++  // Add the multilib suffixed paths where they are available.
++  if (GCCInstallation.isValid()) {
++    const llvm::Triple &GCCTriple = GCCInstallation.getTriple();
++    const std::string &LibPath = GCCInstallation.getParentLibPath();
++    const Multilib &Multilib = GCCInstallation.getMultilib();
++    const MultilibSet &Multilibs = GCCInstallation.getMultilibs();
++
++    // Add toolchain / multilib specific file paths.
++    addMultilibsFilePaths(D, Multilibs, Multilib,
++                          GCCInstallation.getInstallPath(), Paths);
++
++    // Sourcery CodeBench MIPS toolchain holds some libraries under
++    // a biarch-like suffix of the GCC installation.
++    addPathIfExists(D, GCCInstallation.getInstallPath() + Multilib.gccSuffix(),
++                    Paths);
++
++    // GCC cross compiling toolchains will install target libraries which ship
++    // as part of the toolchain under <prefix>/<triple>/<libdir> rather than as
++    // any part of the GCC installation in
++    // <prefix>/<libdir>/gcc/<triple>/<version>. This decision is somewhat
++    // debatable, but is the reality today. We need to search this tree even
++    // when we have a sysroot somewhere else. It is the responsibility of
++    // whomever is doing the cross build targeting a sysroot using a GCC
++    // installation that is *not* within the system root to ensure two things:
++    //
++    //  1) Any DSOs that are linked in from this tree or from the install path
++    //     above must be present on the system root and found via an
++    //     appropriate rpath.
++    //  2) There must not be libraries installed into
++    //     <prefix>/<triple>/<libdir> unless they should be preferred over
++    //     those within the system root.
++    //
++    // Note that this matches the GCC behavior. See the below comment for where
++    // Clang diverges from GCC's behavior.
++    addPathIfExists(D, LibPath + "/../" + GCCTriple.str() + "/lib/../" +
++                           OSLibDir + Multilib.osSuffix(),
++                    Paths);
++
++    // If the GCC installation we found is inside of the sysroot, we want to
++    // prefer libraries installed in the parent prefix of the GCC installation.
++    // It is important to *not* use these paths when the GCC installation is
++    // outside of the system root as that can pick up unintended libraries.
++    // This usually happens when there is an external cross compiler on the
++    // host system, and a more minimal sysroot available that is the target of
++    // the cross. Note that GCC does include some of these directories in some
++    // configurations but this seems somewhere between questionable and simply
++    // a bug.
++    if (StringRef(LibPath).startswith(SysRoot)) {
++      addPathIfExists(D, LibPath + "/" + MultiarchTriple, Paths);
++      addPathIfExists(D, LibPath + "/../" + OSLibDir, Paths);
++    }
++  }
++
++  // Similar to the logic for GCC above, if we currently running Clang inside
++  // of the requested system root, add its parent library paths to
++  // those searched.
++  // FIXME: It's not clear whether we should use the driver's installed
++  // directory ('Dir' below) or the ResourceDir.
++  if (StringRef(D.Dir).startswith(SysRoot)) {
++    addPathIfExists(D, D.Dir + "/../lib/" + MultiarchTriple, Paths);
++    addPathIfExists(D, D.Dir + "/../" + OSLibDir, Paths);
++  }
++
++  addPathIfExists(D, SysRoot + "/lib/" + MultiarchTriple, Paths);
++  addPathIfExists(D, SysRoot + "/lib/../" + OSLibDir, Paths);
++
++  addPathIfExists(D, SysRoot + "/usr/lib/" + MultiarchTriple, Paths);
++  addPathIfExists(D, SysRoot + "/usr/lib/../" + OSLibDir, Paths);
++
++  // Try walking via the GCC triple path in case of biarch or multiarch GCC
++  // installations with strange symlinks.
++  if (GCCInstallation.isValid()) {
++    addPathIfExists(D,
++                    SysRoot + "/usr/lib/" + GCCInstallation.getTriple().str() +
++                        "/../../" + OSLibDir,
++                    Paths);
++
++    // Add the 'other' biarch variant path
++    Multilib BiarchSibling;
++    if (GCCInstallation.getBiarchSibling(BiarchSibling)) {
++      addPathIfExists(D, GCCInstallation.getInstallPath() +
++                             BiarchSibling.gccSuffix(),
++                      Paths);
++    }
++
++    // See comments above on the multilib variant for details of why this is
++    // included even from outside the sysroot.
++    const std::string &LibPath = GCCInstallation.getParentLibPath();
++    const llvm::Triple &GCCTriple = GCCInstallation.getTriple();
++    const Multilib &Multilib = GCCInstallation.getMultilib();
++    addPathIfExists(D, LibPath + "/../" + GCCTriple.str() + "/lib" +
++                           Multilib.osSuffix(),
++                    Paths);
++
++    // See comments above on the multilib variant for details of why this is
++    // only included from within the sysroot.
++    if (StringRef(LibPath).startswith(SysRoot))
++      addPathIfExists(D, LibPath, Paths);
++  }
++
++  // Similar to the logic for GCC above, if we are currently running Clang
++  // inside of the requested system root, add its parent library path to those
++  // searched.
++  // FIXME: It's not clear whether we should use the driver's installed
++  // directory ('Dir' below) or the ResourceDir.
++  if (StringRef(D.Dir).startswith(SysRoot))
++    addPathIfExists(D, D.Dir + "/../lib", Paths);
++
++  addPathIfExists(D, SysRoot + "/lib", Paths);
++  addPathIfExists(D, SysRoot + "/usr/lib", Paths);
++}
++
++bool kFreeBSD::HasNativeLLVMSupport() const { return true; }
++
++Tool *kFreeBSD::buildLinker() const { return new tools::gnutools::Linker(*this); }
++
++Tool *kFreeBSD::buildAssembler() const {
++  return new tools::gnutools::Assembler(*this);
++}
++
++std::string kFreeBSD::computeSysRoot() const {
++  if (!getDriver().SysRoot.empty())
++    return getDriver().SysRoot;
++
++  return std::string();
++}
++
++std::string kFreeBSD::getDynamicLinker(const ArgList &Args) const {
++  const llvm::Triple::ArchType Arch = getArch();
++
++  if (Arch == llvm::Triple::x86_64)
++    return "/lib/ld-kfreebsd-x86-64.so.1";
++
++  if (Arch == llvm::Triple::x86)
++    return "/lib/ld.so.1";
++
++  llvm_unreachable("unsupported architecture");
++}
++
++void kFreeBSD::AddClangSystemIncludeArgs(const ArgList &DriverArgs,
++                                     ArgStringList &CC1Args) const {
++  const Driver &D = getDriver();
++  std::string SysRoot = computeSysRoot();
++
++  if (DriverArgs.hasArg(clang::driver::options::OPT_nostdinc))
++    return;
++
++  if (!DriverArgs.hasArg(options::OPT_nostdlibinc))
++    addSystemInclude(DriverArgs, CC1Args, SysRoot + "/usr/local/include");
++
++  if (!DriverArgs.hasArg(options::OPT_nobuiltininc)) {
++    SmallString<128> P(D.ResourceDir);
++    llvm::sys::path::append(P, "include");
++    addSystemInclude(DriverArgs, CC1Args, P);
++  }
++
++  if (DriverArgs.hasArg(options::OPT_nostdlibinc))
++    return;
++
++  // Check for configure-time C include directories.
++  StringRef CIncludeDirs(C_INCLUDE_DIRS);
++  if (CIncludeDirs != "") {
++    SmallVector<StringRef, 5> dirs;
++    CIncludeDirs.split(dirs, ":");
++    for (StringRef dir : dirs) {
++      StringRef Prefix =
++          llvm::sys::path::is_absolute(dir) ? StringRef(SysRoot) : "";
++      addExternCSystemInclude(DriverArgs, CC1Args, Prefix + dir);
++    }
++    // addExternCSystemInclude(DriverArgs, CC1Args, SysRoot + "/usr/include");
++    return;
++  }
++
++  // Lacking those, try to detect the correct set of system includes for the
++  // target triple.
++
++  // Add include directories specific to the selected multilib set and multilib.
++  if (GCCInstallation.isValid()) {
++    const auto &Callback = Multilibs.includeDirsCallback();
++    if (Callback) {
++      for (const auto &Path : Callback(GCCInstallation.getMultilib()))
++        addExternCSystemIncludeIfExists(
++            DriverArgs, CC1Args, GCCInstallation.getInstallPath() + Path);
++    }
++  }
++
++  // Implement generic Debian multiarch support.
++  const StringRef X86_64MultiarchIncludeDirs[] = {
++      "/usr/include/x86_64-kfreebsd-gnu"};
++
++  // CHECK
++  const StringRef X86MultiarchIncludeDirs[] = {
++      "/usr/include/i386-kfreebsd-gnu"};
++
++  ArrayRef<StringRef> MultiarchIncludeDirs;
++  switch (getTriple().getArch()) {
++  case llvm::Triple::x86:
++    MultiarchIncludeDirs = X86MultiarchIncludeDirs;
++    break;
++  case llvm::Triple::x86_64:
++    MultiarchIncludeDirs = X86_64MultiarchIncludeDirs;
++    break;
++  default:
++    break;
++  }
++
++  for (StringRef Dir : MultiarchIncludeDirs) {
++    if (D.getVFS().exists(SysRoot + Dir)) {
++      addExternCSystemInclude(DriverArgs, CC1Args, SysRoot + Dir);
++      break;
++    }
++  }
++
++  // Add an include of '/include' directly. This isn't provided by default by
++  // system GCCs, but is often used with cross-compiling GCCs, and harmless to
++  // add even when Clang is acting as-if it were a system compiler.
++  addExternCSystemInclude(DriverArgs, CC1Args, SysRoot + "/include");
++
++  addExternCSystemInclude(DriverArgs, CC1Args, SysRoot + "/usr/include");
++}
++
++static std::string DetectLibcxxIncludePath(StringRef base) {
++  std::error_code EC;
++  int MaxVersion = 0;
++  std::string MaxVersionString = "";
++  for (llvm::sys::fs::directory_iterator LI(base, EC), LE; !EC && LI != LE;
++       LI = LI.increment(EC)) {
++    StringRef VersionText = llvm::sys::path::filename(LI->path());
++    int Version;
++    if (VersionText[0] == 'v' &&
++        !VersionText.slice(1, StringRef::npos).getAsInteger(10, Version)) {
++      if (Version > MaxVersion) {
++        MaxVersion = Version;
++        MaxVersionString = VersionText;
++      }
++    }
++  }
++  return MaxVersion ? (base + "/" + MaxVersionString).str() : "";
++}
++
++void kFreeBSD::addLibCxxIncludePaths(const llvm::opt::ArgList &DriverArgs,
++                                 llvm::opt::ArgStringList &CC1Args) const {
++  const std::string& SysRoot = computeSysRoot();
++  const std::string LibCXXIncludePathCandidates[] = {
++      DetectLibcxxIncludePath(getDriver().ResourceDir + "/include/c++"),
++      DetectLibcxxIncludePath(getDriver().Dir + "/../include/c++"),
++      // If this is a development, non-installed, clang, libcxx will
++      // not be found at ../include/c++ but it likely to be found at
++      // one of the following two locations:
++      DetectLibcxxIncludePath(SysRoot + "/usr/local/include/c++"),
++      DetectLibcxxIncludePath(SysRoot + "/usr/include/c++") };
++  for (const auto &IncludePath : LibCXXIncludePathCandidates) {
++    if (IncludePath.empty() || !getVFS().exists(IncludePath))
++      continue;
++    // Use the first candidate that exists.
++    addSystemInclude(DriverArgs, CC1Args, IncludePath);
++    return;
++  }
++}
++
++void kFreeBSD::addLibStdCxxIncludePaths(const llvm::opt::ArgList &DriverArgs,
++                                    llvm::opt::ArgStringList &CC1Args) const {
++  // We need a detected GCC installation on kFreeBSD to provide libstdc++'s
++  // headers.
++  if (!GCCInstallation.isValid())
++    return;
++
++  // By default, look for the C++ headers in an include directory adjacent to
++  // the lib directory of the GCC installation. Note that this is expect to be
++  // equivalent to '/usr/include/c++/X.Y' in almost all cases.
++  StringRef LibDir = GCCInstallation.getParentLibPath();
++  StringRef InstallDir = GCCInstallation.getInstallPath();
++  StringRef TripleStr = GCCInstallation.getTriple().str();
++  const Multilib &Multilib = GCCInstallation.getMultilib();
++  const std::string GCCMultiarchTriple = getMultiarchTriple(
++      getDriver(), GCCInstallation.getTriple(), getDriver().SysRoot);
++  const std::string TargetMultiarchTriple =
++      getMultiarchTriple(getDriver(), getTriple(), getDriver().SysRoot);
++  const GCCVersion &Version = GCCInstallation.getVersion();
++
++  // The primary search for libstdc++ supports multiarch variants.
++  if (addLibStdCXXIncludePaths(LibDir.str() + "/../include",
++                               "/c++/" + Version.Text, TripleStr,
++                               GCCMultiarchTriple, TargetMultiarchTriple,
++                               Multilib.includeSuffix(), DriverArgs, CC1Args))
++    return;
++
++  // Otherwise, fall back on a bunch of options which don't use multiarch
++  // layouts for simplicity.
++  const std::string LibStdCXXIncludePathCandidates[] = {
++      // Gentoo is weird and places its headers inside the GCC install,
++      // so if the first attempt to find the headers fails, try these patterns.
++      InstallDir.str() + "/include/g++-v" + Version.Text,
++      InstallDir.str() + "/include/g++-v" + Version.MajorStr + "." +
++          Version.MinorStr,
++      InstallDir.str() + "/include/g++-v" + Version.MajorStr,
++      // Android standalone toolchain has C++ headers in yet another place.
++      LibDir.str() + "/../" + TripleStr.str() + "/include/c++/" + Version.Text,
++      // Freescale SDK C++ headers are directly in <sysroot>/usr/include/c++,
++      // without a subdirectory corresponding to the gcc version.
++      LibDir.str() + "/../include/c++",
++  };
++
++  for (const auto &IncludePath : LibStdCXXIncludePathCandidates) {
++    if (addLibStdCXXIncludePaths(IncludePath, /*Suffix*/ "", TripleStr,
++                                 /*GCCMultiarchTriple*/ "",
++                                 /*TargetMultiarchTriple*/ "",
++                                 Multilib.includeSuffix(), DriverArgs, CC1Args))
++      break;
++  }
++}
++
++/* FIXME:
++/home/srs/DEBs/llvm-toolchain-7/llvm-toolchain-7-7.0.1~+rc2-7/tools/clang/lib/Driver/ToolChains/KFreeBSD.cpp:431:15: error: no declaration matches ‘clang::SanitizerMask clang::driver::toolchains::kFreeBSD::getSupportedSanitizers() const’
++ SanitizerMask kFreeBSD::getSupportedSanitizers() const {
++*/
++SanitizerMask kFreeBSD::getSupportedSanitizers() const {
++  const bool IsX86 = getTriple().getArch() == llvm::Triple::x86;
++  const bool IsX86_64 = getTriple().getArch() == llvm::Triple::x86_64;
++  SanitizerMask Res = ToolChain::getSupportedSanitizers();
++  // FIXME: Add here!!
++  if (IsX86_64) {
++    Res |= SanitizerKind::DataFlow;
++    Res |= SanitizerKind::Leak;
++    Res |= SanitizerKind::Thread;
++    Res |= SanitizerKind::Efficiency;
++    Res |= SanitizerKind::Scudo;
++    Res |= SanitizerKind::HWAddress;
++    Res |= SanitizerKind::KernelHWAddress;
++  }
++  if (IsX86 || IsX86_64)
++    Res |= SanitizerKind::Function;
++
++  return Res;
++}
++
+Index: llvm-toolchain-7-7.0.1/clang/lib/Driver/ToolChains/KFreeBSD.h
+===================================================================
+--- /dev/null
++++ llvm-toolchain-7-7.0.1/clang/lib/Driver/ToolChains/KFreeBSD.h
+@@ -0,0 +1,54 @@
++//===--- KFreeBSD.h - kFreeBSD ToolChain Implementations ----------*- C++ -*-===//
++//
++//                     The LLVM Compiler Infrastructure
++//
++// This file is distributed under the University of Illinois Open Source
++// License. See LICENSE.TXT for details.
++//
++//===----------------------------------------------------------------------===//
++
++#ifndef LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_KFreeBSD_H
++#define LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_KFreeBSD_H
++
++#include "Gnu.h"
++#include "clang/Driver/ToolChain.h"
++
++namespace clang {
++namespace driver {
++namespace toolchains {
++
++class LLVM_LIBRARY_VISIBILITY kFreeBSD : public Generic_ELF {
++public:
++  kFreeBSD(const Driver &D, const llvm::Triple &Triple,
++          const llvm::opt::ArgList &Args);
++
++  bool HasNativeLLVMSupport() const override;
++
++  void
++  AddClangSystemIncludeArgs(const llvm::opt::ArgList &DriverArgs,
++                            llvm::opt::ArgStringList &CC1Args) const override;
++  void addLibCxxIncludePaths(
++      const llvm::opt::ArgList &DriverArgs,
++      llvm::opt::ArgStringList &CC1Args) const override;
++  void addLibStdCxxIncludePaths(
++      const llvm::opt::ArgList &DriverArgs,
++      llvm::opt::ArgStringList &CC1Args) const override;
++
++  SanitizerMask getSupportedSanitizers() const override;
++
++  virtual std::string computeSysRoot() const;
++
++  virtual std::string getDynamicLinker(const llvm::opt::ArgList &Args) const;
++
++  std::vector<std::string> ExtraOpts;
++
++protected:
++  Tool *buildAssembler() const override;
++  Tool *buildLinker() const override;
++};
++
++} // end namespace toolchains
++} // end namespace driver
++} // end namespace clang
++
++#endif // LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_KFreeBSD_H

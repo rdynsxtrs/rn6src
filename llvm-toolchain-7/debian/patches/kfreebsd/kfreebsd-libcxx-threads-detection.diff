@@ -1,0 +1,12 @@
+Index: llvm-toolchain-7-7.0.1/libcxx/include/__config
+===================================================================
+--- llvm-toolchain-7-7.0.1.orig/libcxx/include/__config
++++ llvm-toolchain-7-7.0.1/libcxx/include/__config
+@@ -1107,6 +1107,7 @@ _LIBCPP_FUNC_VIS extern "C" void __sanit
+     !defined(_LIBCPP_HAS_THREAD_API_WIN32) && \
+     !defined(_LIBCPP_HAS_THREAD_API_EXTERNAL)
+ #  if defined(__FreeBSD__) || \
++      defined(__FreeBSD_kernel__) || \
+       defined(__Fuchsia__) || \
+       defined(__NetBSD__) || \
+       defined(__linux__) || \

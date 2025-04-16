@@ -1,0 +1,17 @@
+Index: llvm-toolchain-snapshot_7.0~svn309541/clang-tools-extra/clang-tidy/tool/run-clang-tidy.py
+===================================================================
+--- llvm-toolchain-snapshot_7.0~svn309541.orig/clang-tools-extra/clang-tidy/tool/run-clang-tidy.py
++++ llvm-toolchain-snapshot_7.0~svn309541/clang-tools-extra/clang-tidy/tool/run-clang-tidy.py
+@@ -157,10 +157,10 @@ def main():
+                                    'clang-tidy and clang-apply-replacements in '
+                                    '$PATH.')
+   parser.add_argument('-clang-tidy-binary', metavar='PATH',
+-                      default='clang-tidy',
++                      default='clang-tidy-7',
+                       help='path to clang-tidy binary')
+   parser.add_argument('-clang-apply-replacements-binary', metavar='PATH',
+-                      default='clang-apply-replacements',
++                      default='clang-apply-replacements-7',
+                       help='path to clang-apply-replacements binary')
+   parser.add_argument('-checks', default=None,
+                       help='checks filter, when not specified, use clang-tidy '

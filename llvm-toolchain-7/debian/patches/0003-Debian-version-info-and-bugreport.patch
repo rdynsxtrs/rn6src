@@ -1,0 +1,19 @@
+---
+ lib/Support/CommandLine.cpp |    4 ++++
+ 1 file changed, 4 insertions(+)
+
+Index: llvm-toolchain-snapshot_5.0~svn296106/lib/Support/CommandLine.cpp
+===================================================================
+--- llvm-toolchain-snapshot_5.0~svn296106.orig/lib/Support/CommandLine.cpp
++++ llvm-toolchain-snapshot_5.0~svn296106/lib/Support/CommandLine.cpp
+@@ -2064,6 +2064,10 @@ public:
+     OS << " " << LLVM_VERSION_INFO;
+ #endif
+     OS << "\n  ";
++#ifdef LLVM_DEBIAN_INFO
++    OS << LLVM_DEBIAN_INFO;
++#endif
++    OS << "\n  ";
+ #ifndef __OPTIMIZE__
+     OS << "DEBUG build";
+ #else

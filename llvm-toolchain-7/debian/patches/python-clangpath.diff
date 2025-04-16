@@ -1,0 +1,15 @@
+---
+ clang/bindings/python/clang/cindex.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/clang/bindings/python/clang/cindex.py
++++ b/clang/bindings/python/clang/cindex.py
+@@ -3851,7 +3851,7 @@ class Config:
+         elif name == 'Windows':
+             file = 'libclang.dll'
+         else:
+-            file = 'libclang.so'
++            file = 'libclang-7.so'
+ 
+         if Config.library_path:
+             file = Config.library_path + '/' + file

@@ -1,0 +1,10 @@
+Index: llvm-toolchain-7-7.0.1~+rc2/tools/llvm-objcopy/StripOpts.td
+===================================================================
+--- llvm-toolchain-7-7.0.1~+rc2.orig/tools/llvm-objcopy/StripOpts.td
++++ llvm-toolchain-7-7.0.1~+rc2/tools/llvm-objcopy/StripOpts.td
+@@ -47,3 +47,5 @@ def x : Flag<["-"], "x">,
+ 
+ def strip_unneeded : Flag<["-", "--"], "strip-unneeded">,
+                       HelpText<"Remove all symbols not needed by relocations">;
++
++def deterministic : Flag<["--"], "enable-deterministic-archives">;

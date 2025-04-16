@@ -1,0 +1,34 @@
+All programs and libraries shipped in this package are trying to stay as close
+as possible from upstream.
+
+However, because of the objectives of Debian, besides paths, some changes are
+made.
+
+= File names =
+
+* To make sure that most of the llvm-toolchain packages are co-installable,
+files are installed in /usr/lib/llvm-X/
+and symlinks are managed by the other package llvm-defaults
+
+
+= CPU extensions =
+
+* For x86, SSE2 extensions are disabled (and the target CPU is i686 instead of
+  pentium4.
+
+* For armel, uses float ABI instead of hard.
+
+* For armv7-a, NEON extensions are disabled.
+
+* For mips, FPXX is enabled.
+
+
+= Libraries =
+
+* sonames are created
+
+* Build-ID are enabled
+
+
+ -- Sylvestre Ledru <sylvestre@debian.org>, Wed, 26 Dec 2018 22:56:30 +0100
+

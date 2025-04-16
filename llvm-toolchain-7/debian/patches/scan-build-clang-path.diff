@@ -1,0 +1,15 @@
+---
+ clang/tools/scan-build/bin/scan-build |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/clang/tools/scan-build/bin/scan-build
++++ b/clang/tools/scan-build/bin/scan-build
+@@ -1432,7 +1432,7 @@ sub FindClang {
+   if (!defined $Options{AnalyzerDiscoveryMethod}) {
+     $Clang = Cwd::realpath("$RealBin/bin/clang") if (-f "$RealBin/bin/clang");
+     if (!defined $Clang || ! -x $Clang) {
+-      $Clang = Cwd::realpath("$RealBin/clang") if (-f "$RealBin/clang");
++      $Clang = Cwd::realpath("/usr/lib/llvm-7/bin/clang");
+     }
+     if (!defined $Clang || ! -x $Clang) {
+       return "error: Cannot find an executable 'clang' relative to" .

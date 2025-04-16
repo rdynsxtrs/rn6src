@@ -1,0 +1,150 @@
+r346310 | achurbanov | 2018-11-07 13:27:38 +0100 (Wed, 07 Nov 2018) | 6 lines
+
+Add Hurd support.
+
+Patch by samuel.thibault@ens-lyon.org
+
+Differential Revision: https://reviews.llvm.org/D54079
+
+Index: llvm/openmp/runtime/src/kmp.h
+===================================================================
+--- llvm/openmp/runtime/src/kmp.h.orig
++++ llvm/openmp/runtime/src/kmp.h
+@@ -1048,6 +1048,10 @@ extern kmp_uint64 __kmp_now_nsec();
+ /* TODO: tune for KMP_OS_NETBSD */
+ #define KMP_INIT_WAIT 1024U /* initial number of spin-tests   */
+ #define KMP_NEXT_WAIT 512U /* susequent number of spin-tests */
++#elif KMP_OS_HURD
++/* TODO: tune for KMP_OS_HURD */
++#define KMP_INIT_WAIT 1024U /* initial number of spin-tests   */
++#define KMP_NEXT_WAIT 512U /* susequent number of spin-tests */
+ #endif
+ 
+ #if KMP_ARCH_X86 || KMP_ARCH_X86_64
+Index: llvm/openmp/runtime/src/kmp_ftn_entry.h
+===================================================================
+--- llvm/openmp/runtime/src/kmp_ftn_entry.h.orig
++++ llvm/openmp/runtime/src/kmp_ftn_entry.h
+@@ -369,7 +369,7 @@ int FTN_STDCALL KMP_EXPAND_NAME(FTN_GET_
+ #else
+   int gtid;
+ 
+-#if KMP_OS_DARWIN || KMP_OS_FREEBSD || KMP_OS_NETBSD
++#if KMP_OS_DARWIN || KMP_OS_FREEBSD || KMP_OS_NETBSD || KMP_OS_HURD
+   gtid = __kmp_entry_gtid();
+ #elif KMP_OS_WINDOWS
+   if (!__kmp_init_parallel ||
+Index: llvm/openmp/runtime/src/kmp_platform.h
+===================================================================
+--- llvm/openmp/runtime/src/kmp_platform.h.orig
++++ llvm/openmp/runtime/src/kmp_platform.h
+@@ -22,6 +22,7 @@
+ #define KMP_OS_DARWIN 0
+ #define KMP_OS_WINDOWS 0
+ #define KMP_OS_CNK 0
++#define KMP_OS_HURD 0
+ #define KMP_OS_UNIX 0 /* disjunction of KMP_OS_LINUX, KMP_OS_DARWIN etc. */
+ 
+ #ifdef _WIN32
+@@ -59,13 +60,18 @@
+ #define KMP_OS_CNK 1
+ #endif
+ 
++#if (defined __GNU__)
++#undef KMP_OS_HURD
++#define KMP_OS_HURD 1
++#endif
++
+ #if (1 !=                                                                      \
+      KMP_OS_LINUX + KMP_OS_FREEBSD + KMP_OS_NETBSD + KMP_OS_DARWIN +           \
+-         KMP_OS_WINDOWS)
++         KMP_OS_WINDOWS + KMP_OS_HURD)
+ #error Unknown OS
+ #endif
+ 
+-#if KMP_OS_LINUX || KMP_OS_FREEBSD || KMP_OS_NETBSD || KMP_OS_DARWIN
++#if KMP_OS_LINUX || KMP_OS_FREEBSD || KMP_OS_NETBSD || KMP_OS_DARWIN || KMP_OS_HURD
+ #undef KMP_OS_UNIX
+ #define KMP_OS_UNIX 1
+ #endif
+Index: llvm/openmp/runtime/src/kmp_runtime.cpp
+===================================================================
+--- llvm/openmp/runtime/src/kmp_runtime.cpp.orig
++++ llvm/openmp/runtime/src/kmp_runtime.cpp
+@@ -7643,7 +7643,7 @@ __kmp_determine_reduction_method(
+ #if KMP_ARCH_X86_64 || KMP_ARCH_PPC64 || KMP_ARCH_AARCH64 || KMP_ARCH_MIPS64
+ 
+ #if KMP_OS_LINUX || KMP_OS_FREEBSD || KMP_OS_NETBSD || KMP_OS_WINDOWS ||       \
+-    KMP_OS_DARWIN
++    KMP_OS_DARWIN || KMP_OS_HURD
+ 
+     int teamsize_cutoff = 4;
+ 
+@@ -7670,7 +7670,7 @@ __kmp_determine_reduction_method(
+ 
+ #elif KMP_ARCH_X86 || KMP_ARCH_ARM || KMP_ARCH_AARCH || KMP_ARCH_MIPS
+ 
+-#if KMP_OS_LINUX || KMP_OS_WINDOWS
++#if KMP_OS_LINUX || KMP_OS_WINDOWS || KMP_OS_HURD
+ 
+     // basic tuning
+ 
+Index: llvm/openmp/runtime/src/thirdparty/ittnotify/ittnotify_static.c
+===================================================================
+--- llvm/openmp/runtime/src/thirdparty/ittnotify/ittnotify_static.c.orig
++++ llvm/openmp/runtime/src/thirdparty/ittnotify/ittnotify_static.c
+@@ -70,6 +70,10 @@ static const char* ittnotify_lib_name =
+ #define ANDROID_ITTNOTIFY_DEFAULT_PATH  "/data/data/com.intel.vtune/intel/libittnotify.so"
+ #endif
+ 
++#ifndef PATH_MAX
++#define PATH_MAX 4096
++#endif
++
+ 
+ #ifndef LIB_VAR_NAME
+ #if ITT_ARCH==ITT_ARCH_IA32 || ITT_ARCH==ITT_ARCH_ARM || ITT_ARCH==ITT_ARCH_MIPS
+Index: llvm/openmp/runtime/src/z_Linux_util.cpp
+===================================================================
+--- llvm/openmp/runtime/src/z_Linux_util.cpp.orig
++++ llvm/openmp/runtime/src/z_Linux_util.cpp
+@@ -444,8 +444,7 @@ void __kmp_terminate_thread(int gtid) {
+    determined exactly, FALSE if incremental refinement is necessary. */
+ static kmp_int32 __kmp_set_stack_info(int gtid, kmp_info_t *th) {
+   int stack_data;
+-#if KMP_OS_LINUX || KMP_OS_FREEBSD || KMP_OS_NETBSD
+-  /* Linux* OS only -- no pthread_getattr_np support on OS X* */
++#if KMP_OS_LINUX || KMP_OS_FREEBSD || KMP_OS_NETBSD || KMP_OS_HURD
+   pthread_attr_t attr;
+   int status;
+   size_t size = 0;
+@@ -497,7 +496,7 @@ static void *__kmp_launch_worker(void *t
+   sigset_t new_set, old_set;
+ #endif /* KMP_BLOCK_SIGNALS */
+   void *exit_val;
+-#if KMP_OS_LINUX || KMP_OS_FREEBSD || KMP_OS_NETBSD
++#if KMP_OS_LINUX || KMP_OS_FREEBSD || KMP_OS_NETBSD || KMP_OS_HURD
+   void *volatile padding = 0;
+ #endif
+   int gtid;
+@@ -1765,7 +1764,7 @@ static int __kmp_get_xproc(void) {
+ 
+   int r = 0;
+ 
+-#if KMP_OS_LINUX || KMP_OS_FREEBSD || KMP_OS_NETBSD
++#if KMP_OS_LINUX || KMP_OS_FREEBSD || KMP_OS_NETBSD || KMP_OS_HURD
+ 
+   r = sysconf(_SC_NPROCESSORS_ONLN);
+ 
+@@ -1953,9 +1952,9 @@ int __kmp_is_address_mapped(void *addr)
+   int found = 0;
+   int rc;
+ 
+-#if KMP_OS_LINUX || KMP_OS_FREEBSD
++#if KMP_OS_LINUX || KMP_OS_FREEBSD || KMP_OS_HURD
+ 
+-  /* On Linux* OS, read the /proc/<pid>/maps pseudo-file to get all the address
++  /* On GNUish OSes, read the /proc/<pid>/maps pseudo-file to get all the address
+      ranges mapped into the address space. */
+ 
+   char *name = __kmp_str_format("/proc/%d/maps", getpid());

@@ -1,0 +1,30 @@
+---
+ clang/tools/libclang/CMakeLists.txt |    2 +-
+ tools/llvm-shlib/CMakeLists.txt     |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+Index: llvm-toolchain-snapshot_6.0~svn309319/clang/tools/libclang/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-snapshot_6.0~svn309319.orig/clang/tools/libclang/CMakeLists.txt
++++ llvm-toolchain-snapshot_6.0~svn309319/clang/tools/libclang/CMakeLists.txt
+@@ -84,7 +84,7 @@ else()
+   set(output_name "clang")
+ endif()
+ 
+-add_clang_library(libclang ${ENABLE_SHARED} ${ENABLE_STATIC}
++add_clang_library(libclang ${ENABLE_SHARED} ${ENABLE_STATIC} SONAME
+   OUTPUT_NAME ${output_name}
+   ${SOURCES}
+   DEPENDS clang-headers
+Index: llvm-toolchain-snapshot_6.0~svn309319/tools/llvm-shlib/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-snapshot_6.0~svn309319.orig/tools/llvm-shlib/CMakeLists.txt
++++ llvm-toolchain-snapshot_6.0~svn309319/tools/llvm-shlib/CMakeLists.txt
+@@ -35,6 +35,7 @@ if(LLVM_DYLIB_EXPORTED_SYMBOL_FILE)
+ endif()
+ 
+ add_llvm_library(LLVM SHARED DISABLE_LLVM_LINK_LLVM_DYLIB SONAME ${SOURCES})
++set_property(TARGET LLVM PROPERTY VERSION "1") # Append .1 to SONAME
+ 
+ list(REMOVE_DUPLICATES LIB_NAMES)
+ if(("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux") OR (MINGW) OR (HAIKU)

@@ -1,0 +1,35 @@
+lldb-server exec users always /usr/bin/lldb-server. Server is required
+for any debugging with lldb which makes it unusable unless default version
+package has been installed. Small changes to code and debian/rules allows
+a workaround for lldb-server start up.
+
+To use this one needs to add cmake definition during configure. eg
+-DDEBIAN_VERSION_SUFFIX=-$(LLVM_VERSION)
+
+Better implementation would be to use /usr/share/llvm-$(VERSION)/bin but 
+that change seems to require a big change to the path handling code
+which could then break something else.
+
+This probably should have upstream bug but I couldn't find any existing report.
+
+Index: llvm-toolchain-snapshot_7.0~svn293997/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
+===================================================================
+--- llvm-toolchain-snapshot_7.0~svn293997.orig/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
++++ llvm-toolchain-snapshot_7.0~svn293997/lldb/source/Plugins/Process/gdb-remote/GDBRemoteCommunication.cpp
+@@ -32,6 +32,7 @@
+ #include "lldb/Utility/StreamString.h"
+ #include "llvm/ADT/SmallString.h"
+ #include "llvm/Support/ScopedPrinter.h"
++#include "llvm/Config/llvm-config.h"
+ 
+ // Project includes
+ #include "ProcessGDBRemoteLog.h"
+@@ -39,7 +40,7 @@
+ #if defined(__APPLE__)
+ #define DEBUGSERVER_BASENAME "debugserver"
+ #else
+-#define DEBUGSERVER_BASENAME "lldb-server"
++# define DEBUGSERVER_BASENAME    "lldb-server-" LLVM_VERSION_STRING
+ #endif
+ 
+ #if defined(HAVE_LIBCOMPRESSION)

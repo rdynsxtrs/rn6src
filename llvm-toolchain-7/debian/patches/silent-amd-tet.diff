@@ -1,0 +1,11 @@
+Index: llvm-toolchain-snapshot_6.0~svn315566/test/MC/AMDGPU/hsa.s
+===================================================================
+--- llvm-toolchain-snapshot_6.0~svn315566.orig/test/MC/AMDGPU/hsa.s
++++ llvm-toolchain-snapshot_6.0~svn315566/test/MC/AMDGPU/hsa.s
+@@ -1,5 +1,6 @@
+ // RUN: llvm-mc -triple amdgcn--amdhsa -mcpu=kaveri -show-encoding %s | FileCheck %s --check-prefix=ASM
+ // RUN: llvm-mc -filetype=obj -triple amdgcn--amdhsa -mcpu=kaveri -show-encoding %s | llvm-readobj -symbols -s -sd | FileCheck %s --check-prefix=ELF
++// XFAIL: *
+ 
+ // ELF: Section {
+ // ELF: Name: .text

@@ -1,0 +1,13 @@
+Index: llvm-toolchain-snapshot_7~svn334230/lib/Support/Unix/Path.inc
+===================================================================
+--- llvm-toolchain-snapshot_7~svn334230.orig/lib/Support/Unix/Path.inc
++++ llvm-toolchain-snapshot_7~svn334230/lib/Support/Unix/Path.inc
+@@ -175,7 +175,7 @@ std::string getMainExecutable(const char
+ 
+   if (getprogpath(exe_path, argv0) != NULL)
+     return exe_path;
+-#elif defined(__linux__) || defined(__CYGWIN__)
++#elif defined(__linux__) || defined(__CYGWIN__) || defined(__GNU__)
+   char exe_path[MAXPATHLEN];
+   StringRef aPath("/proc/self/exe");
+   if (sys::fs::exists(aPath)) {

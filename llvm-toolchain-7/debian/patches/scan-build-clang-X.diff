@@ -1,0 +1,13 @@
+Index: llvm-toolchain-7_7~+rc1/clang/tools/scan-build/bin/scan-build
+===================================================================
+--- llvm-toolchain-7_7~+rc1.orig/clang/tools/scan-build/bin/scan-build
++++ llvm-toolchain-7_7~+rc1/clang/tools/scan-build/bin/scan-build
+@@ -1079,7 +1079,7 @@ sub RunBuildCommand {
+   if ($Cmd =~ /(.*\/?gcc[^\/]*$)/ or
+       $Cmd =~ /(.*\/?cc[^\/]*$)/ or
+       $Cmd =~ /(.*\/?llvm-gcc[^\/]*$)/ or
+-      $Cmd =~ /(.*\/?clang$)/ or
++      $Cmd =~ /(.*\/?clang[^\/]*$)/ or
+       $Cmd =~ /(.*\/?ccc-analyzer[^\/]*$)/) {
+ 
+     if (!($Cmd =~ /ccc-analyzer/) and !defined $ENV{"CCC_CC"}) {

@@ -1,0 +1,17 @@
+Index: llvm-toolchain-snapshot_5.0~svn297449/clang/lib/Driver/ToolChains/Arch/Mips.cpp
+===================================================================
+--- llvm-toolchain-snapshot_5.0~svn297449.orig/clang/lib/Driver/ToolChains/Arch/Mips.cpp
++++ llvm-toolchain-snapshot_5.0~svn297449/clang/lib/Driver/ToolChains/Arch/Mips.cpp
+@@ -368,10 +368,10 @@ bool mips::isFP64ADefault(const llvm::Tr
+ 
+ bool mips::isFPXXDefault(const llvm::Triple &Triple, StringRef CPUName,
+                          StringRef ABIName, mips::FloatABI FloatABI) {
+-  if (Triple.getVendor() != llvm::Triple::ImaginationTechnologies &&
++/*  if (Triple.getVendor() != llvm::Triple::ImaginationTechnologies &&
+       Triple.getVendor() != llvm::Triple::MipsTechnologies &&
+       !Triple.isAndroid())
+-    return false;
++    return false;*/
+ 
+   if (ABIName != "32")
+     return false;

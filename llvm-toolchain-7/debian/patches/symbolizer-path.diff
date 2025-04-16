@@ -1,0 +1,24 @@
+Index: llvm-toolchain-7-7/compiler-rt/lib/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cc
+===================================================================
+--- llvm-toolchain-7-7.orig/compiler-rt/lib/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cc
++++ llvm-toolchain-7-7/compiler-rt/lib/sanitizer_common/sanitizer_symbolizer_posix_libcdep.cc
+@@ -26,6 +26,10 @@
+ #include "sanitizer_symbolizer_internal.h"
+ #include "sanitizer_symbolizer_libbacktrace.h"
+ #include "sanitizer_symbolizer_mac.h"
++#include "llvm/Config/llvm-config.h" // for LLVM_VERSION_MAJOR
++
++#define TOSTR2(X) #X
++#define TOSTR(X) TOSTR2(X)
+ 
+ #include <dlfcn.h>   // for dlsym()
+ #include <errno.h>
+@@ -481,7 +485,7 @@ static SymbolizerTool *ChooseExternalSym
+     return new(*allocator) AtosSymbolizer(found_path, allocator);
+   }
+ #endif  // SANITIZER_MAC
+-  if (const char *found_path = FindPathToBinary("llvm-symbolizer")) {
++  if (const char *found_path = "/usr/bin/llvm-symbolizer-" TOSTR(LLVM_VERSION_MAJOR)) {
+     VReport(2, "Using llvm-symbolizer found at: %s\n", found_path);
+     return new(*allocator) LLVMSymbolizer(found_path, allocator);
+   }

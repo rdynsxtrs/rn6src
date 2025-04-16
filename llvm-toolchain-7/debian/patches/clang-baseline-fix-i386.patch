@@ -1,0 +1,13 @@
+--- a/clang/lib/Driver/ToolChains/Arch/X86.cpp
++++ b/clang/lib/Driver/ToolChains/Arch/X86.cpp
+@@ -105,8 +105,8 @@ const char *x86::getX86TargetCPU(const ArgList &Args,
+   case llvm::Triple::Haiku:
+     return "i586";
+   default:
+-    // Fallback to p4.
+-    return "pentium4";
++    // Fallback to i686.
++    return "i686";
+   }
+ }
+

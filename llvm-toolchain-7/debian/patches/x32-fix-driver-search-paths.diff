@@ -1,0 +1,80 @@
+Description: Fix missing include and library paths on x32
+Author: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Forwarded: https://reviews.llvm.org/D52050
+Last-Update: 2018-09-14
+
+--- llvm-toolchain-7-7~+rc3.orig/clang/lib/Driver/ToolChains/Gnu.cpp
++++ llvm-toolchain-7-7~+rc3/clang/lib/Driver/ToolChains/Gnu.cpp
+@@ -1837,7 +1837,10 @@ void Generic_GCC::GCCInstallationDetecto
+       "x86_64-manbo-linux-gnu", "x86_64-linux-gnu",
+       "x86_64-slackware-linux", "x86_64-unknown-linux",
+       "x86_64-amazon-linux"};
+-  static const char *const X32LibDirs[] = {"/libx32"};
++  static const char *const X32LibDirs[] = {"/libx32", "/lib"};
++  static const char *const X32Triples[] = {
++      "x86_64-linux-gnux32",    "x86_64-unknown-linux-gnux32",
++      "x86_64-pc-linux-gnux32"};
+   static const char *const X86LibDirs[] = {"/lib32", "/lib"};
+   static const char *const X86Triples[] = {
+       "i686-linux-gnu",       "i686-pc-linux-gnu",     "i486-linux-gnu",
+@@ -2031,14 +2034,16 @@ void Generic_GCC::GCCInstallationDetecto
+     }
+     break;
+   case llvm::Triple::x86_64:
+-    LibDirs.append(begin(X86_64LibDirs), end(X86_64LibDirs));
+-    TripleAliases.append(begin(X86_64Triples), end(X86_64Triples));
+     // x32 is always available when x86_64 is available, so adding it as
+     // secondary arch with x86_64 triples
+     if (TargetTriple.getEnvironment() == llvm::Triple::GNUX32) {
+-      BiarchLibDirs.append(begin(X32LibDirs), end(X32LibDirs));
++      LibDirs.append(begin(X32LibDirs), end(X32LibDirs));
++      TripleAliases.append(begin(X32Triples), end(X32Triples));
++      BiarchLibDirs.append(begin(X86_64LibDirs), end(X86_64LibDirs));
+       BiarchTripleAliases.append(begin(X86_64Triples), end(X86_64Triples));
+     } else {
++      LibDirs.append(begin(X86_64LibDirs), end(X86_64LibDirs));
++      TripleAliases.append(begin(X86_64Triples), end(X86_64Triples));
+       BiarchLibDirs.append(begin(X86LibDirs), end(X86LibDirs));
+       BiarchTripleAliases.append(begin(X86Triples), end(X86Triples));
+     }
+--- llvm-toolchain-7-7~+rc3.orig/clang/lib/Driver/ToolChains/Linux.cpp
++++ llvm-toolchain-7-7~+rc3/clang/lib/Driver/ToolChains/Linux.cpp
+@@ -86,10 +86,13 @@ static std::string getMultiarchTriple(co
+   case llvm::Triple::x86_64:
+     if (IsAndroid)
+       return "x86_64-linux-android";
+-    // We don't want this for x32, otherwise it will match x86_64 libs
+-    if (TargetEnvironment != llvm::Triple::GNUX32 &&
+-        D.getVFS().exists(SysRoot + "/lib/x86_64-linux-gnu"))
+-      return "x86_64-linux-gnu";
++    if (TargetEnvironment == llvm::Triple::GNUX32) {
++      if (D.getVFS().exists(SysRoot + "/lib/x86_64-linux-gnux32"))
++        return "x86_64-linux-gnux32";
++    } else {
++      if (D.getVFS().exists(SysRoot + "/lib/x86_64-linux-gnu"))
++        return "x86_64-linux-gnu";
++    }
+     break;
+   case llvm::Triple::aarch64:
+     if (IsAndroid)
+@@ -673,6 +676,8 @@ void Linux::AddClangSystemIncludeArgs(co
+       // in use in any released version of Debian, so we should consider
+       // removing them.
+       "/usr/include/i686-linux-gnu/64", "/usr/include/i486-linux-gnu/64"};
++  const StringRef X32MultiarchIncludeDirs[] = {
++      "/usr/include/x86_64-linux-gnux32"};
+   const StringRef X86MultiarchIncludeDirs[] = {
+       "/usr/include/i386-linux-gnu",
+ 
+@@ -715,7 +720,10 @@ void Linux::AddClangSystemIncludeArgs(co
+   ArrayRef<StringRef> MultiarchIncludeDirs;
+   switch (getTriple().getArch()) {
+   case llvm::Triple::x86_64:
+-    MultiarchIncludeDirs = X86_64MultiarchIncludeDirs;
++    if (getTriple().getEnvironment() == llvm::Triple::GNUX32)
++      MultiarchIncludeDirs = X32MultiarchIncludeDirs;
++    else
++      MultiarchIncludeDirs = X86_64MultiarchIncludeDirs;
+     break;
+   case llvm::Triple::x86:
+     MultiarchIncludeDirs = X86MultiarchIncludeDirs;

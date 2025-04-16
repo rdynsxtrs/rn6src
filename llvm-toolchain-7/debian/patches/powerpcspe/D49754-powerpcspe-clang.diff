@@ -1,0 +1,136 @@
+Description: Add -m(no-)spe, and e500 CPU definitions and support to clang
+Author: Justin Hibbits <jrh29@alumni.cwru.edu>
+Origin: https://reviews.llvm.org/D49754
+Last-Update: 2018-12-04
+
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/include/clang/Driver/Options.td
++++ llvm-toolchain-7-7.0.1~+rc2/clang/include/clang/Driver/Options.td
+@@ -2053,6 +2053,8 @@ def faltivec : Flag<["-"], "faltivec">,
+ def fno_altivec : Flag<["-"], "fno-altivec">, Group<f_Group>, Flags<[DriverOption]>;
+ def maltivec : Flag<["-"], "maltivec">, Group<m_ppc_Features_Group>;
+ def mno_altivec : Flag<["-"], "mno-altivec">, Group<m_ppc_Features_Group>;
++def mspe : Flag<["-"], "mspe">, Group<m_ppc_Features_Group>;
++def mno_spe : Flag<["-"], "mno-spe">, Group<m_ppc_Features_Group>;
+ def mvsx : Flag<["-"], "mvsx">, Group<m_ppc_Features_Group>;
+ def mno_vsx : Flag<["-"], "mno-vsx">, Group<m_ppc_Features_Group>;
+ def msecure_plt : Flag<["-"], "msecure-plt">, Group<m_ppc_Features_Group>;
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/lib/Basic/Targets/PPC.cpp
++++ llvm-toolchain-7-7.0.1~+rc2/clang/lib/Basic/Targets/PPC.cpp
+@@ -54,6 +54,8 @@ bool PPCTargetInfo::handleTargetFeatures
+       HasFloat128 = true;
+     } else if (Feature == "+power9-vector") {
+       HasP9Vector = true;
++    } else if (Feature == "+spe") {
++      HasSPE = true;
+     }
+     // TODO: Finish this list and add an assert that we've handled them
+     // all.
+@@ -161,6 +163,8 @@ void PPCTargetInfo::getTargetDefines(con
+     Builder.defineMacro("__VEC__", "10206");
+     Builder.defineMacro("__ALTIVEC__");
+   }
++  if (HasSPE)
++    Builder.defineMacro("__SPE__");
+   if (HasVSX)
+     Builder.defineMacro("__VSX__");
+   if (HasP8Vector)
+@@ -334,6 +338,7 @@ bool PPCTargetInfo::hasFeature(StringRef
+       .Case("extdiv", HasExtDiv)
+       .Case("float128", HasFloat128)
+       .Case("power9-vector", HasP9Vector)
++      .Case("spe", HasSPE)
+       .Default(false);
+ }
+ 
+@@ -413,16 +418,16 @@ ArrayRef<TargetInfo::GCCRegAlias> PPCTar
+ }
+ 
+ static constexpr llvm::StringLiteral ValidCPUNames[] = {
+-    {"generic"}, {"440"},         {"450"},     {"601"},    {"602"},
+-    {"603"},     {"603e"},        {"603ev"},   {"604"},    {"604e"},
+-    {"620"},     {"630"},         {"g3"},      {"7400"},   {"g4"},
+-    {"7450"},    {"g4+"},         {"750"},     {"970"},    {"g5"},
+-    {"a2"},      {"a2q"},         {"e500mc"},  {"e5500"},  {"power3"},
+-    {"pwr3"},    {"power4"},      {"pwr4"},    {"power5"}, {"pwr5"},
+-    {"power5x"}, {"pwr5x"},       {"power6"},  {"pwr6"},   {"power6x"},
+-    {"pwr6x"},   {"power7"},      {"pwr7"},    {"power8"}, {"pwr8"},
+-    {"power9"},  {"pwr9"},        {"powerpc"}, {"ppc"},    {"powerpc64"},
+-    {"ppc64"},   {"powerpc64le"}, {"ppc64le"},
++    {"generic"},   {"440"},       {"450"},         {"601"},     {"602"},
++    {"603"},       {"603e"},      {"603ev"},       {"604"},     {"604e"},
++    {"620"},       {"630"},       {"g3"},          {"7400"},    {"g4"},
++    {"7450"},      {"g4+"},       {"750"},         {"970"},     {"g5"},
++    {"a2"},        {"a2q"},       {"e500"},        {"e500mc"},  {"e5500"},
++    {"power3"},    {"pwr3"},      {"power4"},      {"pwr4"},    {"power5"},
++    {"pwr5"},      {"power5x"},   {"pwr5x"},       {"power6"},  {"pwr6"},
++    {"power6x"},   {"pwr6x"},     {"power7"},      {"pwr7"},    {"power8"},
++    {"pwr8"},      {"power9"},    {"pwr9"},        {"powerpc"}, {"ppc"},
++    {"powerpc64"}, {"ppc64"},     {"powerpc64le"}, {"ppc64le"},
+ };
+ 
+ bool PPCTargetInfo::isValidCPUName(StringRef Name) const {
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/lib/Basic/Targets/PPC.h
++++ llvm-toolchain-7-7.0.1~+rc2/clang/lib/Basic/Targets/PPC.h
+@@ -45,7 +45,8 @@ class LLVM_LIBRARY_VISIBILITY PPCTargetI
+     ArchDefinePwr8 = 1 << 12,
+     ArchDefinePwr9 = 1 << 13,
+     ArchDefineA2 = 1 << 14,
+-    ArchDefineA2q = 1 << 15
++    ArchDefineA2q = 1 << 15,
++    ArchDefine500v2 = 1 << 16
+   } ArchDefineTypes;
+ 
+ 
+@@ -66,6 +67,7 @@ class LLVM_LIBRARY_VISIBILITY PPCTargetI
+   bool HasBPERMD = false;
+   bool HasExtDiv = false;
+   bool HasP9Vector = false;
++  bool HasSPE = false;
+ 
+ protected:
+   std::string ABI;
+@@ -145,6 +147,8 @@ public:
+                         ArchDefinePwr6x | ArchDefinePwr6 | ArchDefinePwr5x |
+                         ArchDefinePwr5 | ArchDefinePwr4 | ArchDefinePpcgr |
+                         ArchDefinePpcsq)
++              .Cases("e500", "e500v2",
++                    ArchDefineName | ArchDefine500v2)
+               .Default(ArchDefineNone);
+     }
+     return CPUKnown;
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/test/Driver/ppc-features.cpp
++++ llvm-toolchain-7-7.0.1~+rc2/clang/test/Driver/ppc-features.cpp
+@@ -168,6 +168,9 @@
+ // RUN: %clang -target powerpc64-unknown-linux-gnu %s -mno-invariant-function-descriptors -minvariant-function-descriptors -### -o %t.o 2>&1 | FileCheck -check-prefix=CHECK-INVFUNCDESC %s
+ // CHECK-INVFUNCDESC: "-target-feature" "+invariant-function-descriptors"
+ 
++// RUN: %clang -target powerpc-unknown-linux-gnu %s -mno-spe -mspe -### -o %t.o 2>&1 | FileCheck -check-prefix=CHECK-SPE %s
++// CHECK-SPE: "-target-feature" "+spe"
++
+ // Assembler features
+ // RUN: %clang -target powerpc64-unknown-linux-gnu %s -### -o %t.o -no-integrated-as 2>&1 | FileCheck -check-prefix=CHECK_BE_AS_ARGS %s
+ // CHECK_BE_AS_ARGS: "-mppc64"
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/test/Misc/target-invalid-cpu-note.c
++++ llvm-toolchain-7-7.0.1~+rc2/clang/test/Misc/target-invalid-cpu-note.c
+@@ -79,7 +79,7 @@
+ // PPC: error: unknown target CPU 'not-a-cpu'
+ // PPC: note: valid target CPU values are: generic, 440, 450, 601, 602, 603,
+ // PPC-SAME: 603e, 603ev, 604, 604e, 620, 630, g3, 7400, g4, 7450, g4+, 750,
+-// PPC-SAME: 970, g5, a2, a2q, e500mc, e5500, power3, pwr3, power4, pwr4,
++// PPC-SAME: 970, g5, a2, a2q, e500, e500mc, e5500, power3, pwr3, power4, pwr4,
+ // PPC-SAME: power5, pwr5, power5x, pwr5x, power6, pwr6, power6x, pwr6x, power7,
+ // PPC-SAME: pwr7, power8, pwr8, power9, pwr9, powerpc, ppc, powerpc64, ppc64,
+ // PPC-SAME: powerpc64le, ppc64le
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/test/Preprocessor/init.c
++++ llvm-toolchain-7-7.0.1~+rc2/clang/test/Preprocessor/init.c
+@@ -6980,6 +6980,10 @@
+ //
+ // PPC32-LINUX-NOT: _CALL_LINUX
+ //
++// RUN: %clang_cc1 -E -dM -ffreestanding -triple=powerpc-unknown-linux-gnu -target-feature +spe < /dev/null | FileCheck -match-full-lines -check-prefix PPC32-SPE %s
++//
++// PPC32-SPE:#define __SPE__ 1
++//
+ // RUN: %clang_cc1 -E -dM -ffreestanding -triple=powerpc-apple-darwin8 < /dev/null | FileCheck -match-full-lines -check-prefix PPC-DARWIN %s
+ //
+ // PPC-DARWIN:#define _ARCH_PPC 1

@@ -1,0 +1,16 @@
+Index: llvm-toolchain-5.0-5.0.2~+rc1/clang/lib/Driver/ToolChains/Linux.cpp
+===================================================================
+--- llvm-toolchain-5.0-5.0.2~+rc1.orig/clang/lib/Driver/ToolChains/Linux.cpp
++++ llvm-toolchain-5.0-5.0.2~+rc1/clang/lib/Driver/ToolChains/Linux.cpp
+@@ -571,6 +571,11 @@ void Linux::AddClangSystemIncludeArgs(co
+     return;
+   }
+ 
++  // Force the inclusion of the gcc headers (objc/objc.h)
++  addExternCSystemIncludeIfExists(
++     DriverArgs, CC1Args, GCCInstallation.getInstallPath() + "/include");
++//  std::cout << GCCInstallation.getInstallPath().str() << "/include" << std::endl;
++
+   // Lacking those, try to detect the correct set of system includes for the
+   // target triple.
+ 

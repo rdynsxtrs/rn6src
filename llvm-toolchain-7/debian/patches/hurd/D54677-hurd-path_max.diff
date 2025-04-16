@@ -1,0 +1,64 @@
+[hurd] Fix unconditional use of PATH_MAX
+
+The GNU/Hurd system does not define an arbitrary PATH_MAX limitation, the POSIX 2001 realpath extension can be used instead, and the size of symlinks can be determined.
+
+https://reviews.llvm.org/D54677
+
+Index: llvm-toolchain-7_7.0.1~svn347285/libcxx/src/filesystem/operations.cpp
+===================================================================
+--- llvm-toolchain-7_7.0.1~svn347285.orig/libcxx/src/filesystem/operations.cpp
++++ llvm-toolchain-7_7.0.1~svn347285/libcxx/src/filesystem/operations.cpp
+@@ -531,11 +531,20 @@ path __canonical(path const& orig_p, err
+   ErrorHandler<path> err("canonical", ec, &orig_p, &cwd);
+ 
+   path p = __do_absolute(orig_p, &cwd, ec);
++#if _POSIX_VERSION >= 200112 || defined(__GLIBC__)
++  char *buff;
++  if ((buff = ::realpath(p.c_str(), NULL)) == nullptr)
++    return err.report(capture_errno());
++  path ret = {buff};
++  free(buff);
++  return ret;
++#else
+   char buff[PATH_MAX + 1];
+   char* ret;
+   if ((ret = ::realpath(p.c_str(), buff)) == nullptr)
+     return err.report(capture_errno());
+   return {ret};
++#endif
+ }
+ 
+ void __copy(const path& from, const path& to, copy_options options,
+@@ -1077,16 +1086,27 @@ void __permissions(const path& p, perms
+ path __read_symlink(const path& p, error_code* ec) {
+   ErrorHandler<path> err("read_symlink", ec, &p);
+ 
+-  char buff[PATH_MAX + 1];
+-  error_code m_ec;
++  struct stat sb;
++  if (lstat(p.c_str(), &sb) == -1) {
++    return err.report(capture_errno());
++  }
++  size_t size = sb.st_size + 1;
++  char *buff = (char*) malloc(size);
++  if (buff == NULL) {
++    return err.report(capture_errno());
++  }
++
+   ::ssize_t ret;
+-  if ((ret = ::readlink(p.c_str(), buff, PATH_MAX)) == -1) {
++  if ((ret = ::readlink(p.c_str(), buff, size)) == -1) {
++    free(buff);
+     return err.report(capture_errno());
+   }
+-  _LIBCPP_ASSERT(ret <= PATH_MAX, "TODO");
++  _LIBCPP_ASSERT(ret < size, "TODO");
+   _LIBCPP_ASSERT(ret > 0, "TODO");
+   buff[ret] = 0;
+-  return {buff};
++  path res = {buff};
++  free(buff);
++  return res;
+ }
+ 
+ bool __remove(const path& p, error_code* ec) {

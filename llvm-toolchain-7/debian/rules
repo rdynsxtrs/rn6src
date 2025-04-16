@@ -1,0 +1,843 @@
+#!/usr/bin/make -f
+
+TARGET_BUILD	:= build-llvm
+TARGET_BUILD_STAGE2    := $(TARGET_BUILD)/tools/clang/stage2-bins
+DEB_INST		:= $(CURDIR)/debian/tmp/
+
+# Disable to move the previous method
+BUILD_METHOD := stage2
+
+GXX_VERSIONED_PACKAGE    := $(shell dpkg-query -W -f '$${Depends}' g++ | grep -o 'g++-[0-9][0-9.]*' | tail -n1 )
+GXX_VERSIONED_EXECUTABLE := $(shell dpkg -L $(GXX_VERSIONED_PACKAGE) | grep '/usr/bin/g++-[0-9][0-9.]*' | xargs ls -d | tail -n1 )
+GCC_VERSION              := $(subst /usr/bin/g++-,,$(GXX_VERSIONED_EXECUTABLE))
+
+LLVM_VERSION   := $(shell dpkg-parsechangelog | sed -rne "s,^Version: 1:([0-9]+).*,\1,p")
+LLVM_VERSION_FULL := $(shell dpkg-parsechangelog | sed -rne "s,^Version: 1:([0-9.]+)(~|-)(.*),\1,p")
+ifeq ($(LLVM_VERSION),$(LLVM_VERSION_FULL))
+	LLVM_VERSION_FULL := $(LLVM_VERSION).0.0
+endif
+
+SONAME_EXT      := 1
+SONAME_OPENMP	:= 5
+# Manage the case when the version is 3.5~svn213052-1~exp1 or 3.4.2-1
+DEBIAN_REVISION := $(shell dpkg-parsechangelog |  sed -rne "s,^Version: 1:([0-9.]+)(~|-)(.*),\3,p")
+ifneq (,$(filter parallel=%,$(subst $(COMMA), ,$(DEB_BUILD_OPTIONS))))
+  NJOBS := -j $(subst parallel=,,$(filter parallel=%,$(subst $(COMMA), ,$(DEB_BUILD_OPTIONS))))
+endif
+
+VENDOR=$(shell lsb_release -is)
+DH_VERSION := $(shell dpkg -s debhelper | grep '^Version' | awk '{print $$2}')
+
+DEB_HOST_MULTIARCH  ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_HOST_ARCH_BITS  ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_BITS)
+DEB_HOST_ARCH       ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
+DEB_HOST_ARCH_OS    ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
+
+LDFLAGS_EXTRA =
+CXXFLAGS_EXTRA =
+CFLAGS_EXTRA =
+CONFIGURE_EXTRA =
+CMAKE_EXTRA =
+
+BASE_PATH	:= $(CURDIR)
+LIBCXX_EXCEPTIONS :=ON
+
+ifneq (,$(filter $(DEB_HOST_ARCH),s390x))
+	LIBCXX_EXCEPTIONS :=OFF
+endif
+
+ifneq (,$(filter $(DEB_HOST_ARCH),i386 armel mips mipsel powerpc powerpcspe riscv64))
+CMAKE_EXTRA += -DLIBOMP_LIBFLAGS="-latomic" -DCMAKE_SHARED_LINKER_FLAGS="-latomic"
+endif
+
+ifneq (,$(filter $(DEB_HOST_ARCH),armel))
+# For some reason, in the stage2 build, when clang is used to compile
+# itself. The atomic detection is failing on armel. Forcing the inclusion everywhere.
+LDFLAGS_EXTRA += -latomic
+endif
+
+# Cxx flags for building libcxx and libcxxabi
+LIBCXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS) $(shell dpkg-buildflags --get CPPFLAGS)
+
+ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' g++-$(GCC_VERSION)) lt 4.9-20140411-1~ ; echo $$?),0)
+# Too old version of gcc. Force 4.9
+	GCC_VERSION := 4.9
+endif
+
+export CC=gcc-$(GCC_VERSION)
+export CXX=g++-$(GCC_VERSION)
+
+opt_flags = -O2 -DNDEBUG
+
+# Only enable g1 on archs which needs it (it fixes an OOM during dh_strip due to huge symbols)
+ifeq ($(DEB_HOST_ARCH_BITS),32)
+opt_flags += -g1
+else
+# Should be -g, but this causes buildd disk space issues
+opt_flags += -g1
+endif
+
+ifneq (,$(findstring $(DEB_HOST_ARCH),armel))
+  opt_flags += -marm
+  # 3.8 fails to build, disable the compiler_rt builtins
+  # See http://lists.llvm.org/pipermail/llvm-dev/2016-May/099761.html
+  CMAKE_EXTRA += -DCOMPILER_RT_BUILD_BUILTINS=OFF
+  # Check for ancient libstdc++ fails due to atomics usage
+  CMAKE_EXTRA_LIBCXX += -DLLVM_COMPILER_CHECKED=ON
+  # Prevent clang from getting a > v4t default
+  # See bug #868779
+  CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=arm-linux-gnueabi
+endif
+
+
+ifneq (,$(findstring $(DEB_HOST_ARCH),armhf))
+# avoid an issue with openmp on armhf
+  CMAKE_EXTRA += -DLLVM_HOST_TRIPLE=armv7l-unknown-linux-gnueabihf
+endif
+
+ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' g++-$(GCC_VERSION)) ge 4.8-20121128-1~ ; echo $$?),0)
+	control_vars = '-Vdep:devlibs=libstdc++-$(GCC_VERSION)-dev, libgcc-$(GCC_VERSION)-dev' \
+		'-Vdep:devlibs-objc=libobjc-$(GCC_VERSION)-dev'
+else ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' g++-$(GCC_VERSION)) ge 4.7.2-10~ ; echo $$?),0)
+	control_vars = '-Vdep:devlibs=libstdc++6-$(GCC_VERSION)-dev, libgcc-$(GCC_VERSION)-dev' \
+		'-Vdep:devlibs-objc=libobjc-$(GCC_VERSION)-dev'
+else
+	control_vars = '-Vdep:devlibs=libstdc++6-$(GCC_VERSION)-dev'
+endif
+
+# Disabled:
+#  Host compiler does not support '-fuse-ld=lld'
+# USE_LLD_ARCHS := amd64
+# ifneq (,$(filter $(DEB_HOST_ARCH),$(USE_LLD_ARCHS)))
+# 	CMAKE_EXTRA += -DLLVM_ENABLE_LLD=ON
+# endif
+
+BINUTILS_GOLD_ARCHS := amd64 arm64 armhf i386 ppc64 ppc64el x32 s390x hurd-i386 kfreebsd-amd64 kfreebsd-i386
+ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' binutils) ge 2.23.1-1~exp3 ; echo $$?),0)
+ifneq (,$(filter $(DEB_HOST_ARCH),$(BINUTILS_GOLD_ARCHS)))
+# -fused-ld=gold enables the gold linker (but is not supported by all archs / distro)
+	LDFLAGS_EXTRA += -fuse-ld=gold
+#--no-keep-files-mapped --no-map-whole-files
+	CXXFLAGS_EXTRA += -fuse-ld=gold
+	CFLAGS_EXTRA += -fuse-ld=gold
+#-Wl,--no-keep-files-mapped -Wl,--no-map-whole-files
+	CMAKE_EXTRA += -DLLVM_BINUTILS_INCDIR=/usr/include/
+endif
+endif
+
+CODECOVERAGE=no
+ifneq (,$(filter codecoverage,$(DEB_BUILD_OPTIONS)))
+# enable the code coverage
+	CODECOVERAGE=yes
+# for -fvisibility-inlines-hidden see http://lists.cs.uiuc.edu/pipermail/llvm-commits/Week-of-Mon-20130729/183016.html
+	CXXFLAGS_EXTRA += -fprofile-arcs -ftest-coverage
+	LDFLAGS_EXTRA += -coverage -lgcov
+	RUN_TEST=yes
+endif
+
+# Enable for bootstrap
+LDFLAGS_EXTRA            += -fPIC -Wno-unused-command-line-argument -Wno-unknown-warning-option -Wl,--build-id
+CXXFLAGS_EXTRA           += -fPIC -Wno-unused-command-line-argument -Wno-unknown-warning-option
+BOOTSTRAP_CXXFLAGS_EXTRA  = $(CXXFLAGS_EXTRA) # Nothing for now. Keeping in case we need it
+CFLAGS_EXTRA             += -fPIC -Wno-unused-command-line-argument -Wno-unknown-warning-option
+BOOTSTRAP_CFLAGS_EXTRA    = $(CFLAGS_EXTRA) # Nothing for now. Keeping in case we need it
+
+# Enable polly (or not)
+POLLY_ENABLE=yes
+ifneq (,$(filter $(DEB_HOST_ARCH), powerpc powerpcspe))
+  POLLY_ENABLE=no
+endif
+
+# Enable openmp (or not)
+OPENMP_ENABLE=yes
+ifneq (,$(filter $(DEB_HOST_ARCH), mips mipsel powerpc powerpcspe riscv64 sparc64 s390x x32))
+  OPENMP_ENABLE=no
+endif
+
+RUN_TEST=yes
+ifneq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	RUN_TEST=no
+endif
+
+ifneq (,$(filter scan-build,$(DEB_BUILD_OPTIONS)))
+# enable the build using scan-build
+# The package are installed through the variable declarations:
+# OTHERMIRROR="deb http://llvm.org/apt/unstable/ llvm-toolchain main"
+# EXTRAPACKAGES="clang-X"
+	PRE_PROCESS=scan-build-$(LLVM_VERSION) --show-description -analyzer-config stable-report-filename=true
+# -enable-checker optin.performance.Padding
+	PRE_PROCESS_CONF=scan-build-$(LLVM_VERSION)
+# no need to run tests in this case
+	RUN_TEST=no
+	CONFIGURE_EXTRA += --enable-assertions
+	CMAKE_EXTRA += -DLLVM_ENABLE_ASSERTIONS=ON
+endif
+
+ifneq (,$(filter coverity,$(DEB_BUILD_OPTIONS)))
+# enable the build using coverity
+# pbuilder contains BINDMOUNTS="/opt/cov-analysis/"
+# And we have some pbuilder hooks to configure and pack the result
+# Where the binaries are installed on the jenkins instance
+	PRE_PROCESS=PATH=$$PATH:/opt/cov-analysis/bin/ cov-build --dir cov-int
+# We don't want to check the temporary files produced by the configure
+	PRE_PROCESS_CONF=
+	COVERITY_ENABLE=1
+	CONFIGURE_EXTRA += --enable-assertions
+	CMAKE_EXTRA += -DLLVM_ENABLE_ASSERTIONS=ON
+# no need to run tests in this case
+	RUN_TEST=no
+else
+	COVERITY_ENABLE=0
+endif
+
+LLDB_ENABLE=yes
+LLDB_DISABLE_ARCHS := hurd-i386 ia64 powerpc powerpcspe ppc64 riscv64 s390x sparc64
+# hurd has threading issues
+ifeq (,$(filter-out $(LLDB_DISABLE_ARCHS), $(DEB_HOST_ARCH)))
+# Disable LLDB for this arch.
+		LLDB_ENABLE=no
+else
+# See https://llvm.org/bugs/show_bug.cgi?id=28898
+# Enable it again as it seems it is fixed upstream https://bugs.llvm.org/show_bug.cgi?id=35291
+#	CMAKE_EXTRA += -DLLDB_DISABLE_LIBEDIT=ON
+endif
+
+LLD_ENABLE=yes
+
+ifneq (,$(filter $(DEB_HOST_ARCH_OS),linux))
+# only for linux
+	CMAKE_EXTRA += -DLLVM_USE_PERF=yes
+endif
+
+DH_OPTIONS=
+OCAML_ENABLE= no
+OCAML_ARCHS := amd64 arm64 armhf i386 ppc64el s390x
+ifneq (,$(filter $(DEB_HOST_ARCH),$(OCAML_ARCHS)))
+# Enable OCAML for this arch.
+	OCAML_ENABLE=yes
+	OCAML_STDLIB_DIR    ?= $(shell ocamlc -where)
+	DH_OPTIONS=--with ocaml
+endif
+# Force the deactivation of ocaml until the transition is done
+#OCAML_ENABLE=no
+
+LIBFUZZER_ENABLE=yes
+ifeq (,$(filter $(DEB_HOST_ARCH_OS),linux))
+	LIBFUZZER_ENABLE=no
+endif
+
+ifneq (,$(filter $(DEB_HOST_ARCH), mips mipsel))
+	LIBOMP_ARCH = mips
+endif
+
+ifneq (,$(filter $(DEB_HOST_ARCH), mips64 mips64el))
+	LIBOMP_ARCH = mips64
+endif
+
+
+%:
+	dh $@ $(DH_OPTIONS)
+
+
+preconfigure:
+	for f in debian/*.in; do \
+		f2=$$(echo $$f | sed 's/\.in$$//;s/X\.Y/$(LLVM_VERSION)/'); \
+		echo "$$f => $$f2"; \
+		sed -e 's|@DEB_HOST_MULTIARCH@|$(DEB_HOST_MULTIARCH)|g' \
+			-e "s|@OCAML_STDLIB_DIR@|$(OCAML_STDLIB_DIR)|g" \
+			-e "s|@LLVM_VERSION_FULL@|$(LLVM_VERSION_FULL)|g" \
+			-e "s|@LLVM_VERSION@|$(LLVM_VERSION)|g" $$f > $$f2; \
+	done
+
+# Override this two targets. They are trying to manage the .in conversion for me
+override_dh_ocamlinit:
+override_dh_ocamlclean:
+
+override_dh_auto_configure: preconfigure
+	echo "Using gcc: "
+	$(CC) -v
+	mkdir -p $(TARGET_BUILD)
+	mkdir -p clang/include/clang/Debian
+	sed -e "s|@DEB_PATCHSETVERSION@|$(DEBIAN_REVISION)|" \
+		debian/debian_path.h > clang/include/clang/Debian/debian_path.h
+
+# Remove some old symlinks
+	cd tools/ && \
+		if test -h clang; then \
+			rm clang; \
+		fi; \
+		ln -s ../clang .; \
+	readlink clang
+
+	if test "$(POLLY_ENABLE)" = yes; then \
+		cd tools/ && \
+		if test -h polly; then \
+			rm polly; \
+		fi; \
+		ln -s ../polly .; \
+	fi
+
+	if test "$(LLD_ENABLE)" = yes; then \
+	cd tools/ && \
+		if test -h lld; then \
+			rm lld; \
+		fi; \
+		ln -s ../lld .; \
+	readlink lld; \
+	fi
+
+	if test "$(LLDB_ENABLE)" = yes; then \
+		cd tools/ && \
+		if test -h lldb; then \
+		   rm lldb; \
+		fi; \
+		ln -s ../lldb .; \
+	fi
+
+	cd projects/ && \
+	if test -h compiler-rt; then \
+		rm compiler-rt; \
+	fi; \
+	ln -s ../compiler-rt .; \
+	readlink compiler-rt
+
+	if test "$(OPENMP_ENABLE)" = yes; then \
+		cd projects/ && \
+		if test -h openmp; then \
+			rm openmp; \
+		fi; \
+		ln -s ../openmp .; \
+		readlink openmp; \
+	fi
+
+	# Configure coverity (we need the compilers) + work around perf issues
+	-(if test $(COVERITY_ENABLE) -eq 1; then \
+		export PATH=$$PATH:/opt/cov-analysis/bin/; \
+		cov-configure --compiler clang --comptype clang; \
+		cov-configure --compiler gcc-$(GCC_VERSION) --comptype gcc; \
+		cov-configure --compiler g++-$(GCC_VERSION) --comptype gcc; \
+		cov-configure -co /usr/bin/g++-$(GCC_VERSION) --comptype gcc -- -fPIC -std=c++11; \
+		cov-configure -co /usr/bin/gcc-$(GCC_VERSION) --comptype gcc -- -fPIC; \
+		cov-configure -co /usr/bin/g++-$(GCC_VERSION) --comptype gcc -- -fPIC -std=c++11 -fno-exceptions; \
+		cov-configure -co /usr/bin/g++-$(GCC_VERSION) --comptype gcc --template \
+			--xml-option append_arg:"--ppp_translator" \
+			--xml-option append_arg:"replace/llvm::AlignOf<PrevTy>::Alignment/(llvm::AlignOf<PrevTy>::Alignment)" \
+			--xml-option append_arg:"--ppp_translator" \
+			--xml-option append_arg:"replace/llvm::AlignOf<NextTy>::Alignment/(llvm::AlignOf<NextTy>::Alignment)"; \
+		cov-configure --compiler c++ --comptype g++ --template \
+			--xml-option append_arg:"--ppp_translator" \
+			--xml-option append_arg:"replace/llvm::AlignOf<PrevTy>::Alignment/(llvm::AlignOf<PrevTy>::Alignment)" \
+			--xml-option append_arg:"--ppp_translator" \
+			--xml-option append_arg:"replace/llvm::AlignOf<NextTy>::Alignment/(llvm::AlignOf<NextTy>::Alignment)"; \
+	fi)
+
+	# Due to bug upstream, no symlink here
+	rm -fr tools/clang/tools/extra
+	cp -R -H clang-tools-extra tools/clang/tools/extra
+
+	echo "Running tests: $(RUN_TEST)"
+
+	# if cmake is installed in /tmp/cmake/ uses it
+	# Used to build llvm on old ubuntu (precise) on the llvm.org/apt/ ci
+	CMAKE_BIN=cmake; \
+	if test -f /tmp/cmake/bin/cmake; then \
+		CMAKE_BIN=/tmp/cmake/bin/cmake; \
+	fi; \
+	echo "Using cmake: $$CMAKE_BIN"; \
+	cd $(TARGET_BUILD) && \
+	$(PRE_PROCESS_CONF) $$CMAKE_BIN ../ \
+	-DCMAKE_INSTALL_PREFIX=/usr/lib/llvm-$(LLVM_VERSION) \
+	-DCMAKE_VERBOSE_MAKEFILE=ON \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DCMAKE_CXX_FLAGS_RELWITHDEBINFO="$(opt_flags)" \
+	-DBOOTSTRAP_CMAKE_CXX_FLAGS='$(BOOTSTRAP_CXXFLAGS_EXTRA)' \
+	-DBOOTSTRAP_CMAKE_C_FLAGS='$(BOOTSTRAP_CFLAGS_EXTRA)' \
+	-DLLVM_LINK_LLVM_DYLIB=ON \
+	-DLLVM_INSTALL_UTILS=ON \
+	-DLLVM_VERSION_SUFFIX= \
+	-DLLVM_ENABLE_SPHINX=ON \
+	-DSPHINX_WARNINGS_AS_ERRORS=OFF \
+	-DLLVM_BUILD_LLVM_DYLIB=ON \
+	-DLLVM_ENABLE_RTTI=ON \
+	-DLLVM_ENABLE_FFI=ON \
+	$(CMAKE_EXTRA) \
+	-DLIBCLANG_LIBRARY_VERSION=$(SONAME_EXT) \
+	-DENABLE_LINKER_BUILD_ID=ON \
+	-DPOLLY_BUNDLED_JSONCPP=OFF \
+	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="WebAssembly;AVR" \
+	-DCLANG_ENABLE_BOOTSTRAP=ON \
+	-DCLANG_VENDOR=$(VENDOR) \
+	-DCLANG_BOOTSTRAP_PASSTHROUGH="CMAKE_INSTALL_PREFIX;CMAKE_VERBOSE_MAKEFILE;CMAKE_BUILD_TYPE;CMAKE_CXX_FLAGS_RELWITHDEBINFO;LLVM_LINK_LLVM_DYLIB;LLVM_INSTALL_UTILS;LLVM_VERSION_SUFFIX;LLVM_ENABLE_SPHINX;SPHINX_WARNINGS_AS_ERRORS;LLVM_BUILD_LLVM_DYLIB;LLVM_ENABLE_RTTI;LLVM_ENABLE_FFI;LIBCLANG_LIBRARY_VERSION;ENABLE_LINKER_BUILD_ID;POLLY_BUNDLED_JSONCPP;LLVM_EXPERIMENTAL_TARGETS_TO_BUILD;LLVM_USE_PERF;LLVM_ENABLE_ASSERTIONS;LLVM_BINUTILS_INCDIR;LLVM_HOST_TRIPLE;;LLVM_COMPILER_CHECKED;COMPILER_RT_BUILD_BUILTINS;LIBOMP_LIBFLAGS;CMAKE_SHARED_LINKER_FLAGS"
+
+
+# make
+VERBOSE=VERBOSE=1
+# ninja
+#VERBOSE=-v
+
+debian-full-build:
+	$(PRE_PROCESS) make $(NJOBS) -C $(TARGET_BUILD) $(VERBOSE) CFLAGS="$(CFLAGS_EXTRA)" CXXFLAGS="$(CXXFLAGS_EXTRA)"  LDFLAGS="$(LDFLAGS_EXTRA)" REQUIRES_RTTI=1 DEBUGMAKE=1 $(BUILD_METHOD)
+
+# Check the stage 2 build worked
+	if test "$(BUILD_METHOD)" = "stage2"; then \
+	if ! readelf --string-dump .comment  $(TARGET_BUILD_STAGE2)/bin/clang 2>&1|grep -q "clang version"; then \
+		echo "clang hasn't been built using clang. Bye bye. Check that the stage2 build has been done."; \
+	fi; \
+	fi
+
+	touch $@
+
+debian-libfuzzer-build:
+ifeq (${LIBFUZZER_ENABLE},yes)
+	cd $(TARGET_BUILD) \
+	CFLAGS=`dpkg-buildflags --get CFLAGS`; \
+	CFLAGS="$$CFLAGS `dpkg-buildflags --get CPPFLAGS`"; \
+	echo $$CFLAGS; \
+	$(BASE_PATH)/$(TARGET_BUILD_STAGE2)/bin/clang++ -c $$CFLAGS -std=c++11 $(BASE_PATH)/compiler-rt/lib/fuzzer/*.cpp -IFuzzer; \
+	ar ruv libFuzzer.a Fuzzer*.o
+endif
+	touch $@
+
+
+LIBCXX_CMAKE_OPTIONS := \
+	-DCMAKE_INSTALL_PREFIX=/usr/lib/llvm-$(LLVM_VERSION) \
+	-DLLVM_CONFIG_PATH=$(CURDIR)/$(TARGET_BUILD_STAGE2)/bin/llvm-config \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DCMAKE_CXX_COMPILER=$(CURDIR)/$(TARGET_BUILD_STAGE2)/bin/clang++ \
+	-DCMAKE_C_COMPILER=$(CURDIR)/$(TARGET_BUILD_STAGE2)/bin/clang \
+	-DCMAKE_CXX_FLAGS="$(LIBCXXFLAGS)" \
+	-DCMAKE_EXE_LINKER_FLAGS="" \
+	-DCMAKE_SHARED_LINKER_FLAGS="" \
+	-DCMAKE_MODULE_LINKER_FLAGS="" \
+	-DCMAKE_AR=$(CURDIR)/$(TARGET_BUILD_STAGE2)/bin/llvm-ar \
+	-DCMAKE_RANLIB=$(CURDIR)/$(TARGET_BUILD_STAGE2)/bin/llvm-ranlib \
+	-DLLVM_EXTERNAL_LIT=$(BASE_PATH)/utils/lit/lit.py \
+	$(CMAKE_EXTRA) \
+	$(CMAKE_EXTRA_LIBCXX)
+
+debian-libcxx-build:
+# Builds libcxx
+
+	mkdir -p libcxx/build
+	mkdir -p libcxxabi/build
+
+	CMAKE_BIN=cmake; \
+	if test -f /tmp/cmake/bin/cmake; then \
+		CMAKE_BIN=/tmp/cmake/bin/cmake; \
+	fi; \
+	echo "Using cmake: $$CMAKE_BIN"; \
+	cd libcxxabi/build && \
+	$(PRE_PROCESS_CONF) $$CMAKE_BIN ../ \
+	$(LIBCXX_CMAKE_OPTIONS) \
+	-DLIBCXXABI_LIBCXX_PATH=$(BASE_PATH)/libcxx \
+	-DLIBCXXABI_LIBCXX_LIBRARY_PATH=$(BASE_PATH)/libcxx/build/lib \
+	-DLIBCXXABI_LIBCXX_INCLUDES=$(BASE_PATH)/libcxx/include \
+	-DLIBCXXABI_ENABLE_EXCEPTIONS=$(LIBCXX_EXCEPTIONS) \
+	-DLLVM_ENABLE_RTTI=ON && \
+	$(PRE_PROCESS_CONF) make $(NJOBS) $(VERBOSE) CXXFLAGS="$(CXXFLAGS_EXTRA)" LDFLAGS="$(LDFLAGS_EXTRA)"
+	touch $@
+
+debian-libcxxabi-build:
+# Builds libcxxabi
+
+	mkdir -p libcxxabi/build
+
+	CMAKE_BIN=cmake; \
+	if test -f /tmp/cmake/bin/cmake; then \
+		CMAKE_BIN=/tmp/cmake/bin/cmake; \
+	fi; \
+	echo "Using cmake: $$CMAKE_BIN"; \
+	cd libcxx/build && \
+	$(PRE_PROCESS_CONF) $$CMAKE_BIN ../ \
+	$(LIBCXX_CMAKE_OPTIONS) \
+	-DLIBCXX_CXX_ABI=libcxxabi \
+	-DLIBCXX_CXX_ABI_INCLUDE_PATHS=$(BASE_PATH)/libcxxabi/include \
+	-DLIBCXX_CXX_ABI_LIBRARY_PATH=$(BASE_PATH)/libcxxabi/build/lib \
+	-DLIBCXX_ENABLE_EXCEPTIONS=$(LIBCXX_EXCEPTIONS) \
+	-DLIBCXX_INSTALL_EXPERIMENTAL_LIBRARY=ON && \
+	$(PRE_PROCESS_CONF) make $(NJOBS) $(VERBOSE) CXXFLAGS="$(CXXFLAGS_EXTRA)" LDFLAGS="$(LDFLAGS_EXTRA)"
+	touch $@
+
+override_dh_auto_build: debian-full-build debian-libfuzzer-build debian-libcxx-build debian-libcxxabi-build
+
+override_dh_prep: build_doc
+	dh_prep
+
+build_doc:
+	cd $(CURDIR)/docs && make -f Makefile.sphinx && make -f Makefile.sphinx man
+	cd $(CURDIR)/clang/docs && make -f Makefile.sphinx && make -f Makefile.sphinx man
+	-(if test "$(OCAML_ENABLE)" = yes; then \
+	make $(NJOBS) -C "$(TARGET_BUILD_STAGE2)/docs" ocaml_doc; \
+	fi)
+
+# Continue if failing, Ubuntu precise cannot generate manpages as sphinx is too old
+	-(cd $(TARGET_BUILD) && make $(NJOBS) docs-llvm-html docs-clang-html docs-clang-tools-html docs-polly-html docs-polly-man docs-clang-tools-man docs-clang-man docs-llvm-man)
+
+# Rename manpages
+	d=$(CURDIR)/docs/_build/man/; \
+	if test -d $$d; then \
+		cd $$d; \
+		for f in *.1; do \
+			echo "$$f"|grep $(LLVM_VERSION) || mv $$f `echo $$f|sed "s|\.1|-$(LLVM_VERSION).1|"`; \
+		done; \
+	else \
+		echo "could not find $$d"; \
+	fi
+# the clang doc generation only generates clang manpage
+# When it will do more, we should move that in the loop above
+	cd $(CURDIR)/clang/docs/_build/man/; mv clang.1 clang-$(LLVM_VERSION).1
+
+# Remove the copy of jquery. See bug #701087
+	for d in $(TARGET_BUILD)/docs/html/_static/ $(TARGET_BUILD)/tools/clang/docs/html/_static/ $(TARGET_BUILD)/tools/clang/tools/extra/docs/html/_static/; do \
+		cd $$d && rm -f jquery.js && ln -s /usr/share/javascript/jquery/jquery.js && cd -; \
+		cd $$d && rm -f underscore.js && ln -s /usr/share/javascript/underscore/underscore.js && cd -; \
+	done
+
+	mkdir -p debian/man/
+	help2man --no-info --version-string=$(LLVM_VERSION) clang/tools/scan-view/bin/scan-view > debian/man/scan-view-$(LLVM_VERSION).1
+	help2man --no-info --version-string=$(LLVM_VERSION) clang/tools/clang-format/clang-format-diff.py > debian/man/clang-format-diff-$(LLVM_VERSION).1
+
+	CMDS="llvm-dwarfdump llvm-mc llvm-mcmarkup llvm-objdump llvm-rtdyld llvm-size llvm-ranlib lldb lldb-mi clang-format clang clang++ clang-tblgen clang-check clang-cpp clang-import-test clang-tidy clang-apply-replacements clang-rename clang-query pp-trace sancov lli modularize clang-include-fixer find-all-symbols clang-reorder-fields ld.lld llvm-tblgen clang-change-namespace clang-offload-bundler"; \
+	for f in $$CMDS; do \
+		echo "Generating manpage of $$f"; \
+		LD_LIBRARY_PATH=$(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/:/usr/lib/*/libfakeroot help2man --no-info --version-string=$(LLVM_VERSION) $(TARGET_BUILD)/bin/$$f > debian/man/$$f-$(LLVM_VERSION).1; \
+	done
+	if test "$(OPENMP_ENABLE)" = yes; then \
+		cd openmp/runtime && doxygen doc/doxygen/config; cd -; \
+		cd openmp/runtime/doc/doxygen/generated/html/ && rm jquery.js && ln -s /usr/share/javascript/jquery/jquery.js; \
+	fi
+
+override_dh_auto_install:
+	# Clean up temporary files to make sure the install works
+	rm -rf $(find $(TARGET_BUILD) -wholename '*CMakeFiles*' -not -name CMakeLists.txt -a -name "*.dir" -type d)
+	# install/fast enables a make install without recompiling temporary files
+	if test "$(BUILD_METHOD)" = "stage2"; then \
+		$(MAKE) -C $(TARGET_BUILD) $(VERBOSE) stage2-install DESTDIR=$(DEB_INST)/; \
+	else \
+		$(MAKE) -C $(TARGET_BUILD) $(VERBOSE) install DESTDIR=$(DEB_INST)/; \
+	fi
+	# Not used on Linux.
+	rm -f $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/bin/argdumper
+	rm -f $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/share/clang/clang-format-bbedit.applescript
+	# Remove bat files https://bugs.llvm.org/show_bug.cgi?id=30755
+	rm -f $(DEB_INST)/usr/share/clang/scan-build-$(LLVM_VERSION)/libexec/*.bat $(DEB_INST)/usr/share/clang/scan-build-$(LLVM_VERSION)/bin/*.bat
+
+	cp $(TARGET_BUILD_STAGE2)/bin/clang-query $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/bin
+
+	# Only run on executable, not script
+	chrpath -d `find $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/bin/ -type f -executable -exec file -i '{}' \; | grep 'x-executable; charset=binary'|cut -d: -f1`
+	chrpath -d libcxxabi/build/lib/libc++abi.so.1.0
+	chrpath -d libcxx/build/lib/libc++.so.1.0
+
+	cd debian/tmp/usr/lib/llvm-$(LLVM_VERSION)/lib/ && rm -f libclang.so.$(SONAME_EXT) libclang-$(LLVM_VERSION).so; \
+	ln -s libclang-$(LLVM_VERSION).so.$(SONAME_EXT) libclang.so.$(SONAME_EXT)
+
+	cd debian/tmp/usr/lib/llvm-$(LLVM_VERSION)/lib && rm -f libomp.so; \
+	ln -s libomp.so.$(SONAME_OPENMP) libomp.so
+
+	if test "$(OPENMP_ENABLE)" = yes; then \
+		mkdir -p debian/tmp/usr/lib/llvm-$(LLVM_VERSION)/include/openmp; \
+		cp -f openmp/runtime/exports/common*/include/* debian/tmp/usr/lib/llvm-$(LLVM_VERSION)/include/openmp; \
+		cd debian/tmp/usr/lib/llvm-$(LLVM_VERSION)/lib && cp libomp.so.$(SONAME_OPENMP) libomp-$(LLVM_VERSION).so.$(SONAME_OPENMP); \
+	fi
+
+# Remove artifact (where compiler-rt is built)
+#	if test -d $(TARGET_BUILD)/tools/clang/runtime/compiler-rt/clang_linux; then \
+#	cd $(TARGET_BUILD)/tools/clang/runtime/compiler-rt/clang_linux && rm -rf $$(find . -mindepth 2 -maxdepth 2 -type d) && rm -rf $$(find -empty) && rm -rf */.dir; \
+#	fi
+
+	mkdir -p $(CURDIR)/debian/clang-$(LLVM_VERSION)/usr/bin/
+	cp compiler-rt/lib/asan/scripts/asan_symbolize.py $(CURDIR)/debian/clang-$(LLVM_VERSION)/usr/bin/asan_symbolize-$(LLVM_VERSION)
+
+ifeq (${LIBFUZZER_ENABLE},yes)
+	mkdir -p $(CURDIR)/debian/libfuzzer-$(LLVM_VERSION)-dev/usr/lib/llvm-$(LLVM_VERSION)/lib/
+	cp -v $(TARGET_BUILD)/libFuzzer.a $(CURDIR)/debian/libfuzzer-$(LLVM_VERSION)-dev/usr/lib/llvm-$(LLVM_VERSION)/lib/
+endif
+
+# Create this fake directory to make the install libclang-common-dev happy
+# under the unsupported archs of compiler-rt
+	mkdir -p $(DEB_INST)/usr/lib/clang/$(LLVM_VERSION)/lib
+	mkdir -p $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION_FULL)/lib/
+	mkdir -p $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION)/lib/clang_linux/
+	mkdir -p $(TARGET_BUILD)/tools/clang/runtime/compiler-rt/clang_linux/
+	mkdir -p $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION_FULL)/share/
+# On some archs, the sanatizers are not built. As we explicitly includes some txt files, create
+# a fake txt to make sure it doesn't fail
+	echo "The *.txt files, if available, contain helper to override some of the errors messages." > $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION_FULL)/README.txt
+	echo "Please visit https://github.com/google/sanitizers/wiki/AddressSanitizer for help" >> $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION_FULL)/README.txt
+# Path changed. Make a copy of it
+	cp $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION_FULL)/README.txt $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/clang/$(LLVM_VERSION_FULL)/share/README.txt
+
+# idem for the lldb python binding
+	mkdir -p $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/python2.7/site-packages/lldb/
+
+# Remove things that CMake  install but which aren't packaged yet,
+# or are packaged from the source or build tree.
+	mv $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/bin/clang-$(LLVM_VERSION) \
+	   $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/bin/clang
+
+# Don't think it is used
+	rm -f $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/libPolly*a
+# Probably useless
+	rm -f $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/python2.7/site-packages/six.py
+
+	$(MAKE) -C libcxxabi/build install DESTDIR=$(DEB_INST)
+	$(MAKE) -C libcxx/build install DESTDIR=$(DEB_INST)
+
+# Rename binaries
+	mkdir -p $(DEB_INST)/usr/bin/
+	cd $(DEB_INST)/usr/bin/; \
+	rm -f *; \
+	for f in ../lib/llvm-$(LLVM_VERSION)/bin/*; do \
+		ln -s $$f `basename $$f`-$(LLVM_VERSION); \
+		echo "Link $$f to `basename $$f`-$(LLVM_VERSION)"; \
+	done
+
+# Rename some stuff with the version name
+	cp $(CURDIR)/clang/tools/scan-build/man/scan-build.1 $(CURDIR)/clang/tools/scan-build/man/scan-build-$(LLVM_VERSION).1
+
+	# copy the vim files (except that tablegen does not exist for indent
+	VIM_DIRS="ftdetect ftplugin syntax indent"; \
+	for dir in $$VIM_DIRS; do \
+		cp -f $(CURDIR)/utils/vim/$$dir/llvm.vim $(CURDIR)/utils/vim/$$dir/llvm-$(LLVM_VERSION).vim; \
+		if test -f $(CURDIR)/utils/vim/$$dir/tablegen.vim; then \
+			cp -f $(CURDIR)/utils/vim/$$dir/tablegen.vim $(CURDIR)/utils/vim/$$dir/tablegen-$(LLVM_VERSION).vim; \
+		fi; \
+	done
+	cp -f $(CURDIR)/utils/vim/vimrc $(CURDIR)/utils/vim/llvm-$(LLVM_VERSION)-vimrc
+
+	cp -f $(CURDIR)/clang/tools/clang-format/clang-format-diff.py $(CURDIR)/clang/tools/clang-format/clang-format-diff-$(LLVM_VERSION)
+
+	cp -f $(CURDIR)/clang/tools/clang-format/clang-format.py clang/tools/clang-format/clang-format-$(LLVM_VERSION).py
+
+	rm -rf clang/tools/scan-build-$(LLVM_VERSION)
+	cp -fR $(CURDIR)/clang/tools/scan-build clang/tools/scan-build-$(LLVM_VERSION)
+
+	rm -rf clang/tools/scan-build-py-$(LLVM_VERSION)
+	cp -fR $(CURDIR)/clang/tools/scan-build-py clang/tools/scan-build-py-$(LLVM_VERSION)
+	chmod +x clang/tools/scan-build-py-$(LLVM_VERSION)/bin/*
+
+	rm -rf clang/tools/scan-view-$(LLVM_VERSION)
+	cp -fR $(CURDIR)/clang/tools/scan-view clang/tools/scan-view-$(LLVM_VERSION)
+
+# Remove some license files
+	rm -f $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/include/llvm/Support/LICENSE.TXT
+
+# Disable CMake's package validation checks for target files that we may remove.
+	sed -i '/_IMPORT_CHECK_TARGETS \(Polly\|sancov\)/ {s|^|#|}' $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/cmake/llvm/LLVMExports-*.cmake
+
+# Disable CMake's package validation checks for binaries that may not be installed
+	sed -i 's|.*_IMPORT_CHECK_FILES_FOR_.*/bin/.*)|#&|' $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/cmake/clang/ClangTargets-*.cmake
+
+# Managed in python-lldb-X.Y.links.in
+	rm -f $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/python*/site-packages/lldb/_lldb.so
+
+# Manage the polly files. Sometimes, we build them. Sometimes not.
+	if test "$(POLLY_ENABLE)" = yes; then \
+		mkdir -p $(CURDIR)/debian/libclang-$(LLVM_VERSION)-dev/usr/lib/llvm-$(LLVM_VERSION)/lib/ $(CURDIR)/debian/libclang-common-$(LLVM_VERSION)-dev/usr/lib/llvm-$(LLVM_VERSION)/include/polly/; \
+		mv -f $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/libpolly* \
+		$(CURDIR)/debian/libclang-$(LLVM_VERSION)-dev/usr/lib/llvm-$(LLVM_VERSION)/lib/; \
+		rm -rf $(CURDIR)/debian/libclang-common-$(LLVM_VERSION)-dev/usr/lib/llvm-$(LLVM_VERSION)/include/polly; \
+		mv -f $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/include/polly/ \
+		$(CURDIR)/debian/libclang-common-$(LLVM_VERSION)-dev/usr/lib/llvm-$(LLVM_VERSION)/include/; \
+	fi
+
+	mkdir -p $(CURDIR)/debian/usr/share/doc/llvm-$(LLVM_VERSION)-doc/ $(CURDIR)/debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/
+	cp -R $(TARGET_BUILD)/docs/html $(CURDIR)/debian/usr/share/doc/llvm-$(LLVM_VERSION)-doc/
+	cp -R $(TARGET_BUILD)/tools/clang/docs/html $(CURDIR)/debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/
+	cp -R $(TARGET_BUILD)/tools/clang/tools/extra/docs/html $(CURDIR)/debian/usr/share/doc/clang-$(LLVM_VERSION)-doc/clang-extra
+
+# Rename OCaml bindings
+	if test "$(OCAML_ENABLE)" = yes; then \
+		mkdir -p "$(DEB_INST)$(OCAML_STDLIB_DIR)"; \
+		mkdir -p "$(DEB_INST)usr/lib/llvm-$(LLVM_VERSION)/docs/ocaml/html/html"; \
+		mkdir -p "$(DEB_INST)usr/lib/llvm-$(LLVM_VERSION)/share/doc/llvm/ocaml-html/"; \
+		if test -d "$(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/ocaml"; then \
+			mv -f "$(DEB_INST)usr/lib/llvm-$(LLVM_VERSION)/lib/ocaml" \
+			"$(DEB_INST)$(OCAML_STDLIB_DIR)/llvm-$(LLVM_VERSION)"; \
+		fi; \
+	fi
+
+# Delete the target build directory to save some space on the build systems
+# All the files have been installed in $(CURDIR)/debian/tmp/ already
+	rm -rf $(TARGET_BUILD)
+
+
+override_dh_makeshlibs:
+	dh_makeshlibs -plibclang$(SONAME_EXT)-$(LLVM_VERSION) -V"libclang$(SONAME_EXT)-$(LLVM_VERSION) (>= 1:7~svn298832-1~)" -- -c4
+	dh_makeshlibs -pliblldb-$(LLVM_VERSION) -V"liblldb-$(LLVM_VERSION) (>= 1:7~svn298832-1~)"
+	dh_makeshlibs -plibllvm$(LLVM_VERSION) -V"libllvm$(LLVM_VERSION) (>= 1:7~svn298832-1~)"
+	dh_makeshlibs -plibomp$(SONAME_OPENMP)-$(LLVM_VERSION) -V"libomp$(SONAME_OPENMP)-$(LLVM_VERSION)) (>= 1:7~svn298832-1~)"
+	dh_makeshlibs --remaining-packages
+
+override_dh_shlibdeps:
+# Ignore asan libraries. They would trigger dependencies to multiarch libraries
+	dh_shlibdeps -l$(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/ -Xlibclang_rt.asan -Xlibclang_rt.asan -Xlibclang_rt.asan-*.so -Xlibclang_rt.asan-*.so
+
+override_dh_installman:
+	if test -f lld/docs/ld.lld.1; then \
+	mv lld/docs/ld.lld.1 lld/docs/ld.lld-$(LLVM_VERSION).1; \
+	fi
+	dh_installman
+# Make sure that lli manpage is only in llvm-3.2-runtime (See #697117)
+	rm -f $(CURDIR)/debian/llvm-$(LLVM_VERSION)/usr/share/man/man1/lli*
+
+
+override_dh_strip:
+	: # running out of diskspace on the buildds
+	find $(TARGET_BUILD) -name '*.o' -o -name '*.a' -type f | xargs -r rm -f
+ifeq (0, $(strip $(shell dpkg --compare-versions $(DH_VERSION) ge 9.20160114; echo $$?)))
+	: # If we don't have the right version of debhelper, don't run the option
+	dh_strip -p libclang$(SONAME_EXT)-$(LLVM_VERSION) --dbgsym-migration='libclang$(SONAME_EXT)-$(LLVM_VERSION)-dbg (<< 1:7~svn327768-1~)'
+	dh_strip -p libllvm$(LLVM_VERSION) --dbgsym-migration='libllvm$(LLVM_VERSION)-dbg (<< 1:7~svn327768-1~)'
+	dh_strip -p liblldb-$(LLVM_VERSION) --dbgsym-migration='liblldb-$(LLVM_VERSION)-dbg (<< 1:7~svn327768-1~)'
+	dh_strip -p libomp$(SONAME_OPENMP)-$(LLVM_VERSION) --dbgsym-migration='libomp$(SONAME_OPENMP)-$(LLVM_VERSION)-dbg (<< 1:7~svn327768-1~)'
+endif
+# ifeq (${LLD_ENABLE},yes)
+# 	PATH=$(CURDIR)/:$$PATH dh_strip -p liblld-$(LLVM_VERSION) --dbg-package=liblld-$(LLVM_VERSION)-dbg
+# endif
+ifeq ($(shell dpkg --compare-versions $(shell dpkg-query -W -f '$${Version}' binutils) lt 2.31.1-11 ; echo $$?),0)
+	: # building with clang, binutils/strip has hard time stripping some libs because of
+	: # https://sourceware.org/bugzilla/show_bug.cgi?id=23788
+	: # use llvm-strip instead
+	: # Workaround some issues with stripping by using llvm's
+	if test ! -f $(CURDIR)/strip; then \
+		ln -s $(CURDIR)/debian/llvm-$(LLVM_VERSION)/usr/lib/llvm-$(LLVM_VERSION)/bin/llvm-strip $(CURDIR)/strip; \
+	fi
+	ls -al $(CURDIR)/debian/.debhelper/*/dbgsym-root/usr/lib/debug/.build-id/*/*|| true
+	: # On some old version of Debian (stretch) and Ubuntu, Rules-Requires-Root isn't supported
+	: # Sometime, it fails because of chown: changing ownership of 'debian/.debhelper/clang-7/dbgsym-root/usr/lib/debug/.build-id/37/ba506ae9d2f82219bf5c552f7c09853052b2b0.debug': Operation not permitted
+	: # Therefor, continue when we encounter an error
+	PATH=$(CURDIR)/:$$PATH LD_LIBRARY_PATH=$(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/:/usr/lib/*/libfakeroot dh_strip -a -v || true
+	: # Remove the workaround
+	rm $(CURDIR)/strip
+	: # for some reasons, the +x might be removed
+	chmod -f +x $(CURDIR)/debian/*/usr/lib/llvm-$(LLVM_VERSION)/bin/* || true
+else
+	dh_strip -a -v
+endif
+
+override_dh_install:
+#	cp $(TARGET_BUILD)/lib/libLLVM-$(LLVM_VERSION).so $(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/libLLVM-$(LLVM_VERSION).so.$(SONAME_EXT)
+ifeq (${POLLY_ENABLE},yes)
+# only for arch:any builds
+ifneq (,$(filter libclang-common-$(LLVM_VERSION)-dev, $(shell dh_listpackages)))
+	dh_install -p libclang-common-$(LLVM_VERSION)-dev usr/lib/llvm-$(LLVM_VERSION)/lib/cmake/polly/*.cmake usr/lib/llvm-$(LLVM_VERSION)/lib/cmake/polly
+# On old Debian & Ubuntu, removing the files is necessary
+	rm -rf debian/tmp/usr/lib/llvm-$(LLVM_VERSION)/lib/cmake/polly/*.cmake
+else
+	rm -rf $(CURDIR)/debian/tmp/usr/lib/llvm-$(LLVM_VERSION)/lib/cmake/polly/*.cmake
+endif
+endif
+	dh_install --fail-missing
+
+override_dh_installdeb:
+# Managed by the package
+	dh_installdeb -a
+
+	rm -f $(CURDIR)/debian/tmp/usr/lib/llvm-$(LLVM_VERSION)/lib/python*/site-packages/lldb/__init__.pyc $(CURDIR)/debian/python-lldb-$(LLVM_VERSION)/usr/lib/llvm-$(LLVM_VERSION)/lib/python*/site-packages/lldb/__init__.pyc
+	rm -f $(CURDIR)/debian/clang-$(LLVM_VERSION)-examples/usr/share/doc/clang-$(LLVM_VERSION)-examples/examples/*Make*
+
+# Remove auto generated python pyc
+	find $(CURDIR)/debian/llvm-$(LLVM_VERSION)-tools/usr/lib/llvm-$(LLVM_VERSION)/ -name '*.pyc' | xargs -r rm -f
+
+ifeq (${RUN_TEST},yes)
+# List of the archs we know we have 100 % tests working
+ARCH_LLVM_TEST_OK := i386 amd64
+
+override_dh_auto_test:
+
+# LLVM tests
+ifneq (,$(findstring $(DEB_HOST_ARCH),$(ARCH_LLVM_TEST_OK)))
+# logs the output to check-llvm_build_log.txt for validation through autopkgtest
+	$(MAKE) $(NJOBS) -C $(TARGET_BUILD) stage2-check-llvm | tee check-llvm_build_log.txt
+else
+	$(MAKE) $(NJOBS) -C $(TARGET_BUILD) stage2-check-llvm || true
+endif
+
+# Clang tests
+	$(MAKE) $(NJOBS) -C $(TARGET_BUILD) stage2-check-clang || true
+
+# Clang extra tests (ex: clang-tidy)
+	$(MAKE) $(NJOBS) -C $(TARGET_BUILD_STAGE2) check-clang-tools || true
+
+# LLD tests
+ifeq (${LLD_ENABLE},yes)
+	$(MAKE) $(NJOBS) -C $(TARGET_BUILD_STAGE2) check-lld || true
+endif
+
+# Sanitizer
+	$(MAKE) $(NJOBS) -C $(TARGET_BUILD_STAGE2) check-sanitizer || true
+
+# Libcxx
+	$(MAKE) $(NJOBS) -C libcxx/build check-libcxx || true
+
+# Libcxxabi
+	$(MAKE) $(MAKE) -C libcxxabi/build check-libcxxabi || true
+
+# LLDB tests
+ifeq (,$(filter $(DEB_HOST_ARCH), $(LLDB_DISABLE_ARCHS) armhf armel))
+ifneq (,$(filter codecoverage,$(DEB_BUILD_OPTIONS)))
+# Create a symlink to run the testsuite: see https://bugs.archlinux.org/task/50759
+	cd $(CURDIR)/$(TARGET_BUILD)/lib/python*/site-packages/; \
+		if test ! -e _lldb.so; then \
+			ln -s lldb/_lldb.so; \
+		fi
+	LD_LIBRARY_PATH=$$LD_LIBRARY_PATH:$(CURDIR)/$(TARGET_BUILD)/lib/ $(MAKE) $(NJOBS) -C $(TARGET_BUILD) check-lldb || true
+	# remove the workaround
+	rm $(CURDIR)/$(TARGET_BUILD)/lib/python*/site-packages/_lldb.so
+endif
+endif
+
+# Polly tests
+ifeq (${POLLY_ENABLE},yes)
+	$(MAKE) $(NJOBS) -C $(TARGET_BUILD) check-polly || true
+endif
+
+# Managed by debian build system
+	rm -f $(CURDIR)/$(TARGET_BUILD)/lib/python*/site-packages/lldb/_lldb.so
+
+# polly tests
+	if test "$(POLLY_ENABLE)" = yes; then \
+		cd $(TARGET_BUILD)/ && LD_LIBRARY_PATH=$$LD_LIBRARY_PATH:$(DEB_INST)/usr/lib/llvm-$(LLVM_VERSION)/lib/ $(MAKE) -C tools/polly/test/ check-polly || true; \
+	fi
+
+# The compression of the code coverage report is done in the
+# hook B21GetCoverageResults on the server
+	if test "$(CODECOVERAGE)" = "yes"; then \
+		REPORT=reports/llvm-toolchain.info; \
+		mkdir -p reports/; \
+		lcov --directory $(TARGET_BUILD)/ --capture --ignore-errors source --output-file $$REPORT; \
+		lcov --remove $$REPORT "/usr*" -o $$REPORT; \
+		genhtml -o reports/coverage --show-details --highlight --legend $$REPORT; \
+	fi
+override_dh_auto_test:
+endif
+
+
+override_dh_gencontrol:
+	dh_gencontrol -- $(control_vars)
+
+
+override_dh_auto_clean:
+	rm -rf $(TARGET_BUILD) tools/clang/include/clang/Debian/debian_path.h docs/_build/ clang/docs/_build tools/clang/docs/_html/
+# QA tools
+	rm -rf cov-int/ reports/
+	rm -f `ls debian/*.in|sed -e "s|.in$$||g"`
+	find utils -name '*.pyc' | xargs -r rm -f
+	# Use -I because a test has a space in its name
+	find lldb/test -iname '*.pyc' | xargs -I{} -r rm -f {}
+	find test -name '*.pyc' -o -name '*.cm[ix]' | xargs -r rm -f
+	find test/Bindings -name '*.o' | xargs -r rm -f
+	rm -f tools/clang tools/polly tools/lld tools/lldb projects/compiler-rt
+	rm -rf tools/clang/tools/extra clang/tools/extra/
+	rm -f $(CURDIR)/utils/vim/llvm-$(LLVM_VERSION).vim $(CURDIR)/utils/vim/tablegen-$(LLVM_VERSION).vim
+	rm -f $(CURDIR)/clang/tools/clang-format/clang-format-diff-$(LLVM_VERSION)
+	rm -f $(CURDIR)/clang/tools/clang-format/clang-format-$(LLVM_VERSION).py
+	rm -rf libcxx/build libcxxabi/build
+	if test -f lld/docs/ld.lld-$(LLVM_VERSION).1; then \
+		mv lld/docs/ld.lld-$(LLVM_VERSION).1 lld/docs/ld.lld.1; \
+	fi
+
+.PHONY: override_dh_strip preconfigure debian-full-build debian-libfuzzer-build debian-libcxx-build debian-libcxxabi-build

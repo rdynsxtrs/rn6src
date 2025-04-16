@@ -1,0 +1,17 @@
+Index: llvm-toolchain-7-7.0.1/tools/llvm-config/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-7-7.0.1.orig/tools/llvm-config/CMakeLists.txt
++++ llvm-toolchain-7-7.0.1/tools/llvm-config/CMakeLists.txt
+@@ -32,9 +32,9 @@ get_property(COMPILE_FLAGS TARGET llvm-c
+ # Use configure_file to create BuildVariables.inc.
+ set(LLVM_SRC_ROOT ${LLVM_MAIN_SRC_DIR})
+ set(LLVM_OBJ_ROOT ${LLVM_BINARY_DIR})
+-set(LLVM_CPPFLAGS "${CMAKE_CPP_FLAGS} ${CMAKE_CPP_FLAGS_${uppercase_CMAKE_BUILD_TYPE}} ${LLVM_DEFINITIONS}")
+-set(LLVM_CFLAGS "${CMAKE_C_FLAGS} ${CMAKE_C_FLAGS_${uppercase_CMAKE_BUILD_TYPE}} ${LLVM_DEFINITIONS}")
+-set(LLVM_CXXFLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_${uppercase_CMAKE_BUILD_TYPE}} ${COMPILE_FLAGS} ${LLVM_DEFINITIONS}")
++set(LLVM_CPPFLAGS "${LLVM_DEFINITIONS}")
++set(LLVM_CFLAGS "${LLVM_DEFINITIONS}")
++set(LLVM_CXXFLAGS "${COMPILE_FLAGS} ${LLVM_DEFINITIONS}")
+ set(LLVM_BUILD_SYSTEM cmake)
+ set(LLVM_HAS_RTTI ${LLVM_CONFIG_HAS_RTTI})
+ set(LLVM_DYLIB_VERSION "${LLVM_VERSION_MAJOR}${LLVM_VERSION_SUFFIX}")

@@ -1,0 +1,2 @@
+usr/lib/llvm-@LLVM_VERSION@/lib/libc++abi.so.1.0  /usr/lib/@DEB_HOST_MULTIARCH@/libc++abi.so.1.0
+/usr/lib/@DEB_HOST_MULTIARCH@/libc++abi.so.1.0	/usr/lib/@DEB_HOST_MULTIARCH@/libc++abi.so.1

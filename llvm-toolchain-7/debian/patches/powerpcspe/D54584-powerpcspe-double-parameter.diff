@@ -1,0 +1,216 @@
+Description: PowerPC: Optimize SPE double parameter calling setup
+Author: Justin Hibbits <jrh29@alumni.cwru.edu>
+Origin: https://reviews.llvm.org/D54583
+Last-Update: 2018-12-04
+
+--- llvm-toolchain-7-7.0.1~+rc2.orig/lib/Target/PowerPC/PPCISelLowering.cpp
++++ llvm-toolchain-7-7.0.1~+rc2/lib/Target/PowerPC/PPCISelLowering.cpp
+@@ -389,8 +389,16 @@ PPCTargetLowering::PPCTargetLowering(con
+   } else {
+     setOperationAction(ISD::BITCAST, MVT::f32, Expand);
+     setOperationAction(ISD::BITCAST, MVT::i32, Expand);
+-    setOperationAction(ISD::BITCAST, MVT::i64, Expand);
+     setOperationAction(ISD::BITCAST, MVT::f64, Expand);
++    if (Subtarget.hasSPE()) {
++      setOperationAction(ISD::BITCAST, MVT::i64, Custom);
++    } else {
++      setOperationAction(ISD::BITCAST, MVT::i64, Expand);
++    }
++  }
++
++  if (Subtarget.hasSPE()) {
++    setOperationAction(ISD::EXTRACT_ELEMENT, MVT::i64, Custom);
+   }
+ 
+   // We cannot sextinreg(i1).  Expand to shifts.
+@@ -1355,6 +1363,9 @@ const char *PPCTargetLowering::getTarget
+   case PPCISD::QBFLT:           return "PPCISD::QBFLT";
+   case PPCISD::QVLFSb:          return "PPCISD::QVLFSb";
+   case PPCISD::BUILD_FP128:     return "PPCISD::BUILD_FP128";
++  case PPCISD::BUILD_SPE64:     return "PPCISD::BUILD_SPE64";
++  case PPCISD::EXTRACT_SPE_LO:  return "PPCISD::EXTRACT_SPE_LO";
++  case PPCISD::EXTRACT_SPE_HI:  return "PPCISD::EXTRACT_SPE_HI";
+   }
+   return nullptr;
+ }
+@@ -7764,6 +7775,15 @@ SDValue PPCTargetLowering::LowerBITCAST(
+   SDLoc dl(Op);
+   SDValue Op0 = Op->getOperand(0);
+ 
++  if (Subtarget.hasSPE()) {
++    if (Op.getValueType() == MVT::f64 &&
++        Op0.getOpcode() == ISD::BUILD_PAIR &&
++        (Op0.getOperand(1).getValueType() == MVT::i32) &&
++        (Op0.getOperand(0).getValueType() == MVT::i32))
++      return DAG.getNode(PPCISD::BUILD_SPE64, dl, MVT::f64, Op0.getOperand(0),
++          Op0.getOperand(1));
++  }
++
+   if (!EnableQuadPrecision ||
+       (Op.getValueType() != MVT::f128 ) ||
+       (Op0.getOpcode() != ISD::BUILD_PAIR) ||
+@@ -7775,6 +7795,26 @@ SDValue PPCTargetLowering::LowerBITCAST(
+                      Op0.getOperand(1));
+ }
+ 
++// Lower EXTRACT_ELEMENT (i64 BITCAST f64), 0/1 to evmerge*
++SDValue PPCTargetLowering::LowerEXTRACT_ELEMENT(SDValue Op, SelectionDAG &DAG) const {
++
++  SDLoc dl(Op);
++  SDValue Op0 = Op->getOperand(0);
++
++  if (!Subtarget.hasSPE())
++    return SDValue();
++
++  if (!(Op.getValueType() == MVT::i32 &&
++      Op0.getOpcode() == ISD::BITCAST))
++    return SDValue();
++
++  assert(Op0.getNumOperands() > 0 && "WTF?");
++  if (Op->getConstantOperandVal(1) == 0)
++    return DAG.getNode(PPCISD::EXTRACT_SPE_LO,  dl, MVT::i32, Op0.getOperand(0));
++
++  return DAG.getNode(PPCISD::EXTRACT_SPE_HI, dl, MVT::i32, Op0.getOperand(0));
++}
++
+ // If this is a case we can't handle, return null and let the default
+ // expansion code take care of it.  If we CAN select this case, and if it
+ // selects to a single instruction, return Op.  Otherwise, if we can codegen
+@@ -9584,6 +9624,8 @@ SDValue PPCTargetLowering::LowerOperatio
+     return LowerBSWAP(Op, DAG);
+   case ISD::ATOMIC_CMP_SWAP:
+     return LowerATOMIC_CMP_SWAP(Op, DAG);
++  case ISD::EXTRACT_ELEMENT:
++    return LowerEXTRACT_ELEMENT(Op, DAG);
+   }
+ }
+ 
+@@ -9641,6 +9683,8 @@ void PPCTargetLowering::ReplaceNodeResul
+       return;
+     Results.push_back(LowerFP_TO_INT(SDValue(N, 0), DAG, dl));
+     return;
++  case ISD::BITCAST:
++    return;
+   }
+ }
+ 
+--- llvm-toolchain-7-7.0.1~+rc2.orig/lib/Target/PowerPC/PPCISelLowering.h
++++ llvm-toolchain-7-7.0.1~+rc2/lib/Target/PowerPC/PPCISelLowering.h
+@@ -192,6 +192,15 @@ namespace llvm {
+       /// Direct move of 2 consective GPR to a VSX register.
+       BUILD_FP128,
+ 
++      /// Merge 2 GPRs to a single SPE register
++      BUILD_SPE64,
++
++      /// Extract high SPE register component
++      EXTRACT_SPE_HI,
++
++      /// Extract low SPE register component
++      EXTRACT_SPE_LO,
++
+       /// Extract a subvector from signed integer vector and convert to FP.
+       /// It is primarily used to convert a (widened) illegal integer vector
+       /// type to a legal floating point vector type.
+@@ -1079,6 +1088,7 @@ namespace llvm {
+     SDValue lowerEH_SJLJ_SETJMP(SDValue Op, SelectionDAG &DAG) const;
+     SDValue lowerEH_SJLJ_LONGJMP(SDValue Op, SelectionDAG &DAG) const;
+     SDValue LowerBITCAST(SDValue Op, SelectionDAG &DAG) const;
++    SDValue LowerEXTRACT_ELEMENT(SDValue Op, SelectionDAG &DAG) const;
+ 
+     SDValue DAGCombineExtBoolTrunc(SDNode *N, DAGCombinerInfo &DCI) const;
+     SDValue DAGCombineBuildVector(SDNode *N, DAGCombinerInfo &DCI) const;
+--- llvm-toolchain-7-7.0.1~+rc2.orig/lib/Target/PowerPC/PPCInstrInfo.td
++++ llvm-toolchain-7-7.0.1~+rc2/lib/Target/PowerPC/PPCInstrInfo.td
+@@ -225,6 +225,22 @@ def PPCbuild_fp128: SDNode<"PPCISD::BUIL
+                               SDTCisSameAs<1,2>]>,
+                            []>;
+ 
++def PPCbuild_spe64: SDNode<"PPCISD::BUILD_SPE64",
++                           SDTypeProfile<1, 2,
++                             [SDTCisFP<0>, SDTCisSameSizeAs<1,2>,
++                              SDTCisSameAs<1,2>]>,
++                           []>;
++
++def PPCextract_spe_hi : SDNode<"PPCISD::EXTRACT_SPE_HI",
++                               SDTypeProfile<1, 1,
++                                 [SDTCisInt<0>, SDTCisFP<1>]>,
++                                 []>;
++
++def PPCextract_spe_lo : SDNode<"PPCISD::EXTRACT_SPE_LO",
++                               SDTypeProfile<1, 1,
++                               [SDTCisInt<0>, SDTCisFP<1>]>,
++                               []>;
++
+ // These are target-independent nodes, but have target-specific formats.
+ def callseq_start : SDNode<"ISD::CALLSEQ_START", SDT_PPCCallSeqStart,
+                            [SDNPHasChain, SDNPOutGlue]>;
+--- llvm-toolchain-7-7.0.1~+rc2.orig/lib/Target/PowerPC/PPCInstrSPE.td
++++ llvm-toolchain-7-7.0.1~+rc2/lib/Target/PowerPC/PPCInstrSPE.td
+@@ -512,7 +512,7 @@ def EVLWWSPLATX    : EVXForm_1<792, (out
+ 
+ def EVMERGEHI      : EVXForm_1<556, (outs sperc:$RT), (ins sperc:$RA, sperc:$RB),
+                                "evmergehi $RT, $RA, $RB", IIC_VecGeneral, []>;
+-def EVMERGELO      : EVXForm_1<557, (outs sperc:$RT), (ins sperc:$RA, sperc:$RB),
++def EVMERGELO      : EVXForm_1<557, (outs sperc:$RT), (ins gprc:$RA, gprc:$RB),
+                                "evmergelo $RT, $RA, $RB", IIC_VecGeneral, []>;
+ def EVMERGEHILO    : EVXForm_1<558, (outs sperc:$RT), (ins sperc:$RA, sperc:$RB),
+                                "evmergehilo $RT, $RA, $RB", IIC_VecGeneral, []>;
+@@ -889,4 +889,15 @@ def : Pat<(f64 (selectcc i1:$lhs, i1:$rh
+           (SELECT_SPE (CRANDC $lhs, $rhs), $tval, $fval)>;
+ def : Pat<(f64 (selectcc i1:$lhs, i1:$rhs, f64:$tval, f64:$fval, SETNE)),
+           (SELECT_SPE (CRXOR $lhs, $rhs), $tval, $fval)>;
++
++
++def : Pat<(f64 (PPCbuild_spe64 i32:$rB, i32:$rA)),
++          (f64 (COPY_TO_REGCLASS (EVMERGELO $rA, $rB), SPERC))>;
++
++def : Pat<(i32 (PPCextract_spe_hi f64:$rA)),
++          (i32 (EXTRACT_SUBREG (EVMERGEHI $rA, $rA), sub_32))>;
++
++def : Pat<(i32 (PPCextract_spe_lo f64:$rA)),
++          (i32 (EXTRACT_SUBREG $rA, sub_32))>;
++
+ }
+--- llvm-toolchain-7-7.0.1~+rc2.orig/test/CodeGen/PowerPC/spe.ll
++++ llvm-toolchain-7-7.0.1~+rc2/test/CodeGen/PowerPC/spe.ll
+@@ -472,10 +472,8 @@ entry:
+ ; CHECK-LABEL: test_dselect
+ ; CHECK: andi.
+ ; CHECK: bc
+-; CHECK: evldd
+-; CHECK: b
+-; CHECK: evldd
+-; CHECK: evstdd
++; CHECK: evor
++; CHECK: evmergehi
+ ; CHECK: blr
+ }
+ 
+@@ -519,7 +517,7 @@ entry:
+   %1 = call i32 asm sideeffect "efdctsi $0, $1", "=d,d"(double %0)
+   ret i32 %1
+ ; CHECK-LABEL: test_dasmconst
+-; CHECK: evldd
++; CHECK: evmergelo
+ ; CHECK: #APP
+ ; CHECK: efdctsi
+ ; CHECK: #NO_APP
+@@ -541,7 +539,7 @@ entry:
+   %a4.addr = alloca i32*, align 4
+   %a5.addr = alloca i32*, align 4
+   %ptr = alloca i32*, align 4
+-  %v1 = alloca [8 x i32], align 4
++  %v1 = alloca [9 x i32], align 4
+   %v2 = alloca [7 x i32], align 4
+   %v3 = alloca [5 x i32], align 4
+   store i32 %a1, i32* %a1.addr, align 4
+@@ -554,7 +552,7 @@ entry:
+   call void asm sideeffect "","~{s0},~{s3},~{s4},~{s5},~{s6},~{s7},~{s8},~{s9},~{s10},~{s11},~{s12},~{s13},~{s14},~{s15},~{s16},~{s17},~{s18},~{s19},~{s20},~{s21},~{s22},~{s23},~{s24},~{s25},~{s26},~{s27},~{s28},~{s29},~{s30},~{s31}"() nounwind
+   %1 = fadd double %0, 3.14159
+   %2 = load i32*, i32** %ptr, align 4
+-  %3 = bitcast [8 x i32]* %v1 to i8*
++  %3 = bitcast [9 x i32]* %v1 to i8*
+   call void @llvm.memset.p0i8.i32(i8* align 4 %3, i8 0, i32 24, i1 true)
+   %4 = load i32*, i32** %a5.addr, align 4
+   store i32 0, i32* %4, align 4

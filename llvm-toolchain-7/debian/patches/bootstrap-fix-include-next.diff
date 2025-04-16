@@ -1,0 +1,41 @@
+When doing a bootstrap, we use a newly built clang.
+When this one is used, if already installed on the system,
+we have clang header in two places:
+llvm-toolchain-7-7/build-llvm/lib/clang/7.0.0/include/inttypes.h
+and
+/usr/include/clang/7.0.0/include/inttypes.h
+
+Because clang expects only one of his headers to be available, it uses
+include_next to get the glibc (libc6-dev package) header.
+
+However, in the previous example, because we have inttypes.h twice in the
+include search path, clang's header will call itself without any effect.
+Therefore, it will do include_next until the define from the libc is existing (ex: _INTTYPES_H)
+
+
+Index: llvm-toolchain-7-7/clang/lib/Headers/inttypes.h
+===================================================================
+--- llvm-toolchain-7-7.orig/clang/lib/Headers/inttypes.h
++++ llvm-toolchain-7-7/clang/lib/Headers/inttypes.h
+@@ -20,7 +20,7 @@
+  *
+ \*===----------------------------------------------------------------------===*/
+ 
+-#ifndef __CLANG_INTTYPES_H
++#if !defined(__CLANG_INTTYPES_H) || !defined(_INTTYPES_H)
+ #define __CLANG_INTTYPES_H
+ 
+ #if defined(_MSC_VER) && _MSC_VER < 1800
+Index: llvm-toolchain-7-7/clang/lib/Headers/limits.h
+===================================================================
+--- llvm-toolchain-7-7.orig/clang/lib/Headers/limits.h
++++ llvm-toolchain-7-7/clang/lib/Headers/limits.h
+@@ -22,7 +22,7 @@
+  *
+ \*===----------------------------------------------------------------------===*/
+ 
+-#ifndef __CLANG_LIMITS_H
++#if !defined(__CLANG_LIMITS_H) || !defined(_LIBC_LIMITS_H_)
+ #define __CLANG_LIMITS_H
+ 
+ /* The system's limits.h may, in turn, try to #include_next GCC's limits.h.

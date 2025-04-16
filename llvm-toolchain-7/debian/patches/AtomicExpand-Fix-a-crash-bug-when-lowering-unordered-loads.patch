@@ -1,0 +1,28 @@
+From 2153c4b8281c1e5f25887ef9183947198c50a9d2 Mon Sep 17 00:00:00 2001
+From: Philip Reames <listmail@philipreames.com>
+Date: Tue, 19 Mar 2019 17:20:49 +0000
+Subject: [PATCH] [AtomicExpand] Fix a crash bug when lowering unordered loads
+ to cmpxchg
+
+Add tests for wider atomic loads and stores.  In the process, fix a crasher where we appearently handled unorder stores, but not loads, when lowering to cmpxchg idioms.
+
+llvm-svn: 356482
+---
+ llvm/lib/CodeGen/AtomicExpandPass.cpp     |   3 +
+ llvm/test/CodeGen/X86/atomic-unordered.ll | 234 +++++++++++++++++++---
+ 2 files changed, 213 insertions(+), 24 deletions(-)
+
+diff --git a/lib/CodeGen/AtomicExpandPass.cpp b/lib/CodeGen/AtomicExpandPass.cpp
+index 10dd21d1ef9d..7a8013abccfb 100644
+--- a/lib/CodeGen/AtomicExpandPass.cpp
++++ b/lib/CodeGen/AtomicExpandPass.cpp
+@@ -430,6 +430,9 @@ bool AtomicExpand::expandAtomicLoadToLL(LoadInst *LI) {
+ bool AtomicExpand::expandAtomicLoadToCmpXchg(LoadInst *LI) {
+   IRBuilder<> Builder(LI);
+   AtomicOrdering Order = LI->getOrdering();
++  if (Order == AtomicOrdering::Unordered)
++    Order = AtomicOrdering::Monotonic;
++
+   Value *Addr = LI->getPointerOperand();
+   Type *Ty = cast<PointerType>(Addr->getType())->getElementType();
+   Constant *DummyVal = Constant::getNullValue(Ty);

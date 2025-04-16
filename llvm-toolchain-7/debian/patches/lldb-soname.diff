@@ -1,0 +1,44 @@
+---
+ lldb/source/API/CMakeLists.txt |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+Index: llvm-toolchain-7_7~+rc1/lldb/source/API/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-7_7~+rc1.orig/lldb/source/API/CMakeLists.txt
++++ llvm-toolchain-7_7~+rc1/lldb/source/API/CMakeLists.txt
+@@ -4,7 +4,12 @@ endif()
+ 
+ get_property(LLDB_ALL_PLUGINS GLOBAL PROPERTY LLDB_PLUGINS)
+ 
+-add_lldb_library(liblldb SHARED
++set(output_name lldb)
++if (CMAKE_SYSTEM_NAME MATCHES "Windows")
++  set(output_name liblldb)
++endif()
++
++add_lldb_library(liblldb SHARED OUTPUT_NAME ${output_name} SONAME
+   SBAddress.cpp
+   SBAttachInfo.cpp
+   SBBlock.cpp
+@@ -112,7 +117,7 @@ endif ()
+ 
+ set_target_properties(liblldb
+   PROPERTIES
+-  VERSION ${LLDB_VERSION}
++  VERSION 1
+ )
+ 
+ if (NOT CMAKE_SYSTEM_NAME MATCHES "Windows")
+@@ -141,11 +141,6 @@ if ( CMAKE_SYSTEM_NAME MATCHES "Windows"
+   if (MSVC AND NOT LLDB_DISABLE_PYTHON)
+     target_link_libraries(liblldb PRIVATE ${PYTHON_LIBRARY})
+   endif()
+-else()
+-  set_target_properties(liblldb
+-    PROPERTIES
+-    OUTPUT_NAME lldb
+-  )
+ endif()
+ 
+ if (LLDB_WRAP_PYTHON)
+

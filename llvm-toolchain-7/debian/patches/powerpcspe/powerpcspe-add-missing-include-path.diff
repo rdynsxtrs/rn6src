@@ -1,0 +1,18 @@
+Description: Fix missing include paths on powerpcspe
+Author: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=908791
+Forwarded: https://reviews.llvm.org/D52066
+Last-Update: 2018-09-13
+
+--- llvm-toolchain-7-7~+rc3.orig/clang/lib/Driver/ToolChains/Linux.cpp
++++ llvm-toolchain-7-7~+rc3/clang/lib/Driver/ToolChains/Linux.cpp
+@@ -700,7 +700,8 @@ void Linux::AddClangSystemIncludeArgs(co
+       "/usr/include/mips64el-linux-gnu",
+       "/usr/include/mips64el-linux-gnuabi64"};
+   const StringRef PPCMultiarchIncludeDirs[] = {
+-      "/usr/include/powerpc-linux-gnu"};
++      "/usr/include/powerpc-linux-gnu",
++      "/usr/include/powerpc-linux-gnuspe"};
+   const StringRef PPC64MultiarchIncludeDirs[] = {
+       "/usr/include/powerpc64-linux-gnu"};
+   const StringRef PPC64LEMultiarchIncludeDirs[] = {

@@ -1,0 +1,13 @@
+Index: llvm-toolchain-snapshot_7~svn335581/test/ThinLTO/X86/autoupgrade.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn335581.orig/test/ThinLTO/X86/autoupgrade.ll
++++ llvm-toolchain-snapshot_7~svn335581/test/ThinLTO/X86/autoupgrade.ll
+@@ -19,6 +19,8 @@
+ ; SUMMARYNAMES: ^2 = gv: (name: "globalfunc2",
+ ; SUMMARYNAMES: ^3 = gv: (name: "globalfunc1"
+ 
++; XFAIL: *
++
+ target datalayout = "e-m:o-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-apple-macosx10.11.0"
+ 

@@ -1,0 +1,31 @@
+Lock is_always_lock free test fails on i386 because std::atomic is aligned
+to 8 bytes while long long is aligned to 4 bytes. clang can't generate inline
+code for unaligned 8 byte atomics even tough instruction set and gcc support
+it.
+
+That makes it expected thaqt ATOMIC_LLONG_LOCK_FREE and
+std::atomic<long long>::is_always_lock_free don't match on i386. Correct test
+for std::atomic<long long> is to check if target cpu support cmpxchg8 instruction.
+To set instruction support one can check __GCC_HAVE_SYNC_COMPARE_AND_SWAP_8 define.
+
+Bug: https://llvm.org/bugs/show_bug.cgi?id=19355
+
+Index: llvm-toolchain-snapshot_7~svn337372/libcxx/test/std/atomics/atomics.lockfree/isalwayslockfree.pass.cpp
+===================================================================
+--- llvm-toolchain-snapshot_7~svn337372.orig/libcxx/test/std/atomics/atomics.lockfree/isalwayslockfree.pass.cpp
++++ llvm-toolchain-snapshot_7~svn337372/libcxx/test/std/atomics/atomics.lockfree/isalwayslockfree.pass.cpp
+@@ -20,6 +20,14 @@
+ # error Feature test macro missing.
+ #endif
+ 
++#if defined(__i386__) && defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_8)
++/* Fix for clang setting __GCC_ATOMIC_LLONG_LOCK_FREE incorecctly for x86
++ * https://llvm.org/bugs/show_bug.cgi?id=19355
++ */
++#undef ATOMIC_LLONG_LOCK_FREE
++#define ATOMIC_LLONG_LOCK_FREE 2
++#endif
++
+ template <typename T> void checkAlwaysLockFree() {
+   if (std::atomic<T>::is_always_lock_free)
+     assert(std::atomic<T>().is_lock_free());

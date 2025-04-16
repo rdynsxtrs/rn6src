@@ -1,0 +1,25 @@
+---
+ clang/lib/Basic/Targets.cpp           |   14 ++++++++++++++
+ clang/test/CodeGen/linux-arm-atomic.c |   10 ++++++++++
+ 2 files changed, 24 insertions(+)
+
+Index: llvm-toolchain-snapshot_6.0~svn309319/clang/test/CodeGen/linux-arm-atomic.c
+===================================================================
+--- llvm-toolchain-snapshot_6.0~svn309319.orig/clang/test/CodeGen/linux-arm-atomic.c
++++ llvm-toolchain-snapshot_6.0~svn309319/clang/test/CodeGen/linux-arm-atomic.c
+@@ -1,5 +1,15 @@
+ // RUN: %clang_cc1 %s -emit-llvm -o - -triple=armv7-unknown-linux | FileCheck %s
+ // RUN: %clang_cc1 %s -emit-llvm -o - -triple=armv6-unknown-linux | FileCheck %s
++
++typedef int _Atomic_word;
++_Atomic_word exchange_and_add(volatile _Atomic_word *__mem, int __val) {
++  return __atomic_fetch_add(__mem, __val, __ATOMIC_ACQ_REL);
++}
++
++// CHECK: define {{.*}} @exchange_and_add
++// CHECK: atomicrmw {{.*}} add
++// RUN: %clang_cc1 %s -emit-llvm -o - -triple=armv7-unknown-linux | FileCheck %s
++// RUN: %clang_cc1 %s -emit-llvm -o - -triple=armv6-unknown-linux | FileCheck %s
+ // RUN: %clang_cc1 %s -emit-llvm -o - -triple=thumbv7-unknown-linux | FileCheck %s
+ // RUN: %clang_cc1 %s -emit-llvm -o - -triple=armv6-unknown-freebsd | FileCheck %s
+ 

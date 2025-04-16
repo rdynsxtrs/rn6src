@@ -1,0 +1,13 @@
+Index: llvm-toolchain-7-7.0.1/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-7-7.0.1.orig/CMakeLists.txt
++++ llvm-toolchain-7-7.0.1/CMakeLists.txt
+@@ -821,7 +821,7 @@ if(LLVM_TARGET_IS_CROSSCOMPILE_HOST)
+ # (this is a variable that CrossCompile sets on recursive invocations)
+ endif()
+ 
+-if(${CMAKE_SYSTEM_NAME} MATCHES "(FreeBSD|DragonFly)")
++if( ${CMAKE_SYSTEM_NAME} MATCHES "(FreeBSD|DragonFly)" AND NOT "kFreeBSD" )
+   # On FreeBSD, /usr/local/* is not used by default. In order to build LLVM
+   # with libxml2, iconv.h, etc., we must add /usr/local paths.
+   include_directories(SYSTEM "/usr/local/include")

@@ -1,0 +1,11 @@
+clang/tools/scan-build/man/scan-build-@LLVM_VERSION@.1
+debian/man/clang-check-@LLVM_VERSION@.1
+debian/man/clang-rename-@LLVM_VERSION@.1
+debian/man/clang-query-@LLVM_VERSION@.1
+debian/man/clang-apply-replacements-@LLVM_VERSION@.1
+debian/man/sancov-@LLVM_VERSION@.1
+debian/man/scan-view-@LLVM_VERSION@.1
+debian/man/modularize-@LLVM_VERSION@.1
+debian/man/find-all-symbols-@LLVM_VERSION@.1
+debian/man/clang-include-fixer-@LLVM_VERSION@.1
+debian/man/clang-reorder-fields-@LLVM_VERSION@.1

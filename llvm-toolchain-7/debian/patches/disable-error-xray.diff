@@ -1,0 +1,13 @@
+Index: llvm-toolchain-snapshot_5.0~svn300419/compiler-rt/lib/xray/xray_tsc.h
+===================================================================
+--- llvm-toolchain-snapshot_5.0~svn300419.orig/compiler-rt/lib/xray/xray_tsc.h
++++ llvm-toolchain-snapshot_5.0~svn300419/compiler-rt/lib/xray/xray_tsc.h
+@@ -61,8 +61,6 @@ inline uint64_t getTSCFrequency() XRAY_N
+ 
+ } // namespace __xray
+ 
+-#else
+-#error Target architecture is not supported.
+ #endif // CPU architecture
+ 
+ #endif // XRAY_EMULATE_TSC_H

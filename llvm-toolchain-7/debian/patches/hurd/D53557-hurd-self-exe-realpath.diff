@@ -1,0 +1,74 @@
+r345104 | rnk | 2018-10-24 01:35:43 +0200 (mer. 24 oct. 2018) | 25 lignes
+
+[hurd] Make getMainExecutable get the real binary path
+
+On GNU/Hurd, llvm-config is returning bogus value, such as:
+
+$ llvm-config-6.0 --includedir
+/usr/include
+
+while it should be:
+$ llvm-config-6.0 --includedir
+/usr/lib/llvm-6.0/include
+
+This is because getMainExecutable does not get the actual installation
+path. On GNU/Hurd, /proc/self/exe is indeed a symlink to the path that
+was used to start the program, and not the eventual binary file. Llvm's
+getMainExecutable thus needs to run realpath over it to get the actual
+place where llvm was installed (/usr/lib/llvm-6.0/bin/llvm-config), and
+not /usr/bin/llvm-config-6.0. This will not change the result on Linux,
+where /proc/self/exe already points to the eventual file.
+
+Patch by Samuel Thibault!
+
+While making changes here, I reformatted this block a bit to reduce
+indentation and match 2 space indent style.
+
+Differential Revision: https://reviews.llvm.org/D53557
+
+Index: llvm-toolchain-6.0-6.0.1/lib/Support/Unix/Path.inc
+===================================================================
+--- llvm-toolchain-6.0-6.0.1.orig/lib/Support/Unix/Path.inc
++++ llvm-toolchain-6.0-6.0.1/lib/Support/Unix/Path.inc
+@@ -191,14 +191,34 @@ std::string getMainExecutable(const char
+   char exe_path[MAXPATHLEN];
+   StringRef aPath("/proc/self/exe");
+   if (sys::fs::exists(aPath)) {
+-      // /proc is not always mounted under Linux (chroot for example).
+-      ssize_t len = readlink(aPath.str().c_str(), exe_path, sizeof(exe_path));
+-      if (len >= 0)
+-          return std::string(exe_path, len);
++    // /proc is not always mounted under Linux (chroot for example).
++    ssize_t len = readlink(aPath.str().c_str(), exe_path, sizeof(exe_path));
++    if (len < 0)
++      return "";
++
++    // Null terminate the string for realpath. readlink never null
++    // terminates its output.
++    len = std::min(len, ssize_t(sizeof(exe_path) - 1));
++    exe_path[len] = '\0';
++
++    // At least on GNU/Hurd, /proc/self/exe is a symlink to the path that
++    // was used to start the program, and not the eventual binary file.
++    // We thus needs to run realpath over it to get the actual place
++    // where llvm was installed.
++#if _POSIX_VERSION >= 200112 || defined(__GLIBC__)
++    char *real_path = realpath(exe_path, NULL);
++    std::string ret = std::string(real_path);
++    free(real_path);
++    return ret;
++#else
++    char real_path[MAXPATHLEN];
++    realpath(exe_path, real_path);
++    return std::string(real_path);
++#endif
+   } else {
+-      // Fall back to the classical detection.
+-      if (getprogpath(exe_path, argv0))
+-        return exe_path;
++    // Fall back to the classical detection.
++    if (getprogpath(exe_path, argv0))
++      return exe_path;
+   }
+ #elif defined(HAVE_DLFCN_H) && defined(HAVE_DLADDR)
+   // Use dladdr to get executable path if available.

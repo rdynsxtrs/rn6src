@@ -1,0 +1,24 @@
+Index: llvm-toolchain-snapshot_6.0~svn315736/test/tools/llvm-isel-fuzzer/aarch64-execname-options.ll
+===================================================================
+--- llvm-toolchain-snapshot_6.0~svn315736.orig/test/tools/llvm-isel-fuzzer/aarch64-execname-options.ll
++++ llvm-toolchain-snapshot_6.0~svn315736/test/tools/llvm-isel-fuzzer/aarch64-execname-options.ll
+@@ -2,6 +2,7 @@
+ ; without copying the whole lib dir or polluting the build dir.
+ ; REQUIRES: static-libs
+ ; REQUIRES: aarch64-registered-target
++: XFAIL: *
+ 
+ ; RUN: echo > %t.input
+ 
+Index: llvm-toolchain-snapshot_6.0~svn315736/test/tools/llvm-isel-fuzzer/execname-options.ll
+===================================================================
+--- llvm-toolchain-snapshot_6.0~svn315736.orig/test/tools/llvm-isel-fuzzer/execname-options.ll
++++ llvm-toolchain-snapshot_6.0~svn315736/test/tools/llvm-isel-fuzzer/execname-options.ll
+@@ -1,6 +1,7 @@
+ ; If the binary looks up libraries using an rpath, we can't test this
+ ; without copying the whole lib dir or polluting the build dir.
+ ; REQUIRES: static-libs
++: XFAIL: *
+ 
+ ; RUN: echo > %t.input
+ 

@@ -1,0 +1,39 @@
+---
+ clang/tools/clang-format/clang-format-diff.py |    2 +-
+ clang/tools/clang-format/clang-format.el      |    2 +-
+ clang/tools/clang-format/clang-format.py      |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+--- a/clang/tools/clang-format/clang-format-diff.py
++++ b/clang/tools/clang-format/clang-format-diff.py
+@@ -55,7 +55,7 @@ def main():
+   parser.add_argument('-style',
+                       help='formatting style to apply (LLVM, Google, Chromium, '
+                       'Mozilla, WebKit)')
+-  parser.add_argument('-binary', default='clang-format',
++  parser.add_argument('-binary', default='clang-format-7',
+                       help='location of binary to use for clang-format')
+   args = parser.parse_args()
+ 
+--- a/clang/tools/clang-format/clang-format.el
++++ b/clang/tools/clang-format/clang-format.el
+@@ -36,7 +36,7 @@
+   :group 'tools)
+ 
+ (defcustom clang-format-executable
+-  (or (executable-find "clang-format")
++  (or (executable-find "clang-format-7")
+       "clang-format")
+   "Location of the clang-format executable.
+ 
+--- a/clang/tools/clang-format/clang-format.py
++++ b/clang/tools/clang-format/clang-format.py
+@@ -35,7 +35,7 @@ import vim
+ 
+ # set g:clang_format_path to the path to clang-format if it is not on the path
+ # Change this to the full path if clang-format is not on the path.
+-binary = 'clang-format'
++binary = 'clang-format-7'
+ if vim.eval('exists("g:clang_format_path")') == "1":
+   binary = vim.eval('g:clang_format_path')
+ 

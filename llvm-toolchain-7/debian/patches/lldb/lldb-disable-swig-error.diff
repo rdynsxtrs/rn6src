@@ -1,0 +1,13 @@
+Index: llvm-toolchain-snapshot_5.0~svn306792/lldb/scripts/lldb.swig
+===================================================================
+--- llvm-toolchain-snapshot_5.0~svn306792.orig/lldb/scripts/lldb.swig
++++ llvm-toolchain-snapshot_5.0~svn306792/lldb/scripts/lldb.swig
+@@ -50,7 +50,7 @@ except ImportError:
+ %enddef
+ // These versions will not generate working python modules, so error out early.
+ #if SWIG_VERSION >= 0x030009 && SWIG_VERSION < 0x030011
+-#error Swig versions 3.0.9 and 3.0.10 are incompatible with lldb.
++#warning Swig versions 3.0.9 and 3.0.10 are incompatible with lldb.
+ #endif
+ 
+ // The name of the module to be created.

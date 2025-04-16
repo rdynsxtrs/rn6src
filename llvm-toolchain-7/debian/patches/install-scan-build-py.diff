@@ -1,0 +1,16 @@
+---
+ clang/tools/CMakeLists.txt |    1 +
+ 1 file changed, 1 insertion(+)
+
+Index: llvm-toolchain-snapshot_6.0~svn314025/clang/tools/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-snapshot_6.0~svn314025.orig/clang/tools/CMakeLists.txt
++++ llvm-toolchain-snapshot_6.0~svn314025/clang/tools/CMakeLists.txt
+@@ -23,6 +23,7 @@ if(CLANG_ENABLE_STATIC_ANALYZER)
+   add_clang_subdirectory(clang-check)
+   add_clang_subdirectory(clang-func-mapping)
+   add_clang_subdirectory(scan-build)
++  add_clang_subdirectory(scan-build-py)
+   add_clang_subdirectory(scan-view)
+ endif()
+ 

@@ -1,0 +1,100 @@
+Organization of the repository
+==============================
+
+The debian package for each LLVM point release is maintained as a git branch.
+For example, the 7 release lives at in the "7" branch.
+
+The current snapshot release is maintained in the "snapshot" branch.
+
+The easiest way to get all branches is probably to have one
+clone per version:
+
+for f in 4.0 5.0 6.0 7 snapshot; do
+    git clone git@salsa.debian.org:pkg-llvm-team/llvm-toolchain.git -b $f $f
+done
+
+Steps for manually building a snapshot release
+==============================================
+
+1) Retrieve the latest snapshot and create original tarballs.
+
+   Run the orig-tar.sh script,
+
+     $ sh snapshot/debian/orig-tar.sh
+
+   which will retrieve the latest version for each LLVM subproject (llvm,
+   clang, lldb, etc.) from the main development (upstream SVN). and repack it
+   as a set of tarballs.
+
+2) Unpack the original tarballs and apply quilt debian patches.
+
+   From the branches/ directory run the unpack.sh script,
+
+     $ sh unpack.sh
+
+   which will unpack the source tree inside a new directory such as
+   branches/llvm-toolchain-snapshot_3.9~svn268942. Depending on the current
+   snapshot version number and svn release, the directory name will be
+   different.
+
+   Quilt patches will then be applied.
+
+3) Build the binary packages using,
+
+     $ fakeroot debian/rules binary
+
+When debugging, successive builds can be recompiled faster by using tools such
+as ccache (PATH=/usr/lib/ccache:$PATH fakeroot debian/rules binary).
+
+Retrieving a specific branch or release candidate with orig-tar.sh
+==================================================================
+
+When using orig-tar.sh, if you need to retrieve a specific branch, you can pass
+the branch name as the first argument. For example, to get the 7 release
+branch at
+  http://llvm.org/svn/llvm-project/{llvm,...}/branches/release_70
+you should use,
+
+  $ sh 7/debian/orig-tar.sh release_70
+
+To retrieve a specific release candidate, you can pass the branch name as the
+first argument, and the tag rc number as the second argument. For example, to
+get the 7.0.1 release candidate rc3 at
+  http://llvm.org/svn/llvm-project/{llvm,...}/tags/RELEASE_701/rc3
+you should use,
+
+  $ sh 7/debian/orig-tar.sh RELEASE_701 rc3 7.0.1
+
+For a stable release, the syntax is:
+
+ $ sh 7/debian/orig-tar.sh RELEASE_700 final 7.0
+
+
+Additional maintainer scripts
+=============================
+
+The script qualify-clang.sh that is found at the git debian/ directory
+should be used to quickly test a newly built package. It runs a short
+set of sanity-check tests and regression tests.
+
+The script releases/snapshot/debian/prepare-new-release.sh is used when
+preparing a new point release. It automatically replaces version numbers
+in various files of the package.
+
+
+Change in major upstream version
+================================
+TODO update with the git commands
+
+$ svn copy snapshot VERSION
+$ svn commit -m "VERSION branched" VERSION
+$ cd VERSION
+$ sed -i -e '0,/llvm-toolchain-snapshot/s/llvm-toolchain-snapshot/llvm-toolchain-VERSION/' debian/changelog debian/control
+$ svn commit -m "snapshot => VERSION"
+$ cd ../snapshot
+$ emacs debian/prepare-new-release.sh
+# Change the version
+$ bash debian/prepare-new-release.sh
+$ svn commit -m "new snapshot release"
+
+Now, try build build it.

@@ -1,0 +1,14 @@
+Index: llvm-toolchain-snapshot_7~svn335949/openmp/runtime/tools/check-execstack.pl
+===================================================================
+--- llvm-toolchain-snapshot_7~svn335949.orig/openmp/runtime/tools/check-execstack.pl
++++ llvm-toolchain-snapshot_7~svn335949/openmp/runtime/tools/check-execstack.pl
+@@ -46,7 +46,8 @@ sub execstack($) {
+     #    GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RWE 0x4
+     # Linux* OS Intel(R) 64:
+     #    GNU_STACK      0x000000 0x0000000000000000 0x0000000000000000 0x000000 0x000000 RWE 0x8
+-    if ( $stack[ 0 ] !~ m{\A\s*(?:GNU_)?STACK(?:\s+0x[0-9a-f]+){5}\s+([R ][W ][E ])\s+0x[0-9a-f]+\s*\z} ) {
++#    if ( $stack[ 0 ] !~ m{\A\s*(?:GNU_)?STACK(?:\s+0x[0-9a-f]+){5}\s+([R ][W ][E ])\s+0x[0-9a-f]+\s*\z} ) {
++    if ( $stack[ 0 ] !~ m{\A\s*(?:GNU_)?STACK(?:\s+0x[0-9a-f]+){5}\s+([R ][W ][E ])\s+0(?:x[0-9a-f]+)*\s*\z} ) {
+         runtime_error( "$file: Cannot parse stack segment line:", ">>> $stack[ 0 ]" );
+     }; # if
+     my $attrs = $1;

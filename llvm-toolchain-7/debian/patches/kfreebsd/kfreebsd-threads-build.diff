@@ -1,0 +1,13 @@
+Index: llvm-toolchain-7-7.0.1/libcxx/src/thread.cpp
+===================================================================
+--- llvm-toolchain-7-7.0.1.orig/libcxx/src/thread.cpp
++++ llvm-toolchain-7-7.0.1/libcxx/src/thread.cpp
+@@ -19,7 +19,7 @@
+ 
+ #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
+ # include <sys/param.h>
+-# if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__) || defined(__APPLE__)
++# if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__) || defined(__APPLE__) || defined(__FreeBSD_kernel__)
+ #   include <sys/sysctl.h>
+ # endif
+ #endif // defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))

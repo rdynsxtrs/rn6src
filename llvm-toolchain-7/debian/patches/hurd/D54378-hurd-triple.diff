@@ -1,0 +1,74 @@
+Add Hurd triplet to LLVMSupport
+
+This introduces GNU Hurd as a new target OS.
+
+https://reviews.llvm.org/D54378
+
+Index: llvm-toolchain-7-7.0.1~+rc2/include/llvm/ADT/Triple.h
+===================================================================
+--- llvm-toolchain-7-7.0.1~+rc2.orig/include/llvm/ADT/Triple.h
++++ llvm-toolchain-7-7.0.1~+rc2/include/llvm/ADT/Triple.h
+@@ -182,7 +182,8 @@ public:
+     Mesa3D,
+     Contiki,
+     AMDPAL,     // AMD PAL Runtime
+-    LastOSType = AMDPAL
++    Hurd,       // GNU/Hurd
++    LastOSType = Hurd
+   };
+   enum EnvironmentType {
+     UnknownEnvironment,
+@@ -578,9 +579,15 @@ public:
+     return getOS() == Triple::KFreeBSD;
+   }
+ 
++  /// Tests whether the OS is Hurd.
++  bool isOSHurd() const {
++    return getOS() == Triple::Hurd;
++  }
++
+   /// Tests whether the OS uses glibc.
+   bool isOSGlibc() const {
+-    return (getOS() == Triple::Linux || getOS() == Triple::KFreeBSD) &&
++    return (getOS() == Triple::Linux || getOS() == Triple::KFreeBSD ||
++            getOS() == Triple::Hurd) &&
+            !isAndroid();
+   }
+ 
+Index: llvm-toolchain-7-7.0.1~+rc2/lib/Support/Triple.cpp
+===================================================================
+--- llvm-toolchain-7-7.0.1~+rc2.orig/lib/Support/Triple.cpp
++++ llvm-toolchain-7-7.0.1~+rc2/lib/Support/Triple.cpp
+@@ -209,6 +209,7 @@ StringRef Triple::getOSTypeName(OSType K
+   case Mesa3D: return "mesa3d";
+   case Contiki: return "contiki";
+   case AMDPAL: return "amdpal";
++  case Hurd: return "hurd";
+   }
+ 
+   llvm_unreachable("Invalid OSType");
+@@ -502,6 +503,7 @@ static Triple::OSType parseOS(StringRef
+     .StartsWith("mesa3d", Triple::Mesa3D)
+     .StartsWith("contiki", Triple::Contiki)
+     .StartsWith("amdpal", Triple::AMDPAL)
++    .StartsWith("hurd", Triple::Hurd)
+     .Default(Triple::UnknownOS);
+ }
+ 
+Index: llvm/unittests/ADT/TripleTest.cpp
+===================================================================
+--- llvm/unittests/ADT/TripleTest.cpp	(révision 346226)
++++ llvm/unittests/ADT/TripleTest.cpp	(copie de travail)
+@@ -93,6 +93,12 @@
+   EXPECT_EQ(Triple::Contiki, T.getOS());
+   EXPECT_EQ(Triple::UnknownEnvironment, T.getEnvironment());
+ 
++  T = Triple("i386-pc-hurd-gnu");
++  EXPECT_EQ(Triple::x86, T.getArch());
++  EXPECT_EQ(Triple::PC, T.getVendor());
++  EXPECT_EQ(Triple::Hurd, T.getOS());
++  EXPECT_EQ(Triple::GNU, T.getEnvironment());
++
+   T = Triple("x86_64-pc-linux-gnu");
+   EXPECT_EQ(Triple::x86_64, T.getArch());
+   EXPECT_EQ(Triple::PC, T.getVendor());

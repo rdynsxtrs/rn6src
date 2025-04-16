@@ -1,0 +1,166 @@
+# Debian versions
+19-clang_debian_version.patch
+0003-Debian-version-info-and-bugreport.patch
+clang-format-version.diff
+clang-analyzer-force-version.diff
+
+# Disabling features
+23-strlcpy_strlcat_warning_removed.diff
+
+27-fix_clang_stdint.diff
+declare_clear_cache.diff
+unwind-chain-inclusion.diff
+atomic_library_1.diff
+
+# Path updates
+python-clangpath.diff
+fix-clang-path-and-build.diff
+0048-Set-html_static_path-_static-everywhere.patch
+x32-fix-driver-search-paths.diff
+symbolizer-path.diff
+clang-tidy-run-bin.diff
+0001-tools-clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
+debug-jit-path.diff
+
+# commented because of bug 903709
+#force-gcc-header-obj.diff
+
+do-not-fail-on-unexpected-pass.diff
+disable-display-PASS-UNSUPPORTED-XFAIL.diff
+
+# llvm-config
+fix-llvm-config-obj-src-root.patch
+fix-llvm-config.diff
+0001-llvm-cmake-resolve-symlinks-in-LLVMConfig.cmake.patch
+
+# Lib names
+0044-soname.diff
+lldb-soname.diff
+lldb-libname.diff
+openmp-soname.diff
+
+# Disable some tests
+silent-gold-test.diff
+silent-more-tests.diff
+silent-MCJIIT-tests.diff
+silent-gold-utils.diff
+silent-test-failing-codeverage.diff
+silent-amd-tet.diff
+silent-test-macho.diff
+silent-llvm-isel-fuzzer.diff
+remove-test-freezing.diff
+disable-llvm-symbolizer-test.diff
+disable-path-test-failing.diff
+disable-source-interleave.diff
+
+# Decrease the freq for the keep alive
+test-keep-alive.diff
+
+# scan-build
+scan-build-clang-path.diff
+install-scan-build-py.diff
+scan-view-fix-path.diff
+fix-scan-view-path.diff
+scan-build-clang-X.diff
+
+# lldb
+lldb/lldb-link-atomic-cmake.patch
+lldb/lldb-addversion-suffix-to-llvm-server-exec.patch
+lldb/lldb-missing-install.diff
+lldb/lldb-disable-swig-error.diff
+
+# Fix arch issue
+disable-error-xray.diff
+
+# OpenMP
+openmp/openmp-check-execstack.diff
+openmp/openmp-mips-affinity.patch
+openmp/bootstrap-with-openmp-version-export-missing.diff
+
+# libcxx
+libcxx/libcxxabi-test-don-t-fail-extended-long-double.patch
+libcxx/libcxx-test-fix-lockfree-test-for-i386.patch
+libcxx/libcxxabi-arm-ehabi-fix.patch
+libcxx/libcxx-test-atomics-set-compare-exchange-to-be-expected-fails-on-arm.patch
+libcxx/libcxx-silent-test-libcxx.diff
+libcxx/libcxx-silent-failure-ppc64el.diff
+libcxx/libcxx-silent-failure-arm64.diff
+
+# Rust on ppc
+D51108-rust-powerpc.diff
+
+# Change default optims
+mips-fpxx-enable.diff
+26-set-correct-float-abi.diff
+clang-baseline-fix-i386.patch
+disable-sse2-old-x86.diff
+clang-arm-default-vfp3-on-armv7a.patch
+
+# For the bootstrap
+bootstrap-fix-include-next.diff
+clangd-atomic-cmake.patch
+
+# Rustc
+rustc-aarch64-test-failure.diff
+
+# Fix docs
+remove-apple-clang-manpage.diff
+0049-Use-Debian-provided-MathJax-everywhere.patch
+
+# reproducible
+reproducible-pch.diff
+
+# Hurd port
+hurd/hurd-pathmax.diff
+hurd/hurd-EIEIO-undef.diff
+hurd/impl-path-hurd.diff
+hurd/hurd-lib_Support_Unix_Path.inc.diff
+hurd/hurd-tools_llvm-shlib_CMakeLists.txt.diff
+hurd/D54079-hurd-openmp.diff
+hurd/D54338-hurd-libcxx-threads-build.diff
+hurd/D54339-hurd-libcxx-threads-detection.diff
+hurd/D54378-hurd-triple.diff
+hurd/D54379-hurd-triple-clang.diff
+hurd/D54677-hurd-path_max.diff
+hurd/hurd-cxx-paths.diff
+hurd/D53557-hurd-self-exe-realpath.diff
+
+strip-ignore-deterministic-archives.diff
+
+# powerpcspe
+powerpcspe/powerpcspe-add-missing-include-path.diff
+powerpcspe/D49754-powerpcspe-clang.diff
+powerpcspe/D54409-powerpcspe-register-spilling.diff
+powerpcspe/D54584-powerpcspe-double-parameter.diff
+
+D52340-rustc-debuginfo.diff
+
+# Disable https://llvm.org/viewvc/llvm-project?view=revision&revision=352580
+# 7.0.1 was always abi compatible with 7.0
+# Therefor, the libraries are still compatible with the 7.1.0 version
+#7.1.0/revert-change-soname-2.diff
+#7.1.0/revert-change-soname.diff
+
+# fix the abi issue
+pr39427-misscompile.diff
+
+
+# kfreebsd
+kfreebsd/clang_lib_Basic_Targets.diff
+kfreebsd/CMakeLists.txt.diff
+kfreebsd/compiler-rt_lib.diff
+kfreebsd/include_llvm_ADT_Triple.h.diff
+kfreebsd/kfreebsd-libcxx-threads-detection.diff
+kfreebsd/kfreebsd-openmp.diff
+kfreebsd/kfreebsd-threads-build.diff
+kfreebsd/kfreebsd-triple-clang.diff
+kfreebsd/kfreebsd-triple.diff
+kfreebsd/lib_Support.diff
+kfreebsd/lib_Target_X86.diff
+kfreebsd/lldb_source_Host_freebsd_Host.cpp.diff
+kfreebsd/lldb_source_Plugins_Process_FreeBSD.diff
+kfreebsd/tools_llvm-shlib_CMakeLists.txt.diff
+kfreebsd/include_llvm_MC_MCELFObjectWriter.h.diff
+AtomicExpand-Fix-a-crash-bug-when-lowering-unordered-loads.patch
+mips-force-nomadd4.diff
+D71028-mips-atomics-rust-test.diff

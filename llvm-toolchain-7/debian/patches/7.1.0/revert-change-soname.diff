@@ -1,0 +1,56 @@
+Index: llvm-toolchain-7_7.1.0~svn353565/docs/ReleaseNotes.rst
+===================================================================
+--- llvm-toolchain-7_7.1.0~svn353565.orig/docs/ReleaseNotes.rst
++++ llvm-toolchain-7_7.1.0~svn353565/docs/ReleaseNotes.rst
+@@ -30,6 +30,9 @@ Non-comprehensive list of changes in thi
+   is available on the Visual Studio Marketplace. The new integration
+   supports Visual Studio 2017.
+ 
++* Libraries have been renamed from 7.0 to 7. This change also impacts
++  downstream libraries like lldb.
++
+ * The LoopInstSimplify pass (``-loop-instsimplify``) has been removed.
+ 
+ * Symbols starting with ``?`` are no longer mangled by LLVM when using the
+Index: llvm-toolchain-7_7.1.0~svn353565/tools/llvm-config/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-7_7.1.0~svn353565.orig/tools/llvm-config/CMakeLists.txt
++++ llvm-toolchain-7_7.1.0~svn353565/tools/llvm-config/CMakeLists.txt
+@@ -37,7 +37,7 @@ set(LLVM_CFLAGS "${LLVM_DEFINITIONS}")
+ set(LLVM_CXXFLAGS "${COMPILE_FLAGS} ${LLVM_DEFINITIONS}")
+ set(LLVM_BUILD_SYSTEM cmake)
+ set(LLVM_HAS_RTTI ${LLVM_CONFIG_HAS_RTTI})
+-set(LLVM_DYLIB_VERSION "${LLVM_VERSION_MAJOR}.${LLVM_VERSION_MINOR}${LLVM_VERSION_SUFFIX}")
++set(LLVM_DYLIB_VERSION "${LLVM_VERSION_MAJOR}${LLVM_VERSION_SUFFIX}")
+ set(LLVM_HAS_GLOBAL_ISEL "ON")
+ 
+ # Use the C++ link flags, since they should be a superset of C link flags.
+Index: llvm-toolchain-7_7.1.0~svn353565/tools/llvm-shlib/simple_version_script.map.in
+===================================================================
+--- llvm-toolchain-7_7.1.0~svn353565.orig/tools/llvm-shlib/simple_version_script.map.in
++++ llvm-toolchain-7_7.1.0~svn353565/tools/llvm-shlib/simple_version_script.map.in
+@@ -1 +1 @@
+-LLVM_@LLVM_VERSION_MAJOR@.@LLVM_VERSION_MINOR@ { global: *; };
++LLVM_@LLVM_VERSION_MAJOR@ { global: *; };
+Index: llvm-toolchain-7_7.1.0~svn353565/cmake/modules/AddLLVM.cmake
+===================================================================
+--- llvm-toolchain-7_7.1.0~svn353565.orig/cmake/modules/AddLLVM.cmake
++++ llvm-toolchain-7_7.1.0~svn353565/cmake/modules/AddLLVM.cmake
+@@ -83,7 +83,7 @@ function(add_llvm_symbol_exports target_
+     # FIXME: Don't write the "local:" line on OpenBSD.
+     # in the export file, also add a linker script to version LLVM symbols (form: LLVM_N.M)
+     add_custom_command(OUTPUT ${native_export_file}
+-      COMMAND echo "LLVM_${LLVM_VERSION_MAJOR}.${LLVM_VERSION_MINOR} {" > ${native_export_file}
++      COMMAND echo "LLVM_${LLVM_VERSION_MAJOR} {" > ${native_export_file}
+       COMMAND grep -q "[[:alnum:]]" ${export_file} && echo "  global:" >> ${native_export_file} || :
+       COMMAND sed -e "s/$/;/" -e "s/^/    /" < ${export_file} >> ${native_export_file}
+       COMMAND echo "  local: *;" >> ${native_export_file}
+@@ -522,7 +522,7 @@ function(llvm_add_library name)
+       if(${output_name} STREQUAL "output_name-NOTFOUND")
+         set(output_name ${name})
+       endif()
+-      set(library_name ${output_name}-${LLVM_VERSION_MAJOR}.${LLVM_VERSION_MINOR}${LLVM_VERSION_SUFFIX})
++      set(library_name ${output_name}-${LLVM_VERSION_MAJOR}${LLVM_VERSION_SUFFIX})
+       set(api_name ${output_name}-${LLVM_VERSION_MAJOR}.${LLVM_VERSION_MINOR}.${LLVM_VERSION_PATCH}${LLVM_VERSION_SUFFIX})
+       set_target_properties(${name} PROPERTIES OUTPUT_NAME ${library_name})
+       llvm_install_library_symlink(${api_name} ${library_name} SHARED

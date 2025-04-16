@@ -1,0 +1,40 @@
+Description: Make ordering of OPENCL_EXTENSION_TYPES reproducible
+
+Author: Rebecca N. Palmer <rebecca_palmer@zoho.com>
+Bug-Debian: https://bugs.debian.org/877359
+Forwarded: no
+
+Index: llvm-toolchain-7-7/clang/lib/Serialization/ASTWriter.cpp
+===================================================================
+--- llvm-toolchain-7-7.orig/clang/lib/Serialization/ASTWriter.cpp
++++ llvm-toolchain-7-7/clang/lib/Serialization/ASTWriter.cpp
+@@ -4293,9 +4293,13 @@ void ASTWriter::WriteOpenCLExtensionType
+     return;
+ 
+   RecordData Record;
++  // Sort to allow reproducible .pch files - https://bugs.debian.org/877359
++  std::map<TypeID, std::set<std::string>> sortedOpenCLTypeExtMap;
+   for (const auto &I : SemaRef.OpenCLTypeExtMap) {
+-    Record.push_back(
+-        static_cast<unsigned>(getTypeID(I.first->getCanonicalTypeInternal())));
++    sortedOpenCLTypeExtMap[getTypeID(I.first->getCanonicalTypeInternal())]=I.second;
++  }
++  for (const auto &I : sortedOpenCLTypeExtMap) {
++    Record.push_back(static_cast<unsigned>(I.first));
+     Record.push_back(I.second.size());
+     for (auto Ext : I.second)
+       AddString(Ext, Record);
+@@ -4308,8 +4312,12 @@ void ASTWriter::WriteOpenCLExtensionDecl
+     return;
+ 
+   RecordData Record;
++  std::map<DeclID, std::set<std::string>> sortedOpenCLDeclExtMap;
+   for (const auto &I : SemaRef.OpenCLDeclExtMap) {
+-    Record.push_back(getDeclID(I.first));
++    sortedOpenCLDeclExtMap[getDeclID(I.first)]=I.second;
++  }
++  for (const auto &I : sortedOpenCLDeclExtMap) {
++    Record.push_back(I.first);
+     Record.push_back(static_cast<unsigned>(I.second.size()));
+     for (auto Ext : I.second)
+       AddString(Ext, Record);

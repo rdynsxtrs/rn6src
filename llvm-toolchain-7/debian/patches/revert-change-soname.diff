@@ -1,0 +1,65 @@
+Index: tools/llvm-shlib/simple_version_script.map.in
+===================================================================
+--- tools/llvm-shlib/simple_version_script.map.in	(revision 352580)
++++ tools/llvm-shlib/simple_version_script.map.in	(revision 352579)
+@@ -1 +1 @@
+-LLVM_@LLVM_VERSION_MAJOR@.@LLVM_VERSION_MINOR@ { global: *; };
++LLVM_@LLVM_VERSION_MAJOR@ { global: *; };
+Index: tools/llvm-config/CMakeLists.txt
+===================================================================
+--- tools/llvm-config/CMakeLists.txt	(revision 352580)
++++ tools/llvm-config/CMakeLists.txt	(revision 352579)
+@@ -37,7 +37,7 @@
+ set(LLVM_CXXFLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_${uppercase_CMAKE_BUILD_TYPE}} ${COMPILE_FLAGS} ${LLVM_DEFINITIONS}")
+ set(LLVM_BUILD_SYSTEM cmake)
+ set(LLVM_HAS_RTTI ${LLVM_CONFIG_HAS_RTTI})
+-set(LLVM_DYLIB_VERSION "${LLVM_VERSION_MAJOR}.${LLVM_VERSION_MINOR}${LLVM_VERSION_SUFFIX}")
++set(LLVM_DYLIB_VERSION "${LLVM_VERSION_MAJOR}${LLVM_VERSION_SUFFIX}")
+ set(LLVM_HAS_GLOBAL_ISEL "ON")
+ 
+ # Use the C++ link flags, since they should be a superset of C link flags.
+Index: cmake/modules/AddLLVM.cmake
+===================================================================
+--- cmake/modules/AddLLVM.cmake	(revision 352580)
++++ cmake/modules/AddLLVM.cmake	(revision 352579)
+@@ -83,7 +83,7 @@
+     # FIXME: Don't write the "local:" line on OpenBSD.
+     # in the export file, also add a linker script to version LLVM symbols (form: LLVM_N.M)
+     add_custom_command(OUTPUT ${native_export_file}
+-      COMMAND echo "LLVM_${LLVM_VERSION_MAJOR}.${LLVM_VERSION_MINOR} {" > ${native_export_file}
++      COMMAND echo "LLVM_${LLVM_VERSION_MAJOR} {" > ${native_export_file}
+       COMMAND grep -q "[[:alnum:]]" ${export_file} && echo "  global:" >> ${native_export_file} || :
+       COMMAND sed -e "s/$/;/" -e "s/^/    /" < ${export_file} >> ${native_export_file}
+       COMMAND echo "  local: *;" >> ${native_export_file}
+@@ -500,7 +500,7 @@
+         PROPERTIES
+         # Since 4.0.0, the ABI version is indicated by the major version
+         SOVERSION ${LLVM_VERSION_MAJOR}
+-        VERSION ${LLVM_VERSION_MAJOR}.${LLVM_VERSION_MINOR}.${LLVM_VERSION_PATCH}${LLVM_VERSION_SUFFIX})
++        VERSION ${LLVM_VERSION_MAJOR}${LLVM_VERSION_SUFFIX})
+     endif()
+   endif()
+ 
+@@ -522,7 +522,7 @@
+       if(${output_name} STREQUAL "output_name-NOTFOUND")
+         set(output_name ${name})
+       endif()
+-      set(library_name ${output_name}-${LLVM_VERSION_MAJOR}.${LLVM_VERSION_MINOR}${LLVM_VERSION_SUFFIX})
++      set(library_name ${output_name}-${LLVM_VERSION_MAJOR}${LLVM_VERSION_SUFFIX})
+       set(api_name ${output_name}-${LLVM_VERSION_MAJOR}.${LLVM_VERSION_MINOR}.${LLVM_VERSION_PATCH}${LLVM_VERSION_SUFFIX})
+       set_target_properties(${name} PROPERTIES OUTPUT_NAME ${library_name})
+       llvm_install_library_symlink(${api_name} ${library_name} SHARED
+Index: docs/ReleaseNotes.rst
+===================================================================
+--- docs/ReleaseNotes.rst	(revision 352580)
++++ docs/ReleaseNotes.rst	(revision 352579)
+@@ -30,6 +30,9 @@
+   is available on the Visual Studio Marketplace. The new integration
+   supports Visual Studio 2017.
+ 
++* Libraries have been renamed from 7.0 to 7. This change also impacts
++  downstream libraries like lldb.
++
+ * The LoopInstSimplify pass (``-loop-instsimplify``) has been removed.
+ 
+ * Symbols starting with ``?`` are no longer mangled by LLVM when using the

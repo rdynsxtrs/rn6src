@@ -1,0 +1,190 @@
+---
+ test/tools/gold/X86/common_thinlto.ll             |    1 +
+ test/tools/gold/X86/emit-llvm.ll                  |    2 ++
+ test/tools/gold/X86/parallel.ll                   |    1 +
+ test/tools/gold/X86/pr19901_thinlto.ll            |    1 +
+ test/tools/gold/X86/slp-vectorize.ll              |    1 +
+ test/tools/gold/X86/strip_names.ll                |    1 +
+ test/tools/gold/X86/thinlto.ll                    |    2 ++
+ test/tools/gold/X86/thinlto_archive.ll            |    1 +
+ test/tools/gold/X86/thinlto_internalize.ll        |    2 ++
+ test/tools/gold/X86/thinlto_linkonceresolution.ll |    2 ++
+ test/tools/gold/X86/thinlto_weak_resolution.ll    |    3 ++-
+ test/tools/gold/X86/type-merge2.ll                |    2 +-
+ test/tools/gold/X86/vectorize.ll                  |    1 +
+ test/tools/gold/X86/visibility.ll                 |    1 +
+ 14 files changed, 19 insertions(+), 2 deletions(-)
+
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/common_thinlto.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/common_thinlto.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/common_thinlto.ll
+@@ -17,6 +17,7 @@
+ 
+ ; RUN: llvm-nm %t3 | FileCheck %s --check-prefix=NM
+ ; NM: bar
++; XFAIL: *
+ 
+ source_filename = "common1.c"
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/emit-llvm.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/emit-llvm.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/emit-llvm.ll
+@@ -21,6 +21,8 @@
+ ; RUN: not test -a %t4.o
+ 
+ ; NM: T f3
++; XFAIL: *
++
+ 
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-unknown-linux-gnu"
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/parallel.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/parallel.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/parallel.ll
+@@ -5,6 +5,7 @@
+ ; RUN: llvm-dis %t.1.5.precodegen.bc -o - | FileCheck --check-prefix=CHECK-BC1 %s
+ ; RUN: llvm-nm %t.o | FileCheck --check-prefix=CHECK0 %s
+ ; RUN: llvm-nm %t.o1 | FileCheck --check-prefix=CHECK1 %s
++; XFAIL: *
+ 
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-unknown-linux-gnu"
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/pr19901_thinlto.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/pr19901_thinlto.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/pr19901_thinlto.ll
+@@ -4,6 +4,7 @@
+ ; RUN:     --plugin-opt=thinlto \
+ ; RUN:     -shared -m elf_x86_64 -o %t.so %t2.o %t.o
+ ; RUN: llvm-readobj -t %t.so | FileCheck %s
++; XFAIL: i686, i386
+ 
+ ; CHECK:       Symbol {
+ ; CHECK:         Name: f
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/slp-vectorize.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/slp-vectorize.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/slp-vectorize.ll
+@@ -7,6 +7,7 @@
+ 
+ ; test that the vectorizer is run.
+ ; CHECK: fadd <4 x float>
++; XFAIL: *
+ 
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-unknown-linux-gnu"
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/strip_names.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/strip_names.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/strip_names.ll
+@@ -25,6 +25,7 @@
+ ; NONAME:  %2 = load i32, i32* @GlobalValueName
+ ; NONAME:  %3 = add i32 %0, %2
+ ; NONAME:  ret i32 %3
++; XFAIL: *
+ 
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-unknown-linux-gnu"
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/thinlto.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/thinlto.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/thinlto.ll
+@@ -127,6 +127,8 @@
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-unknown-linux-gnu"
+ 
++; XFAIL: i686, i386
++
+ declare void @g(...)
+ 
+ define void @f() {
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/thinlto_archive.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/thinlto_archive.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/thinlto_archive.ll
+@@ -15,6 +15,7 @@
+ ; RUN:    --plugin-opt=jobs=1 \
+ ; RUN:    -shared %t.o %t.a -o %t4 2>&1 | FileCheck %s
+ ; RUN: llvm-nm %t4 | FileCheck %s --check-prefix=NM
++; XFAIL: i686, i386
+ 
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-unknown-linux-gnu"
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/thinlto_internalize.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/thinlto_internalize.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/thinlto_internalize.ll
+@@ -14,6 +14,8 @@
+ ; h() should be internalized after promotion, and eliminated after inlining
+ ; CHECK-NOT: @h.llvm.
+ 
++; XFAIL: i686, i386
++
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-unknown-linux-gnu"
+ define i32 @g() {
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/thinlto_linkonceresolution.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/thinlto_linkonceresolution.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/thinlto_linkonceresolution.ll
+@@ -23,6 +23,8 @@
+ ; OPT-NOT: @f()
+ ; OPT2: define weak_odr hidden void @f()
+ 
++; XFAIL: i686, i386
++
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-unknown-linux-gnu"
+ define i32 @g() {
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/thinlto_weak_resolution.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/thinlto_weak_resolution.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/thinlto_weak_resolution.ll
+@@ -9,6 +9,7 @@
+ ; RUN:     --plugin-opt=save-temps \
+ ; RUN:     -shared \
+ ; RUN:     -o %t3.o %t.o %t2.o
++; XFAIL: i686, i386
+ 
+ ; RUN: llvm-nm %t3.o | FileCheck %s
+ ; CHECK: weakfunc
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/type-merge2.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/type-merge2.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/type-merge2.ll
+@@ -6,6 +6,8 @@
+ ; RUN:    -shared %t.o %t2.o -o %t3.o
+ ; RUN: llvm-dis %t3.o.0.2.internalize.bc -o - | FileCheck %s
+ 
++; XFAIL: *
++
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-unknown-linux-gnu"
+ 
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/vectorize.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/vectorize.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/vectorize.ll
+@@ -7,6 +7,7 @@
+ 
+ ; test that the vectorizer is run.
+ ; CHECK: fadd <4 x float>
++; XFAIL: *
+ 
+ target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+ target triple = "x86_64-unknown-linux-gnu"
+Index: llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/visibility.ll
+===================================================================
+--- llvm-toolchain-snapshot_7~svn322880.orig/test/tools/gold/X86/visibility.ll
++++ llvm-toolchain-snapshot_7~svn322880/test/tools/gold/X86/visibility.ll
+@@ -16,6 +16,7 @@
+ ; CHECK-NEXT: Other [
+ ; CHECK-NEXT:   STV_PROTECTED
+ ; CHECK-NEXT: ]
++; XFAIL: *
+ 
+ ; IR: define dso_local void @foo
+ 

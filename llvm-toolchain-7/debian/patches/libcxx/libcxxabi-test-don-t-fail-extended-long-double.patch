@@ -1,0 +1,17 @@
+Powerpc has extended double that doesn't match x86 coding. Power format would
+need special tests to verify correctness but for now it is enough to prevent
+incorrect test from running.
+
+Index: llvm-toolchain-snapshot_7~svn337372/libcxxabi/test/test_demangle.pass.cpp
+===================================================================
+--- llvm-toolchain-snapshot_7~svn337372.orig/libcxxabi/test/test_demangle.pass.cpp
++++ llvm-toolchain-snapshot_7~svn337372svn337372/libcxxabi/test/test_demangle.pass.cpp
+@@ -29648,7 +29648,7 @@ const char* invalid_cases[] =
+     "NSoERj5E=Y1[uM:ga",
+     "Aon_PmKVPDk7?fg4XP5smMUL6;<WsI_mgbf23cCgsHbT<l8EE\0uVRkNOoXDrgdA4[8IU>Vl<>IL8ayHpiVDDDXTY;^o9;i",
+     "_ZNSt16allocator_traitsISaIN4llvm3sys2fs18directory_iteratorEEE9constructIS3_IS3_EEEDTcl12_S_constructfp_fp0_spcl7forwardIT0_Efp1_EEERS4_PT_DpOS7_",
+-#if !LDBL_FP80
++#if !LDBL_FP80 && __LDBL_MANT_DIG__ < 64
+     "_ZN5test01hIfEEvRAcvjplstT_Le4001a000000000000000E_c",
+ #endif
+ 	// The following test cases were found by libFuzzer+ASAN

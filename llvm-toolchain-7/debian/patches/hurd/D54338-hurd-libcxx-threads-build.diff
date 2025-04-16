@@ -1,0 +1,24 @@
+r346763 | ldionne | 2018-11-13 18:00:04 +0100 (Tue, 13 Nov 2018) | 5 lines
+
+[libcxx] GNU/Hurd uses BSD-based interfaces, but does not (and won't) provide <sys/sysctl.h>
+
+Reviewed as https://reviews.llvm.org/D54338.
+
+Thanks to sthibaul for the patch.
+
+Index: llvm-toolchain-7-7/libcxx/src/thread.cpp
+===================================================================
+--- llvm-toolchain-7-7.orig/libcxx/src/thread.cpp
++++ llvm-toolchain-7-7/libcxx/src/thread.cpp
+@@ -19,9 +19,9 @@
+ 
+ #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
+ # include <sys/param.h>
+-# if defined(BSD)
++# if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__) || defined(__APPLE__)
+ #   include <sys/sysctl.h>
+-# endif // defined(BSD)
++# endif
+ #endif // defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))
+ 
+ #if defined(__unix__) || (defined(__APPLE__) && defined(__MACH__)) || defined(__CloudABI__) || defined(__Fuchsia__)

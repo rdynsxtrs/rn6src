@@ -1,0 +1,3 @@
+usr/lib/llvm-@LLVM_VERSION@/lib/libc++abi*so
+usr/lib/llvm-@LLVM_VERSION@/lib/libc++abi.a
+libcxxabi/include/* usr/lib/llvm-@LLVM_VERSION@/include/

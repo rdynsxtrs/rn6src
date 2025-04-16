@@ -1,0 +1,413 @@
+Add Hurd toolchain support to Clang
+
+https://reviews.llvm.org/D54379
+
+Index: llvm-toolchain-7-7.0.1~+rc2/clang/lib/Basic/Targets/OSTargets.h
+===================================================================
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/lib/Basic/Targets/OSTargets.h
++++ llvm-toolchain-7-7.0.1~+rc2/clang/lib/Basic/Targets/OSTargets.h
+@@ -270,6 +270,29 @@ public:
+   }
+ };
+ 
++// Hurd target
++template <typename Target>
++class LLVM_LIBRARY_VISIBILITY HurdTargetInfo : public OSTargetInfo<Target> {
++protected:
++  void getOSDefines(const LangOptions &Opts, const llvm::Triple &Triple,
++                    MacroBuilder &Builder) const override {
++    // Linux defines; list based off of gcc output
++    DefineStd(Builder, "unix", Opts);
++    Builder.defineMacro("__GNU__");
++    Builder.defineMacro("__gnu_hurd__");
++    Builder.defineMacro("__MACH__");
++    Builder.defineMacro("__GLIBC__");
++    Builder.defineMacro("__ELF__");
++    if (Opts.POSIXThreads)
++      Builder.defineMacro("_REENTRANT");
++    if (Opts.CPlusPlus)
++      Builder.defineMacro("_GNU_SOURCE");
++  }
++public:
++  HurdTargetInfo(const llvm::Triple &Triple, const TargetOptions &Opts)
++      : OSTargetInfo<Target>(Triple, Opts) {}
++};
++
+ // Minix Target
+ template <typename Target>
+ class LLVM_LIBRARY_VISIBILITY MinixTargetInfo : public OSTargetInfo<Target> {
+Index: llvm-toolchain-7-7.0.1~+rc2/clang/lib/Basic/Targets.cpp
+===================================================================
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/lib/Basic/Targets.cpp
++++ llvm-toolchain-7-7.0.1~+rc2/clang/lib/Basic/Targets.cpp
+@@ -495,6 +495,8 @@ TargetInfo *AllocateTarget(const llvm::T
+       return new NaClTargetInfo<X86_32TargetInfo>(Triple, Opts);
+     case llvm::Triple::ELFIAMCU:
+       return new MCUX86_32TargetInfo(Triple, Opts);
++    case llvm::Triple::Hurd:
++      return new HurdTargetInfo<X86_32TargetInfo>(Triple, Opts);
+     default:
+       return new X86_32TargetInfo(Triple, Opts);
+     }
+Index: llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/CMakeLists.txt
+===================================================================
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/lib/Driver/CMakeLists.txt
++++ llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/CMakeLists.txt
+@@ -47,6 +47,7 @@ add_clang_library(clangDriver
+   ToolChains/Haiku.cpp
+   ToolChains/HIP.cpp
+   ToolChains/Hexagon.cpp
++  ToolChains/Hurd.cpp
+   ToolChains/Linux.cpp
+   ToolChains/MipsLinux.cpp
+   ToolChains/MinGW.cpp
+Index: llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/Driver.cpp
+===================================================================
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/lib/Driver/Driver.cpp
++++ llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/Driver.cpp
+@@ -26,6 +26,7 @@
+ #include "ToolChains/HIP.h"
+ #include "ToolChains/Haiku.h"
+ #include "ToolChains/Hexagon.h"
++#include "ToolChains/Hurd.h"
+ #include "ToolChains/Lanai.h"
+ #include "ToolChains/Linux.h"
+ #include "ToolChains/MSVC.h"
+@@ -399,6 +400,13 @@ static llvm::Triple computeTargetTriple(
+ 
+   llvm::Triple Target(llvm::Triple::normalize(TargetTriple));
+ 
++  // GNU/Hurd's triple should have been -hurd-gnu*, but was historically made
++  // -gnu* only, and we can not change this, so we have to detect that case as
++  // being the Hurd OS.
++  if (TargetTriple.find("-unknown-gnu") != StringRef::npos ||
++      TargetTriple.find("-pc-gnu") != StringRef::npos)
++    Target.setOSName("hurd");
++
+   // Handle Apple-specific options available here.
+   if (Target.isOSBinFormatMachO()) {
+     // If an explicit Darwin arch name is given, that trumps all.
+@@ -4374,6 +4382,9 @@ const ToolChain &Driver::getToolChain(co
+     case llvm::Triple::Contiki:
+       TC = llvm::make_unique<toolchains::Contiki>(*this, Target, Args);
+       break;
++    case llvm::Triple::Hurd:
++      TC = llvm::make_unique<toolchains::Hurd>(*this, Target, Args);
++      break;
+     default:
+       // Of these targets, Hexagon is the only one that might have
+       // an OS of Linux, in which case it got handled above already.
+Index: llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/ToolChains/Clang.cpp
+===================================================================
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/lib/Driver/ToolChains/Clang.cpp
++++ llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/ToolChains/Clang.cpp
+@@ -528,7 +528,7 @@ static bool useFramePointerForTargetByDe
+     return !areOptimizationsEnabled(Args);
+   }
+ 
+-  if (Triple.isOSLinux() || Triple.getOS() == llvm::Triple::CloudABI) {
++  if (Triple.isOSLinux() || Triple.getOS() == llvm::Triple::CloudABI || Triple.isOSHurd()) {
+     switch (Triple.getArch()) {
+     // Don't use a frame pointer on linux if optimizing for certain targets.
+     case llvm::Triple::mips64:
+Index: llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/ToolChains/Gnu.cpp
+===================================================================
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/lib/Driver/ToolChains/Gnu.cpp
++++ llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/ToolChains/Gnu.cpp
+@@ -1846,7 +1846,9 @@ void Generic_GCC::GCCInstallationDetecto
+       "i686-linux-gnu",       "i686-pc-linux-gnu",     "i486-linux-gnu",
+       "i386-linux-gnu",       "i386-redhat-linux6E",   "i686-redhat-linux",
+       "i586-redhat-linux",    "i386-redhat-linux",     "i586-suse-linux",
+-      "i486-slackware-linux", "i686-montavista-linux", "i586-linux-gnu"};
++      "i486-slackware-linux", "i686-montavista-linux", "i586-linux-gnu",
++      "i386-gnu",             "i486-gnu",              "i586-gnu",
++      "i686-gnu"};
+ 
+   static const char *const MIPSLibDirs[] = {"/lib"};
+   static const char *const MIPSTriples[] = {"mips-linux-gnu", "mips-mti-linux",
+@@ -2210,6 +2212,9 @@ void Generic_GCC::GCCInstallationDetecto
+       // triple.
+       {"i386-linux-gnu/gcc/" + CandidateTriple.str(), "../../..",
+        (TargetArch == llvm::Triple::x86 &&
++        TargetTriple.getOS() != llvm::Triple::Solaris)},
++      {"i386-gnu/gcc/" + CandidateTriple.str(), "../../..",
++       (TargetArch == llvm::Triple::x86 &&
+         TargetTriple.getOS() != llvm::Triple::Solaris)}};
+ 
+   for (auto &Suffix : Suffixes) {
+Index: llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/ToolChains/Hurd.cpp
+===================================================================
+--- /dev/null
++++ llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/ToolChains/Hurd.cpp
+@@ -0,0 +1,191 @@
++//===--- Hurd.cpp - Hurd ToolChain Implementations --------*- C++ -*-===//
++//
++//                     The LLVM Compiler Infrastructure
++//
++// This file is distributed under the University of Illinois Open Source
++// License. See LICENSE.TXT for details.
++//
++//===----------------------------------------------------------------------===//
++
++#include "Hurd.h"
++#include "CommonArgs.h"
++#include "clang/Basic/VirtualFileSystem.h"
++#include "clang/Config/config.h"
++#include "clang/Driver/Driver.h"
++#include "clang/Driver/Options.h"
++#include "llvm/Support/Path.h"
++
++using namespace clang::driver;
++using namespace clang::driver::toolchains;
++using namespace clang;
++using namespace llvm::opt;
++
++using tools::addPathIfExists;
++
++/// Get our best guess at the multiarch triple for a target.
++///
++/// Debian-based systems are starting to use a multiarch setup where they use
++/// a target-triple directory in the library and header search paths.
++/// Unfortunately, this triple does not align with the vanilla target triple,
++/// so we provide a rough mapping here.
++static std::string getMultiarchTriple(const Driver &D,
++                                      const llvm::Triple &TargetTriple,
++                                      StringRef SysRoot) {
++  // For most architectures, just use whatever we have rather than trying to be
++  // clever.
++  switch (TargetTriple.getArch()) {
++  default:
++    break;
++
++  // We use the existence of '/lib/<triple>' as a directory to detect some
++  // common hurd triples that don't quite match the Clang triple for both
++  // 32-bit and 64-bit targets. Multiarch fixes its install triples to these
++  // regardless of what the actual target triple is.
++  case llvm::Triple::x86:
++    if (D.getVFS().exists(SysRoot + "/lib/i386-gnu"))
++      return "i386-gnu";
++    break;
++  }
++
++  return TargetTriple.str();
++}
++
++static StringRef getOSLibDir(const llvm::Triple &Triple, const ArgList &Args) {
++  // It happens that only x86 and PPC use the 'lib32' variant of oslibdir, and
++  // using that variant while targeting other architectures causes problems
++  // because the libraries are laid out in shared system roots that can't cope
++  // with a 'lib32' library search path being considered. So we only enable
++  // them when we know we may need it.
++  //
++  // FIXME: This is a bit of a hack. We should really unify this code for
++  // reasoning about oslibdir spellings with the lib dir spellings in the
++  // GCCInstallationDetector, but that is a more significant refactoring.
++
++  if (Triple.getArch() == llvm::Triple::x86)
++    return "lib32";
++
++  return Triple.isArch32Bit() ? "lib" : "lib64";
++}
++
++Hurd::Hurd(const Driver &D, const llvm::Triple &Triple,
++                 const ArgList &Args)
++    : Generic_ELF(D, Triple, Args) {
++  std::string SysRoot = computeSysRoot();
++  path_list &Paths = getFilePaths();
++
++  const std::string OSLibDir = getOSLibDir(Triple, Args);
++  const std::string MultiarchTriple = getMultiarchTriple(D, Triple, SysRoot);
++
++  // Similar to the logic for GCC above, if we currently running Clang inside
++  // of the requested system root, add its parent library paths to
++  // those searched.
++  // FIXME: It's not clear whether we should use the driver's installed
++  // directory ('Dir' below) or the ResourceDir.
++  if (StringRef(D.Dir).startswith(SysRoot)) {
++    addPathIfExists(D, D.Dir + "/../lib/" + MultiarchTriple, Paths);
++    addPathIfExists(D, D.Dir + "/../" + OSLibDir, Paths);
++  }
++
++  addPathIfExists(D, SysRoot + "/lib/" + MultiarchTriple, Paths);
++  addPathIfExists(D, SysRoot + "/lib/../" + OSLibDir, Paths);
++
++  addPathIfExists(D, SysRoot + "/usr/lib/" + MultiarchTriple, Paths);
++  addPathIfExists(D, SysRoot + "/usr/lib/../" + OSLibDir, Paths);
++
++  // If we are currently running Clang inside of the requested system root, add
++  // its parent library path to those searched.
++  // FIXME: It's not clear whether we should use the driver's installed
++  // directory ('Dir' below) or the ResourceDir.
++  if (StringRef(D.Dir).startswith(SysRoot))
++    addPathIfExists(D, D.Dir + "/../lib", Paths);
++
++  addPathIfExists(D, SysRoot + "/lib", Paths);
++  addPathIfExists(D, SysRoot + "/usr/lib", Paths);
++}
++
++bool Hurd::HasNativeLLVMSupport() const { return true; }
++
++Tool *Hurd::buildLinker() const { return new tools::gnutools::Linker(*this); }
++
++Tool *Hurd::buildAssembler() const {
++  return new tools::gnutools::Assembler(*this);
++}
++
++std::string Hurd::computeSysRoot() const {
++  if (!getDriver().SysRoot.empty())
++    return getDriver().SysRoot;
++
++  return std::string();
++}
++
++std::string Hurd::getDynamicLinker(const ArgList &Args) const {
++  const llvm::Triple::ArchType Arch = getArch();
++
++  if (Arch == llvm::Triple::x86)
++    return "/lib/ld.so";
++
++  llvm_unreachable("unsupported architecture");
++}
++
++void Hurd::AddClangSystemIncludeArgs(const ArgList &DriverArgs,
++                                     ArgStringList &CC1Args) const {
++  const Driver &D = getDriver();
++  std::string SysRoot = computeSysRoot();
++
++  if (DriverArgs.hasArg(clang::driver::options::OPT_nostdinc))
++    return;
++
++  if (!DriverArgs.hasArg(options::OPT_nostdlibinc))
++    addSystemInclude(DriverArgs, CC1Args, SysRoot + "/usr/local/include");
++
++  if (!DriverArgs.hasArg(options::OPT_nobuiltininc)) {
++    SmallString<128> P(D.ResourceDir);
++    llvm::sys::path::append(P, "include");
++    addSystemInclude(DriverArgs, CC1Args, P);
++  }
++
++  if (DriverArgs.hasArg(options::OPT_nostdlibinc))
++    return;
++
++  // Check for configure-time C include directories.
++  StringRef CIncludeDirs(C_INCLUDE_DIRS);
++  if (CIncludeDirs != "") {
++    SmallVector<StringRef, 5> dirs;
++    CIncludeDirs.split(dirs, ":");
++    for (StringRef dir : dirs) {
++      StringRef Prefix =
++          llvm::sys::path::is_absolute(dir) ? StringRef(SysRoot) : "";
++      addExternCSystemInclude(DriverArgs, CC1Args, Prefix + dir);
++    }
++    return;
++  }
++
++  // Lacking those, try to detect the correct set of system includes for the
++  // target triple.
++
++  const StringRef X86MultiarchIncludeDirs[] = {
++      "/usr/include/i386-gnu"};
++
++  ArrayRef<StringRef> MultiarchIncludeDirs;
++  switch (getTriple().getArch()) {
++  case llvm::Triple::x86:
++    MultiarchIncludeDirs = X86MultiarchIncludeDirs;
++    break;
++  default:
++    break;
++  }
++
++  for (StringRef Dir : MultiarchIncludeDirs) {
++    if (D.getVFS().exists(SysRoot + Dir)) {
++      addExternCSystemInclude(DriverArgs, CC1Args, SysRoot + Dir);
++      break;
++    }
++  }
++
++  // Add an include of '/include' directly. This isn't provided by default by
++  // system GCCs, but is often used with cross-compiling GCCs, and harmless to
++  // add even when Clang is acting as-if it were a system compiler.
++  addExternCSystemInclude(DriverArgs, CC1Args, SysRoot + "/include");
++
++  addExternCSystemInclude(DriverArgs, CC1Args, SysRoot + "/usr/include");
++}
+Index: llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/ToolChains/Hurd.h
+===================================================================
+--- /dev/null
++++ llvm-toolchain-7-7.0.1~+rc2/clang/lib/Driver/ToolChains/Hurd.h
+@@ -0,0 +1,46 @@
++//===--- Hurd.h - Hurd ToolChain Implementations ----------*- C++ -*-===//
++//
++//                     The LLVM Compiler Infrastructure
++//
++// This file is distributed under the University of Illinois Open Source
++// License. See LICENSE.TXT for details.
++//
++//===----------------------------------------------------------------------===//
++
++#ifndef LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_Hurd_H
++#define LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_Hurd_H
++
++#include "Gnu.h"
++#include "clang/Driver/ToolChain.h"
++
++namespace clang {
++namespace driver {
++namespace toolchains {
++
++class LLVM_LIBRARY_VISIBILITY Hurd : public Generic_ELF {
++public:
++  Hurd(const Driver &D, const llvm::Triple &Triple,
++          const llvm::opt::ArgList &Args);
++
++  bool HasNativeLLVMSupport() const override;
++
++  void
++  AddClangSystemIncludeArgs(const llvm::opt::ArgList &DriverArgs,
++                            llvm::opt::ArgStringList &CC1Args) const override;
++
++  virtual std::string computeSysRoot() const;
++
++  virtual std::string getDynamicLinker(const llvm::opt::ArgList &Args) const;
++
++  std::vector<std::string> ExtraOpts;
++
++protected:
++  Tool *buildAssembler() const override;
++  Tool *buildLinker() const override;
++};
++
++} // end namespace toolchains
++} // end namespace driver
++} // end namespace clang
++
++#endif // LLVM_CLANG_LIB_DRIVER_TOOLCHAINS_Hurd_H
+Index: llvm-toolchain-7-7.0.1~+rc2/clang/lib/Frontend/InitHeaderSearch.cpp
+===================================================================
+--- llvm-toolchain-7-7.0.1~+rc2.orig/clang/lib/Frontend/InitHeaderSearch.cpp
++++ llvm-toolchain-7-7.0.1~+rc2/clang/lib/Frontend/InitHeaderSearch.cpp
+@@ -260,6 +260,7 @@ void InitHeaderSearch::AddDefaultCInclud
+ 
+   switch (os) {
+   case llvm::Triple::Linux:
++  case llvm::Triple::Hurd:
+   case llvm::Triple::Solaris:
+     llvm_unreachable("Include management is handled in the driver.");
+ 
+@@ -412,6 +413,7 @@
+
+   switch (os) {
+   case llvm::Triple::Linux:
++  case llvm::Triple::Hurd:
+   case llvm::Triple::Solaris:
+     llvm_unreachable("Include management is handled in the driver.");
+     break;
+@@ -460,6 +462,7 @@
+     break; // Everything else continues to use this routine's logic.
+
+   case llvm::Triple::Linux:
++  case llvm::Triple::Hurd:
+   case llvm::Triple::Solaris:
+     return;
+
+ 

@@ -1,0 +1,15 @@
+---
+ lldb/scripts/Python/finishSwigPythonLLDB.py |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/lldb/scripts/Python/finishSwigPythonLLDB.py
++++ b/lldb/scripts/Python/finishSwigPythonLLDB.py
+@@ -443,7 +443,7 @@ def make_symlink_liblldb(
+             if eOSType == utilsOsType.EnumOsType.Darwin:
+                 strLibFileExtn = ".dylib"
+             else:
+-                strLibFileExtn = ".so"
++                strLibFileExtn = "-7.so"
+             strSrc = os.path.join(vstrLldbLibDir, "liblldb" + strLibFileExtn)
+ 
+     bOk, strErrMsg = make_symlink(

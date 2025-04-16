@@ -1,0 +1,34 @@
+From c830d84bc802ca1e9219415a5784c4ad97a34819 Mon Sep 17 00:00:00 2001
+From: Peter Wu <peter@lekensteyn.nl>
+Date: Fri, 4 May 2018 15:55:26 +0200
+Subject: [PATCH] [clang] cmake: resolve symlinks in ClangConfig.cmake
+
+Ensure that symlinks such as /usr/lib/cmake/clang-X.Y (pointing to
+/usr/lib/llvm-X.Y/lib/cmake/llvm) are resolved. This ensures that
+CLANG_INSTALL_PREFIX ends up to be /usr/lib/llvm-X.Y instead of /usr.
+
+Partially addresses PR37128
+---
+ cmake/modules/CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/cmake/modules/CMakeLists.txt b/cmake/modules/CMakeLists.txt
+index be6d1d7257..bcb61f6cc8 100644
+--- a/clang/cmake/modules/CMakeLists.txt
++++ b/clang/cmake/modules/CMakeLists.txt
+@@ -30,10 +30,10 @@ set(CLANG_CONFIG_EXPORTS_FILE)
+ # Generate ClangConfig.cmake for the install tree.
+ set(CLANG_CONFIG_CODE "
+ # Compute the installation prefix from this LLVMConfig.cmake file location.
+-get_filename_component(CLANG_INSTALL_PREFIX \"\${CMAKE_CURRENT_LIST_FILE}\" PATH)")
++get_filename_component(CLANG_INSTALL_PREFIX \"\${CMAKE_CURRENT_LIST_FILE}\" REALPATH)")
+ # Construct the proper number of get_filename_component(... PATH)
+ # calls to compute the installation prefix.
+-string(REGEX REPLACE "/" ";" _count "${CLANG_INSTALL_PACKAGE_DIR}")
++string(REGEX REPLACE "/" ";" _count "prefix/${CLANG_INSTALL_PACKAGE_DIR}")
+ foreach(p ${_count})
+   set(CLANG_CONFIG_CODE "${CLANG_CONFIG_CODE}
+ get_filename_component(CLANG_INSTALL_PREFIX \"\${CLANG_INSTALL_PREFIX}\" PATH)")
+-- 
+2.17.0
+

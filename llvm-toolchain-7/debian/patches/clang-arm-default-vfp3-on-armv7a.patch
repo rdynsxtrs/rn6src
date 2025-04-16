@@ -1,0 +1,27 @@
+Index: llvm-toolchain-7-7/include/llvm/Support/ARMTargetParser.def
+===================================================================
+--- llvm-toolchain-7-7.orig/include/llvm/Support/ARMTargetParser.def
++++ llvm-toolchain-7-7/include/llvm/Support/ARMTargetParser.def
+@@ -75,7 +75,7 @@ ARM_ARCH("armv6kz", ARMV6KZ, "6KZ", "v6k
+ ARM_ARCH("armv6-m", ARMV6M, "6-M", "v6m", ARMBuildAttrs::CPUArch::v6_M,
+           FK_NONE, ARM::AEK_NONE)
+ ARM_ARCH("armv7-a", ARMV7A, "7-A", "v7", ARMBuildAttrs::CPUArch::v7,
+-          FK_NEON, ARM::AEK_DSP)
++          FK_VFPV3_D16 /* Hard float */, ARM::AEK_DSP)
+ ARM_ARCH("armv7ve", ARMV7VE, "7VE", "v7ve", ARMBuildAttrs::CPUArch::v7,
+           FK_NEON, (ARM::AEK_SEC | ARM::AEK_MP | ARM::AEK_VIRT |
+           ARM::AEK_HWDIVARM | ARM::AEK_HWDIVTHUMB | ARM::AEK_DSP))
+Index: llvm-toolchain-7-7/lib/Target/ARM/ARM.td
+===================================================================
+--- llvm-toolchain-7-7.orig/lib/Target/ARM/ARM.td
++++ llvm-toolchain-7-7/lib/Target/ARM/ARM.td
+@@ -558,7 +558,8 @@ def ARMv6sm   : Architecture<"armv6s-m",
+                                                        FeatureStrictAlign]>;
+ 
+ def ARMv7a    : Architecture<"armv7-a",   "ARMv7a",   [HasV7Ops,
+-                                                       FeatureNEON,
++                                                       FeatureVFP3,
++                                                       FeatureD16,
+                                                        FeatureDB,
+                                                        FeatureDSP,
+                                                        FeatureAClass]>;

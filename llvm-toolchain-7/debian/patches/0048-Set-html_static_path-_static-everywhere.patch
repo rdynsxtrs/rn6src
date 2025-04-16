@@ -1,0 +1,63 @@
+From: Nicholas D Steeves <nsteeves@gmail.com>
+Date: Sat, 10 Feb 2018 21:00:55 -0500
+Subject: Set html_static_path = ['_static'] everywhere.
+
+---
+ clang-tools-extra/docs/conf.py | 2 +-
+ clang/docs/analyzer/conf.py    | 2 +-
+ clang/docs/conf.py             | 2 +-
+ polly/docs/conf.py             | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/clang-tools-extra/docs/conf.py b/clang-tools-extra/docs/conf.py
+index e872c55..69f425a 100644
+--- a/clang-tools-extra/docs/conf.py
++++ b/clang-tools-extra/docs/conf.py
+@@ -121,7 +121,7 @@ html_theme = 'haiku'
+ # Add any paths that contain custom static files (such as style sheets) here,
+ # relative to this directory. They are copied after the builtin static files,
+ # so a file named "default.css" will overwrite the builtin "default.css".
+-html_static_path = []
++html_static_path = ['_static']
+ 
+ # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
+ # using the given strftime format.
+diff --git a/clang/docs/analyzer/conf.py b/clang/docs/analyzer/conf.py
+index c40af7a..666308d 100644
+--- a/clang/docs/analyzer/conf.py
++++ b/clang/docs/analyzer/conf.py
+@@ -121,7 +121,7 @@ html_theme = 'haiku'
+ # Add any paths that contain custom static files (such as style sheets) here,
+ # relative to this directory. They are copied after the builtin static files,
+ # so a file named "default.css" will overwrite the builtin "default.css".
+-html_static_path = []
++html_static_path = ['_static']
+ 
+ # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
+ # using the given strftime format.
+diff --git a/clang/docs/conf.py b/clang/docs/conf.py
+index a9861cd..d125dc6 100644
+--- a/clang/docs/conf.py
++++ b/clang/docs/conf.py
+@@ -121,7 +121,7 @@ html_theme = 'haiku'
+ # Add any paths that contain custom static files (such as style sheets) here,
+ # relative to this directory. They are copied after the builtin static files,
+ # so a file named "default.css" will overwrite the builtin "default.css".
+-html_static_path = []
++html_static_path = ['_static']
+ 
+ # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
+ # using the given strftime format.
+diff --git a/polly/docs/conf.py b/polly/docs/conf.py
+index 64d3968..aa854ad 100644
+--- a/polly/docs/conf.py
++++ b/polly/docs/conf.py
+@@ -127,7 +127,7 @@ except ImportError:
+ # Add any paths that contain custom static files (such as style sheets) here,
+ # relative to this directory. They are copied after the builtin static files,
+ # so a file named "default.css" will overwrite the builtin "default.css".
+-html_static_path = []
++html_static_path = ['_static']
+ 
+ # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
+ # using the given strftime format.

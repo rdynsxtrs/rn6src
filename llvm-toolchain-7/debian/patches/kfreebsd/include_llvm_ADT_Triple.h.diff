@@ -1,0 +1,33 @@
+Index: llvm-toolchain-7-7.0.1/include/llvm/ADT/Triple.h
+===================================================================
+--- llvm-toolchain-7-7.0.1.orig/include/llvm/ADT/Triple.h
++++ llvm-toolchain-7-7.0.1/include/llvm/ADT/Triple.h
+@@ -158,7 +158,7 @@ public:
+     FreeBSD,
+     Fuchsia,
+     IOS,
+-    KFreeBSD,
++    kFreeBSD,
+     Linux,
+     Lv2,        // PS3
+     MacOSX,
+@@ -575,8 +575,8 @@ public:
+   }
+ 
+   /// Tests whether the OS is kFreeBSD.
+-  bool isOSKFreeBSD() const {
+-    return getOS() == Triple::KFreeBSD;
++  bool isOSkFreeBSD() const {
++    return getOS() == Triple::kFreeBSD;
+   }
+ 
+   /// Tests whether the OS is Hurd.
+@@ -586,7 +586,7 @@ public:
+ 
+   /// Tests whether the OS uses glibc.
+   bool isOSGlibc() const {
+-    return (getOS() == Triple::Linux || getOS() == Triple::KFreeBSD ||
++    return (getOS() == Triple::Linux || getOS() == Triple::kFreeBSD ||
+             getOS() == Triple::Hurd) &&
+            !isAndroid();
+   }

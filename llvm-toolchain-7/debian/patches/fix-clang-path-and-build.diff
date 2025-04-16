@@ -1,0 +1,24 @@
+---
+ clang/lib/Driver/ToolChains.cpp |    2 ++
+ 1 file changed, 2 insertions(+)
+
+Index: llvm-toolchain-snapshot_7~svn329789/clang/lib/Driver/ToolChains/Gnu.cpp
+===================================================================
+--- llvm-toolchain-snapshot_7~svn329789.orig/clang/lib/Driver/ToolChains/Gnu.cpp
++++ llvm-toolchain-snapshot_7~svn329789/clang/lib/Driver/ToolChains/Gnu.cpp
+@@ -17,6 +17,7 @@
+ #include "CommonArgs.h"
+ #include "Linux.h"
+ #include "clang/Basic/VirtualFileSystem.h"
++#include "clang/Basic/Version.h"
+ #include "clang/Config/config.h" // for GCC_INSTALL_PREFIX
+ #include "clang/Driver/Compilation.h"
+ #include "clang/Driver/Driver.h"
+@@ -2399,6 +2400,7 @@ void Generic_GCC::AddClangCXXStdlibInclu
+     addLibStdCxxIncludePaths(DriverArgs, CC1Args);
+     break;
+   }
++  addSystemInclude(DriverArgs, CC1Args, "/usr/include/clang/" + std::string(CLANG_VERSION_STRING) + "/include/");
+ }
+ 
+ void

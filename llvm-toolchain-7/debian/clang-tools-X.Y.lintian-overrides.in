@@ -1,0 +1,6 @@
+# I know but well...
+clang-tools-@LLVM_VERSION@: manpage-has-useless-whatis-entry usr/share/man/man1/clang-check.1.gz
+clang-tools-@LLVM_VERSION@: manpage-has-useless-whatis-entry usr/share/man/man1/scan-view.1.gz
+clang-tools-@LLVM_VERSION@: manpage-has-useless-whatis-entry usr/share/man/man1/clang-apply-replacements-@LLVM_VERSION@.1.gz
+clang-tools-@LLVM_VERSION@: manpage-has-useless-whatis-entry usr/share/man/man1/clang-check-@LLVM_VERSION@.1.gz
+clang-tools-@LLVM_VERSION@: manpage-has-useless-whatis-entry usr/share/man/man1/scan-view-@LLVM_VERSION@.1.gz

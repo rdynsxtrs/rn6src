@@ -1,0 +1,38 @@
+Index: llvm-toolchain-7-7/clang/docs/CommandGuide/clang.rst
+===================================================================
+--- llvm-toolchain-7-7.orig/clang/docs/CommandGuide/clang.rst
++++ llvm-toolchain-7-7/clang/docs/CommandGuide/clang.rst
+@@ -310,20 +310,10 @@ Clang fully supports cross compilation a
+ Depending on how your version of Clang is configured, it may have support for a
+ number of cross compilers, or may only support a native target.
+ 
+-.. option:: -arch <architecture>
++.. option:: -target <architecture>
+ 
+   Specify the architecture to build for.
+ 
+-.. option:: -mmacosx-version-min=<version>
+-
+-  When building for Mac OS X, specify the minimum version supported by your
+-  application.
+-
+-.. option:: -miphoneos-version-min
+-
+-  When building for iPhone OS, specify the minimum version supported by your
+-  application.
+-
+ .. option:: -march=<cpu>
+ 
+   Specify that Clang should generate code for a specific processor family
+@@ -616,11 +606,6 @@ ENVIRONMENT
+   These environment variables specify additional paths, as for :envvar:`CPATH`, which are
+   only used when processing the appropriate language.
+ 
+-.. envvar:: MACOSX_DEPLOYMENT_TARGET
+-
+-  If :option:`-mmacosx-version-min` is unspecified, the default deployment
+-  target is read from this environment variable. This option only affects
+-  Darwin targets.
+ 
+ BUGS
+ ----

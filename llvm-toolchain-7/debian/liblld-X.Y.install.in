@@ -1,0 +1,11 @@
+#usr/lib/llvm-@LLVM_VERSION@/lib/liblld-@LLVM_VERSION@.so.1 /usr/lib/@DEB_HOST_MULTIARCH@/
+usr/lib/llvm-@LLVM_VERSION@/lib/liblldReaderWriter.a
+usr/lib/llvm-@LLVM_VERSION@/lib/liblldDriver.a
+usr/lib/llvm-@LLVM_VERSION@/lib/liblldYAML.a
+usr/lib/llvm-@LLVM_VERSION@/lib/liblldELF.a
+usr/lib/llvm-@LLVM_VERSION@/lib/liblldCore.a
+usr/lib/llvm-@LLVM_VERSION@/lib/liblldMachO.a
+usr/lib/llvm-@LLVM_VERSION@/lib/liblldCOFF.a
+usr/lib/llvm-@LLVM_VERSION@/lib/liblldMinGW.a
+usr/lib/llvm-@LLVM_VERSION@/lib/liblldCommon.a
+usr/lib/llvm-@LLVM_VERSION@/lib/liblldWasm.a
