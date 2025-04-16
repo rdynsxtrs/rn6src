@@ -1,0 +1,4 @@
+include: https://salsa.debian.org/postgresql/postgresql-common/raw/master/gitlab/gitlab-ci.yml
+
+variables:
+  RELEASE: 'bookworm'

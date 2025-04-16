@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+MAJOR_VER="${DPKG_MAINTSCRIPT_PACKAGE#postgresql-}"
+CATVERSION="@CATVERSION@" # set by override_dh_installdeb
+
+case $1 in
+    install|upgrade)
+        if [ "$2" ]; then
+            . /usr/share/postgresql-common/maintscripts-functions
+            preinst_check_catversion "$MAJOR_VER" "$CATVERSION"
+        fi ;;
+esac
+
+#DEBHELPER#
+
+exit 0

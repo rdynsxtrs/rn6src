@@ -1,0 +1,20 @@
+Tests: run-testsuite
+Depends:
+ build-essential,
+ debhelper,
+ fakeroot,
+ hunspell-en-us,
+ iproute2,
+ locales-all,
+ logrotate,
+ netcat-openbsd,
+ perl,
+ procps,
+ @,
+Restrictions: needs-root
+
+Tests: installcheck
+Depends:
+ build-essential,
+ @,
+Restrictions: allow-stderr

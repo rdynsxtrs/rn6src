@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+VERSION=${DPKG_MAINTSCRIPT_PACKAGE##*-}
+
+#DEBHELPER#
+
+if [ "$1" = remove ]; then
+    . /usr/share/postgresql-common/maintscripts-functions
+    remove_client_version $VERSION
+fi

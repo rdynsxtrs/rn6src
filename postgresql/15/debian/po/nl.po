@@ -1,0 +1,40 @@
+# Dutch translation of postgresql-11 debconf templates.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the postgresql-11 package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Frans Spiesschaert <Frans.Spiesschaert@yucom.be>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: postgresql-11_11.1-2\n"
+"Report-Msgid-Bugs-To: postgresql-11@packages.debian.org\n"
+"POT-Creation-Date: 2019-01-09 15:22+0100\n"
+"PO-Revision-Date: 2019-01-19 10:43+0100\n"
+"Last-Translator: Frans Spiesschaert <Frans.Spiesschaert@yucom.be>\n"
+"Language-Team: Debian Dutch l10n Team <debian-l10n-dutch@lists.debian.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.7\n"
+
+#. Type: boolean
+#. Description
+#: ../postgresql-11.templates:1001
+msgid "Remove PostgreSQL directories when package is purged?"
+msgstr ""
+"De PostgreSQL-mappen verwijderen wanneer het pakket gewist (purged) wordt?"
+
+#. Type: boolean
+#. Description
+#: ../postgresql-11.templates:1001
+msgid ""
+"Removing the PostgreSQL server package will leave existing database clusters "
+"intact, i.e. their configuration, data, and log directories will not be "
+"removed. On purging the package, the directories can optionally be removed."
+msgstr ""
+"Bij het verwijderen van het serverpakket van PostgreSQL blijven de bestaande "
+"databaseclusters intact. Dit wil zeggen dat hun configuratie-, gegevens- en "
+"logboekmappen niet verwijderd worden. Bij het wissen (purge) van het pakket, "
+"kunnen de mappen naar keuze verwijderd worden."

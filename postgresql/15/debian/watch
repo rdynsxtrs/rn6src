@@ -1,0 +1,4 @@
+version=3
+opts=uversionmangle=s/alpha/~alpha/;s/beta/~beta/;s/rc/~rc/ \
+https://ftp.postgresql.org/pub/source/v(15.*)/postgresql-(15.*).tar.bz2
+

@@ -1,0 +1,23 @@
+Enable outline-atomics on arm64.
+
+The flag was added in focal's gcc, but is off by default there. It is enabled
+by default on all later distributions (hirsute, impish, bullseye, bookwork,
+sid).
+
+https://www.postgresql.org/message-id/flat/1635221042457.21654%40amazon.com
+
+This patch can be removed once focal is EOL.
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -566,6 +566,10 @@ if test "$GCC" = yes -a "$ICC" = no; the
+   if test -n "$NOT_THE_CFLAGS"; then
+     CFLAGS="$CFLAGS -Wno-cast-function-type-strict"
+   fi
++  if test x"$host_cpu" == x"aarch64"; then
++    PGAC_PROG_CC_CFLAGS_OPT([-moutline-atomics])
++    PGAC_PROG_CXX_CFLAGS_OPT([-moutline-atomics])
++  fi
+ elif test "$ICC" = yes; then
+   # Intel's compiler has a bug/misoptimization in checking for
+   # division by NAN (NaN == 0), -mp1 fixes it, so add it to the CFLAGS.

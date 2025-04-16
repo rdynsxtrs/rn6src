@@ -1,0 +1,20 @@
+# We test for /usr/bin/pg_dropcluster, but run it without path
+command-with-path-in-maintainer-script
+
+# The World's Most Advanced Open Source Relational Database
+description-synopsis-starts-with-article
+
+# We ship binaries and libs in subdirs of /usr/lib/postgresql
+executable-in-usr-lib
+repeated-path-segment lib *
+
+# These are PostgreSQL server plugins; some need no external libraries
+hardening-no-fortify-functions [usr/lib/postgresql/*/lib/*]
+library-not-linked-against-libc [usr/lib/postgresql/*/lib/*]
+shared-library-lacks-prerequisites [usr/lib/postgresql/*/lib/*]
+
+# We use debconf in postrm only
+no-debconf-config
+
+# We store the PostgreSQL catalog version in a custom control field
+unknown-field *Postgresql-Catversion

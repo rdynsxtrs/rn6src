@@ -1,0 +1,44 @@
+To make the PostgreSQL server packages build reproducibly, we need to remove
+the build path from -fdebug-prefix-map and -ffile-prefix-map in CFLAGS.
+
+* The actual server build still uses the original CFLAGS so the build path is
+  correctly mapped in the object files.
+* The information printed by the pg_config binary and the system view is
+  filtered in src/common/Makefile and the configure script.
+* The build paths stored in Makefile.global are filtered in debian/rules.
+  (abs_top_builddir, abs_top_srcdir, configure_args, CFLAGS)
+* To make PGXS module builds reproducible, pg_buildext copies the environment
+  CFLAGS to COPT where Makefile.global picks them up, using the prefix maps
+  from dpkg-buildflags.
+
+--- a/src/common/Makefile
++++ b/src/common/Makefile
+@@ -33,7 +33,7 @@ STD_CPPFLAGS := $(filter-out -I$(top_src
+ STD_LDFLAGS := $(filter-out -L$(top_builddir)/src/common -L$(top_builddir)/src/port,$(LDFLAGS))
+ override CPPFLAGS += -DVAL_CC="\"$(CC)\""
+ override CPPFLAGS += -DVAL_CPPFLAGS="\"$(STD_CPPFLAGS)\""
+-override CPPFLAGS += -DVAL_CFLAGS="\"$(CFLAGS)\""
++override CPPFLAGS += -DVAL_CFLAGS="\"$(filter-out -fdebug-prefix-map=% -ffile-prefix-map=%,$(CFLAGS))\""
+ override CPPFLAGS += -DVAL_CFLAGS_SL="\"$(CFLAGS_SL)\""
+ override CPPFLAGS += -DVAL_LDFLAGS="\"$(STD_LDFLAGS)\""
+ override CPPFLAGS += -DVAL_LDFLAGS_EX="\"$(LDFLAGS_EX)\""
+--- a/configure.ac
++++ b/configure.ac
+@@ -27,6 +27,7 @@ AC_COPYRIGHT([Copyright (c) 1996-2020, P
+ AC_CONFIG_SRCDIR([src/backend/access/common/heaptuple.c])
+ AC_CONFIG_AUX_DIR(config)
+ AC_PREFIX_DEFAULT(/usr/local/pgsql)
++[ac_configure_args=$(echo "$ac_configure_args" | sed -e "s/ -f\(debug\|file\)-prefix-map=[^' ]*//g")]
+ AC_DEFINE_UNQUOTED(CONFIGURE_ARGS, ["$ac_configure_args"], [Saved arguments from configure])
+ 
+ [PG_MAJORVERSION=`expr "$PACKAGE_VERSION" : '\([0-9][0-9]*\)'`]
+--- a/configure
++++ b/configure
+@@ -2796,6 +2796,7 @@ ac_config_sub="$SHELL $ac_aux_dir/config
+ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
+ 
+ 
++ac_configure_args=$(echo "$ac_configure_args" | sed -e "s/ -f\(debug\|file\)-prefix-map=[^' ]*//g")
+ 
+ 
+ cat >>confdefs.h <<_ACEOF

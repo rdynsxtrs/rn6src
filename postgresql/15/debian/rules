@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+
+MAJOR_VER := 15
+
+include /usr/share/postgresql-common/server/postgresql.mk
+
+# get debug info for test failure on mipsel
+# https://buildd.debian.org/status/logs.php?pkg=postgresql-15&ver=15.12-0%2Bdeb12u1&arch=mipsel&suite=bookworm
+TEST_FAIL_COMMAND = ls -al build/src/bin/pg_verifybackup/tmp_check/t_010_client_untar_primary_data/backup/client-backup; openssl base64 -e < build/src/bin/pg_verifybackup/tmp_check/t_010_client_untar_primary_data/backup/client-backup/base.tar.zst; exit 1

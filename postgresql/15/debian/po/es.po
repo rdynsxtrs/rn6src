@@ -1,0 +1,58 @@
+# postgresql-13 po-debconf translation to Spanish.
+# Copyright (C) 2021 Software in the Public Interest
+# This file is distributed under the same license as the postgresql-13 package.
+#
+# Changes:
+# - Initial translation
+# Jonathan Bustillos <jathan@debian.org>, 2021.
+#
+# Traductores, si no conocen el formato PO, merece la pena leer la
+# documentación de gettext, especialmente las secciones dedicadas a este
+# formato, por ejemplo ejecutando:
+# info -n '(gettext)PO Files'
+# info -n '(gettext)Header Entry'
+#
+# Equipo de traducción al español, por favor lean antes de traducir
+# los siguientes documentos:
+#
+# - El proyecto de traducción de Debian al español
+# http://www.debian.org/intl/spanish/
+# especialmente las notas y normas de traducción en
+# http://www.debian.org/intl/spanish/notas
+#
+# - La guía de traducción de po's de debconf:
+# /usr/share/doc/po-debconf/README-trans
+# o http://www.debian.org/intl/l10n/po-debconf/README-trans
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-31 18:37+0000\n"
+"PO-Revision-Date: 2021-04-03 14:25-0600\n"
+"Last-Translator: Jonathan Bustillos <jathan@debian.org>\n"
+"Language-Team: Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.7\n"
+
+#. Type: boolean
+#. Description
+#: ../postgresql-13.templates:1001
+msgid "Remove PostgreSQL directories when package is purged?"
+msgstr "¿Eliminar los directorios de PostgreSQL cuando se purga el paquete?"
+
+#. Type: boolean
+#. Description
+#: ../postgresql-13.templates:1001
+msgid ""
+"Removing the PostgreSQL server package will leave existing database clusters "
+"intact, i.e. their configuration, data, and log directories will not be "
+"removed. On purging the package, the directories can optionally be removed."
+msgstr ""
+"La eliminación del paquete del servidor PostgreSQL dejará intactos los "
+"clusters de bases de datos existentes, es decir, no se eliminarán sus "
+"directorios de configuración, datos y registro. Al purgar el paquete, los "
+"directorios pueden ser eliminados opcionalmente."

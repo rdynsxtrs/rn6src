@@ -1,0 +1,7 @@
+--- a/configure.ac
++++ b/configure.ac
+@@ -22,4 +21,0 @@ AC_INIT([PostgreSQL], [15devel], [pgsql-
+-m4_if(m4_defn([m4_PACKAGE_VERSION]), [2.69], [], [m4_fatal([Autoconf version 2.69 is required.
+-Untested combinations of 'autoconf' and PostgreSQL versions are not
+-recommended.  You can remove the check from 'configure.ac' but it is then
+-your responsibility whether the result works or not.])])

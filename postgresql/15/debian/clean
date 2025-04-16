@@ -1,0 +1,8 @@
+# force rebuild of errcodes.h and symlinks
+src/backend/utils/errcodes.h
+src/backend/utils/fmgr-stamp
+src/backend/utils/fmgroids.h
+src/backend/utils/fmgrprotos.h
+# regression tests debris
+src/test/regress/regress.o
+src/test/regress/regress.so

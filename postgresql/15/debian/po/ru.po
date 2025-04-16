@@ -1,0 +1,39 @@
+# Russian translation of debconf template for postgresql-11
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the postgresql-11 package.
+# Lev Lamberov <dogsleg@debian.org>, 2019
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: postgresql-11\n"
+"Report-Msgid-Bugs-To: postgresql-11@packages.debian.org\n"
+"POT-Creation-Date: 2019-01-09 15:22+0100\n"
+"PO-Revision-Date: 2019-01-27 14:56+0500\n"
+"Language-Team: Debian L10N Russian <debian-l10n-russian@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.1\n"
+"Last-Translator: Lev Lamberov <dogsleg@debian.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Language: ru\n"
+
+#. Type: boolean
+#. Description
+#: ../postgresql-11.templates:1001
+msgid "Remove PostgreSQL directories when package is purged?"
+msgstr "Удалить каталоги PostgreSQL при вычищении пакета?"
+
+#. Type: boolean
+#. Description
+#: ../postgresql-11.templates:1001
+msgid ""
+"Removing the PostgreSQL server package will leave existing database clusters "
+"intact, i.e. their configuration, data, and log directories will not be "
+"removed. On purging the package, the directories can optionally be removed."
+msgstr ""
+"При удалении серверного пакета PostgreSQL существующие кластеры баз данных "
+"останутся нетронутыми. То есть, их каталоги с настройками, данными и "
+"журналами не будут удалены. При вычистке пакета эти каталоги могут быть при "
+"необходимости удалены."

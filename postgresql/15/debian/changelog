@@ -1,0 +1,443 @@
+postgresql-15 (15.12-0+deb12u2+rnx1) unstable; urgency=medium
+
+  * Backported to ReadyNAS OS 6 
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Wed, 16 Apr 2025 08:53:43 +0200
+
+postgresql-15 (15.12-0+deb12u2) bookworm; urgency=medium
+
+  * Grab base.tar.zst from failing 010_client_untar test on mipsel.
+
+ -- Christoph Berg <myon@debian.org>  Thu, 06 Mar 2025 11:38:37 +0100
+
+postgresql-15 (15.12-0+deb12u1) bookworm; urgency=medium
+
+  * New upstream version 15.12.
+
+    + Improve behavior of libpq's quoting functions (Andres Freund, Tom Lane)
+
+      The changes made for CVE-2025-1094 had one serious oversight:
+      PQescapeLiteral() and PQescapeIdentifier() failed to honor their string
+      length parameter, instead always reading to the input string's trailing
+      null.  This resulted in including unwanted text in the output, if the
+      caller intended to truncate the string via the length parameter.  With
+      very bad luck it could cause a crash due to reading off the end of
+      memory.
+
+      In addition, modify all these quoting functions so that when invalid
+      encoding is detected, an invalid sequence is substituted for just the
+      first byte of the presumed character, not all of it.  This reduces the
+      risk of problems if a calling application performs additional processing
+      on the quoted string.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 18 Feb 2025 11:59:37 +0100
+
+postgresql-15 (15.11-0+deb12u1) bookworm; urgency=medium
+
+  * New upstream version 15.11.
+
+    + Harden PQescapeString and allied functions against invalidly-encoded
+      input strings (Andres Freund, Noah Misch)
+
+      Data-quoting functions supplied by libpq now fully check the encoding
+      validity of their input.  If invalid characters are detected, they
+      report an error if possible.  For the ones that lack an error return
+      convention, the output string is adjusted to ensure that the server will
+      report invalid encoding and no intervening processing will be fooled by
+      bytes that might happen to match single quote, backslash, etc.
+
+      The purpose of this change is to guard against SQL-injection attacks
+      that are possible if one of these functions is used to quote crafted
+      input.  There is no hazard when the resulting string is sent directly to
+      a PostgreSQL server (which would check its encoding anyway), but there
+      is a risk when it is passed through psql or other client-side code.
+      Historically such code has not carefully vetted encoding, and in many
+      cases it's not clear what it should do if it did detect such a problem.
+
+      This fix is effective only if the data-quoting function, the server, and
+      any intermediate processing agree on the character encoding that's being
+      used.  Applications that insert untrusted input into SQL commands should
+      take special care to ensure that that's true.
+
+      Applications and drivers that quote untrusted input without using these
+      libpq functions may be at risk of similar problems.  They should first
+      confirm the data is valid in the encoding expected by the server.
+
+      The PostgreSQL Project thanks Stephen Fewer for reporting this problem.
+      (CVE-2025-1094)
+
+ -- Christoph Berg <myon@debian.org>  Tue, 11 Feb 2025 11:27:41 +0100
+
+postgresql-15 (15.10-0+deb12u1) bookworm-security; urgency=medium
+
+  * New upstream version 15.10.
+
+    + Repair ABI break for extensions that work with struct ResultRelInfo
+
+      Last week's minor releases unintentionally broke binary compatibility
+      with timescaledb and several other extensions.  Restore the affected
+      structure to its previous size, so that such extensions need not be
+      rebuilt.
+
+    + Restore functionality of ALTER {ROLE|DATABASE} SET role
+
+      The fix for CVE-2024-10978 accidentally caused settings for role to not
+      be applied if they come from non-interactive sources, including previous
+      ALTER {ROLE|DATABASE} commands and the PGOPTIONS environment variable.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 19 Nov 2024 15:36:12 +0100
+
+postgresql-15 (15.9-0+deb12u1) bookworm-security; urgency=medium
+
+  * New upstream version 15.9.
+
+    + Ensure cached plans are marked as dependent on the calling role when RLS
+      applies to a non-top-level table reference (Nathan Bossart)
+
+      If a CTE, subquery, sublink, security invoker view, or coercion
+      projection in a query references a table with row-level security
+      policies, we neglected to mark the resulting plan as potentially
+      dependent on which role is executing it.  This could lead to later query
+      executions in the same session using the wrong plan, and then returning
+      or hiding rows that should have been hidden or returned instead.
+
+      The PostgreSQL Project thanks Wolfgang Walther for reporting this
+      problem. (CVE-2024-10976)
+
+    + Make libpq discard error messages received during SSL or GSS protocol
+      negotiation (Jacob Champion)
+
+      An error message received before encryption negotiation is completed
+      might have been injected by a man-in-the-middle, rather than being real
+      server output.  Reporting it opens the door to various security hazards;
+      for example, the message might spoof a query result that a careless user
+      could mistake for correct output.  The best answer seems to be to
+      discard such data and rely only on libpq's own report of the connection
+      failure.
+
+      The PostgreSQL Project thanks Jacob Champion for reporting this problem.
+      (CVE-2024-10977)
+
+    + Fix unintended interactions between SET SESSION AUTHORIZATION and SET
+      ROLE (Tom Lane)
+
+      The SQL standard mandates that SET SESSION AUTHORIZATION have a
+      side-effect of doing SET ROLE NONE.  Our implementation of that was
+      flawed, creating more interaction between the two settings than
+      intended. Notably, rolling back a transaction that had done SET SESSION
+      AUTHORIZATION would revert ROLE to NONE even if that had not been the
+      previous state, so that the effective user ID might now be different
+      from what it had been before the transaction.  Transiently setting
+      session_authorization in a function SET clause had a similar effect. A
+      related bug was that if a parallel worker inspected
+      current_setting('role'), it saw none even when it should see something
+      else.
+
+      The PostgreSQL Project thanks Tom Lane for reporting this problem.
+      (CVE-2024-10978)
+
+    + Prevent trusted PL/Perl code from changing environment variables
+      (Andrew Dunstan, Noah Misch)
+
+      The ability to manipulate process environment variables such as PATH
+      gives an attacker opportunities to execute arbitrary code.  Therefore,
+      trusted PLs must not offer the ability to do that.  To fix plperl,
+      replace %ENV with a tied hash that rejects any modification attempt with
+      a warning. Untrusted plperlu retains the ability to change the
+      environment.
+
+      The PostgreSQL Project thanks Coby Abrams for reporting this problem.
+      (CVE-2024-10979)
+
+ -- Christoph Berg <myon@debian.org>  Tue, 12 Nov 2024 15:06:10 +0100
+
+postgresql-15 (15.8-0+deb12u1) bookworm-security; urgency=medium
+
+  * New upstream version.
+
+    + Prevent unauthorized code execution during pg_dump (Masahiko Sawada)
+
+      An attacker able to create and drop non-temporary objects could inject
+      SQL code that would be executed by a concurrent pg_dump session with the
+      privileges of the role running pg_dump (which is often a superuser).
+      The attack involves replacing a sequence or similar object with a view
+      or foreign table that will execute malicious code.  To prevent this,
+      introduce a new server parameter restrict_nonsystem_relation_kind that
+      can disable expansion of non-builtin views as well as access to foreign
+      tables, and teach pg_dump to set it when available.  Note that the
+      attack is prevented only if both pg_dump and the server it is dumping
+      from are new enough to have this fix.
+
+      The PostgreSQL Project thanks Noah Misch for reporting this problem.
+      (CVE-2024-7348)
+
+    * Refresh debian/patches/focal-arm64-outline-atomics.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 07 Aug 2024 15:24:37 +0200
+
+postgresql-15 (15.7-0+deb12u1) bookworm; urgency=medium
+
+  * New upstream version.
+
+    + Restrict visibility of pg_stats_ext and pg_stats_ext_exprs entries to
+      the table owner (Nathan Bossart)
+
+      These views failed to hide statistics for expressions that involve
+      columns the accessing user does not have permission to read.  View
+      columns such as most_common_vals might expose security-relevant data.
+      The potential interactions here are not fully clear, so in the interest
+      of erring on the side of safety, make rows in these views visible only
+      to the owner of the associated table.
+
+      The PostgreSQL Project thanks Lukas Fittl for reporting this problem.
+      (CVE-2024-4317)
+
+      By itself, this fix will only fix the behavior in newly initdb'd
+      database clusters.  If you wish to apply this change in an existing
+      cluster, you will need to do the following:
+
+        In each database of the cluster, run the fix-CVE-2024-4317.sql script
+        as superuser. In psql this would look like
+          \i /usr/share/postgresql/15/fix-CVE-2024-4317.sql
+        Any error probably indicates that you've used the wrong script
+        version.  It will not hurt to run the script more than once.
+
+        Do not forget to include the template0 and template1 databases, or the
+        vulnerability will still exist in databases you create later.  To fix
+        template0, you'll need to temporarily make it accept connections.  Do
+        that with
+          ALTER DATABASE template0 WITH ALLOW_CONNECTIONS true;
+        and then after fixing template0, undo it with
+          ALTER DATABASE template0 WITH ALLOW_CONNECTIONS false;
+
+ -- Christoph Berg <myon@debian.org>  Tue, 07 May 2024 11:24:26 +0200
+
+postgresql-15 (15.6-0+deb12u1) bookworm-security; urgency=medium
+
+  * New upstream version.
+
+    * Tighten security restrictions within REFRESH MATERIALIZED VIEW
+      CONCURRENTLY (Heikki Linnakangas)
+
+      One step of a concurrent refresh command was run under weak security
+      restrictions.  If a materialized view's owner could persuade a superuser
+      or other high-privileged user to perform a concurrent refresh on that
+      view, the view's owner could control code executed with the privileges
+      of the user running REFRESH. Fix things so that all user-determined code
+      is run as the view's owner, as expected.
+
+      The PostgreSQL Project thanks Pedro Gallegos for reporting this problem.
+      (CVE-2024-0985)
+
+ -- Christoph Berg <myon@debian.org>  Tue, 06 Feb 2024 13:37:19 +0100
+
+postgresql-15 (15.5-0+deb12u1) bookworm-security; urgency=medium
+
+  * New upstream version.
+
+    * Fix handling of unknown-type arguments in DISTINCT "any" aggregate
+      functions (Tom Lane)
+
+      This error led to a text-type value being interpreted as an unknown-type
+      value (that is, a zero-terminated string) at runtime.  This could result
+      in disclosure of server memory following the text value.
+
+      The PostgreSQL Project thanks Jingzhou Fu for reporting this problem.
+      (CVE-2023-5868)
+
+    * Detect integer overflow while computing new array dimensions
+      (Tom Lane)
+
+      When assigning new elements to array subscripts that are outside the
+      current array bounds, an undetected integer overflow could occur in edge
+      cases.  Memory stomps that are potentially exploitable for arbitrary
+      code execution are possible, and so is disclosure of server memory.
+
+      The PostgreSQL Project thanks Pedro Gallegos for reporting this problem.
+      (CVE-2023-5869)
+
+    * Prevent the pg_signal_backend role from signalling background workers
+      and autovacuum processes (Noah Misch, Jelte Fennema-Nio)
+
+      The documentation says that pg_signal_backend
+      cannot issue signals to superuser-owned processes.  It was able to
+      signal these background processes, though, because they advertise a
+      role OID of zero.  Treat that as indicating superuser ownership.
+      The security implications of cancelling one of these process types
+      are fairly small so far as the core code goes (we'll just start
+      another one), but extensions might add background workers that are
+      more vulnerable.
+
+      Also ensure that the is_superuser parameter is set correctly in such
+      processes.  No specific security consequences are known for that
+      oversight, but it might be significant for some extensions.
+
+      The PostgreSQL Project thanks Hemanth Sandrana and Mahendrakar
+      Srinivasarao for reporting this problem. (CVE-2023-5870)
+
+    * Fix misbehavior during recursive page split in GiST index build
+      (Heikki Linnakangas)
+
+      Fix a case where the location of a page downlink was incorrectly
+      tracked, and introduce some logic to allow recovering from such
+      situations rather than silently doing the wrong thing.  This error could
+      result in incorrect answers from subsequent index searches. It may be
+      advisable to reindex all GiST indexes after installing this update.
+
+    * Prevent de-duplication of btree index entries for interval columns
+
+      There are interval values that are distinguishable but compare equal,
+      for example 24:00:00 and 1 day.  This breaks assumptions made by btree
+      de-duplication, so interval columns need to be excluded from
+      de-duplication.  This oversight can cause incorrect results from
+      index-only scans.  Moreover, after updating amcheck will report an error
+      for almost all such indexes.  Users should reindex any btree indexes on
+      interval columns.
+
+  * Rebase debian/patches/libpgport-pkglibdir.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 07 Nov 2023 14:36:06 +0100
+
+postgresql-15 (15.4-0+deb12u1) bookworm; urgency=medium
+
+  * New upstream version.
+
+    + Disallow substituting a schema or owner name into an extension script if
+      the name contains a quote, backslash, or dollar sign (Noah Misch)
+      This restriction guards against SQL-injection hazards for trusted
+      extensions.
+      The PostgreSQL Project thanks Micah Gate, Valerie Woolard, Tim
+      Carey-Smith, and Christoph Berg for reporting this problem.
+      (CVE-2023-39417)
+
+    + Fix MERGE to enforce row security policies properly (Dean Rasheed)
+      When MERGE performs an UPDATE action, it should enforce any UPDATE or
+      SELECT RLS policies defined on the target table, to be consistent with
+      the way that a plain UPDATE with a WHERE clause works.  Instead it was
+      enforcing INSERT RLS policies for both INSERT and UPDATE actions.
+      In addition, when MERGE performs a DO NOTHING action, it applied the
+      target table's DELETE RLS policies to existing rows, even though those
+      rows are not being deleted.  While it's not a security problem, this
+      could result in unwanted errors.
+      The PostgreSQL Project thanks Dean Rasheed for reporting this problem.
+      (CVE-2023-39418)
+
+ -- Christoph Berg <myon@debian.org>  Sun, 01 Oct 2023 21:50:06 +0200
+
+postgresql-15 (15.3-0+deb12u1) unstable; urgency=medium
+
+  * New upstream version.
+
+    + Prevent CREATE SCHEMA from defeating changes in search_path
+      (Report and fix by Alexander Lakhin, CVE-2023-2454)
+
+      Within a CREATE SCHEMA command, objects in the prevailing search_path,
+      as well as those in the newly-created schema, would be visible even
+      within a called function or script that attempted to set a secure
+      search_path.  This could allow any user having permission to create a
+      schema to hijack the privileges of a security definer function or
+      extension script.
+
+    + Enforce row-level security policies correctly after inlining a
+      set-returning function (Report by Wolfgang Walther, CVE-2023-2455)
+
+      If a set-returning SQL-language function refers to a table having
+      row-level security policies, and it can be inlined into a calling query,
+      those RLS policies would not get enforced properly in some cases
+      involving re-using a cached plan under a different role. This could
+      allow a user to see or modify rows that should have been invisible.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 09 May 2023 19:05:02 +0200
+
+postgresql-15 (15.2-2) unstable; urgency=medium
+
+  * Add Romanian debconf translation, mulțumesc Remus-Gabriel Chelu!
+  * Fix update-alternatives when doc package is installed stand-alone.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 27 Feb 2023 10:30:23 +0100
+
+postgresql-15 (15.2-1) unstable; urgency=medium
+
+  * New upstream version.
+
+    + libpq can leak memory contents after GSSAPI transport encryption
+      initiation fails (Jacob Champion)
+
+      A modified server, or an unauthenticated man-in-the-middle, can send a
+      not-zero-terminated error message during setup of GSSAPI (Kerberos)
+      transport encryption.  libpq will then copy that string, as well as
+      following bytes in application memory up to the next zero byte, to its
+      error report. Depending on what the calling application does with the
+      error report, this could result in disclosure of application memory
+      contents.  There is also a small probability of a crash due to reading
+      beyond the end of memory.  Fix by properly zero-terminating the server
+      message. (CVE-2022-41862)
+
+ -- Christoph Berg <myon@debian.org>  Tue, 07 Feb 2023 14:57:10 +0100
+
+postgresql-15 (15.1-1) unstable; urgency=medium
+
+  * New upstream version.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 08 Nov 2022 10:59:12 +0100
+
+postgresql-15 (15.0-2) unstable; urgency=medium
+
+  * Add Breaks on dbconfig-common (<< 2.0.22~) which doesn't support the
+    stricter permissions on the default public schema yet.
+  * Cherry-pick 4a6de748d3 from upstream to help fix #1021859.
+  * Mark -doc package as <!nodoc>.
+
+ -- Christoph Berg <myon@debian.org>  Mon, 24 Oct 2022 11:30:00 +0200
+
+postgresql-15 (15.0-1) unstable; urgency=medium
+
+  * New upstream version.
+
+ -- Christoph Berg <myon@debian.org>  Fri, 14 Oct 2022 10:36:49 +0200
+
+postgresql-15 (15~rc2-1) unstable; urgency=medium
+
+  [ Christoph Berg ]
+  * New upstream RC version.
+
+  [ Petter Jacobsen ]
+  * Add . to extension_destdir description.
+
+ -- Christoph Berg <myon@debian.org>  Thu, 06 Oct 2022 14:06:05 +0200
+
+postgresql-15 (15~rc1-1) experimental; urgency=medium
+
+  * New upstream RC version.
+
+ -- Christoph Berg <myon@debian.org>  Tue, 27 Sep 2022 11:31:54 +0200
+
+postgresql-15 (15~beta4-1) experimental; urgency=medium
+
+  * New upstream beta version.
+  * Add Italian debconf translation by Ceppo, thanks! (Closes: #1019162)
+
+ -- Christoph Berg <myon@debian.org>  Tue, 06 Sep 2022 11:44:55 +0200
+
+postgresql-15 (15~beta3-1) experimental; urgency=medium
+
+  * New upstream beta version.
+  * debian/copyright: Update src/backend/regex section.
+  * Update lintian overrides.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 10 Aug 2022 14:33:48 +0200
+
+postgresql-15 (15~beta2-1) experimental; urgency=medium
+
+  * New upstream beta version.
+  * Depend on postgresql-common >= 241.
+  * Disable LLVM JIT on s390x for now. (See #1002029)
+
+ -- Christoph Berg <myon@debian.org>  Tue, 28 Jun 2022 18:20:44 +0200
+
+postgresql-15 (15~beta1-1) experimental; urgency=medium
+
+  * New major upstream version 15; packaging based on postgresql-14.
+  * configure.ac: Remove check for autoconf 2.69.
+
+ -- Christoph Berg <myon@debian.org>  Wed, 18 May 2022 16:26:02 +0200

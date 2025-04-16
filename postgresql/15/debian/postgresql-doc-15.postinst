@@ -1,0 +1,30 @@
+#!/bin/sh
+
+set -e
+
+VERSION=${DPKG_MAINTSCRIPT_PACKAGE##*-}
+
+# arguments: version master package [package]
+__link_manpages() {
+    MANS=$(unset GREP_OPTIONS; dpkg -L $3 $4 $5 2>/dev/null | grep -E '/man/.*\.[1-9](\.gz)?$' | grep -v "$2") || true
+    [ -n "$MANS" ] || return 0
+
+    SLAVES=$(for i in $MANS; do TARGET=$(echo $i | sed "s/postgresql\/$1\///"); echo -n " --slave $TARGET $(basename $i) $i"; done)
+
+    mkdir -p /usr/share/man/man3
+    section=$(echo "$2" | sed -e 's/.*\.\(.*\)\..*/man\1/')
+    update-alternatives --install /usr/share/man/$section/$2 \
+        $2 /usr/share/postgresql/$1/man/$section/$2 \
+        ${1}0 $SLAVES
+}
+
+if [ "$1" = configure ]; then
+    if [ -f /usr/share/postgresql-common/maintscripts-functions ]; then
+        . /usr/share/postgresql-common/maintscripts-functions
+        configure_doc_version $VERSION "$2"
+    else
+        __link_manpages $VERSION SPI_connect.3.gz "postgresql-doc-$VERSION"
+    fi
+fi
+
+#DEBHELPER#

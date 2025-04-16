@@ -1,0 +1,4 @@
+# pregenerated docs contain some tables rendered on a single line
+source: source-is-missing [doc/src/sgml/html/*]
+# same for these, plus including some regression output files
+source: very-long-line-length-in-source-file *
