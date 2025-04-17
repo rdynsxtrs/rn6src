@@ -46,3 +46,4 @@
 0046-Add-missing-header-includes.patch
 rnx001_lower_zlib_pq_requirements.patch
 rnx002_revert_build_file_changes.patch
+rnx003_fix_for_older_glibc.patch

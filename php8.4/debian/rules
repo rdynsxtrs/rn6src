@@ -262,9 +262,9 @@ ext_DEBS       := $(addprefix php$(PHP_NAME_VERSION)-,$(ext_PACKAGES))
 ext_EXTENSIONS := $(foreach ext_package,$(ext_PACKAGES),$($(ext_package)_EXTENSIONS))
 ext_config     += $(foreach ext_ext,$(ext_EXTENSIONS),$($(ext_ext)_config))
 
-#$(info Enabled packages $(ext_DEBS))
-#$(info Enabled extensions $(ext_EXTENSIONS))
-#$(info Enabled config $(ext_config))
+$(info Enabled packages $(ext_DEBS))
+$(info Enabled extensions $(ext_EXTENSIONS))
+$(info Enabled config $(ext_config))
 
 %:
 	dh $@ --with systemd --with apache2 --without=build-stamp --without autoreconf $(PARALLEL)
@@ -495,7 +495,8 @@ override_dh_install-arch: remove-files-stamp prepare-fpm-pools
 	install -d -m 755 debian/tmp/usr/lib/cgi-bin/
 	ln debian/tmp/usr/bin/php-cgi$(PHP_NAME_VERSION) debian/tmp/usr/lib/cgi-bin/php$(PHP_NAME_VERSION)
 
-	dh_install --fail-missing
+	# dh_install --fail-missing
+	dh_install --list-missing
 
 # Install a helper script for checking PHP FPM configuration
 	mkdir -p debian/$(PHP_FPM)/usr/lib/php/

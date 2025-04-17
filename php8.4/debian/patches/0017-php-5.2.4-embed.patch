@@ -1,21 +1,36 @@
-From: Debian PHP Maintainers <pkg-php-maint@lists.alioth.debian.org>
-Date: Sat, 2 May 2015 10:26:55 +0200
-Subject: php-5.2.4-embed
+Description: <short summary of the patch>
+ TODO: Put a short summary on the line above and replace this paragraph
+ with a longer explanation of this change. Complete the meta-information
+ with other relevant fields (see below for details). To make it easier, the
+ information below has been extracted from the changelog. Adjust it or drop
+ it.
+ .
+ php8.4 (8.4.6-1+rnx1) unstable; urgency=medium
+ .
+   * New upstream release PHP 8.4.6
+Author: ReadyNAS Xtras <xtras@rnxtras.com>
 
 ---
- sapi/embed/config.m4 | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
 
-diff --git a/sapi/embed/config.m4 b/sapi/embed/config.m4
-index c385e28..caad308 100644
---- a/sapi/embed/config.m4
-+++ b/sapi/embed/config.m4
-@@ -12,7 +12,7 @@ if test "$PHP_EMBED" != "no"; then
-     [yes|shared], [
-       LIBPHP_CFLAGS="-shared"
-       PHP_EMBED_TYPE=shared
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: 2025-04-15
+
+--- php8.4-8.4.6.orig/sapi/embed/config.m4
++++ php8.4-8.4.6/sapi/embed/config.m4
+@@ -15,7 +15,7 @@ if test "$PHP_EMBED" != "no"; then
+         SAPI_SHARED="libs/libphp.dylib"
+         PHP_EMBED_TYPE=shared-dylib
+       ], [PHP_EMBED_TYPE=shared])
 -      INSTALL_IT="\$(mkinstalldirs) \$(INSTALL_ROOT)\$(orig_libdir); \$(INSTALL) -m 0755 $SAPI_SHARED \$(INSTALL_ROOT)\$(orig_libdir)"
-+      INSTALL_IT="\$(mkinstalldirs) \$(INSTALL_ROOT)\$(orig_libdir); \$(LIBTOOL) --mode=install \$(INSTALL) -m 0755 $SAPI_SHARED \$(INSTALL_ROOT)\$(orig_libdir)"
++      INSTALL_IT="\$(mkinstalldirs) \$(INSTALL_ROOT)\$(libdir); \$(LIBTOOL) --mode=install \$(INSTALL) -m 0755 \$(OVERALL_TARGET) \$(INSTALL_ROOT)\$(libdir)"
      ],
      [static], [
        LIBPHP_CFLAGS="-static"

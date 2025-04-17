@@ -1,3 +1,27 @@
+php8.4 (8.4.6-1+rnx1) unstable; urgency=medium
+
+  * New upstream release PHP 8.4.6
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Tue, 15 Apr 2025 11:32:41 +0200
+
+php8.4 (8.4.5-1+rnx1) unstable; urgency=medium
+
+  * New upstream release PHP 8.4.5
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Fri, 14 Mar 2025 09:45:06 +0100
+
+php8.4 (8.4.4-1+rnx1) unstable; urgency=medium
+
+  * New upstream release PHP 8.4.4
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Sun, 16 Feb 2025 13:30:39 +0100
+
+php8.4 (8.4.3-1+rnx1) unstable; urgency=medium
+
+  * New upstream release PHP 8.4.3
+
+ -- ReadyNAS Xtras <xtras@rnxtras.com>  Mon, 20 Jan 2025 13:12:55 +0100
+
 php8.4 (8.4.2-1+rnx1) unstable; urgency=medium
 
   * New upstream release 8.4.2
